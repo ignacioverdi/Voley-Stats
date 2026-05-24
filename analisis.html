@@ -110,6 +110,13 @@ body{background:var(--bg);font-family:'Barlow Condensed',sans-serif;color:var(--
 .spark-bar{width:4px;border-radius:2px;background:var(--indigo)}
 .b{border:1px solid var(--border)}
 
+.cancha-modal{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.92);backdrop-filter:blur(16px);overflow-y:auto;padding:1.5rem 1rem}
+.cancha-modal-hdr{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:420px;margin-bottom:12px}
+.cancha-modal-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#e2e8f0}
+.cancha-modal-close{padding:6px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:7px;color:#94a3b8;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer;text-transform:uppercase}
+.cancha-modal-legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.cml-item{display:flex;align-items:center;gap:6px;font-size:10px;color:#64748b;letter-spacing:.8px;text-transform:uppercase}
+.cml-dot{width:20px;height:3px;border-radius:2px}
 </style>
 </head>
 <body>
@@ -1328,15 +1335,25 @@ function renderIndividualNew(num){
     return '<div class="stat-pill"><div class="stat-pill-val" style="color:'+color+'">'+val+'</div><div class="stat-pill-lbl">'+lbl+'</div></div>';
   }
   function card(titulo, color, cols, pills_html, extra){
+    var extraHtml = '';
+    if(extra && typeof extra === 'string' && extra.indexOf('<') === 0){
+      extraHtml = extra;
+    }
     return '<div class="ind-card">'+
       '<div class="ind-card-hdr">'+
         '<div class="ind-fund-title" style="color:'+color+'">'+titulo+'</div>'+
-        (extra?'<div style="font-size:11px;color:'+effColor(extra)+'">'+extra+'%</div>':'') +
       '</div>'+
       '<div class="stat-pills" style="grid-template-columns:repeat('+cols+',1fr)">'+pills_html+'</div>'+
+      extraHtml+
     '</div>';
   }
 
+  // Preparar historial de saque para cancha
+  var hist_saque = hist_jug.map(function(j){
+    return {sT:j.sT,sPunto:j.sPunto,sPos:j.sPos,sAdm:j.sAdm,
+      sNeg:j.sNeg,sVend:j.sVend,sErr:j.sErr,
+      sOrig:j.sOrig||'',sDest:j.sDest||''};
+  });
   var sCard = acum.sT>0 ? card('⚡ SAQUE','#f59e0b',7,
     pill('EFF%', se!==null?se+'%':'--', effColor(se)) +
     pill('TOT', acum.sT, '#f59e0b') +
@@ -1344,7 +1361,8 @@ function renderIndividualNew(num){
     pill('+', acum.sPos, '#86efac') +
     pill('!', acum.sAdm, '#fbbf24') +
     pill('-', acum.sNeg, '#f97316') +
-    pill('=', acum.sErr, '#ef4444'), null) : '';
+    pill('=', acum.sErr, '#ef4444'),
+    '<button onclick="openSaqueCanchaModal('+JSON.stringify(hist_saque)+',\"'+nombre+'\")" style="margin:8px 16px;padding:6px 14px;border-radius:8px;border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.08);color:#f59e0b;font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;cursor:pointer">🗺️ Ver cancha de saque</button>') : '';
 
   var rCard = acum.rT>0 ? card('🛡️ RECEPCIÓN','#22c55e',7,
     pill('EFF%', re!==null?re+'%':'--', effColor(re)) +
@@ -1363,7 +1381,8 @@ function renderIndividualNew(num){
     pill('!', acum.aAdm, '#fbbf24') +
     pill('-', acum.aNeg, '#f97316') +
     pill('/', acum.aVend, '#fb923c') +
-    pill('=', acum.aErr, '#ef4444'), null) : '';
+    pill('=', acum.aErr, '#ef4444'),
+    '<button onclick="openCanchaModal('+JSON.stringify(acum.dv4)+',\"'+nombre+'\")" style="margin:8px 16px;padding:6px 14px;border-radius:8px;border:1px solid rgba(129,140,248,.3);background:rgba(129,140,248,.08);color:#818cf8;font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;cursor:pointer">🗺️ Ver cancha de ataque</button>') : '';
 
   var bCard = acum.bT>0 ? card('🧱 BLOQUEO','#06b6d4',3,
     pill('EFF%', be!==null?be+'%':'--', effColor(be)) +
@@ -1551,5 +1570,23 @@ function renderCompar(){
 }
 
 </script>
+<div class="cancha-modal" id="cancha-modal">
+  <div class="cancha-modal-hdr">
+    <div class="cancha-modal-title" id="cancha-modal-title">Análisis DV4</div>
+    <button class="cancha-modal-close" onclick="closeCanchaModal()">✕ Cerrar</button>
+  </div>
+  <div class="cancha-modal-info" id="cancha-modal-info"></div>
+  <div style="border-radius:10px;overflow:hidden;box-shadow:0 0 0 5px rgba(0,80,150,.5),0 20px 60px rgba(0,0,0,.8)">
+    <canvas id="cancha-canvas" width="380" height="560" style="display:block"></canvas>
+  </div>
+  <div id="cancha-stats-wrap" style="display:none;justify-content:center;margin-top:12px;width:100%"></div>
+  <div class="cancha-modal-legend">
+    <div class="cml-item"><div class="cml-dot" style="background:#00bfff"></div>Rápida</div>
+    <div class="cml-item"><div class="cml-dot" style="background:#ff3030"></div>Alta</div>
+    <div class="cml-item"><div class="cml-dot" style="background:#ff8c00"></div>Central</div>
+    <div class="cml-item"><div class="cml-dot" style="background:#ff8c00"></div>1° zona</div>
+    <div class="cml-item"><div class="cml-dot" style="background:#a855f7"></div>2° zona</div>
+  </div>
+</div>
 </body>
 </html>
