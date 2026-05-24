@@ -134,13 +134,18 @@ def init_jug(num, nombre):
 
 # ── Calcular eficiencias ──────────────────────────────────────
 def calc_eff(j):
+    # SAQUE: (Pt×1 + Vend×0.5 + Pos×0.25 - Err×1) / Total × 100
     if j['sT'] > 0:
-        j['sEff'] = round((j['sPunto'] - j['sErr']) / j['sT'] * 100)
+        j['sEff'] = round((j['sPunto']*1 + j['sVend']*0.5 + j['sPos']*0.25 - j['sErr']*1) / j['sT'] * 100)
+    # RECEPCION: (Perf×1 + Pos×0.5 - Vend×0.5 - Err×1) / Total × 100
     if j['rT'] > 0:
-        j['rEff'] = round((j['rPunto']*2 + j['rPos']*1) / j['rT'] * 100)
-        j['rEff'] = min(j['rEff'], 100)
+        j['rEff'] = round((j['rPunto']*1 + j['rPos']*0.5 - j['rVend']*0.5 - j['rErr']*1) / j['rT'] * 100)
+    # ATAQUE: (Pt - Vend - Err) / Total × 100
     if j['aT'] > 0:
-        j['aEff'] = round((j['aPunto'] - j['aErr'] - j['aVend']) / j['aT'] * 100)
+        j['aEff'] = round((j['aPunto'] - j['aVend'] - j['aErr']) / j['aT'] * 100)
+    # BLOQUEO: (Pt + Pos) / Total × 100
+    if j['bT'] > 0:
+        j['bEff'] = round((j['bPt'] + j['bPtPos']) / j['bT'] * 100)
     if j['_sdir']:
         mas = max(j['_sdir'], key=j['_sdir'].get)
         j['sOrig'] = mas.split('-')[0]
