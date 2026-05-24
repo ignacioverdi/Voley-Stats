@@ -125,6 +125,16 @@ body{background:var(--bg);font-family:'Barlow Condensed',sans-serif;color:var(--
 .cancha-modal-legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:12px}
 .cml-item{display:flex;align-items:center;gap:6px;font-size:10px;color:#64748b;letter-spacing:.8px;text-transform:uppercase}
 .cml-dot{width:20px;height:3px;border-radius:2px}
+
+.cmodal{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.92);
+  backdrop-filter:blur(16px);align-items:center;justify-content:center;flex-direction:column;padding:1rem}
+.cmodal.open{display:flex}
+.cmodal-box{background:#0d0e1a;border:1px solid rgba(255,255,255,.08);border-radius:16px;
+  padding:20px;max-width:420px;width:100%}
+.cmodal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cmodal-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px}
+.cmodal-close{background:none;border:none;color:#475569;font-size:20px;cursor:pointer;padding:4px 8px}
+.cmodal-close:hover{color:#e2e8f0}
 </style>
 </head>
 <body>
@@ -1146,5 +1156,16 @@ function renderCompar(){
 
 
 </script>
+
+<div class="cmodal" id="cmodal" onclick="if(event.target===this)closeCmodal()">
+  <div class="cmodal-box">
+    <div class="cmodal-hdr">
+      <div class="cmodal-title" id="cmodal-title">Dirección</div>
+      <button class="cmodal-close" onclick="closeCmodal()">✕</button>
+    </div>
+    <canvas id="cmodal-canvas" width="380" height="240" style="width:100%;border-radius:8px"></canvas>
+    <div id="cmodal-legend" style="margin-top:12px;font-size:11px;color:#475569;text-align:center"></div>
+  </div>
+</div>
 </body>
 </html>

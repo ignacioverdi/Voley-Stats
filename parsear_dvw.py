@@ -146,6 +146,12 @@ def calc_eff(j):
     # BLOQUEO: (# + +) / Total
     if j['bT'] > 0:
         j['bEff'] = round((j['bPt'] + j['bPtPos']) / j['bT'] * 100)
+    # SAQUE: dirección más frecuente
+    if j.get('_sdir'):
+        mas = max(j['_sdir'], key=j['_sdir'].get)
+        partes = mas.split('-')
+        j['sOrig'] = partes[0]
+        j['sDest'] = partes[1] if len(partes) > 1 else ''
 
 def parsear_scout(lines, jugadores_casla, casla_char='*'):
     stats = {}
