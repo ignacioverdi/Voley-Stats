@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Análisis de Partidos — CASLA VOLEY</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="datos_historial.js" onerror="void 0"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07080f;--card:#0d0e1a;--card2:#111220;
+  --border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.12);
+  --red:#e8192c;--green:#22c55e;--amber:#f59e0b;
+  --indigo:#818cf8;--orange:#f97316;--cyan:#06b6d4;
+  --mut:#475569;--txt:#e2e8f0;
+}
+body{background:var(--bg);font-family:'Barlow Condensed',sans-serif;color:var(--txt);min-height:100vh;}
+
+.header{padding:14px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.01);position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);}
+.title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:5px;background:linear-gradient(120deg,#e8192c,#fff 50%,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.back-btn{padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--mut);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-decoration:none;text-transform:uppercase;}
+
+.main{max-width:1400px;margin:0 auto;padding:24px 28px;}
+
+/* SELECTOR PARTIDOS */
+.partidos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:24px;}
+.partido-btn{padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--card);cursor:pointer;text-align:left;transition:all .15s;font-family:'Barlow Condensed',sans-serif;}
+.partido-btn:hover{border-color:var(--border2);background:var(--card2);}
+.partido-btn.activo{border-color:rgba(232,25,44,.4);background:rgba(232,25,44,.06);}
+.partido-btn.acum{border-color:rgba(129,140,248,.4);background:rgba(129,140,248,.06);}
+.partido-btn.acum.activo{border-color:rgba(129,140,248,.6);background:rgba(129,140,248,.12);}
+.pb-fecha{font-size:11px;color:var(--mut);letter-spacing:1px;margin-bottom:4px;}
+.pb-rival{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1.5px;margin-bottom:6px;}
+.pb-res{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;}
+.pb-sets{font-size:10px;color:var(--mut);margin-top:4px;line-height:1.4;}
+.res-win{color:var(--green);}
+.res-loss{color:var(--red);}
+
+/* TABS */
+.tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.tab-btn{padding:7px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--mut);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all .15s;}
+.tab-btn.activo{background:var(--card2);color:var(--txt);border-color:var(--border2);}
+
+/* TABLA */
+.tabla-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:auto;margin-bottom:20px;}
+.tabla{width:100%;border-collapse:collapse;font-size:12px;}
+.tabla th{padding:8px 10px;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--mut);border-bottom:1px solid var(--border);white-space:nowrap;text-align:center;}
+.tabla th.left{text-align:left;}
+.tabla th.sec{font-size:10px;font-weight:800;letter-spacing:2px;}
+.tabla td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.03);text-align:center;white-space:nowrap;}
+.tabla td.left{text-align:left;font-weight:700;}
+.tabla tr:last-child td{border-bottom:none;}
+.tabla tr.total-row td{background:rgba(255,255,255,.03);font-weight:700;border-top:1px solid var(--border);}
+.tabla tr:hover td{background:rgba(255,255,255,.02);}
+
+.eff-pos{color:var(--green);}
+.eff-neu{color:var(--amber);}
+.eff-neg{color:var(--red);}
+.val-perf{color:#22c55e;}
+.val-pos{color:#86efac;}
+.val-adm{color:#fbbf24;}
+.val-neg{color:#f97316;}
+.val-vend{color:#fb923c;}
+.val-err{color:#ef4444;}
+.val-tot{color:var(--txt);}
+.val-mut{color:var(--mut);}
+
+.sec-label{font-size:9px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.empty{text-align:center;padding:60px;color:var(--mut);}
+.empty-icon{font-size:48px;margin-bottom:12px;}
+.empty-txt{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;}
+
+@media(max-width:768px){
+  .main{padding:14px 16px;}
+  .header{padding:12px 16px;}
+  .tabla{font-size:11px;}
+  .tabla th,.tabla td{padding:6px 6px;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <a href="index.html" class="back-btn">← Inicio</a>
+    <div>
+      <div class="title">📊 Análisis de Partidos</div>
+      <div style="font-size:9px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;">CASLA VOLEY · División de Honor 2026</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- SELECTOR DE PARTIDOS -->
+  <div class="sec-label">Seleccioná un partido</div>
+  <div class="partidos-grid" id="partidos-grid">
+    <div class="empty"><div class="empty-icon">📋</div><div class="empty-txt">Cargando...</div></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs" id="tabs" style="display:none">
+    <button class="tab-btn activo" onclick="setTab('saque',this)">⚡ SAQUE</button>
+    <button class="tab-btn" onclick="setTab('recepcion',this)">🛡️ RECEPCIÓN</button>
+    <button class="tab-btn" onclick="setTab('ataque',this)">💥 ATAQUE</button>
+    <button class="tab-btn" onclick="setTab('bloqueo',this)">🧱 BLOQUEO</button>
+    <button class="tab-btn" onclick="setTab('resumen',this)">📋 RESUMEN</button>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div id="contenido">
+    <div class="empty">
+      <div class="empty-icon">👆</div>
+      <div class="empty-txt">Elegí un partido arriba</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var DATA = null;
+var PARTIDO_IDX = null;
+var TAB_ACTIVO = 'saque';
+
+// ── Cargar datos ──────────────────────────────────────────────
+window.addEventListener('load', function(){
+  setTimeout(function(){
+    DATA = window.HISTORIAL_DATA || null;
+    if(!DATA || !DATA.entrenamientos || !DATA.entrenamientos.length){
+      document.getElementById('partidos-grid').innerHTML =
+        '<div class="empty"><div class="empty-icon">📭</div><div class="empty-txt">Sin datos</div></div>';
+      return;
+    }
+    renderPartidosGrid();
+  }, 200);
+});
+
+// ── Grid de partidos ──────────────────────────────────────────
+function renderPartidosGrid(){
+  var grid = document.getElementById('partidos-grid');
+  grid.innerHTML = '';
+
+  // Botón acumulado
+  var btnAcum = document.createElement('button');
+  btnAcum.className = 'partido-btn acum';
+  btnAcum.innerHTML =
+    '<div class="pb-fecha">TEMPORADA 2026</div>' +
+    '<div class="pb-rival">ACUMULADO</div>' +
+    '<div class="pb-res" style="color:var(--indigo)">' + DATA.entrenamientos.length + ' PARTIDOS</div>';
+  btnAcum.onclick = function(){ selectPartido(-1, this); };
+  grid.appendChild(btnAcum);
+
+  // Un botón por partido
+  DATA.entrenamientos.forEach(function(p, i){
+    var res = p.resultado || {};
+    var ganado = (res.casla||0) > (res.rival||0);
+    var sets = (res.sets||[]).join(' · ');
+    var btn = document.createElement('button');
+    btn.className = 'partido-btn';
+    btn.innerHTML =
+      '<div class="pb-fecha">' + (p.fecha||'') + '</div>' +
+      '<div class="pb-rival">vs ' + (p.rival||'RIVAL') + '</div>' +
+      '<div class="pb-res ' + (ganado?'res-win':'res-loss') + '">' +
+        'CASLA ' + (res.casla||0) + ' — ' + (res.rival||0) +
+      '</div>' +
+      '<div class="pb-sets">' + sets + '</div>';
+    btn.onclick = function(){ selectPartido(i, this); };
+    grid.appendChild(btn);
+  });
+}
+
+// ── Seleccionar partido ───────────────────────────────────────
+function selectPartido(idx, btn){
+  PARTIDO_IDX = idx;
+  // Resaltar botón
+  document.querySelectorAll('.partido-btn').forEach(function(b){ b.classList.remove('activo'); });
+  btn.classList.add('activo');
+  // Mostrar tabs
+  document.getElementById('tabs').style.display = 'flex';
+  // Renderizar tab activo
+  renderTab(TAB_ACTIVO);
+}
+
+// ── Tabs ──────────────────────────────────────────────────────
+function setTab(tab, btn){
+  TAB_ACTIVO = tab;
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('activo'); });
+  btn.classList.add('activo');
+  renderTab(tab);
+}
+
+function renderTab(tab){
+  if(PARTIDO_IDX === null) return;
+  var jugadores = getJugadores(PARTIDO_IDX);
+  var cont = document.getElementById('contenido');
+  if(tab === 'saque') cont.innerHTML = tablaSaque(jugadores);
+  else if(tab === 'recepcion') cont.innerHTML = tablaRecepcion(jugadores);
+  else if(tab === 'ataque') cont.innerHTML = tablaAtaque(jugadores);
+  else if(tab === 'bloqueo') cont.innerHTML = tablaBloqueo(jugadores);
+  else if(tab === 'resumen') cont.innerHTML = tablaResumen(jugadores);
+}
+
+// ── Obtener jugadores ─────────────────────────────────────────
+function getJugadores(idx){
+  if(idx === -1){
+    // Acumular todos
+    var acum = {};
+    DATA.entrenamientos.forEach(function(p){
+      p.jugadores.forEach(function(j){
+        if(j.n === 'TOTALES EQUIPO') return;
+        if(!acum[j.c]) acum[j.c] = {c:j.c,n:j.n,PJ:0,
+          sT:0,sPunto:0,sPos:0,sAdm:0,sNeg:0,sVend:0,sErr:0,
+          rT:0,rPunto:0,rPos:0,rAdm:0,rNeg:0,rVend:0,rErr:0,
+          aT:0,aPunto:0,aPos:0,aAdm:0,aNeg:0,aVend:0,aErr:0,
+          bT:0,bPt:0,bPtPos:0};
+        var s = acum[j.c];
+        if(j.sT+j.rT+j.aT+j.bT > 0) s.PJ++;
+        ['sT','sPunto','sPos','sAdm','sNeg','sVend','sErr',
+         'rT','rPunto','rPos','rAdm','rNeg','rVend','rErr',
+         'aT','aPunto','aPos','aAdm','aNeg','aVend','aErr',
+         'bT','bPt','bPtPos'].forEach(function(k){ s[k]+=(j[k]||0); });
+      });
+    });
+    return Object.values(acum).sort(function(a,b){return a.c-b.c;});
+  } else {
+    return DATA.entrenamientos[idx].jugadores
+      .filter(function(j){ return j.n !== 'TOTALES EQUIPO'; })
+      .sort(function(a,b){ return a.c-b.c; });
+  }
+}
+
+// ── Helpers ───────────────────────────────────────────────────
+function effColor(v){
+  if(v===null||v===undefined||isNaN(v)) return 'var(--mut)';
+  return v>20?'#22c55e':v>0?'#86efac':v===0?'var(--mut)':'#ef4444';
+}
+function sEff(j){ return j.sT>0?Math.round((j.sPunto*1+j.sVend*0.5+j.sPos*0.25-j.sErr*1)/j.sT*100):null; }
+function rEff(j){ return j.rT>0?Math.round((j.rPunto*1+j.rPos*0.5-j.rVend*0.5-j.rErr*1)/j.rT*100):null; }
+function aEff(j){ return j.aT>0?Math.round((j.aPunto-j.aVend-j.aErr)/j.aT*100):null; }
+function bEff(j){ return j.bT>0?Math.round((j.bPt+j.bPtPos)/j.bT*100):null; }
+function pct(n,tot){ return tot>0?Math.round(n/tot*100)+'%':'-'; }
+function td(v,cls){ return '<td class="'+(cls||'')+'">'+(v!==undefined&&v!==null?v:'-')+'</td>'; }
+function effTd(v){ var e=v!==null&&v!==undefined?v+'%':'--'; return '<td style="font-weight:800;color:'+effColor(v)+'">'+(v!==null?e:'--')+'</td>'; }
+
+function jugadorTd(j, showPJ){
+  var s = '<td class="left" style="padding:8px 12px">';
+  s += '<span style="font-size:10px;color:var(--mut);margin-right:6px">#'+j.c+'</span>';
+  s += '<span style="font-weight:700">'+j.n+'</span>';
+  if(showPJ) s += '<span style="font-size:10px;color:var(--mut);margin-left:8px">'+j.PJ+'p</span>';
+  s += '</td>';
+  return s;
+}
+
+function totalRow(jugs, fields, calcFn){
+  var tot = {};
+  fields.forEach(function(f){ tot[f] = jugs.reduce(function(a,j){ return a+(j[f]||0); },0); });
+  return tot;
+}
+
+function thSec(txt, cols, color){
+  return '<th colspan="'+cols+'" class="sec" style="color:'+color+';border-left:1px solid rgba(255,255,255,.06);padding:10px 8px">'+txt+'</th>';
+}
+
+// ── TABLA SAQUE ───────────────────────────────────────────────
+function tablaSaque(jugs){
+  var isAcum = PARTIDO_IDX === -1;
+  var h = '<div class="tabla-wrap"><table class="tabla">';
+  h += '<thead><tr>';
+  h += '<th class="left sec">JUGADOR</th>';
+  if(isAcum) h += '<th style="color:var(--mut)">PJ</th>';
+  h += thSec('── SAQUE ──', 7, '#f59e0b');
+  h += '</tr><tr>';
+  h += '<th class="left" style="padding:8px 12px">Nombre</th>';
+  if(isAcum) h += '<th></th>';
+  h += '<th style="border-left:1px solid rgba(255,255,255,.06);color:#f59e0b">EFF%</th>';
+  h += '<th>TOT</th><th class="val-perf">#</th><th class="val-pos">+</th>';
+  h += '<th class="val-adm">!</th><th class="val-neg">-</th><th class="val-err">=</th>';
+  h += '</tr></thead><tbody>';
+
+  var totT=0,totPt=0,totPos=0,totAdm=0,totNeg=0,totVend=0,totErr=0;
+  jugs.forEach(function(j, ri){
+    if(j.sT===0) return;
+    var e = sEff(j);
+    totT+=j.sT; totPt+=j.sPunto; totPos+=j.sPos; totAdm+=j.sAdm;
+    totNeg+=j.sNeg; totVend+=j.sVend; totErr+=j.sErr;
+    var bg = ri%2===0?'transparent':'rgba(255,255,255,.015)';
+    h += '<tr style="background:'+bg+'">';
+    h += jugadorTd(j, isAcum);
+    if(isAcum) h += td(j.PJ,'val-mut');
+    h += effTd(e);
+    h += td(j.sT,'val-tot');
+    h += td(j.sPunto,'val-perf');
+    h += td(j.sPos,'val-pos');
+    h += td(j.sAdm,'val-adm');
+    h += td(j.sNeg,'val-neg');
+    h += td(j.sErr,'val-err');
+    h += '</tr>';
+  });
+
+  // Totales
+  var totE = totT>0?Math.round((totPt*1+totVend*0.5+totPos*0.25-totErr*1)/totT*100):null;
+  h += '<tr class="total-row">';
+  h += '<td class="left" style="padding:8px 12px">TOTALES EQUIPO</td>';
+  if(isAcum) h += '<td></td>';
+  h += effTd(totE);
+  h += td(totT,'val-tot')+td(totPt,'val-perf')+td(totPos,'val-pos');
+  h += td(totAdm,'val-adm')+td(totNeg,'val-neg')+td(totErr,'val-err');
+  h += '</tr>';
+  h += '</tbody></table></div>';
+  return h;
+}
+
+// ── TABLA RECEPCIÓN ───────────────────────────────────────────
+function tablaRecepcion(jugs){
+  var isAcum = PARTIDO_IDX === -1;
+  var h = '<div class="tabla-wrap"><table class="tabla">';
+  h += '<thead><tr>';
+  h += '<th class="left sec">JUGADOR</th>';
+  if(isAcum) h += '<th style="color:var(--mut)">PJ</th>';
+  h += thSec('── RECEPCIÓN ──', 7, '#22c55e');
+  h += '</tr><tr>';
+  h += '<th class="left" style="padding:8px 12px">Nombre</th>';
+  if(isAcum) h += '<th></th>';
+  h += '<th style="border-left:1px solid rgba(255,255,255,.06);color:#22c55e">EFF%</th>';
+  h += '<th>TOT</th><th class="val-perf">#</th><th class="val-pos">+</th>';
+  h += '<th class="val-adm">!</th><th class="val-neg">-</th><th class="val-err">=</th>';
+  h += '</tr></thead><tbody>';
+
+  var totT=0,totPt=0,totPos=0,totAdm=0,totNeg=0,totVend=0,totErr=0;
+  jugs.forEach(function(j, ri){
+    if(j.rT===0) return;
+    var e = rEff(j);
+    totT+=j.rT; totPt+=j.rPunto; totPos+=j.rPos; totAdm+=j.rAdm;
+    totNeg+=j.rNeg; totVend+=j.rVend; totErr+=j.rErr;
+    var bg = ri%2===0?'transparent':'rgba(255,255,255,.015)';
+    h += '<tr style="background:'+bg+'">';
+    h += jugadorTd(j, isAcum);
+    if(isAcum) h += td(j.PJ,'val-mut');
+    h += effTd(e);
+    h += td(j.rT,'val-tot');
+    h += td(j.rPunto,'val-perf');
+    h += td(j.rPos,'val-pos');
+    h += td(j.rAdm,'val-adm');
+    h += td(j.rNeg,'val-neg');
+    h += td(j.rVend,'val-vend');
+    h += td(j.rErr,'val-err');
+    h += '</tr>';
+  });
+
+  var totE = totT>0?Math.round((totPt*1+totPos*0.5-totVend*0.5-totErr*1)/totT*100):null;
+  h += '<tr class="total-row">';
+  h += '<td class="left" style="padding:8px 12px">TOTALES EQUIPO</td>';
+  if(isAcum) h += '<td></td>';
+  h += effTd(totE);
+  h += td(totT,'val-tot')+td(totPt,'val-perf')+td(totPos,'val-pos');
+  h += td(totAdm,'val-adm')+td(totNeg,'val-neg')+td(totVend,'val-vend')+td(totErr,'val-err');
+  h += '</tr>';
+  h += '</tbody></table></div>';
+  return h;
+}
+
+// ── TABLA ATAQUE ──────────────────────────────────────────────
+function tablaAtaque(jugs){
+  var isAcum = PARTIDO_IDX === -1;
+  var h = '<div class="tabla-wrap"><table class="tabla">';
+  h += '<thead><tr>';
+  h += '<th class="left sec">JUGADOR</th>';
+  if(isAcum) h += '<th style="color:var(--mut)">PJ</th>';
+  h += thSec('── ATAQUE ──', 7, '#818cf8');
+  h += '</tr><tr>';
+  h += '<th class="left" style="padding:8px 12px">Nombre</th>';
+  if(isAcum) h += '<th></th>';
+  h += '<th style="border-left:1px solid rgba(255,255,255,.06);color:#818cf8">EFF%</th>';
+  h += '<th>TOT</th><th class="val-perf">#</th><th class="val-pos">+</th>';
+  h += '<th class="val-adm">!</th><th class="val-neg">-</th>';
+  h += '<th class="val-vend">/</th><th class="val-err">=</th>';
+  h += '</tr></thead><tbody>';
+
+  var totT=0,totPt=0,totPos=0,totAdm=0,totNeg=0,totVend=0,totErr=0;
+  jugs.forEach(function(j, ri){
+    if(j.aT===0) return;
+    var e = aEff(j);
+    totT+=j.aT; totPt+=j.aPunto; totPos+=j.aPos; totAdm+=j.aAdm;
+    totNeg+=j.aNeg; totVend+=j.aVend; totErr+=j.aErr;
+    var bg = ri%2===0?'transparent':'rgba(255,255,255,.015)';
+    h += '<tr style="background:'+bg+'">';
+    h += jugadorTd(j, isAcum);
+    if(isAcum) h += td(j.PJ,'val-mut');
+    h += effTd(e);
+    h += td(j.aT,'val-tot');
+    h += td(j.aPunto,'val-perf');
+    h += td(j.aPos,'val-pos');
+    h += td(j.aAdm,'val-adm');
+    h += td(j.aNeg,'val-neg');
+    h += td(j.aVend,'val-vend');
+    h += td(j.aErr,'val-err');
+    h += '</tr>';
+  });
+
+  var totE = totT>0?Math.round((totPt-totVend-totErr)/totT*100):null;
+  h += '<tr class="total-row">';
+  h += '<td class="left" style="padding:8px 12px">TOTALES EQUIPO</td>';
+  if(isAcum) h += '<td></td>';
+  h += effTd(totE);
+  h += td(totT,'val-tot')+td(totPt,'val-perf')+td(totPos,'val-pos');
+  h += td(totAdm,'val-adm')+td(totNeg,'val-neg')+td(totVend,'val-vend')+td(totErr,'val-err');
+  h += '</tr>';
+  h += '</tbody></table></div>';
+  return h;
+}
+
+// ── TABLA BLOQUEO ─────────────────────────────────────────────
+function tablaBloqueo(jugs){
+  var isAcum = PARTIDO_IDX === -1;
+  var h = '<div class="tabla-wrap"><table class="tabla">';
+  h += '<thead><tr>';
+  h += '<th class="left sec">JUGADOR</th>';
+  if(isAcum) h += '<th style="color:var(--mut)">PJ</th>';
+  h += thSec('── BLOQUEO ──', 4, '#06b6d4');
+  h += '</tr><tr>';
+  h += '<th class="left" style="padding:8px 12px">Nombre</th>';
+  if(isAcum) h += '<th></th>';
+  h += '<th style="border-left:1px solid rgba(255,255,255,.06);color:#06b6d4">EFF%</th>';
+  h += '<th>TOT</th><th class="val-perf"># Pt</th><th class="val-pos">+ Pos</th>';
+  h += '</tr></thead><tbody>';
+
+  var totT=0,totPt=0,totPos=0;
+  jugs.forEach(function(j, ri){
+    if(j.bT===0) return;
+    var e = bEff(j);
+    totT+=j.bT; totPt+=j.bPt; totPos+=j.bPtPos;
+    var bg = ri%2===0?'transparent':'rgba(255,255,255,.015)';
+    h += '<tr style="background:'+bg+'">';
+    h += jugadorTd(j, isAcum);
+    if(isAcum) h += td(j.PJ,'val-mut');
+    h += effTd(e);
+    h += td(j.bT,'val-tot');
+    h += td(j.bPt,'val-perf');
+    h += td(j.bPtPos,'val-pos');
+    h += '</tr>';
+  });
+
+  var totE = totT>0?Math.round((totPt+totPos)/totT*100):null;
+  h += '<tr class="total-row">';
+  h += '<td class="left" style="padding:8px 12px">TOTALES EQUIPO</td>';
+  if(isAcum) h += '<td></td>';
+  h += effTd(totE);
+  h += td(totT,'val-tot')+td(totPt,'val-perf')+td(totPos,'val-pos');
+  h += '</tr>';
+  h += '</tbody></table></div>';
+  return h;
+}
+
+// ── TABLA RESUMEN ─────────────────────────────────────────────
+function tablaResumen(jugs){
+  var isAcum = PARTIDO_IDX === -1;
+  var h = '<div class="tabla-wrap"><table class="tabla">';
+  h += '<thead><tr>';
+  h += '<th class="left sec">JUGADOR</th>';
+  if(isAcum) h += '<th>PJ</th>';
+  h += thSec('SAQUE', 2, '#f59e0b');
+  h += thSec('RECEPCIÓN', 2, '#22c55e');
+  h += thSec('ATAQUE', 2, '#818cf8');
+  h += thSec('BLOQUEO', 2, '#06b6d4');
+  h += '</tr><tr>';
+  h += '<th class="left" style="padding:8px 12px">Nombre</th>';
+  if(isAcum) h += '<th></th>';
+  var cols = ['EFF%','TOT','EFF%','TOT','EFF%','TOT','EFF%','TOT'];
+  var bords = [true,false,true,false,true,false,true,false];
+  cols.forEach(function(c,i){
+    h += '<th style="'+(bords[i]?'border-left:1px solid rgba(255,255,255,.06);':'')+'">' + c + '</th>';
+  });
+  h += '</tr></thead><tbody>';
+
+  jugs.forEach(function(j, ri){
+    if(j.sT+j.rT+j.aT+j.bT===0) return;
+    var se=sEff(j), re=rEff(j), ae=aEff(j), be=bEff(j);
+    var bg = ri%2===0?'transparent':'rgba(255,255,255,.015)';
+    h += '<tr style="background:'+bg+'">';
+    h += jugadorTd(j, isAcum);
+    if(isAcum) h += td(j.PJ,'val-mut');
+    h += '<td style="font-weight:800;color:'+effColor(se)+';border-left:1px solid rgba(255,255,255,.06)">'+(se!==null?se+'%':'--')+'</td>';
+    h += td(j.sT,'val-mut');
+    h += '<td style="font-weight:800;color:'+effColor(re)+';border-left:1px solid rgba(255,255,255,.06)">'+(re!==null?re+'%':'--')+'</td>';
+    h += td(j.rT,'val-mut');
+    h += '<td style="font-weight:800;color:'+effColor(ae)+';border-left:1px solid rgba(255,255,255,.06)">'+(ae!==null?ae+'%':'--')+'</td>';
+    h += td(j.aT,'val-mut');
+    h += '<td style="font-weight:800;color:'+effColor(be)+';border-left:1px solid rgba(255,255,255,.06)">'+(be!==null?be+'%':'--')+'</td>';
+    h += td(j.bT,'val-mut');
+    h += '</tr>';
+  });
+  h += '</tbody></table></div>';
+  return h;
+}
+</script>
+</body>
+</html>
