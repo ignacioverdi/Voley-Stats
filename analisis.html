@@ -90,9 +90,9 @@ body{background:var(--bg);font-family:'Barlow Condensed',sans-serif;color:var(--
 .ind-card-hdr{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .ind-fund-title{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px}
 .stat-pills{display:grid;gap:1px;background:rgba(255,255,255,.04)}
-.stat-pill{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;background:var(--card)}
-.stat-pill-val{font-family:'Bebas Neue',sans-serif;font-size:20px;font-weight:900}
-.stat-pill-lbl{font-size:9px;color:var(--mut);letter-spacing:1px;text-transform:uppercase}
+.stat-pill{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px;background:var(--card);min-width:0}
+.stat-pill-val{font-family:'Bebas Neue',sans-serif;font-size:17px;font-weight:900;white-space:nowrap}
+.stat-pill-lbl{font-size:8px;color:var(--mut);letter-spacing:.5px;text-transform:uppercase}
 .section-title{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:var(--mut);margin-bottom:12px;margin-top:20px;display:flex;align-items:center;gap:10px}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border)}
 .empty-msg{text-align:center;padding:40px;color:var(--mut);font-size:13px}
@@ -1354,6 +1354,9 @@ function renderIndividualNew(num){
       sNeg:j.sNeg,sVend:j.sVend,sErr:j.sErr,
       sOrig:j.sOrig||'',sDest:j.sDest||''};
   });
+  window._canchaHistSaque = hist_saque;
+  window._canchaHistNombre = nombre;
+  window._canchaDV4 = acum.dv4;
   var sCard = acum.sT>0 ? card('⚡ SAQUE','#f59e0b',7,
     pill('EFF%', se!==null?se+'%':'--', effColor(se)) +
     pill('TOT', acum.sT, '#f59e0b') +
@@ -1362,7 +1365,7 @@ function renderIndividualNew(num){
     pill('!', acum.sAdm, '#fbbf24') +
     pill('-', acum.sNeg, '#f97316') +
     pill('=', acum.sErr, '#ef4444'),
-    '<button onclick="openSaqueCanchaModal('+JSON.stringify(hist_saque)+',\"'+nombre+'\")" style="margin:8px 16px;padding:6px 14px;border-radius:8px;border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.08);color:#f59e0b;font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;cursor:pointer">🗺️ Ver cancha de saque</button>') : '';
+    '<button onclick="openSaqueCanchaModal(window._canchaHistSaque, window._canchaHistNombre)" style="margin:8px 16px;padding:6px 14px;border-radius:8px;border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.08);color:#f59e0b;font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;cursor:pointer">🗺️ Ver cancha de saque</button>') : '';
 
   var rCard = acum.rT>0 ? card('🛡️ RECEPCIÓN','#22c55e',7,
     pill('EFF%', re!==null?re+'%':'--', effColor(re)) +
@@ -1382,7 +1385,7 @@ function renderIndividualNew(num){
     pill('-', acum.aNeg, '#f97316') +
     pill('/', acum.aVend, '#fb923c') +
     pill('=', acum.aErr, '#ef4444'),
-    '<button onclick="openCanchaModal('+JSON.stringify(acum.dv4)+',\"'+nombre+'\")" style="margin:8px 16px;padding:6px 14px;border-radius:8px;border:1px solid rgba(129,140,248,.3);background:rgba(129,140,248,.08);color:#818cf8;font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;cursor:pointer">🗺️ Ver cancha de ataque</button>') : '';
+    '<button onclick="openCanchaModal(window._canchaDV4, window._canchaHistNombre)" style="margin:8px 16px;padding:6px 14px;border-radius:8px;border:1px solid rgba(129,140,248,.3);background:rgba(129,140,248,.08);color:#818cf8;font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;cursor:pointer">🗺️ Ver cancha de ataque</button>') : '';
 
   var bCard = acum.bT>0 ? card('🧱 BLOQUEO','#06b6d4',3,
     pill('EFF%', be!==null?be+'%':'--', effColor(be)) +
