@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DASHBOARD ENTRENADOR — CASL VOLEY</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="datos_equipo.js" onerror="void 0"></script>
+<script src="datos_prep_fisica.js" onerror="void 0"></script>
+<script src="firebase.js" onerror="void 0"></script>
+<script src="lang.js" onerror="void 0"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07080f;--card:#0d0e1a;--card2:#111220;
+  --border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.12);
+  --red:#e8192c;--green:#22c55e;--amber:#f59e0b;
+  --indigo:#818cf8;--orange:#f97316;--cyan:#06b6d4;
+  --mut:#475569;--txt:#e2e8f0;--white:#ffffff;
+}
+body{background:var(--bg);background-image:radial-gradient(ellipse at 20% 0%,rgba(232,25,44,.06) 0%,transparent 50%);font-family:'Barlow Condensed',sans-serif;color:var(--txt);min-height:100vh;}
+select,select option{color:#111!important;background:#fff!important;}
+
+.page-header{padding:14px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.01);position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:5px;background:linear-gradient(120deg,#e8192c,#fff 60%,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.back-btn{padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--mut);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-decoration:none;text-transform:uppercase;}
+.back-btn:hover{color:var(--txt);}
+.live-wrap{display:flex;align-items:center;gap:6px;}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(34,197,94,.5);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.live-txt{font-size:10px;color:var(--green);letter-spacing:1px;}
+
+.main{max-width:1400px;margin:0 auto;padding:24px 28px;}
+
+/* STATS GLOBALES */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:6px;}
+.stat-card-top{display:flex;align-items:center;justify-content:space-between;}
+.stat-icon{font-size:22px;}
+.stat-val{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--white);line-height:1;}
+.stat-lbl{font-size:10px;color:var(--mut);letter-spacing:1.5px;text-transform:uppercase;}
+.stat-sub{font-size:11px;margin-top:2px;}
+
+/* DIA SELECTOR */
+.controles{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+.ctrl-sel{padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--txt);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;cursor:pointer;outline:none;}
+.sec-lbl{font-size:9px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* GRILLA DE JUGADORES */
+.jugadores-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:28px;}
+.jug-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .2s;}
+.jug-card:hover{border-color:var(--border2);}
+.jug-card-header{padding:14px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);}
+.jug-avatar{width:40px;height:40px;border-radius:50%;border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--red);background:rgba(232,25,44,.08);flex-shrink:0;}
+.jug-info{flex:1;}
+.jug-nombre{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;}
+.jug-meta{font-size:10px;color:var(--mut);letter-spacing:.5px;margin-top:1px;}
+.jug-estado{font-size:9px;padding:2px 8px;border-radius:4px;font-weight:700;letter-spacing:.5px;flex-shrink:0;}
+.estado-completo{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2);}
+.estado-parcial{background:rgba(245,158,11,.1);color:var(--amber);border:1px solid rgba(245,158,11,.2);}
+.estado-vacio{background:rgba(232,25,44,.1);color:var(--red);border:1px solid rgba(232,25,44,.2);}
+
+.jug-ejercicios{padding:10px 16px;}
+.ej-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.03);}
+.ej-row:last-child{border-bottom:none;}
+.ej-nombre{font-size:12px;font-weight:600;flex:1;letter-spacing:.3px;}
+.ej-series{display:flex;gap:4px;}
+.serie-dot{width:28px;height:24px;border-radius:5px;border:1px solid var(--border);background:rgba(255,255,255,.02);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:12px;color:var(--mut);transition:all .2s;}
+.serie-dot.cargado{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3);color:var(--green);}
+.serie-dot.empty{background:rgba(232,25,44,.05);border-color:rgba(232,25,44,.15);color:rgba(232,25,44,.4);}
+
+/* TABLA COMPARATIVA */
+.tabla-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:28px;}
+.tabla-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.tabla-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;}
+.tabla-comp{width:100%;border-collapse:collapse;font-size:12px;}
+.tabla-comp th{padding:8px 12px;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--mut);border-bottom:1px solid var(--border);text-align:left;white-space:nowrap;}
+.tabla-comp td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:middle;}
+.tabla-comp tr:last-child td{border-bottom:none;}
+.tabla-comp tr:hover td{background:rgba(255,255,255,.02);}
+.progreso-bar{height:6px;border-radius:3px;background:rgba(255,255,255,.06);overflow:hidden;min-width:80px;}
+.progreso-fill{height:100%;border-radius:3px;transition:width .4s;}
+.pos-badge{font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700;text-transform:uppercase;white-space:nowrap;}
+.pos-CENTRAL{background:rgba(249,115,22,.1);color:#f97316;}
+.pos-PUNTA{background:rgba(34,197,94,.1);color:#22c55e;}
+.pos-ARMADOR{background:rgba(245,158,11,.1);color:#f59e0b;}
+.pos-OPUESTO{background:rgba(129,140,248,.1);color:#818cf8;}
+.pos-LIBERO{background:rgba(6,182,212,.1);color:#06b6d4;}
+
+/* ALERT VACIO */
+.empty-state{text-align:center;padding:60px;color:var(--mut);}
+.empty-icon{font-size:48px;margin-bottom:12px;}
+.empty-txt{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;margin-bottom:6px;}
+
+@media(max-width:768px){
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .main{padding:14px 16px;}
+  .page-header{padding:12px 16px;}
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <a href="index.html" class="back-btn">← Inicio</a>
+    <div>
+      <div class="page-title">📋 Dashboard Entrenador</div>
+      <div style="font-size:9px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;">CASLA VOLEY · Progreso del equipo</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="live-wrap"><div class="live-dot"></div><span class="live-txt">LIVE</span></div>
+    <div id="lang-wrap" style="display:flex;align-items:center;gap:4px"></div>
+    <div style="font-size:9px;color:var(--mut);letter-spacing:1px;" id="last-update"></div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- STATS GLOBALES -->
+  <div class="stats-row">
+    <div class="stat-card" style="border-top:3px solid var(--green);">
+      <div class="stat-card-top"><div class="stat-icon">✅</div></div>
+      <div class="stat-val" id="stat-completaron">0</div>
+      <div class="stat-lbl">Completaron hoy</div>
+      <div class="stat-sub" style="color:var(--green)" id="stat-pct-comp">0% del equipo</div>
+    </div>
+    <div class="stat-card" style="border-top:3px solid var(--amber);">
+      <div class="stat-card-top"><div class="stat-icon">⚡</div></div>
+      <div class="stat-val" id="stat-parcial">0</div>
+      <div class="stat-lbl">En progreso</div>
+      <div class="stat-sub" style="color:var(--amber)">Cargaron algunos pesos</div>
+    </div>
+    <div class="stat-card" style="border-top:3px solid var(--red);">
+      <div class="stat-card-top"><div class="stat-icon">⏳</div></div>
+      <div class="stat-val" id="stat-pendiente">0</div>
+      <div class="stat-lbl">Sin cargar</div>
+      <div class="stat-sub" style="color:var(--mut)">No registraron aún</div>
+    </div>
+    <div class="stat-card" style="border-top:3px solid var(--indigo);">
+      <div class="stat-card-top"><div class="stat-icon">💪</div></div>
+      <div class="stat-val" id="stat-total-pesos">0</div>
+      <div class="stat-lbl">Pesos registrados</div>
+      <div class="stat-sub" style="color:var(--indigo)">En toda la sesión</div>
+    </div>
+  </div>
+
+  <!-- CONTROLES -->
+  <div class="controles">
+    <div>
+      <div style="font-size:9px;color:var(--mut);letter-spacing:1.5px;margin-bottom:4px;">DÍA DE RUTINA</div>
+      <select class="ctrl-sel" id="sel-dia" onchange="cargarDashboard()">
+        <option value="">— Elegí el día —</option>
+      </select>
+    </div>
+    <div>
+      <div style="font-size:9px;color:var(--mut);letter-spacing:1.5px;margin-bottom:4px;">POSICIÓN</div>
+      <select class="ctrl-sel" id="sel-pos" onchange="cargarDashboard()">
+        <option value="TODOS">Todas</option>
+        <option value="CENTRAL">Centrales</option>
+        <option value="PUNTA">Puntas</option>
+        <option value="ARMADOR">Armadores</option>
+        <option value="OPUESTO">Opuestos</option>
+        <option value="LIBERO">Liberos</option>
+      </select>
+    </div>
+    <button onclick="recargarTodo()" style="padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--txt);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;margin-top:16px;">🔄 Actualizar</button>
+  </div>
+
+  <!-- GRILLA DE JUGADORES -->
+  <div class="sec-lbl">👥 Progreso individual</div>
+  <div class="jugadores-grid" id="jugadores-grid"></div>
+
+  <!-- TABLA COMPARATIVA -->
+  <div class="sec-lbl">📊 Comparativa del equipo</div>
+  <div class="tabla-wrap">
+    <div class="tabla-header">
+      <span style="font-size:18px">📊</span>
+      <div class="tabla-title">Progreso por jugador</div>
+    </div>
+    <table class="tabla-comp">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Jugador</th>
+          <th>Posición</th>
+          <th>Ejercicios</th>
+          <th>Series cargadas</th>
+          <th>Progreso</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-body"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+var PLANTEL_DEFAULT = [
+  {num:2,nombre:'OJUEZ',pos:'CENTRAL'},{num:3,nombre:'WINER',pos:'LIBERO'},
+  {num:4,nombre:'VAZQUEZ',pos:'ARMADOR'},{num:5,nombre:'RAMOS',pos:'OPUESTO'},
+  {num:6,nombre:'VILLARRUEL',pos:'PUNTA'},{num:9,nombre:'GODOY',pos:'ARMADOR'},
+  {num:10,nombre:'VIERA',pos:'CENTRAL'},{num:11,nombre:'DURDOS',pos:'PUNTA'},
+  {num:12,nombre:'ZANOTTI',pos:'LIBERO'},{num:13,nombre:'ROJAS CARUSO',pos:'PUNTA'},
+  {num:14,nombre:'NIELSON',pos:'PUNTA'},{num:15,nombre:'ROTEZZI',pos:'CENTRAL'},
+  {num:17,nombre:'HERBSOMMER',pos:'CENTRAL'},{num:18,nombre:'ACOSTA',pos:'OPUESTO'},
+  {num:19,nombre:'DIAZ BOLLI',pos:'ARMADOR'},{num:20,nombre:'FREDDIE',pos:'PUNTA'},
+];
+
+var PREP_DATA_LOCAL = null;
+var EQUIPO_DATA_LOCAL = null;
+var PESOS_FIREBASE = {};
+
+// ── Storage key ───────────────────────────────────────────────────
+function sk(num, ejId, serie){ return 'prep_'+num+'_'+ejId+'_s'+serie; }
+
+// ── Obtener pesos de un jugador para un ejercicio ─────────────────
+function getPesos(num, ejId, series){
+  var pesos = [];
+  for(var i=1; i<=series; i++){
+    var key = sk(num, ejId, i);
+    var val = PESOS_FIREBASE[key] || localStorage.getItem(key) || '';
+    pesos.push(val);
+  }
+  return pesos;
+}
+
+// ── Cargar todos los pesos de Firebase ───────────────────────────
+function cargarPesosFirebase(callback){
+  if(typeof fbGet === 'undefined'){ callback(); return; }
+  fbGet('pesos', function(data){
+    if(data && typeof data === 'object'){
+      Object.keys(data).forEach(function(k){ PESOS_FIREBASE[k] = data[k]; });
+    }
+    callback();
+  });
+}
+
+// ── Poblar selector de días ───────────────────────────────────────
+function poblarDias(){
+  if(!PREP_DATA_LOCAL) return;
+  var dias = {};
+  PREP_DATA_LOCAL.jugadores.forEach(function(j){
+    (j.semanas||[]).forEach(function(s){ dias[s.label] = true; });
+  });
+  var sel = document.getElementById('sel-dia');
+  Object.keys(dias).forEach(function(d){
+    var o = document.createElement('option');
+    o.value = d; o.textContent = d;
+    sel.appendChild(o);
+  });
+  if(Object.keys(dias).length > 0){
+    sel.value = Object.keys(dias)[0];
+    cargarDashboard();
+  }
+}
+
+// ── Dashboard principal ───────────────────────────────────────────
+function cargarDashboard(){
+  var diaLabel = document.getElementById('sel-dia').value;
+  var posFilter = document.getElementById('sel-pos').value;
+  if(!diaLabel){ return; }
+
+  var plantel = (EQUIPO_DATA_LOCAL && EQUIPO_DATA_LOCAL.jugadores)
+    ? EQUIPO_DATA_LOCAL.jugadores : PLANTEL_DEFAULT;
+
+  if(posFilter !== 'TODOS'){
+    plantel = plantel.filter(function(j){ return j.pos === posFilter; });
+  }
+
+  // Para cada jugador, calcular su progreso
+  var jugStats = plantel.map(function(j){
+    var ejercicios = [];
+    if(PREP_DATA_LOCAL){
+      (PREP_DATA_LOCAL.jugadores||[]).forEach(function(pj){
+        if(pj.num !== j.num) return;
+        (pj.semanas||[]).forEach(function(s){
+          if(s.label !== diaLabel) return;
+          (s.bloques||[]).forEach(function(b){
+            (b.ejercicios||[]).forEach(function(e){
+              var pesos = getPesos(j.num, e.id, e.series);
+              var cargados = pesos.filter(function(p){ return p && p !== ''; }).length;
+              ejercicios.push({
+                id: e.id, nombre: e.nombre,
+                series: e.series, pesos: pesos, cargados: cargados
+              });
+            });
+          });
+        });
+      });
+    }
+    var totalSeries = ejercicios.reduce(function(a,e){ return a+e.series; }, 0);
+    var totalCargados = ejercicios.reduce(function(a,e){ return a+e.cargados; }, 0);
+    var pct = totalSeries > 0 ? Math.round(totalCargados/totalSeries*100) : 0;
+    var estado = pct===0 ? 'vacio' : pct===100 ? 'completo' : 'parcial';
+    return { jug:j, ejercicios:ejercicios, totalSeries:totalSeries, totalCargados:totalCargados, pct:pct, estado:estado };
+  });
+
+  // Stats globales
+  var completos = jugStats.filter(function(j){ return j.estado==='completo'; }).length;
+  var parciales = jugStats.filter(function(j){ return j.estado==='parcial'; }).length;
+  var vacios = jugStats.filter(function(j){ return j.estado==='vacio'; }).length;
+  var totalPesos = jugStats.reduce(function(a,j){ return a+j.totalCargados; }, 0);
+
+  document.getElementById('stat-completaron').textContent = completos;
+  document.getElementById('stat-parcial').textContent = parciales;
+  document.getElementById('stat-pendiente').textContent = vacios;
+  document.getElementById('stat-total-pesos').textContent = totalPesos;
+  document.getElementById('stat-pct-comp').textContent = Math.round(completos/plantel.length*100) + '% del equipo';
+
+  renderGrid(jugStats);
+  renderTabla(jugStats);
+  updateLastUpdate();
+}
+
+// ── Render grilla de jugadores ────────────────────────────────────
+function renderGrid(jugStats){
+  var grid = document.getElementById('jugadores-grid');
+  grid.innerHTML = '';
+
+  jugStats.forEach(function(js){
+    var j = js.jug;
+    var card = document.createElement('div');
+    card.className = 'jug-card';
+
+    var estadoClass = 'estado-'+js.estado;
+    var estadoTxt = js.estado==='completo' ? '✅ Completo' : js.estado==='parcial' ? '⚡ En progreso' : '⏳ Sin cargar';
+
+    var hdr = document.createElement('div');
+    hdr.className = 'jug-card-header';
+    hdr.innerHTML =
+      '<div class="jug-avatar">#'+j.num+'</div>'+
+      '<div class="jug-info">'+
+        '<div class="jug-nombre">'+j.nombre+'</div>'+
+        '<div class="jug-meta">'+j.pos+' · '+js.totalCargados+'/'+js.totalSeries+' series</div>'+
+      '</div>'+
+      '<span class="jug-estado '+estadoClass+'">'+estadoTxt+'</span>';
+    card.appendChild(hdr);
+
+    // Barra de progreso
+    var barWrap = document.createElement('div');
+    barWrap.style.cssText = 'padding:8px 16px 4px;';
+    var color = js.estado==='completo' ? '#22c55e' : js.estado==='parcial' ? '#f59e0b' : '#e8192c';
+    barWrap.innerHTML =
+      '<div class="progreso-bar"><div class="progreso-fill" style="width:'+js.pct+'%;background:'+color+'"></div></div>'+
+      '<div style="font-size:9px;color:var(--mut);margin-top:3px;text-align:right">'+js.pct+'%</div>';
+    card.appendChild(barWrap);
+
+    // Ejercicios con dots de series
+    if(js.ejercicios.length > 0){
+      var ejDiv = document.createElement('div');
+      ejDiv.className = 'jug-ejercicios';
+      js.ejercicios.slice(0,4).forEach(function(e){
+        var row = document.createElement('div');
+        row.className = 'ej-row';
+        var dots = '';
+        for(var i=0;i<e.series;i++){
+          var cargado = e.pesos[i] && e.pesos[i] !== '';
+          dots += '<div class="serie-dot '+(cargado?'cargado':'empty')+'">'+(cargado?e.pesos[i]:'—')+'</div>';
+        }
+        row.innerHTML = '<div class="ej-nombre">'+e.nombre.substring(0,28)+(e.nombre.length>28?'...':'')+'</div>'+
+                        '<div class="ej-series">'+dots+'</div>';
+        ejDiv.appendChild(row);
+      });
+      if(js.ejercicios.length > 4){
+        var mas = document.createElement('div');
+        mas.style.cssText='font-size:10px;color:var(--mut);text-align:center;padding:6px;';
+        mas.textContent = '+ '+(js.ejercicios.length-4)+' ejercicios más';
+        ejDiv.appendChild(mas);
+      }
+      card.appendChild(ejDiv);
+    } else {
+      var noej = document.createElement('div');
+      noej.style.cssText='padding:16px;text-align:center;font-size:11px;color:var(--mut);';
+      noej.textContent = 'Sin rutina para este día';
+      card.appendChild(noej);
+    }
+
+    grid.appendChild(card);
+  });
+}
+
+// ── Render tabla comparativa ──────────────────────────────────────
+function renderTabla(jugStats){
+  var maxSeries = Math.max.apply(null, jugStats.map(function(j){ return j.totalSeries||1; }));
+  var tbody = document.getElementById('tabla-body');
+  tbody.innerHTML = '';
+
+  var sorted = jugStats.slice().sort(function(a,b){ return b.pct - a.pct; });
+
+  sorted.forEach(function(js, idx){
+    var j = js.jug;
+    var tr = document.createElement('tr');
+    var color = js.estado==='completo' ? '#22c55e' : js.estado==='parcial' ? '#f59e0b' : '#e8192c';
+    var estadoTxt = js.estado==='completo' ? '✅ Completo' : js.estado==='parcial' ? '⚡ Parcial' : '⏳ Pendiente';
+
+    tr.innerHTML =
+      '<td style="font-family:Bebas Neue,sans-serif;font-size:14px;color:var(--mut);width:32px">#'+j.num+'</td>'+
+      '<td style="font-weight:700;letter-spacing:.5px">'+j.nombre+'</td>'+
+      '<td><span class="pos-badge pos-'+j.pos+'">'+j.pos+'</span></td>'+
+      '<td style="color:var(--mut)">'+js.ejercicios.length+'</td>'+
+      '<td style="font-family:Bebas Neue,sans-serif;font-size:16px;color:'+color+'">'+js.totalCargados+' / '+js.totalSeries+'</td>'+
+      '<td style="min-width:120px">'+
+        '<div class="progreso-bar"><div class="progreso-fill" style="width:'+js.pct+'%;background:'+color+'"></div></div>'+
+        '<div style="font-size:10px;color:var(--mut);margin-top:2px">'+js.pct+'%</div>'+
+      '</td>'+
+      '<td style="font-size:11px;font-weight:700;color:'+color+'">'+estadoTxt+'</td>';
+
+    tbody.appendChild(tr);
+  });
+}
+
+// ── Actualizar timestamp ──────────────────────────────────────────
+function updateLastUpdate(){
+  var d = new Date();
+  document.getElementById('last-update').textContent =
+    'Actualizado '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+':'+String(d.getSeconds()).padStart(2,'0');
+}
+
+// ── Recargar todo ─────────────────────────────────────────────────
+function recargarTodo(){
+  cargarPesosFirebase(function(){ cargarDashboard(); });
+}
+
+// ── Firebase listener en tiempo real ─────────────────────────────
+function initFirebaseListener(){
+  if(typeof fbGet === 'undefined') return;
+  var FB_URL = 'https://casla-voley-default-rtdb.firebaseio.com';
+  try{
+    var es = new EventSource(FB_URL+'/pesos.json');
+    es.addEventListener('put', function(e){
+      try{
+        var p = JSON.parse(e.data);
+        if(p && p.data && typeof p.data==='object'){
+          Object.assign(PESOS_FIREBASE, p.data);
+          cargarDashboard();
+        }
+      }catch(err){}
+    });
+    es.addEventListener('patch', function(e){
+      try{
+        var p = JSON.parse(e.data);
+        if(p && p.data) Object.assign(PESOS_FIREBASE, p.data);
+        cargarDashboard();
+      }catch(err){}
+    });
+    es.onerror = function(){
+      es.close();
+      setInterval(recargarTodo, 20000);
+    };
+  }catch(err){
+    setInterval(recargarTodo, 20000);
+  }
+}
+
+// ── Init ──────────────────────────────────────────────────────────
+window.addEventListener('load', function(){
+  setTimeout(function(){
+    PREP_DATA_LOCAL = window.PREP_DATA || null;
+    EQUIPO_DATA_LOCAL = window.EQUIPO_DATA || null;
+    cargarPesosFirebase(function(){
+      poblarDias();
+      initFirebaseListener();
+    });
+  }, 200);
+});
+</script>
+</body>
+</html>
