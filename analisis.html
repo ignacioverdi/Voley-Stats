@@ -111,6 +111,14 @@ body{background:var(--bg);font-family:'Barlow Condensed',sans-serif;color:var(--
 .b{border:1px solid var(--border)}
 
 .cancha-modal{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.92);backdrop-filter:blur(16px);overflow-y:auto;padding:1.5rem 1rem}
+.cancha-modal.open{display:flex;flex-direction:column;align-items:center}
+.cancha-modal-hdr{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:420px;margin-bottom:12px}
+.cancha-modal-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#e2e8f0}
+.cancha-modal-close{padding:6px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:7px;color:#94a3b8;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer;text-transform:uppercase}
+.cancha-modal-info{font-size:12px;color:#64748b;letter-spacing:.8px;text-align:center;max-width:360px;margin-bottom:10px}
+.cancha-modal-legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.cml-item{display:flex;align-items:center;gap:6px;font-size:10px;color:#64748b;letter-spacing:.8px;text-transform:uppercase}
+.cml-dot{width:20px;height:3px;border-radius:2px}
 .cancha-modal-hdr{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:420px;margin-bottom:12px}
 .cancha-modal-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#e2e8f0}
 .cancha-modal-close{padding:6px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:7px;color:#94a3b8;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer;text-transform:uppercase}
@@ -1348,24 +1356,66 @@ function renderIndividualNew(num){
     '</div>';
   }
 
-  // Preparar historial de saque para cancha
-  var hist_saque = hist_jug.map(function(j){
-    return {sT:j.sT,sPunto:j.sPunto,sPos:j.sPos,sAdm:j.sAdm,
-      sNeg:j.sNeg,sVend:j.sVend,sErr:j.sErr,
-      sOrig:j.sOrig||'',sDest:j.sDest||''};
+  // Calcular direcciones de saque
+  var origMapS = {}, destMapS = {};
+  hist_jug.forEach(function(j){
+    if(j.sOrig && String(j.sOrig).trim()!==''){
+      String(j.sOrig).split(',').forEach(function(z){
+        var zi=parseInt(z); if(!zi) return; origMapS[zi]=(origMapS[zi]||0)+1;
+      });
+    }
+    if(j.sDest && String(j.sDest).trim()!==''){
+      String(j.sDest).split(',').forEach(function(z){
+        var zi=parseInt(z); if(!zi) return; destMapS[zi]=(destMapS[zi]||0)+1;
+      });
+    }
   });
-  window._canchaHistSaque = hist_saque;
-  window._canchaHistNombre = nombre;
-  window._canchaDV4 = acum.dv4;
-  var sCard = acum.sT>0 ? card('⚡ SAQUE','#f59e0b',7,
-    pill('EFF%', se!==null?se+'%':'--', effColor(se)) +
-    pill('TOT', acum.sT, '#f59e0b') +
-    pill('#', acum.sPunto, '#22c55e') +
-    pill('+', acum.sPos, '#86efac') +
-    pill('!', acum.sAdm, '#fbbf24') +
-    pill('-', acum.sNeg, '#f97316') +
-    pill('=', acum.sErr, '#ef4444'),
-    '<button onclick="openSaqueCanchaModal(window._canchaHistSaque, window._canchaHistNombre)" style="margin:8px 16px;padding:6px 14px;border-radius:8px;border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.08);color:#f59e0b;font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;cursor:pointer">🗺️ Ver cancha de saque</button>') : '';
+  var totalDestsS = Object.values(destMapS).reduce(function(a,b){return a+b;},0);
+  var topDestsS = Object.entries(destMapS).sort(function(a,b){return b[1]-a[1];}).slice(0,2)
+    .map(function(x){return {z:parseInt(x[0]),pct:totalDestsS>0?Math.round(x[1]/totalDestsS*100):0};});
+  var topOrigS = Object.entries(origMapS).sort(function(a,b){return b[1]-a[1];})[0];
+  var origZoneS = topOrigS?parseInt(topOrigS[0]):0;
+  var hasSaqueCancha = topDestsS.length > 0;
+
+  var sCard = '';
+  if(acum.sT > 0){
+    var sWrap = document.createElement('div');
+    sWrap.className = 'ind-card';
+    var sHdr = document.createElement('div');
+    sHdr.className = 'ind-card-hdr';
+    var sTit = document.createElement('div');
+    sTit.className = 'ind-fund-title';
+    sTit.style.color = '#f59e0b';
+    sTit.textContent = '⚡ SAQUE';
+    sHdr.appendChild(sTit);
+    if(hasSaqueCancha){
+      var sBtn = document.createElement('button');
+      sBtn.setAttribute('data-saque-dests', encodeURIComponent(JSON.stringify(topDestsS)));
+      sBtn.setAttribute('data-saque-orig', origZoneS);
+      sBtn.setAttribute('data-saque-stats', encodeURIComponent(JSON.stringify({
+        tot:acum.sT, pt:acum.sPunto, err:acum.sErr, vend:acum.sVend,
+        pct:acum.sT>0?Math.round(acum.sPunto/acum.sT*100):0
+      })));
+      sBtn.setAttribute('onclick','saqueClickCancha(this)');
+      sBtn.style.cssText='padding:4px 10px;border-radius:6px;border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.08);color:#f59e0b;font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;cursor:pointer';
+      sBtn.textContent='🗺️ Cancha';
+      sHdr.appendChild(sBtn);
+    }
+    sWrap.appendChild(sHdr);
+    var sPills = document.createElement('div');
+    sPills.className = 'stat-pills';
+    [[se!==null?se+'%':'--','EFF%','#f59e0b'],[acum.sT,'TOT','#f59e0b'],
+     [acum.sPunto,'#','#22c55e'],[acum.sPos,'+','#86efac'],
+     [acum.sAdm,'!','#fbbf24'],[acum.sNeg,'-','#f97316'],[acum.sErr,'=','#ef4444']
+    ].forEach(function(p){
+      var c=document.createElement('div'); c.className='stat-pill';
+      var v=document.createElement('div'); v.className='stat-pill-val'; v.style.color=p[2]; v.textContent=p[0];
+      var l=document.createElement('div'); l.className='stat-pill-lbl'; l.textContent=p[1];
+      c.appendChild(v); c.appendChild(l); sPills.appendChild(c);
+    });
+    sWrap.appendChild(sPills);
+    sCard = sWrap.outerHTML;
+  }
 
   var rCard = acum.rT>0 ? card('🛡️ RECEPCIÓN','#22c55e',7,
     pill('EFF%', re!==null?re+'%':'--', effColor(re)) +
@@ -1376,16 +1426,42 @@ function renderIndividualNew(num){
     pill('-', acum.rNeg, '#f97316') +
     pill('=', acum.rErr, '#ef4444'), null) : '';
 
-  var aCard = acum.aT>0 ? card('💥 ATAQUE','#818cf8',7,
-    pill('EFF%', ae!==null?ae+'%':'--', effColor(ae)) +
-    pill('TOT', acum.aT, '#818cf8') +
-    pill('#', acum.aPunto, '#22c55e') +
-    pill('+', acum.aPos, '#86efac') +
-    pill('!', acum.aAdm, '#fbbf24') +
-    pill('-', acum.aNeg, '#f97316') +
-    pill('/', acum.aVend, '#fb923c') +
-    pill('=', acum.aErr, '#ef4444'),
-    '<button onclick="openCanchaModal(window._canchaDV4, window._canchaHistNombre)" style="margin:8px 16px;padding:6px 14px;border-radius:8px;border:1px solid rgba(129,140,248,.3);background:rgba(129,140,248,.08);color:#818cf8;font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;cursor:pointer">🗺️ Ver cancha de ataque</button>') : '';
+  var aCard = '';
+  if(acum.aT > 0){
+    var aWrap = document.createElement('div');
+    aWrap.className = 'ind-card';
+    var aHdr = document.createElement('div');
+    aHdr.className = 'ind-card-hdr';
+    var aTit = document.createElement('div');
+    aTit.className = 'ind-fund-title';
+    aTit.style.color = '#818cf8';
+    aTit.textContent = '💥 ATAQUE';
+    aHdr.appendChild(aTit);
+    if(Object.keys(acum.dv4).length > 0){
+      var aBtn = document.createElement('button');
+      aBtn.setAttribute('data-dv4', encodeURIComponent(JSON.stringify(acum.dv4)));
+      aBtn.setAttribute('data-player', nombre);
+      aBtn.setAttribute('onclick','dv4ClickCancha(this)');
+      aBtn.style.cssText='padding:4px 10px;border-radius:6px;border:1px solid rgba(129,140,248,.3);background:rgba(129,140,248,.08);color:#818cf8;font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;cursor:pointer';
+      aBtn.textContent='🗺️ Cancha';
+      aHdr.appendChild(aBtn);
+    }
+    aWrap.appendChild(aHdr);
+    var aPills = document.createElement('div');
+    aPills.className = 'stat-pills';
+    [[ae!==null?ae+'%':'--','EFF%','#818cf8'],[acum.aT,'TOT','#818cf8'],
+     [acum.aPunto,'#','#22c55e'],[acum.aPos,'+','#86efac'],
+     [acum.aAdm,'!','#fbbf24'],[acum.aNeg,'-','#f97316'],
+     [acum.aVend,'/','#fb923c'],[acum.aErr,'=','#ef4444']
+    ].forEach(function(p){
+      var c=document.createElement('div'); c.className='stat-pill';
+      var v=document.createElement('div'); v.className='stat-pill-val'; v.style.color=p[2]; v.textContent=p[0];
+      var l=document.createElement('div'); l.className='stat-pill-lbl'; l.textContent=p[1];
+      c.appendChild(v); c.appendChild(l); aPills.appendChild(c);
+    });
+    aWrap.appendChild(aPills);
+    aCard = aWrap.outerHTML;
+  }
 
   var bCard = acum.bT>0 ? card('🧱 BLOQUEO','#06b6d4',3,
     pill('EFF%', be!==null?be+'%':'--', effColor(be)) +
@@ -1572,6 +1648,26 @@ function renderCompar(){
   document.getElementById('comp-content').innerHTML = html;
 }
 
+
+// ════ CANCHA MAPS & VARS ════
+const DV4_CAT_MAP={
+  X1:'C',XM:'C',XG:'C',XC:'C',XD:'C',X7:'C',CB:'C',CF:'C',CD:'C',J1:'C',J4:'C',J2:'C',J3:'C',J5:'C',
+  G4:'V',G2:'V',G8:'V',G9:'V',V5:'V',V0:'V',V6:'V',V8:'V',VB:'V',VP:'V',VR:'V',V4:'V',V3:'V',V2:'V',
+  W4:'X',W2:'X',Y9:'X',Y8:'X',PR:'X',JJ:'X',PP:'X',C5:'X',C0:'X',C6:'X',C8:'X',
+  X5:'X',X0:'X',X6:'X',X8:'X',XB:'X',XP:'X',XR:'X',XT:'X',X3:'X',X4:'X'
+};
+const DV4_ORIG_MAP={
+  X1:3,XM:3,XG:3,XC:3,XD:3,X7:3,CB:3,CF:3,CD:3,J1:3,J4:3,J2:3,J3:3,J5:3,
+  G4:4,V5:4,W4:4,X9:4,X2:4,X5:4,X0:4,C5:4,V0:4,V4:4,
+  XB:8,XP:8,XR:8,VB:8,VP:8,VR:8,Y8:8,G8:8,
+  X3:2,X4:2,X6:2,C6:2,V6:2,W2:2,G2:2,V2:2,
+  X8:9,C8:9,V8:9,Y9:9,G9:9
+};
+const CC_CAT_COLOR={C:'#ff8c00',V:'#ff3030',X:'#00bfff'};
+const CC_CONE_COLS=['#ff8c00','#a855f7'];
+
+let canchaAnimFrame=null, canchaAnimStart=null;
+let canchaAnimFrame=null,canchaAnimStart=null;
 
 // ════ CANCHA FUNCTIONS ════
 function canchaRivalZone(z){
