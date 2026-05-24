@@ -134,24 +134,19 @@ def init_jug(num, nombre):
 
 # ── Calcular eficiencias ──────────────────────────────────────
 def calc_eff(j):
-    # SAQUE: (Pt×1 + Vend×0.5 + Pos×0.25 - Err×1) / Total × 100
+    # SAQUE: (#×1 + /×0.5 + +×0.25 - =×1) / Total
     if j['sT'] > 0:
         j['sEff'] = round((j['sPunto']*1 + j['sVend']*0.5 + j['sPos']*0.25 - j['sErr']*1) / j['sT'] * 100)
-    # RECEPCION: (Perf×1 + Pos×0.5 - Vend×0.5 - Err×1) / Total × 100
+    # RECEPCION: (#×1 + +×0.5 - /×0.5 - =×1) / Total
     if j['rT'] > 0:
         j['rEff'] = round((j['rPunto']*1 + j['rPos']*0.5 - j['rVend']*0.5 - j['rErr']*1) / j['rT'] * 100)
-    # ATAQUE: (Pt - Vend - Err) / Total × 100
+    # ATAQUE: (# - / - =) / Total
     if j['aT'] > 0:
         j['aEff'] = round((j['aPunto'] - j['aVend'] - j['aErr']) / j['aT'] * 100)
-    # BLOQUEO: (Pt + Pos) / Total × 100
+    # BLOQUEO: (# + +) / Total
     if j['bT'] > 0:
         j['bEff'] = round((j['bPt'] + j['bPtPos']) / j['bT'] * 100)
-    if j['_sdir']:
-        mas = max(j['_sdir'], key=j['_sdir'].get)
-        j['sOrig'] = mas.split('-')[0]
-        j['sDest'] = mas.split('-')[1]
 
-# ── Parser principal ──────────────────────────────────────────
 def parsear_scout(lines, jugadores_casla, casla_char='*'):
     stats = {}
     for num, nom in NOMBRES_SISTEMA.items():
@@ -192,48 +187,52 @@ def parsear_scout(lines, jugadores_casla, casla_char='*'):
                     zona_dest = z[1]
                     break
 
-        def add(j_dict, fund, val_sym, combo, zona_orig, zona_dest):
+        def add(j_dict, fund, val_c, combo, zona_orig, zona_dest):
             if fund == 'S':
+                # # = Perfecta, + = Positiva, / = Vendida, ! = Admirable, - = Negativa, = = Error
                 j_dict['sT'] += 1
-                if val_sym == 'punto': j_dict['sPunto'] += 1
-                elif val_sym == 'pos':  j_dict['sPos'] += 1
-                elif val_sym == 'neg':  j_dict['sNeg'] += 1
-                elif val_sym == 'vend': j_dict['sVend'] += 1
-                elif val_sym == 'adm':  j_dict['sAdm'] += 1
-                elif val_sym == 'err':  j_dict['sErr'] += 1
+                if   val_c == '#': j_dict['sPunto'] += 1
+                elif val_c == '+': j_dict['sPos'] += 1
+                elif val_c == '/': j_dict['sVend'] += 1
+                elif val_c == '!': j_dict['sAdm'] += 1
+                elif val_c == '-': j_dict['sNeg'] += 1
+                elif val_c == '=': j_dict['sErr'] += 1
                 if zona_orig and zona_dest:
                     dk = f"{zona_orig}-{zona_dest}"
                     j_dict['_sdir'][dk] = j_dict['_sdir'].get(dk,0) + 1
             elif fund == 'R':
+                # # = Perfecta, + = Positiva, ! = Admirable, - = Negativa, / = Vendida, = = Error
                 j_dict['rT'] += 1
-                if val_sym == 'punto': j_dict['rPunto'] += 1
-                elif val_sym == 'pos':  j_dict['rPos'] += 1
-                elif val_sym == 'neg':  j_dict['rNeg'] += 1
-                elif val_sym == 'vend': j_dict['rVend'] += 1
-                elif val_sym == 'adm':  j_dict['rAdm'] += 1
-                elif val_sym == 'err':  j_dict['rErr'] += 1
+                if   val_c == '#': j_dict['rPunto'] += 1
+                elif val_c == '+': j_dict['rPos'] += 1
+                elif val_c == '!': j_dict['rAdm'] += 1
+                elif val_c == '-': j_dict['rNeg'] += 1
+                elif val_c == '/': j_dict['rVend'] += 1
+                elif val_c == '=': j_dict['rErr'] += 1
             elif fund == 'A':
+                # # = Punto, + = Positivo, ! = Admirable, - = Negativo, / = Bloqueado, = = Error
                 j_dict['aT'] += 1
-                if val_sym == 'punto': j_dict['aPunto'] += 1
-                elif val_sym == 'pos':  j_dict['aPos'] += 1
-                elif val_sym == 'neg':  j_dict['aNeg'] += 1
-                elif val_sym == 'vend': j_dict['aVend'] += 1
-                elif val_sym == 'adm':  j_dict['aAdm'] += 1
-                elif val_sym == 'err':  j_dict['aErr'] += 1
+                if   val_c == '#': j_dict['aPunto'] += 1
+                elif val_c == '+': j_dict['aPos'] += 1
+                elif val_c == '!': j_dict['aAdm'] += 1
+                elif val_c == '-': j_dict['aNeg'] += 1
+                elif val_c == '/': j_dict['aVend'] += 1
+                elif val_c == '=': j_dict['aErr'] += 1
                 if combo:
                     if combo not in j_dict['dv4']:
                         orig_int = int(zona_orig) if zona_orig and zona_orig.isdigit() else 0
                         j_dict['dv4'][combo] = {'tot':0,'pt':0,'err':0,'orig':orig_int,'dest':zona_dest}
                     j_dict['dv4'][combo]['tot'] += 1
-                    if val_sym == 'punto': j_dict['dv4'][combo]['pt'] += 1
-                    if val_sym == 'err':   j_dict['dv4'][combo]['err'] += 1
+                    if val_c == '#': j_dict['dv4'][combo]['pt'] += 1
+                    if val_c == '=': j_dict['dv4'][combo]['err'] += 1
             elif fund == 'B':
+                # # = Punto, + = Positivo
                 j_dict['bT'] += 1
-                if val_sym == 'punto': j_dict['bPt'] += 1
-                elif val_sym == 'pos':  j_dict['bPtPos'] += 1
+                if   val_c == '#': j_dict['bPt'] += 1
+                elif val_c == '+': j_dict['bPtPos'] += 1
 
-        add(j, fund_c, val_sym, combo, zona_orig, zona_dest)
-        add(totales, fund_c, val_sym, combo, zona_orig, zona_dest)
+        add(j, fund_c, val_c, combo, zona_orig, zona_dest)
+        add(totales, fund_c, val_c, combo, zona_orig, zona_dest)
 
     # Calcular eficiencias
     for j in stats.values(): calc_eff(j)
