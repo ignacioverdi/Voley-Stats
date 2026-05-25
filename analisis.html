@@ -942,16 +942,14 @@ function renderIndividualNew(num){
     aTit.style.color = '#818cf8';
     aTit.textContent = '💥 ATAQUE';
     aHdr.appendChild(aTit);
-    if(Object.keys(acum.dv4).length > 0){
-      var aBtn = document.createElement('button');
-      aBtn.setAttribute('data-dv4', encodeURIComponent(JSON.stringify(acum.dv4)));
-      aBtn.setAttribute('data-player', nombre);
-      aBtn.setAttribute('onclick','dv4ClickCancha(this)');
-      aBtn.style.cssText='padding:4px 10px;border-radius:6px;border:1px solid rgba(129,140,248,.3);background:rgba(129,140,248,.08);color:#818cf8;font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;cursor:pointer';
-      aBtn.textContent='🗺️ Cancha';
-      aHdr.appendChild(aBtn);
+    if(Object.keys(acum.dv4).length>0){
+      var aBtnC=document.createElement('button');
+      aBtnC.textContent='🗺️ DV4';
+      aBtnC.style.cssText='padding:4px 10px;border-radius:6px;border:1px solid rgba(129,140,248,.3);background:rgba(129,140,248,.08);color:#818cf8;font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;cursor:pointer';
+      (function(dv,n){aBtnC.onclick=function(){drawAtaqueCancha(dv,n);};})(acum.dv4,nombre);
+      aHdr.appendChild(aBtnC);
     }
-    aWrap.appendChild(aHdr);
+        aWrap.appendChild(aHdr);
     var aPills = document.createElement('div');
     aPills.className = 'stat-pills';
     [[ae!==null?ae+'%':'--','EFF%','#818cf8'],[acum.aT,'TOT','#818cf8'],
@@ -1154,6 +1152,88 @@ function renderCompar(){
 }
 
 
+
+
+// ════ CANCHA SIMPLE ════
+function closeCmodal(){
+  document.getElementById('cmodal').classList.remove('open');
+}
+
+function drawSaqueCancha(orig, dest, jugNombre, sT){
+  var modal=document.getElementById('cmodal');
+  var canvas=document.getElementById('cmodal-canvas');
+  var ctx=canvas.getContext('2d');
+  var W=canvas.width,H=canvas.height;
+  document.getElementById('cmodal-title').textContent=jugNombre+' — Saque';
+  document.getElementById('cmodal-legend').textContent='Origen: zona '+(orig||'?')+'  →  Destino: zona '+(dest||'?')+'  |  Total: '+sT+' saques';
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#1a472a'; ctx.fillRect(20,10,W-40,H-20);
+  ctx.strokeStyle='#fff'; ctx.lineWidth=3;
+  ctx.beginPath(); ctx.moveTo(20,H/2); ctx.lineTo(W-20,H/2); ctx.stroke();
+  var zW=(W-40)/3,zH=(H-20)/2;
+  ctx.strokeStyle='rgba(255,255,255,.3)'; ctx.lineWidth=1;
+  for(var i=1;i<3;i++){ctx.beginPath();ctx.moveTo(20+zW*i,10);ctx.lineTo(20+zW*i,H-10);ctx.stroke();}
+  var ZP={
+    '5':{x:20,y:10,w:zW,h:zH},'6':{x:20+zW,y:10,w:zW,h:zH},'1':{x:20+zW*2,y:10,w:zW,h:zH},
+    '4':{x:20,y:10+zH,w:zW,h:zH},'3':{x:20+zW,y:10+zH,w:zW,h:zH},'2':{x:20+zW*2,y:10+zH,w:zW,h:zH},
+    '7':{x:20,y:H/2+2,w:zW,h:zH-12},'8':{x:20+zW,y:H/2+2,w:zW,h:zH-12},'9':{x:20+zW*2,y:H/2+2,w:zW,h:zH-12}
+  };
+  ctx.fillStyle='rgba(255,255,255,.4)'; ctx.font='11px sans-serif'; ctx.textAlign='center';
+  Object.keys(ZP).forEach(function(z){var p=ZP[z];ctx.fillText(z,p.x+p.w/2,p.y+p.h/2+4);});
+  var op=ZP[String(orig)];
+  if(op){ctx.fillStyle='rgba(245,158,11,.5)';ctx.fillRect(op.x+2,op.y+2,op.w-4,op.h-4);
+    ctx.fillStyle='#f59e0b';ctx.font='bold 12px sans-serif';ctx.fillText('ORIG',op.x+op.w/2,op.y+op.h/2+5);}
+  var dp=ZP[String(dest)];
+  if(dp){ctx.fillStyle='rgba(232,25,44,.5)';ctx.fillRect(dp.x+2,dp.y+2,dp.w-4,dp.h-4);
+    ctx.fillStyle='#e8192c';ctx.font='bold 12px sans-serif';ctx.fillText('DEST',dp.x+dp.w/2,dp.y+dp.h/2+5);}
+  if(op&&dp){
+    var x1=op.x+op.w/2,y1=op.y+op.h/2,x2=dp.x+dp.w/2,y2=dp.y+dp.h/2;
+    ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.setLineDash([4,3]);
+    ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);
+    var ang=Math.atan2(y2-y1,x2-x1);
+    ctx.fillStyle='#fff';ctx.beginPath();
+    ctx.moveTo(x2,y2);ctx.lineTo(x2-10*Math.cos(ang-0.4),y2-10*Math.sin(ang-0.4));
+    ctx.lineTo(x2-10*Math.cos(ang+0.4),y2-10*Math.sin(ang+0.4));ctx.closePath();ctx.fill();
+  }
+  modal.classList.add('open');
+}
+
+function drawAtaqueCancha(dv4,jugNombre){
+  var modal=document.getElementById('cmodal');
+  var canvas=document.getElementById('cmodal-canvas');
+  var ctx=canvas.getContext('2d');
+  var W=canvas.width,H=canvas.height;
+  document.getElementById('cmodal-title').textContent=jugNombre+' — Ataques por zona';
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#1e3a5f';ctx.fillRect(20,10,W-40,H-30);
+  ctx.strokeStyle='#fff';ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(20,H-30);ctx.lineTo(W-20,H-30);ctx.stroke();
+  var zW=(W-40)/3,zH=(H-40)/2;
+  ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=1;
+  for(var i=1;i<3;i++){ctx.beginPath();ctx.moveTo(20+zW*i,10);ctx.lineTo(20+zW*i,H-30);ctx.stroke();}
+  ctx.beginPath();ctx.moveTo(20,10+zH);ctx.lineTo(W-20,10+zH);ctx.stroke();
+  var ZP={'1':{x:20+zW*2,y:10,w:zW,h:zH},'6':{x:20+zW,y:10,w:zW,h:zH},'5':{x:20,y:10,w:zW,h:zH},
+    '2':{x:20+zW*2,y:10+zH,w:zW,h:zH},'3':{x:20+zW,y:10+zH,w:zW,h:zH},'4':{x:20,y:10+zH,w:zW,h:zH},
+    '7':{x:20,y:10,w:zW,h:zH},'8':{x:20+zW,y:10,w:zW,h:zH},'9':{x:20+zW*2,y:10,w:zW,h:zH}};
+  ctx.fillStyle='rgba(255,255,255,.3)';ctx.font='10px sans-serif';ctx.textAlign='center';
+  Object.keys(ZP).forEach(function(z){var p=ZP[z];ctx.fillText(z,p.x+8,p.y+14);});
+  var ZC={},ZPt={};
+  Object.keys(dv4).forEach(function(c){var d=dv4[c],dest=String(d.dest||'');
+    if(dest&&dest!=='0'&&dest!==''){ZC[dest]=(ZC[dest]||0)+d.tot;ZPt[dest]=(ZPt[dest]||0)+d.pt;}});
+  var maxC=Math.max.apply(null,Object.values(ZC).concat([1]));
+  Object.keys(ZC).forEach(function(z){
+    var p=ZP[z];if(!p)return;
+    var alpha=0.2+(ZC[z]/maxC)*0.6;
+    ctx.fillStyle='rgba(129,140,248,'+alpha+')';ctx.fillRect(p.x+2,p.y+2,p.w-4,p.h-4);
+    ctx.fillStyle='#fff';ctx.font='bold 14px sans-serif';ctx.textAlign='center';
+    ctx.fillText(ZC[z],p.x+p.w/2,p.y+p.h/2);
+    ctx.fillStyle='#22c55e';ctx.font='10px sans-serif';
+    ctx.fillText(Math.round(ZPt[z]/ZC[z]*100)+'%',p.x+p.w/2,p.y+p.h/2+14);
+  });
+  var tot=Object.values(ZC).reduce(function(a,b){return a+b;},0);
+  document.getElementById('cmodal-legend').textContent=Object.keys(dv4).length+' combos · '+tot+' ataques';
+  modal.classList.add('open');
+}
 
 </script>
 
