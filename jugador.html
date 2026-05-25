@@ -15,135 +15,209 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#07080f;--card:#0d0e1a;--card2:#111220;
-  --border:rgba(255,255,255,.06);
+  --border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.1);
   --red:#e8192c;--green:#22c55e;--amber:#f59e0b;
   --indigo:#818cf8;--orange:#f97316;--mut:#475569;--txt:#e2e8f0;
 }
 body{background:var(--bg);font-family:'Barlow Condensed',sans-serif;color:var(--txt);min-height:100vh;}
 
 /* HEADER */
-.page-header{padding:14px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.015);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;}
-.back-btn{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--mut);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-decoration:none;text-transform:uppercase;transition:all .15s;}
-.back-btn:hover{color:var(--txt);}
+.page-header{
+  padding:12px 20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(7,8,15,.9);backdrop-filter:blur(20px);
+  position:sticky;top:0;z-index:100;
+}
+.back-btn{
+  display:flex;align-items:center;gap:6px;padding:6px 12px;
+  border-radius:8px;border:1px solid var(--border);
+  background:rgba(255,255,255,.04);color:var(--mut);
+  font-family:'Barlow Condensed',sans-serif;font-size:11px;
+  font-weight:700;letter-spacing:1px;text-decoration:none;
+  text-transform:uppercase;transition:all .15s;
+}
+.back-btn:hover{color:var(--txt);border-color:var(--border2);}
 
 /* HERO */
-.hero{position:relative;overflow:hidden;min-height:280px;}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,25,44,.15) 0%,transparent 60%);}
-.hero-foto{position:absolute;right:0;top:0;bottom:0;width:40%;object-fit:cover;object-position:top;opacity:.3;mask-image:linear-gradient(to left,rgba(0,0,0,.8),transparent);}
-.hero-content{position:relative;z-index:1;padding:32px 32px 24px;}
-.hero-num{font-family:'Bebas Neue',sans-serif;font-size:96px;line-height:1;opacity:.15;position:absolute;right:32px;top:16px;}
-.hero-pos-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:6px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;}
-.hero-nombre{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:3px;line-height:1;margin-bottom:6px;}
-.hero-meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;}
-.hero-meta-item{font-size:11px;color:var(--mut);letter-spacing:.5px;}
-.hero-meta-item span{color:var(--txt);font-weight:700;}
+.hero{position:relative;overflow:hidden;padding:28px 20px 0;}
+.hero-bg-num{
+  position:absolute;right:-10px;top:-20px;
+  font-family:'Bebas Neue',sans-serif;font-size:200px;line-height:1;
+  opacity:.04;color:#fff;pointer-events:none;user-select:none;
+  letter-spacing:-10px;
+}
+.hero-top{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;}
+.hero-badge{
+  width:64px;height:64px;border-radius:16px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:28px;
+  border:2px solid;
+}
+.hero-info{flex:1;min-width:0;}
+.pos-tag{
+  display:inline-block;padding:2px 10px;border-radius:4px;
+  font-size:9px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;margin-bottom:6px;border:1px solid;
+}
+.hero-nombre{
+  font-family:'Bebas Neue',sans-serif;font-size:34px;
+  letter-spacing:2px;line-height:1;margin-bottom:4px;
+}
+.hero-sub{font-size:10px;color:var(--mut);letter-spacing:.5px;}
 
-/* STATS RÁPIDAS */
-.quick-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);}
-.qs-item{background:var(--card);padding:16px;text-align:center;}
-.qs-val{font-family:'Bebas Neue',sans-serif;font-size:26px;line-height:1;margin-bottom:2px;}
-.qs-lbl{font-size:8px;color:var(--mut);letter-spacing:1.5px;text-transform:uppercase;}
+/* QUICK STATS BAR */
+.qs-bar{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.qs-item{
+  background:var(--card);padding:14px 8px;text-align:center;
+}
+.qs-val{
+  font-family:'Bebas Neue',sans-serif;font-size:24px;
+  line-height:1;margin-bottom:3px;
+}
+.qs-lbl{font-size:7px;color:var(--mut);letter-spacing:1.5px;text-transform:uppercase;}
 
 /* MAIN */
-.main{max-width:1100px;margin:0 auto;padding:24px 28px;}
-.section-lbl{font-size:10px;color:var(--mut);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.main{padding:20px 16px;max-width:600px;margin:0 auto;}
+
+.section-lbl{
+  font-size:9px;color:var(--mut);letter-spacing:3px;
+  text-transform:uppercase;margin-bottom:12px;
+  display:flex;align-items:center;gap:10px;
+}
 .section-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* ACCESOS RÁPIDOS */
-.accesos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:28px;}
-.acceso-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-decoration:none;color:var(--txt);transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;}
-.acceso-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.15);}
-.acceso-icon{font-size:24px;}
-.acceso-title{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;}
-.acceso-desc{font-size:9px;color:var(--mut);letter-spacing:.5px;}
-
-/* STATS BLOQUE */
-.stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:28px;}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;}
-.stat-card-title{font-size:9px;color:var(--mut);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;}
-.stat-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);}
-.stat-row:last-child{border:none;}
-.stat-row-lbl{font-size:11px;color:var(--mut);}
-.stat-row-val{font-family:'Bebas Neue',sans-serif;font-size:16px;}
-
-/* RUTINA PRÓXIMA */
-.rutina-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:28px;}
-.rutina-ej{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);}
-.rutina-ej:last-child{border:none;}
-.rutina-ej-num{width:22px;height:22px;border-radius:5px;background:rgba(232,25,44,.1);border:1px solid rgba(232,25,44,.2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--red);flex-shrink:0;}
-.rutina-ej-nombre{font-weight:700;font-size:13px;flex:1;}
-.rutina-ej-meta{font-size:10px;color:var(--mut);}
-
-/* ESTADO MENSAJE */
-.estado-msg{text-align:center;padding:40px 20px;color:var(--mut);}
-.estado-msg-icon{font-size:32px;margin-bottom:10px;}
-.estado-msg-txt{font-size:12px;letter-spacing:.5px;}
-
-@media(max-width:768px){
-  .hero-content{padding:20px 16px 16px;}
-  .hero-nombre{font-size:28px;}
-  .hero-foto{display:none;}
-  .quick-stats{grid-template-columns:repeat(2,1fr);}
-  .stats-grid{grid-template-columns:1fr;}
-  .main{padding:16px;}
-  .accesos-grid{grid-template-columns:repeat(2,1fr);}
+/* ACCESOS — grid 2x2 compacto */
+.accesos-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:8px;margin-bottom:24px;
+}
+.acceso-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:16px 14px;
+  text-decoration:none;color:var(--txt);
+  transition:all .18s;
+  display:flex;align-items:center;gap:12px;
+}
+.acceso-card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(255,255,255,.15);
+  background:var(--card2);
+}
+.acceso-card.full{grid-column:span 2;}
+.acceso-left{
+  width:40px;height:40px;border-radius:10px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;border:1px solid;
+}
+.acceso-text{flex:1;min-width:0;}
+.acceso-title{
+  font-family:'Bebas Neue',sans-serif;font-size:16px;
+  letter-spacing:1.5px;line-height:1;margin-bottom:2px;
+}
+.acceso-desc{font-size:9px;color:var(--mut);letter-spacing:.3px;}
+.acceso-arrow{
+  font-size:14px;color:var(--mut);opacity:.5;flex-shrink:0;
 }
 
-/* ── DROPDOWNS — texto siempre negro ── */
-select, select option {
-  color: #111111 !important;
-  background-color: #ffffff !important;
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:24px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;}
+.stat-card-title{font-size:8px;color:var(--mut);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--border);}
+.stat-row:last-child{border:none;}
+.stat-row-lbl{font-size:10px;color:var(--mut);}
+.stat-row-val{font-family:'Bebas Neue',sans-serif;font-size:15px;}
+
+/* RUTINA */
+.rutina-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:24px;}
+.rutina-ej{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);}
+.rutina-ej:last-child{border:none;}
+.rutina-ej-num{
+  width:20px;height:20px;border-radius:5px;flex-shrink:0;
+  background:rgba(232,25,44,.1);border:1px solid rgba(232,25,44,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:700;color:var(--red);
+}
+.rutina-ej-nombre{font-weight:700;font-size:12px;flex:1;}
+.rutina-ej-meta{font-size:10px;color:var(--mut);}
+
+/* EMPTY STATE */
+.estado-msg{text-align:center;padding:32px 20px;color:var(--mut);}
+.estado-msg-icon{font-size:28px;margin-bottom:8px;}
+.estado-msg-txt{font-size:11px;letter-spacing:.5px;}
+
+/* NEXT MATCH BANNER */
+.next-match{
+  background:linear-gradient(135deg,rgba(232,25,44,.12),rgba(232,25,44,.04));
+  border:1px solid rgba(232,25,44,.2);border-radius:14px;
+  padding:14px 16px;margin-bottom:24px;
+  display:flex;align-items:center;gap:12px;
+  text-decoration:none;color:var(--txt);transition:all .18s;
+}
+.next-match:hover{border-color:rgba(232,25,44,.4);transform:translateY(-1px);}
+.next-match-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--red);flex-shrink:0;
+  box-shadow:0 0 8px var(--red);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.next-match-info{flex:1;}
+.next-match-label{font-size:8px;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:2px;}
+.next-match-rival{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;}
+.next-match-sub{font-size:9px;color:var(--mut);}
+
+select, select option{color:#111 !important;background-color:#fff !important;}
+
+@media(min-width:600px){
+  .main{padding:24px 20px;}
+  .accesos-grid{grid-template-columns:repeat(2,1fr);}
+  .hero-badge{width:72px;height:72px;}
+  .hero-nombre{font-size:40px;}
 }
 </style>
 </head>
 <body>
 
 <div class="page-header">
-  <div style="display:flex;align-items:center;gap:12px;">
+  <div style="display:flex;align-items:center;gap:8px;">
     <a href="equipo.html" class="back-btn">← Equipo</a>
     <a href="index.html" class="back-btn">🏠 Hub</a>
   </div>
-  <div style="display:flex;align-items:center;gap:8px;">
-    <button onclick="cambiarJugador()" style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--mut);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;text-transform:uppercase;">👤 Cambiar</button>
-    <div id="lang-wrap" style="display:flex;align-items:center;gap:4px"></div>
-  </div>
-
+  <button onclick="cambiarJugador()" style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--mut);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;text-transform:uppercase;">👤 Cambiar</button>
+</div>
 
 <!-- HERO -->
 <div class="hero" id="hero">
-  <div class="hero-bg"></div>
-  <!-- Escudo decorativo -->
-  <div style="position:absolute;right:24px;top:50%;transform:translateY(-50%);opacity:.06;pointer-events:none;">
-    <svg width="220" height="220" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <path d="M50 5 L90 20 L90 55 C90 75 72 90 50 97 C28 90 10 75 10 55 L10 20 Z" fill="#e8192c"/>
-      <path d="M50 12 L84 25 L84 55 C84 72 68 85 50 92 C32 85 16 72 16 55 L16 25 Z" fill="#ffffff" opacity=".15"/>
-      <text x="50" y="58" font-family="Arial Black" font-size="28" font-weight="900" fill="white" text-anchor="middle">CASL</text>
-      <text x="50" y="74" font-family="Arial" font-size="10" fill="white" text-anchor="middle" opacity=".8">VOLEY</text>
-    </svg>
-  </div>
-  <!-- Número grande decorativo -->
-  <div class="hero-num" id="hero-num-dec"></div>
-
-  <div class="hero-content" id="hero-content">
-    <div class="estado-msg">
-      <div class="estado-msg-icon">⏳</div>
-      <div class="estado-msg-txt">Cargando perfil...</div>
-    </div>
+  <div class="hero-bg-num" id="hero-num-dec"></div>
+  <div class="hero-top" id="hero-content">
+    <div class="estado-msg"><div class="estado-msg-icon">⏳</div><div class="estado-msg-txt">Cargando...</div></div>
   </div>
 </div>
 
 <!-- QUICK STATS -->
-<div class="quick-stats" id="quick-stats" style="display:none;"></div>
+<div class="qs-bar" id="quick-stats" style="display:none;"></div>
 
 <!-- MAIN -->
 <div class="main" id="main-content" style="display:none;">
 
-  <div class="section-lbl" style="margin-bottom:14px;">Acceso rápido</div>
+  <!-- PRÓXIMO PARTIDO -->
+  <div id="next-match-wrap"></div>
+
+  <div class="section-lbl" style="margin-bottom:12px;">Acceso rápido</div>
   <div class="accesos-grid" id="accesos-grid"></div>
 
   <div class="section-lbl">Estadísticas acumuladas</div>
   <div class="stats-grid" id="stats-grid">
-    <div class="estado-msg"><div class="estado-msg-icon">📊</div><div class="estado-msg-txt">Sin datos de historial</div></div>
+    <div style="grid-column:span 3" class="estado-msg">
+      <div class="estado-msg-icon">📊</div>
+      <div class="estado-msg-txt">Sin datos de historial</div>
+    </div>
   </div>
 
   <div class="section-lbl">Próxima rutina</div>
@@ -154,29 +228,27 @@ select, select option {
 </div>
 
 <script>
-// ── URL PARAM ─────────────────────────────────────────────────────
-var params = new URLSearchParams(window.location.search);
-var numJug = parseInt(params.get('num')) || 0;
+var params  = new URLSearchParams(window.location.search);
+var numJug  = parseInt(params.get('num')) || 0;
 
-// ── DATOS ────────────────────────────────────────────────────────
 var EQUIPO_DEMO = {
   jugadores: [
-    {num:2, nombre:"OJUEZ", pos:"CENTRAL", foto:null, pais:"🇦🇷", altura:"", edad:0},
-    {num:3, nombre:"WINER", pos:"LIBERO", foto:null, pais:"🇦🇷", altura:"", edad:0},
-    {num:4, nombre:"VAZQUEZ", pos:"ARMADOR", foto:null, pais:"🇦🇷", altura:"", edad:0},
-    {num:5, nombre:"RAMOS", pos:"OPUESTO", foto:null, pais:"🇦🇷", altura:"", edad:0},
-    {num:6, nombre:"VILLARRUEL", pos:"PUNTA", foto:null, pais:"🇦🇷", altura:"", edad:0},
-    {num:9, nombre:"GODOY", pos:"ARMADOR", foto:null, pais:"🇦🇷", altura:"", edad:0},
-    {num:10, nombre:"VIERA", pos:"CENTRAL", foto:null, pais:"🇦🇷", altura:"", edad:0},
-    {num:11, nombre:"DURDOS", pos:"PUNTA", foto:null, pais:"🇦🇷", altura:"", edad:0},
-    {num:12, nombre:"ZANOTTI", pos:"LIBERO", foto:null, pais:"🇦🇷", altura:"", edad:0},
-    {num:13, nombre:"ROJAS CARUSO", pos:"PUNTA", foto:null, pais:"🇦🇷", altura:"", edad:0},
-    {num:14, nombre:"NIELSON", pos:"PUNTA", foto:null, pais:"🇦🇷", altura:"", edad:0},
-    {num:15, nombre:"ROTEZZI", pos:"CENTRAL", foto:null, pais:"🇦🇷", altura:"", edad:0},
-    {num:17, nombre:"HERBSOMMER", pos:"CENTRAL", foto:null, pais:"🇩🇪", altura:"", edad:0},
-    {num:18, nombre:"ACOSTA", pos:"OPUESTO", foto:null, pais:"🇦🇷", altura:"", edad:0},
-    {num:19, nombre:"DIAZ BOLLI", pos:"ARMADOR", foto:null, pais:"🇦🇷", altura:"", edad:0},
-    {num:20, nombre:"FREDDIE", pos:"PUNTA", foto:null, pais:"🇦🇷", altura:"", edad:0}
+    {num:2,  nombre:"OJUEZ",       pos:"CENTRAL",  foto:null, pais:"🇦🇷", altura:"", edad:0},
+    {num:3,  nombre:"WINER",       pos:"LIBERO",   foto:null, pais:"🇦🇷", altura:"", edad:0},
+    {num:4,  nombre:"VAZQUEZ",     pos:"ARMADOR",  foto:null, pais:"🇦🇷", altura:"", edad:0},
+    {num:5,  nombre:"RAMOS",       pos:"OPUESTO",  foto:null, pais:"🇦🇷", altura:"", edad:0},
+    {num:6,  nombre:"VILLARRUEL",  pos:"PUNTA",    foto:null, pais:"🇦🇷", altura:"", edad:0},
+    {num:9,  nombre:"GODOY",       pos:"ARMADOR",  foto:null, pais:"🇦🇷", altura:"", edad:0},
+    {num:10, nombre:"VIERA",       pos:"CENTRAL",  foto:null, pais:"🇦🇷", altura:"", edad:0},
+    {num:11, nombre:"DURDOS",      pos:"PUNTA",    foto:null, pais:"🇦🇷", altura:"", edad:0},
+    {num:12, nombre:"ZANOTTI",     pos:"LIBERO",   foto:null, pais:"🇦🇷", altura:"", edad:0},
+    {num:13, nombre:"ROJAS CARUSO",pos:"PUNTA",    foto:null, pais:"🇦🇷", altura:"", edad:0},
+    {num:14, nombre:"NIELSON",     pos:"PUNTA",    foto:null, pais:"🇦🇷", altura:"", edad:0},
+    {num:15, nombre:"ROTEZZI",     pos:"CENTRAL",  foto:null, pais:"🇦🇷", altura:"", edad:0},
+    {num:17, nombre:"HERBSOMMER",  pos:"CENTRAL",  foto:null, pais:"🇩🇪", altura:"", edad:0},
+    {num:18, nombre:"ACOSTA",      pos:"OPUESTO",  foto:null, pais:"🇦🇷", altura:"", edad:0},
+    {num:19, nombre:"DIAZ BOLLI",  pos:"ARMADOR",  foto:null, pais:"🇦🇷", altura:"", edad:0},
+    {num:20, nombre:"FREDDIE",     pos:"PUNTA",    foto:null, pais:"🇦🇷", altura:"", edad:0}
   ]
 };
 
@@ -185,116 +257,113 @@ var POS_COLOR = {
   'PUNTA':'#22c55e','OPUESTO':'#818cf8','LIBERO':'#06b6d4'
 };
 
-var eqData = window.EQUIPO_DATA || EQUIPO_DEMO;
+var eqData  = window.EQUIPO_DATA || EQUIPO_DEMO;
 var jugador = eqData.jugadores.find(function(j){ return j.num === numJug; });
+if(!jugador && eqData.jugadores.length > 0) jugador = eqData.jugadores[0];
 
-if(!jugador && eqData.jugadores.length > 0){
-  jugador = eqData.jugadores[0]; // fallback
-}
-
-// ── RENDER HERO ───────────────────────────────────────────────────
+// ── RENDER HERO ────────────────────────────────────────────────────
 function renderHero(j){
-  var color = POS_COLOR[j.pos] || '#64748b';
-  var hero = document.getElementById('hero');
-  hero.style.borderBottom = '2px solid ' + color + '44';
-
-  var content = document.getElementById('hero-content');
-
-  // Foto de fondo si existe
-  if(j.foto){
-    var img = document.createElement('img');
-    img.src = j.foto;
-    img.className = 'hero-foto';
-    hero.insertBefore(img, content);
-  }
-
+  var color  = POS_COLOR[j.pos] || '#64748b';
   var numDec = document.getElementById('hero-num-dec');
   if(numDec) numDec.textContent = j.num;
+
+  var content = document.getElementById('hero-content');
   content.innerHTML =
-    '<div class="hero-num">' + j.num + '</div>' +
-    '<div class="hero-pos-badge" style="background:' + color + '15;color:' + color + ';border:1px solid ' + color + '33">' +
-      j.pos +
+    '<div class="hero-badge" style="background:'+color+'12;border-color:'+color+'33;color:'+color+'">' +
+      j.num +
     '</div>' +
-    '<div class="hero-nombre">' + j.nombre + '</div>' +
-    '<div class="hero-meta">' +
-      '<div class="hero-meta-item">' + (j.pais||'🇦🇷') + '</div>' +
-      (j.altura ? '<div class="hero-meta-item">📏 <span>' + j.altura + '</span></div>' : '') +
-      (j.edad ? '<div class="hero-meta-item">🎂 <span>' + j.edad + ' años</span></div>' : '') +
-      '<div class="hero-meta-item">🏐 <span>CASLA VOLEY</span></div>' +
-      '<div class="hero-meta-item">📅 <span>Temporada 2026</span></div>' +
-    '</div>' +
-    '<div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">' +
-      '<a href="historial_voley.html" style="padding:7px 16px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:1.5px;text-decoration:none;">📈 VER STATS</a>' +
-      '<a href="prep_fisica.html" style="padding:7px 16px;border-radius:8px;background:rgba(232,25,44,.15);border:1px solid rgba(232,25,44,.3);color:#e8192c;font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:1.5px;text-decoration:none;">💪 MI RUTINA</a>' +
+    '<div class="hero-info">' +
+      '<div class="pos-tag" style="background:'+color+'12;color:'+color+';border-color:'+color+'33">' + j.pos + '</div>' +
+      '<div class="hero-nombre">' + j.nombre + '</div>' +
+      '<div class="hero-sub">' + (j.pais||'🇦🇷') + '  CASLA VOLEY · Temporada 2026' +
+        (j.altura ? '  ·  📏 '+j.altura : '') +
+      '</div>' +
+      '<div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">' +
+        '<a href="historial_voley.html" style="padding:6px 14px;border-radius:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:Bebas Neue,sans-serif;font-size:12px;letter-spacing:1.5px;text-decoration:none;">📈 STATS</a>' +
+        '<a href="prep_fisica.html" style="padding:6px 14px;border-radius:8px;background:rgba(232,25,44,.12);border:1px solid rgba(232,25,44,.25);color:#e8192c;font-family:Bebas Neue,sans-serif;font-size:12px;letter-spacing:1.5px;text-decoration:none;">💪 RUTINA</a>' +
+      '</div>' +
     '</div>';
 }
 
-// ── QUICK STATS desde historial ───────────────────────────────────
-function renderQuickStats(j){
-  var qs = document.getElementById('quick-stats');
-  qs.style.display = 'grid';
-  var color = POS_COLOR[j.pos] || '#64748b';
+// ── NEXT MATCH BANNER ──────────────────────────────────────────────
+function renderNextMatch(){
+  var wrap = document.getElementById('next-match-wrap');
+  if(!window.GAMEPLAN_DATA) return;
+  var gp = window.GAMEPLAN_DATA;
+  wrap.innerHTML =
+    '<a class="next-match" href="game_plan_dbanf.html">' +
+      '<div class="next-match-dot"></div>' +
+      '<div class="next-match-info">' +
+        '<div class="next-match-label">Próximo partido · F' + (gp.fecha||'') + '</div>' +
+        '<div class="next-match-rival">vs ' + (gp.rival||'RIVAL') + '</div>' +
+        '<div class="next-match-sub">' + (gp.torneo||'') + '  ·  Ver plan de juego →</div>' +
+      '</div>' +
+      '<div style="font-size:20px">🎯</div>' +
+    '</a>';
+}
 
-  var totSaque=0, totRecep=0, totAtaque=0, totEff=0, countEff=0;
+// ── QUICK STATS ────────────────────────────────────────────────────
+function renderQuickStats(j){
+  var qs    = document.getElementById('quick-stats');
+  var color = POS_COLOR[j.pos] || '#64748b';
+  var totSaque=0,totRecep=0,totAtaque=0,totEff=0,countEff=0;
 
   if(window.HISTORIAL_DATA){
     window.HISTORIAL_DATA.entrenamientos.forEach(function(e){
       e.jugadores.forEach(function(jh){
         if(jh.n === j.nombre){
-          totSaque  += jh.sT || 0;
-          totRecep  += jh.rT || 0;
-          totAtaque += jh.aT || 0;
-          if(jh.aT > 0){ totEff += jh.aEff||0; countEff++; }
+          totSaque  += jh.sT||0;
+          totRecep  += jh.rT||0;
+          totAtaque += jh.aT||0;
+          if(jh.aT>0){ totEff+=jh.aEff||0; countEff++; }
         }
       });
     });
   }
 
-  var stats = [
-    {lbl:'Saques', val:totSaque||'—', color:color},
-    {lbl:'Recepciones', val:totRecep||'—', color:'#22c55e'},
-    {lbl:'Ataques', val:totAtaque||'—', color:'#818cf8'},
-    {lbl:'Eff. Ataque', val: countEff>0 ? Math.round(totEff/countEff)+'%' : '—', color:'#f59e0b'},
-  ];
-
-  qs.innerHTML = '';
-  stats.forEach(function(s){
-    qs.innerHTML += '<div class="qs-item"><div class="qs-val" style="color:' + s.color + '">' + s.val + '</div><div class="qs-lbl">' + s.lbl + '</div></div>';
-  });
+  qs.style.display='grid';
+  qs.innerHTML = [
+    {lbl:'Saques',     val:totSaque||'—',  c:color},
+    {lbl:'Recepciones',val:totRecep||'—',  c:'#22c55e'},
+    {lbl:'Ataques',    val:totAtaque||'—', c:'#818cf8'},
+    {lbl:'Eff. Ataque',val:countEff>0?Math.round(totEff/countEff)+'%':'—', c:'#f59e0b'},
+  ].map(function(s){
+    return '<div class="qs-item"><div class="qs-val" style="color:'+s.c+'">'+s.val+'</div><div class="qs-lbl">'+s.lbl+'</div></div>';
+  }).join('');
 }
 
-// ── ACCESOS RÁPIDOS ───────────────────────────────────────────────
+// ── ACCESOS ────────────────────────────────────────────────────────
 function renderAccesos(j){
   var grid = document.getElementById('accesos-grid');
-  var accesos = [
-    {icon:'📈', title:'Historial', desc:'Mis estadísticas', url:'historial_voley.html?player='+encodeURIComponent(j.nombre), color:'#818cf8'},
-    {icon:'💪', title:'Rutina', desc:'Mi preparación física', url:'prep_fisica.html?player='+encodeURIComponent(j.nombre), color:'#e8192c'},
-    {icon:'🎯', title:'Game Plan', desc:'Plan del próximo partido', url:'game_plan_velez_sarsfield.html', color:'#f59e0b'},
-    {icon:'📊', title:'Panel en vivo', desc:'Sesión actual', url:'panel_voley.html', color:'#22c55e'},
-    {icon:'🏠', title:'Hub', desc:'Todo el sistema', url:'index.html', color:'#64748b'},
+  var items = [
+    {icon:'📈', title:'Historial',     desc:'Mis estadísticas',       url:'historial_voley.html?player='+encodeURIComponent(j.nombre), color:'#818cf8'},
+    {icon:'💪', title:'Rutina',        desc:'Mi preparación física',  url:'prep_fisica.html?player='+encodeURIComponent(j.nombre),    color:'#e8192c'},
+    {icon:'🎯', title:'Game Plan',     desc:'Plan del próximo partido',url:'game_plan_dbanf.html',                                    color:'#f59e0b'},
+    {icon:'📊', title:'Panel en Vivo', desc:'Sesión actual',           url:'panel_voley.html',                                        color:'#22c55e'},
+    {icon:'🏠', title:'Hub',           desc:'Todo el sistema',         url:'index.html',                                              color:'#64748b', full:true},
   ];
 
-  grid.innerHTML = '';
-  accesos.forEach(function(a){
-    grid.innerHTML +=
-      '<a class="acceso-card" href="' + a.url + '" style="border-color:' + a.color + '15">' +
-        '<div class="acceso-icon">' + a.icon + '</div>' +
-        '<div class="acceso-title" style="color:' + a.color + '">' + a.title + '</div>' +
-        '<div class="acceso-desc">' + a.desc + '</div>' +
-      '</a>';
-  });
+  grid.innerHTML = items.map(function(a){
+    return '<a class="acceso-card'+(a.full?' full':'')+'" href="'+a.url+'" style="border-color:'+a.color+'18">' +
+      '<div class="acceso-left" style="background:'+a.color+'12;border-color:'+a.color+'25;color:'+a.color+'">'+a.icon+'</div>' +
+      '<div class="acceso-text">' +
+        '<div class="acceso-title" style="color:'+a.color+'">'+a.title+'</div>' +
+        '<div class="acceso-desc">'+a.desc+'</div>' +
+      '</div>' +
+      '<div class="acceso-arrow">›</div>' +
+    '</a>';
+  }).join('');
 }
 
-// ── STATS DETALLE ─────────────────────────────────────────────────
+// ── STATS ──────────────────────────────────────────────────────────
 function renderStats(j){
   var grid = document.getElementById('stats-grid');
-  if(!window.HISTORIAL_DATA){ return; }
+  if(!window.HISTORIAL_DATA) return;
 
   var sT=0,sEff=0,rT=0,rEff=0,aT=0,aEff=0,aPunto=0,count=0;
-
   window.HISTORIAL_DATA.entrenamientos.forEach(function(e){
     e.jugadores.forEach(function(jh){
-      if(jh.n === j.nombre){
+      if(jh.n===j.nombre){
         sT+=jh.sT||0; sEff+=(jh.sEff||0)*(jh.sT||0);
         rT+=jh.rT||0; rEff+=(jh.rEff||0)*(jh.rT||0);
         aT+=jh.aT||0; aEff+=(jh.aEff||0)*(jh.aT||0);
@@ -302,77 +371,70 @@ function renderStats(j){
       }
     });
   });
+  if(count===0) return;
 
-  if(count === 0){ return; }
-
-  var color = POS_COLOR[j.pos] || '#64748b';
+  var color = POS_COLOR[j.pos]||'#64748b';
   grid.innerHTML =
     '<div class="stat-card">' +
-      '<div class="stat-card-title" style="color:' + color + '">⬆️ Saque</div>' +
-      '<div class="stat-row"><span class="stat-row-lbl">Total</span><span class="stat-row-val" style="color:' + color + '">' + sT + '</span></div>' +
-      '<div class="stat-row"><span class="stat-row-lbl">Eficiencia</span><span class="stat-row-val">' + (sT>0?Math.round(sEff/sT)+'%':'—') + '</span></div>' +
+      '<div class="stat-card-title" style="color:'+color+'">⬆️ Saque</div>' +
+      '<div class="stat-row"><span class="stat-row-lbl">Total</span><span class="stat-row-val" style="color:'+color+'">'+sT+'</span></div>' +
+      '<div class="stat-row"><span class="stat-row-lbl">Eficiencia</span><span class="stat-row-val">'+(sT>0?Math.round(sEff/sT)+'%':'—')+'</span></div>' +
     '</div>' +
     '<div class="stat-card">' +
       '<div class="stat-card-title" style="color:#22c55e">🛡 Recepción</div>' +
-      '<div class="stat-row"><span class="stat-row-lbl">Total</span><span class="stat-row-val" style="color:#22c55e">' + rT + '</span></div>' +
-      '<div class="stat-row"><span class="stat-row-lbl">Eficiencia</span><span class="stat-row-val">' + (rT>0?Math.round(rEff/rT)+'%':'—') + '</span></div>' +
+      '<div class="stat-row"><span class="stat-row-lbl">Total</span><span class="stat-row-val" style="color:#22c55e">'+rT+'</span></div>' +
+      '<div class="stat-row"><span class="stat-row-lbl">Eficiencia</span><span class="stat-row-val">'+(rT>0?Math.round(rEff/rT)+'%':'—')+'</span></div>' +
     '</div>' +
     '<div class="stat-card">' +
       '<div class="stat-card-title" style="color:#818cf8">⚡ Ataque</div>' +
-      '<div class="stat-row"><span class="stat-row-lbl">Total</span><span class="stat-row-val" style="color:#818cf8">' + aT + '</span></div>' +
-      '<div class="stat-row"><span class="stat-row-lbl">Puntos</span><span class="stat-row-val" style="color:#22c55e">' + aPunto + '</span></div>' +
-      '<div class="stat-row"><span class="stat-row-lbl">Eficiencia</span><span class="stat-row-val">' + (aT>0?Math.round(aEff/aT)+'%':'—') + '</span></div>' +
+      '<div class="stat-row"><span class="stat-row-lbl">Total</span><span class="stat-row-val" style="color:#818cf8">'+aT+'</span></div>' +
+      '<div class="stat-row"><span class="stat-row-lbl">Puntos</span><span class="stat-row-val" style="color:#22c55e">'+aPunto+'</span></div>' +
+      '<div class="stat-row"><span class="stat-row-lbl">Eficiencia</span><span class="stat-row-val">'+(aT>0?Math.round(aEff/aT)+'%':'—')+'</span></div>' +
     '</div>';
 }
 
-// ── PRÓXIMA RUTINA ────────────────────────────────────────────────
+// ── RUTINA ─────────────────────────────────────────────────────────
 function renderRutina(j){
   var card = document.getElementById('rutina-card');
-  if(!window.PREP_DATA){ return; }
-
-  var jugPrep = window.PREP_DATA.jugadores.find(function(jp){ return jp.num === j.num; });
-  if(!jugPrep || !jugPrep.semanas || jugPrep.semanas.length === 0){ return; }
-
-  // Tomar la primera semana con bloques
+  if(!window.PREP_DATA) return;
+  var jugPrep = window.PREP_DATA.jugadores.find(function(jp){ return jp.num===j.num; });
+  if(!jugPrep||!jugPrep.semanas||jugPrep.semanas.length===0) return;
   var semana = jugPrep.semanas[0];
-  if(!semana.bloques || semana.bloques.length === 0){ return; }
-
-  var html = '<div style="font-size:10px;color:var(--mut);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">' + semana.label + '</div>';
-  var ejCount = 0;
+  if(!semana.bloques||semana.bloques.length===0) return;
+  var html='<div style="font-size:9px;color:var(--mut);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">'+semana.label+'</div>';
+  var ejCount=0;
   semana.bloques.forEach(function(b){
     (b.ejercicios||[]).forEach(function(ej){
-      if(ejCount >= 5) return;
-      html += '<div class="rutina-ej">' +
-        '<div class="rutina-ej-num">' + (ejCount+1) + '</div>' +
-        '<div class="rutina-ej-nombre">' + ej.nombre + '</div>' +
-        '<div class="rutina-ej-meta">' + ej.series + '×' + ej.reps + '</div>' +
-      '</div>';
+      if(ejCount>=5) return;
+      html+='<div class="rutina-ej"><div class="rutina-ej-num">'+(ejCount+1)+'</div><div class="rutina-ej-nombre">'+ej.nombre+'</div><div class="rutina-ej-meta">'+ej.series+'×'+ej.reps+'</div></div>';
       ejCount++;
     });
   });
-  if(ejCount > 0){
-    html += '<a href="prep_fisica.html?player=' + encodeURIComponent(j.nombre) + '" style="display:block;text-align:center;margin-top:12px;font-size:10px;color:var(--red);letter-spacing:1px;text-decoration:none;">VER RUTINA COMPLETA →</a>';
-    card.innerHTML = html;
+  if(ejCount>0){
+    html+='<a href="prep_fisica.html?player='+encodeURIComponent(j.nombre)+'" style="display:block;text-align:center;margin-top:12px;font-size:10px;color:var(--red);letter-spacing:1px;text-decoration:none;">VER RUTINA COMPLETA →</a>';
+    card.innerHTML=html;
   }
 }
 
-// ── INIT ──────────────────────────────────────────────────────────
+// ── CAMBIAR JUGADOR ────────────────────────────────────────────────
 function cambiarJugador(){
   sessionStorage.removeItem("casla_pin_skip");
   localStorage.removeItem("casla_player_num");
   window.location.href="index.html";
 }
 
+// ── INIT ───────────────────────────────────────────────────────────
 if(jugador){
   renderHero(jugador);
   renderQuickStats(jugador);
+  renderNextMatch();
   renderAccesos(jugador);
   renderStats(jugador);
   renderRutina(jugador);
-  document.getElementById('main-content').style.display = 'block';
-  document.title = jugador.nombre + ' — CASL VOLEY';
+  document.getElementById('main-content').style.display='block';
+  document.title = jugador.nombre+' — CASL VOLEY';
 } else {
-  document.getElementById('hero-content').innerHTML =
+  document.getElementById('hero-content').innerHTML=
     '<div class="estado-msg"><div class="estado-msg-icon">❌</div><div class="estado-msg-txt">Jugador no encontrado</div></div>';
 }
 </script>
