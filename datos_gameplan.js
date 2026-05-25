@@ -1,8 +1,8 @@
 window.GAMEPLAN_DATA = {
   "rival": "DBANF",
-  "torneo": "División de Honor 2026",
+  "torneo": "DivisiÃ³n de Honor 2026",
   "fecha": 6,
-  "generado": "25/05/2026 16:05",
+  "generado": "25/05/2026 16:12",
   "jugadores": [
     {
       "num": 1,
@@ -168,7 +168,7 @@ window.GAMEPLAN_DATA = {
     ,
     {
       "num": 17,
-      "nombre": "17 Acosta  J.",
+      "nombre": "17 AcostaÂ  J.",
       "pos": "CENTRAL",
       "color": "#f97316",
       "info": {
