@@ -42,7 +42,7 @@ window.PREP_DATA = {
                 "series": 4,
                 "reps": "3",
                 "descanso": "3 min",
-                "nota": "Priorizar tÃ©cnica.",
+                "nota": "Priorizar tÃÂ©cnica.",
                 "video": null
               }
             ]
@@ -138,7 +138,7 @@ window.PREP_DATA = {
                 "series": 4,
                 "reps": "5",
                 "descanso": "3 min",
-                "nota": "MÃ¡xima explosividad.",
+                "nota": "MÃÂ¡xima explosividad.",
                 "video": null
               }
             ]
@@ -165,7 +165,7 @@ window.PREP_DATA = {
             "ejercicios": [
               {
                 "id": "EJ042",
-                "nombre": "Sentadilla BÃºlgara con Mancuerna",
+                "nombre": "Sentadilla BÃÂºlgara con Mancuerna",
                 "desc": "",
                 "series": 3,
                 "reps": "10 c/lado",
@@ -184,7 +184,7 @@ window.PREP_DATA = {
             "ejercicios": [
               {
                 "id": "EJ047",
-                "nombre": "Cargada de parado con transferencia - Saltos al cajÃ³n",
+                "nombre": "Cargada de parado con transferencia - Saltos al cajÃÂ³n",
                 "desc": "",
                 "series": 3,
                 "reps": "4",
@@ -272,7 +272,7 @@ window.PREP_DATA = {
                 "series": 4,
                 "reps": "3",
                 "descanso": "3 min",
-                "nota": "Priorizar tÃ©cnica.",
+                "nota": "Priorizar tÃÂ©cnica.",
                 "video": null
               }
             ]
@@ -299,7 +299,7 @@ window.PREP_DATA = {
             "ejercicios": [
               {
                 "id": "EJ042",
-                "nombre": "Sentadilla BÃºlgara con Mancuerna",
+                "nombre": "Sentadilla BÃÂºlgara con Mancuerna",
                 "desc": "",
                 "series": 3,
                 "reps": "10 c/lado",
@@ -318,7 +318,7 @@ window.PREP_DATA = {
             "ejercicios": [
               {
                 "id": "EJ047",
-                "nombre": "Cargada de parado con transferencia - Saltos al cajÃ³n",
+                "nombre": "Cargada de parado con transferencia - Saltos al cajÃÂ³n",
                 "desc": "",
                 "series": 3,
                 "reps": "4",
@@ -382,7 +382,7 @@ window.PREP_DATA = {
             "ejercicios": [
               {
                 "id": "EJ042",
-                "nombre": "Sentadilla BÃºlgara con Mancuerna",
+                "nombre": "Sentadilla BÃÂºlgara con Mancuerna",
                 "desc": "",
                 "series": 3,
                 "reps": "10 c/lado",
@@ -401,7 +401,7 @@ window.PREP_DATA = {
             "ejercicios": [
               {
                 "id": "EJ047",
-                "nombre": "Cargada de parado con transferencia - Saltos al cajÃ³n",
+                "nombre": "Cargada de parado con transferencia - Saltos al cajÃÂ³n",
                 "desc": "",
                 "series": 3,
                 "reps": "4",
@@ -433,7 +433,7 @@ window.PREP_DATA = {
             "ejercicios": [
               {
                 "id": "EJ042",
-                "nombre": "Sentadilla BÃºlgara con Mancuerna",
+                "nombre": "Sentadilla BÃÂºlgara con Mancuerna",
                 "desc": "",
                 "series": 3,
                 "reps": "10 c/lado",
@@ -452,7 +452,7 @@ window.PREP_DATA = {
             "ejercicios": [
               {
                 "id": "EJ047",
-                "nombre": "Cargada de parado con transferencia - Saltos al cajÃ³n",
+                "nombre": "Cargada de parado con transferencia - Saltos al cajÃÂ³n",
                 "desc": "",
                 "series": 3,
                 "reps": "4",
@@ -508,7 +508,7 @@ window.PREP_DATA = {
                 "series": 4,
                 "reps": "3",
                 "descanso": "3 min",
-                "nota": "Priorizar tÃ©cnica.",
+                "nota": "Priorizar tÃÂ©cnica.",
                 "video": null
               }
             ]
@@ -559,7 +559,7 @@ window.PREP_DATA = {
                 "series": 4,
                 "reps": "3",
                 "descanso": "3 min",
-                "nota": "Priorizar tÃ©cnica.",
+                "nota": "Priorizar tÃÂ©cnica.",
                 "video": null
               }
             ]
@@ -591,7 +591,7 @@ window.PREP_DATA = {
                 "series": 4,
                 "reps": "5",
                 "descanso": "3 min",
-                "nota": "MÃ¡xima explosividad.",
+                "nota": "MÃÂ¡xima explosividad.",
                 "video": null
               }
             ]
@@ -650,7 +650,7 @@ window.PREP_DATA = {
             "ejercicios": [
               {
                 "id": "EJ042",
-                "nombre": "Sentadilla BÃºlgara con Mancuerna",
+                "nombre": "Sentadilla BÃÂºlgara con Mancuerna",
                 "desc": "",
                 "series": 3,
                 "reps": "10 c/lado",
@@ -669,7 +669,7 @@ window.PREP_DATA = {
             "ejercicios": [
               {
                 "id": "EJ047",
-                "nombre": "Cargada de parado con transferencia - Saltos al cajÃ³n",
+                "nombre": "Cargada de parado con transferencia - Saltos al cajÃÂ³n",
                 "desc": "",
                 "series": 3,
                 "reps": "4",

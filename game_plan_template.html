@@ -201,6 +201,32 @@ select, select option {
   color: #111111 !important;
   background-color: #ffffff !important;
 }
+
+.pdf-btn {
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(232,25,44,.4);
+  background: rgba(232,25,44,.08);
+  color: #e8192c;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all .15s;
+  text-transform: uppercase;
+}
+.pdf-btn:hover { background: rgba(232,25,44,.18); border-color: rgba(232,25,44,.7); }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  body { background: #07080f !important; color: #e2e8f0 !important; }
+  .page-header { position: relative !important; }
+  .back-btn, .pdf-btn, .lang-switcher, #lang-switcher { display: none !important; }
+  .section-block, .player-card, .tactic-block { page-break-inside: avoid !important; }
+  .section-title { page-break-after: avoid !important; }
+  @page { margin: 1.5cm; }
+}
+
 </style>
 <script src="lang.js" onerror="void 0"></script>
 </head>
@@ -208,6 +234,7 @@ select, select option {
 
 <header class="page-header">
   <a href="index.html" class="back-btn">← Inicio</a>
+  <button onclick="descargarPDF()" class="pdf-btn">📄 Descargar PDF</button>
   <div>
     <div class="page-title"><span data-t="game_plan">Plan de Juego</span></div>
     <div style="font-size:10px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;margin-top:1px">Análisis táctico de rivales — CASL Voley</div>
@@ -1524,6 +1551,14 @@ function redrawSOTRCourt(ctx, W, H, data, color){
     ctx.fillText('('+d.pts+' pts)',zc.x,zc.y+23);
     ctx.restore();
   });
+}
+
+
+function descargarPDF() {
+  var rival = document.querySelector('.rival-name, .page-subtitle, [data-rival]');
+  var rivalNombre = rival ? rival.textContent.trim() : 'GamePlan';
+  document.title = 'CASLA Voley - Game Plan vs ' + rivalNombre;
+  setTimeout(function() { window.print(); }, 100);
 }
 
 </script>
