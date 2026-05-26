@@ -825,233 +825,274 @@ function renderTeamDV4Historial(){
   return html;
 }
 
+// ═══ DETALLE POR SESIÓN — estado compartido ═══════════════════════
+var HS_SESION_IDX = -2;   // -2 = acumulado, N = sesion específica
+var HS_TAB       = 'resumen';
+var HS_FILTRO    = 'todos'; // todos / P / E
+
+function hsGetSesiones(){
+  var D=window.HISTORIAL_DATA; if(!D) return [];
+  return D.entrenamientos.filter(function(s){
+    return HS_FILTRO==='todos' || (s.tipo||'P')===HS_FILTRO;
+  });
+}
+
+function hsGetJugadores(){
+  var sesiones = hsGetSesiones();
+  var src = HS_SESION_IDX >= 0 ? [sesiones[HS_SESION_IDX]] : sesiones;
+  var acum = {};
+  src.forEach(function(p){
+    p.jugadores.forEach(function(j){
+      if(j.n==='TOTALES EQUIPO') return;
+      if(!acum[j.c]) acum[j.c]={c:j.c,n:j.n,PJ:0,
+        sT:0,sPunto:0,sPos:0,sOvp:0,sNeg:0,sVend:0,sErr:0,sOrig:'',sDest:'',
+        rT:0,rPunto:0,rPos:0,rOvp:0,rNeg:0,rVend:0,rErr:0,
+        aT:0,aPunto:0,aPos:0,aOvp:0,aNeg:0,aVend:0,aErr:0,
+        bT:0,bPt:0,bPtPos:0,dv4:{}};
+      var s=acum[j.c];
+      if(j.sT+j.rT+j.aT+j.bT>0) s.PJ++;
+      ['sT','sPunto','sPos','sOvp','sNeg','sVend','sErr',
+       'rT','rPunto','rPos','rOvp','rNeg','rVend','rErr',
+       'aT','aPunto','aPos','aOvp','aNeg','aVend','aErr',
+       'bT','bPt','bPtPos'].forEach(function(k){ s[k]+=(j[k]||0); });
+      if(j.dv4) Object.keys(j.dv4).forEach(function(combo){
+        if(!acum[j.c].dv4[combo]) acum[j.c].dv4[combo]={tot:0,pt:0,err:0,orig:j.dv4[combo].orig};
+        acum[j.c].dv4[combo].tot+=j.dv4[combo].tot||0;
+        acum[j.c].dv4[combo].pt +=j.dv4[combo].pt||0;
+        acum[j.c].dv4[combo].err+=j.dv4[combo].err||0;
+      });
+    });
+  });
+  // Recalculate EFF from accumulated totals
+  Object.values(acum).forEach(function(s){
+    if(s.sT>0) s.sEff=Math.round((1*s.sPunto+0.5*s.sVend+0.25*s.sPos-1*s.sErr)/s.sT*100);
+    if(s.rT>0) s.rEff=Math.round((1*s.rPunto+0.5*s.rPos-0.5*s.rVend-1*s.rErr)/s.rT*100);
+    if(s.aT>0) s.aEff=Math.round((s.aPunto-s.aVend-s.aErr)/s.aT*100);
+    if(s.bT>0) s.bEff=Math.round((s.bPt+s.bPtPos)/s.bT*100);
+  });
+  return Object.values(acum).sort(function(a,b){return a.c-b.c;});
+}
+
+function hsEffColor(v){ return v===null||isNaN(v)?'var(--mut)':v>20?'#22c55e':v>0?'#86efac':v===0?'var(--mut)':'#ef4444'; }
+function hsTd(v,cls){ var c=cls?(' class="'+cls+'"'):''; return '<td'+c+'>'+(v!==undefined&&v!==null?v:'—')+'</td>'; }
+function hsEffTd(v){ return '<td style="font-weight:800;color:'+hsEffColor(v)+'">'+(v!==null&&v!==undefined?v+'%':'--')+'</td>'; }
+function hsJugTd(j,showPJ){
+  var s='<td class="left" style="padding:8px 12px">';
+  s+='<span style="font-size:10px;color:var(--mut);margin-right:6px">#'+j.c+'</span>';
+  s+='<span style="font-weight:700">'+j.n+'</span>';
+  if(showPJ) s+='<span style="font-size:10px;color:var(--mut);margin-left:8px">'+j.PJ+'ses</span>';
+  return s+'</td>';
+}
+function hsThSec(txt,cols,color){ return '<th colspan="'+cols+'" style="color:'+color+';border-left:2px solid '+color+'33;padding:8px;font-size:9px;letter-spacing:2px">'+txt+'</th>'; }
+
+function hsTablaSaque(jugs){
+  var isAcum = HS_SESION_IDX < 0;
+  var h='<div class="tabla-wrap"><table class="tabla"><thead><tr>';
+  h+='<th class="left sec">JUGADOR</th>';
+  if(isAcum) h+='<th style="color:var(--mut);font-size:9px">SES.</th>';
+  h+=hsThSec('── SAQUE ──',7,'#f59e0b');
+  h+='</tr><tr><th class="left" style="padding:8px 12px">Nombre</th>';
+  if(isAcum) h+='<th></th>';
+  h+='<th style="color:#f59e0b;border-left:2px solid rgba(245,158,11,.2)">EFF%</th>';
+  h+='<th>TOT</th><th style="color:#22c55e">#</th><th style="color:#86efac">+</th><th style="color:#fbbf24">!</th><th style="color:#f97316">-</th><th style="color:#ef4444">=</th></tr></thead><tbody>';
+  var tT=0,tPt=0,tPos=0,tOvp=0,tNeg=0,tVend=0,tErr=0;
+  jugs.forEach(function(j,ri){
+    if(!j.sT) return;
+    tT+=j.sT;tPt+=j.sPunto;tPos+=j.sPos;tOvp+=j.sOvp||0;tNeg+=j.sNeg;tVend+=j.sVend;tErr+=j.sErr;
+    var bg=ri%2===0?'transparent':'rgba(255,255,255,.015)';
+    var e=j.sT>0?Math.round((1*j.sPunto+0.5*j.sVend+0.25*j.sPos-1*j.sErr)/j.sT*100):null;
+    h+='<tr style="background:'+bg+'">'+hsJugTd(j,isAcum);
+    if(isAcum) h+=hsTd(j.PJ,'val-mut');
+    h+=hsEffTd(e)+hsTd(j.sT,'val-tot')+hsTd(j.sPunto)+hsTd(j.sPos)+hsTd(j.sOvp||0)+hsTd(j.sNeg)+hsTd(j.sErr)+'</tr>';
+  });
+  var tE=tT>0?Math.round((1*tPt+0.5*tVend+0.25*tPos-1*tErr)/tT*100):null;
+  h+='<tr class="total-row"><td class="left" style="padding:8px 12px;font-weight:700">TOTALES</td>';
+  if(isAcum) h+='<td></td>';
+  h+=hsEffTd(tE)+hsTd(tT,'val-tot')+hsTd(tPt)+hsTd(tPos)+hsTd(tOvp)+hsTd(tNeg)+hsTd(tErr)+'</tr>';
+  h+='</tbody></table></div>'; return h;
+}
+
+function hsTablaRecepcion(jugs){
+  var isAcum = HS_SESION_IDX < 0;
+  var h='<div class="tabla-wrap"><table class="tabla"><thead><tr>';
+  h+='<th class="left sec">JUGADOR</th>';
+  if(isAcum) h+='<th style="color:var(--mut);font-size:9px">SES.</th>';
+  h+=hsThSec('── RECEPCIÓN ──',8,'#22c55e');
+  h+='</tr><tr><th class="left" style="padding:8px 12px">Nombre</th>';
+  if(isAcum) h+='<th></th>';
+  h+='<th style="color:#22c55e;border-left:2px solid rgba(34,197,94,.2)">EFF%</th>';
+  h+='<th>TOT</th><th style="color:#22c55e">#</th><th style="color:#86efac">+</th><th style="color:#fbbf24">!</th><th style="color:#f97316">-</th><th style="color:#f97316">/</th><th style="color:#ef4444">=</th></tr></thead><tbody>';
+  var tT=0,tPt=0,tPos=0,tOvp=0,tNeg=0,tVend=0,tErr=0;
+  jugs.forEach(function(j,ri){
+    if(!j.rT) return;
+    tT+=j.rT;tPt+=j.rPunto;tPos+=j.rPos;tOvp+=j.rOvp||0;tNeg+=j.rNeg;tVend+=j.rVend;tErr+=j.rErr;
+    var bg=ri%2===0?'transparent':'rgba(255,255,255,.015)';
+    var e=j.rT>0?Math.round((1*j.rPunto+0.5*j.rPos-0.5*j.rVend-1*j.rErr)/j.rT*100):null;
+    h+='<tr style="background:'+bg+'">'+hsJugTd(j,isAcum);
+    if(isAcum) h+=hsTd(j.PJ,'val-mut');
+    h+=hsEffTd(e)+hsTd(j.rT,'val-tot')+hsTd(j.rPunto)+hsTd(j.rPos)+hsTd(j.rOvp||0)+hsTd(j.rNeg)+hsTd(j.rVend)+hsTd(j.rErr)+'</tr>';
+  });
+  var tE=tT>0?Math.round((1*tPt+0.5*tPos-0.5*tVend-1*tErr)/tT*100):null;
+  h+='<tr class="total-row"><td class="left" style="padding:8px 12px;font-weight:700">TOTALES</td>';
+  if(isAcum) h+='<td></td>';
+  h+=hsEffTd(tE)+hsTd(tT,'val-tot')+hsTd(tPt)+hsTd(tPos)+hsTd(tOvp)+hsTd(tNeg)+hsTd(tVend)+hsTd(tErr)+'</tr>';
+  h+='</tbody></table></div>'; return h;
+}
+
+function hsTablaAtaque(jugs){
+  var isAcum = HS_SESION_IDX < 0;
+  var h='<div class="tabla-wrap"><table class="tabla"><thead><tr>';
+  h+='<th class="left sec">JUGADOR</th>';
+  if(isAcum) h+='<th style="color:var(--mut);font-size:9px">SES.</th>';
+  h+=hsThSec('── ATAQUE ──',8,'#818cf8');
+  h+='</tr><tr><th class="left" style="padding:8px 12px">Nombre</th>';
+  if(isAcum) h+='<th></th>';
+  h+='<th style="color:#818cf8;border-left:2px solid rgba(129,140,248,.2)">EFF%</th>';
+  h+='<th>TOT</th><th style="color:#22c55e">#</th><th style="color:#86efac">+</th><th style="color:#fbbf24">!</th><th style="color:#f97316">-</th><th style="color:#f97316">/</th><th style="color:#ef4444">=</th></tr></thead><tbody>';
+  var tT=0,tPt=0,tPos=0,tOvp=0,tNeg=0,tVend=0,tErr=0;
+  jugs.forEach(function(j,ri){
+    if(!j.aT) return;
+    tT+=j.aT;tPt+=j.aPunto;tPos+=j.aPos;tOvp+=j.aOvp||0;tNeg+=j.aNeg;tVend+=j.aVend;tErr+=j.aErr;
+    var bg=ri%2===0?'transparent':'rgba(255,255,255,.015)';
+    var e=j.aT>0?Math.round((j.aPunto-j.aVend-j.aErr)/j.aT*100):null;
+    h+='<tr style="background:'+bg+'">'+hsJugTd(j,isAcum);
+    if(isAcum) h+=hsTd(j.PJ,'val-mut');
+    h+=hsEffTd(e)+hsTd(j.aT,'val-tot')+hsTd(j.aPunto)+hsTd(j.aPos)+hsTd(j.aOvp||0)+hsTd(j.aNeg)+hsTd(j.aVend)+hsTd(j.aErr)+'</tr>';
+  });
+  var tE=tT>0?Math.round((tPt-tVend-tErr)/tT*100):null;
+  h+='<tr class="total-row"><td class="left" style="padding:8px 12px;font-weight:700">TOTALES</td>';
+  if(isAcum) h+='<td></td>';
+  h+=hsEffTd(tE)+hsTd(tT,'val-tot')+hsTd(tPt)+hsTd(tPos)+hsTd(tOvp)+hsTd(tNeg)+hsTd(tVend)+hsTd(tErr)+'</tr>';
+  h+='</tbody></table></div>'; return h;
+}
+
+function hsTablaBloqueo(jugs){
+  var isAcum = HS_SESION_IDX < 0;
+  var h='<div class="tabla-wrap"><table class="tabla"><thead><tr>';
+  h+='<th class="left sec">JUGADOR</th>';
+  if(isAcum) h+='<th style="color:var(--mut);font-size:9px">SES.</th>';
+  h+=hsThSec('── BLOQUEO ──',4,'#06b6d4');
+  h+='</tr><tr><th class="left" style="padding:8px 12px">Nombre</th>';
+  if(isAcum) h+='<th></th>';
+  h+='<th style="color:#06b6d4;border-left:2px solid rgba(6,182,212,.2)">EFF%</th>';
+  h+='<th>TOT</th><th style="color:#22c55e"># Pt</th><th style="color:#86efac">+ Pos</th></tr></thead><tbody>';
+  var tT=0,tPt=0,tPos=0;
+  jugs.forEach(function(j,ri){
+    if(!j.bT) return;
+    tT+=j.bT;tPt+=j.bPt;tPos+=j.bPtPos;
+    var bg=ri%2===0?'transparent':'rgba(255,255,255,.015)';
+    var e=j.bT>0?Math.round((j.bPt+j.bPtPos)/j.bT*100):null;
+    h+='<tr style="background:'+bg+'">'+hsJugTd(j,isAcum);
+    if(isAcum) h+=hsTd(j.PJ,'val-mut');
+    h+=hsEffTd(e)+hsTd(j.bT,'val-tot')+hsTd(j.bPt)+hsTd(j.bPtPos)+'</tr>';
+  });
+  var tE=tT>0?Math.round((tPt+tPos)/tT*100):null;
+  h+='<tr class="total-row"><td class="left" style="padding:8px 12px;font-weight:700">TOTALES</td>';
+  if(isAcum) h+='<td></td>';
+  h+=hsEffTd(tE)+hsTd(tT,'val-tot')+hsTd(tPt)+hsTd(tPos)+'</tr>';
+  h+='</tbody></table></div>'; return h;
+}
+
+function hsTablaResumen(jugs){
+  var isAcum = HS_SESION_IDX < 0;
+  var h='<div class="tabla-wrap"><table class="tabla"><thead><tr>';
+  h+='<th class="left sec">JUGADOR</th>';
+  if(isAcum) h+='<th style="color:var(--mut);font-size:9px">SES.</th>';
+  h+=hsThSec('SAQUE',2,'#f59e0b')+hsThSec('RECEPCIÓN',2,'#22c55e')+hsThSec('ATAQUE',2,'#818cf8')+hsThSec('BLOQUEO',2,'#06b6d4');
+  h+='</tr><tr><th class="left" style="padding:8px 12px">Nombre</th>';
+  if(isAcum) h+='<th></th>';
+  ['EFF%','TOT','EFF%','TOT','EFF%','TOT','EFF%','TOT'].forEach(function(c,i){
+    h+='<th style="'+(i%2===0?'border-left:2px solid rgba(255,255,255,.08);':'')+'">'+(c)+'</th>';
+  });
+  h+='</tr></thead><tbody>';
+  jugs.forEach(function(j,ri){
+    if(j.sT+j.rT+j.aT+j.bT===0) return;
+    var se=j.sT>0?Math.round((1*j.sPunto+0.5*j.sVend+0.25*j.sPos-1*j.sErr)/j.sT*100):null;
+    var re=j.rT>0?Math.round((1*j.rPunto+0.5*j.rPos-0.5*j.rVend-1*j.rErr)/j.rT*100):null;
+    var ae=j.aT>0?Math.round((j.aPunto-j.aVend-j.aErr)/j.aT*100):null;
+    var be=j.bT>0?Math.round((j.bPt+j.bPtPos)/j.bT*100):null;
+    var bg=ri%2===0?'transparent':'rgba(255,255,255,.015)';
+    h+='<tr style="background:'+bg+'">'+hsJugTd(j,isAcum);
+    if(isAcum) h+=hsTd(j.PJ,'val-mut');
+    h+='<td style="font-weight:800;color:'+hsEffColor(se)+';border-left:2px solid rgba(255,255,255,.08)">'+(se!==null?se+'%':'--')+'</td>'+hsTd(j.sT||0,'val-mut');
+    h+='<td style="font-weight:800;color:'+hsEffColor(re)+';border-left:2px solid rgba(255,255,255,.08)">'+(re!==null?re+'%':'--')+'</td>'+hsTd(j.rT||0,'val-mut');
+    h+='<td style="font-weight:800;color:'+hsEffColor(ae)+';border-left:2px solid rgba(255,255,255,.08)">'+(ae!==null?ae+'%':'--')+'</td>'+hsTd(j.aT||0,'val-mut');
+    h+='<td style="font-weight:800;color:'+hsEffColor(be)+';border-left:2px solid rgba(255,255,255,.08)">'+(be!==null?be+'%':'--')+'</td>'+hsTd(j.bT||0,'val-mut');
+    h+='</tr>';
+  });
+  h+='</tbody></table></div>'; return h;
+}
+
+function hsRenderTab(){
+  var jugs=hsGetJugadores();
+  var cont=document.getElementById('hs-tab-content');
+  if(!cont) return;
+  if(HS_TAB==='saque')       cont.innerHTML=hsTablaSaque(jugs);
+  else if(HS_TAB==='recepcion') cont.innerHTML=hsTablaRecepcion(jugs);
+  else if(HS_TAB==='ataque')    cont.innerHTML=hsTablaAtaque(jugs);
+  else if(HS_TAB==='bloqueo')   cont.innerHTML=hsTablaBloqueo(jugs);
+  else                          cont.innerHTML=hsTablaResumen(jugs);
+}
+
+function hsSelectSesion(idx, btn){
+  HS_SESION_IDX = idx;
+  document.querySelectorAll('.hs-ses-btn').forEach(function(b){b.classList.remove('activo');});
+  if(btn) btn.classList.add('activo');
+  hsRenderTab();
+}
+
+function hsSetTab(tab, btn){
+  HS_TAB = tab;
+  document.querySelectorAll('.hs-tab-btn').forEach(function(b){b.classList.remove('activo');});
+  if(btn) btn.classList.add('activo');
+  hsRenderTab();
+}
+
 function renderEquipo(){
   const D=window.HISTORIAL_DATA;
-  if(!D){document.getElementById('eq-content').innerHTML='<div class=empty-msg>Sin datos. Ejecuta GuardarEntrenamiento primero.</div>';return;}
-  const byDate=getTeamByDate();
-  const totalSess=byDate.length;
-  const totalAcc=byDate.reduce((s,d)=>s+(d.sT+d.rT+d.aT+d.bT),0);
-  const lastDate=byDate[byDate.length-1]?.fecha||'--';
-  const avgSEff=byDate.filter(d=>d.sEff!==null).map(d=>d.sEff);
-  const avgREff=byDate.filter(d=>d.rEff!==null).map(d=>d.rEff);
-  const avgAEff=byDate.filter(d=>d.aEff!==null).map(d=>d.aEff);
-  const lastSEff=avgSEff[avgSEff.length-1]??'--';
-  const lastREff=avgREff[avgREff.length-1]??'--';
-  const lastAEff=avgAEff[avgAEff.length-1]??'--';
+  if(!D){document.getElementById('eq-content').innerHTML='<div class=empty-msg>Sin datos.</div>';return;}
 
-  // Cards de stats por fundamento (última sesión del equipo)
-  const lastD=byDate[byDate.length-1]||{};
-  const prevD=byDate[byDate.length-2]||null;
+  var sesiones = hsGetSesiones();
+  var totalSess = sesiones.length;
+  var lastDate = sesiones.length ? sesiones[sesiones.length-1].fecha : '--';
 
-  function fundCard(titulo, color, tot, pills, extra){
-    if(!tot) return '';
-    const wrap=document.createElement('div');
-    wrap.style.cssText='background:var(--card);border:1px solid var(--b);border-radius:12px;overflow:hidden';
-    // Header
-    const hdr=document.createElement('div');
-    hdr.style.cssText='padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.05)';
-    const ttl=document.createElement('div');
-    ttl.style.cssText='font-family:Barlow Condensed,sans-serif;font-size:14px;font-weight:800;letter-spacing:2px;color:'+color;
-    ttl.textContent=titulo;
-    const totEl=document.createElement('div');
-    totEl.style.cssText='font-family:Barlow Condensed,sans-serif;font-size:12px;color:var(--mut);letter-spacing:1px';
-    totEl.textContent=tot+' acciones';
-    hdr.appendChild(ttl); hdr.appendChild(totEl);
-    wrap.appendChild(hdr);
-    // Pills grid
-    const grid=document.createElement('div');
-    grid.style.cssText='display:grid;grid-template-columns:repeat('+pills.length+',1fr);gap:1px;background:rgba(255,255,255,.04)';
-    pills.forEach(function(p){
-      const cell=document.createElement('div');
-      cell.style.cssText='display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;background:var(--card)';
-      const val=document.createElement('div');
-      val.style.cssText='font-family:Barlow Condensed,sans-serif;font-size:20px;font-weight:900;color:'+p.c;
-      val.textContent=p.v;
-      const lbl=document.createElement('div');
-      lbl.style.cssText='font-size:9px;color:var(--mut);letter-spacing:1px;text-transform:uppercase';
-      lbl.textContent=p.l;
-      cell.appendChild(val); cell.appendChild(lbl);
-      grid.appendChild(cell);
-    });
-    wrap.appendChild(grid);
-    if(extra){
-      const ft=document.createElement('div');
-      ft.style.cssText='padding:6px 16px;font-size:10px;color:var(--mut);letter-spacing:.5px;border-top:1px solid rgba(255,255,255,.03)';
-      ft.textContent=extra;
-      wrap.appendChild(ft);
-    }
-    return wrap.outerHTML;
-  }
+  // Build session grid buttons
+  var gridHTML = '<button class="hs-ses-btn activo" onclick="hsSelectSesion(-2,this)" style="'+
+    'padding:10px 14px;border-radius:10px;border:1px solid rgba(129,140,248,.4);background:rgba(129,140,248,.1);'+
+    'cursor:pointer;text-align:left;font-family:Barlow Condensed,sans-serif;color:#e2e8f0;transition:all .15s">'+
+    '<div style="font-size:9px;color:#818cf8;letter-spacing:2px;text-transform:uppercase">TEMPORADA 2026</div>'+
+    '<div style="font-size:16px;font-weight:800;letter-spacing:1px">ACUMULADO</div>'+
+    '<div style="font-size:10px;color:#818cf8">'+totalSess+' sesiones</div></button>';
 
-  // Saque
-  const sEff=lastD.sEff||0;
-  const sCard=fundCard('SAQUE', C.amber, lastD.sT,
-    [
-      {l:'EFF',  v:lastD.sT>0?sEff+'%':'--',     c:ec(sEff)},
-      {l:'TOT',  v:lastD.sT||0,                   c:C.amber},
-      {l:'#',    v:lastD.sPunto||0,                c:'#22c55e'},
-      {l:'/',    v:lastD.sVend||0,                 c:'#fb923c'},
-      {l:'+',    v:lastD.sPos||0,                  c:'#86efac'},
-      {l:'-',    v:lastD.sNeg||0,                  c:'#f97316'},
-      {l:'=',    v:lastD.sErr||0,                  c:'#ef4444'},
-    ],
-    prevD&&prevD.sT>0?'Sesión anterior: '+prevD.sEff+'% EFF':null
-  );
-  // Recepción
-  const rEff=lastD.rEff||0;
-  const rCard=fundCard('RECEPCIÓN', C.green, lastD.rT,
-    [
-      {l:'EFF',  v:lastD.rT>0?rEff+'%':'--',      c:ec(rEff)},
-      {l:'TOT',  v:lastD.rT||0,                    c:C.green},
-      {l:'#',    v:lastD.rPunto||0,                c:'#22c55e'},
-      {l:'+',    v:lastD.rPos||0,                  c:'#86efac'},
-      {l:'!',    v:lastD.rOvp||0,                  c:'#fbbf24'},
-      {l:'-',    v:lastD.rNeg||0,                  c:'#f97316'},
-      {l:'/',    v:lastD.rVend||0,                 c:'#fb923c'},
-      {l:'=',    v:lastD.rErr||0,                  c:'#ef4444'},
-    ],
-    prevD&&prevD.rT>0?'Sesión anterior: '+prevD.rEff+'% EFF':null
-  );
-  // Ataque
-  const aEff=lastD.aEff||0;
-  const aCard=fundCard('ATAQUE', C.indigo, lastD.aT,
-    [
-      {l:'EFF',  v:lastD.aT>0?aEff+'%':'--',      c:ec(aEff)},
-      {l:'TOT',  v:lastD.aT||0,                    c:C.indigo},
-      {l:'#',    v:lastD.aPunto||0,                c:'#22c55e'},
-      {l:'+',    v:lastD.aPos||0,                  c:'#86efac'},
-      {l:'!',    v:lastD.aOvp||0,                  c:'#fbbf24'},
-      {l:'-',    v:lastD.aNeg||0,                  c:'#f97316'},
-      {l:'/',    v:lastD.aVend||0,                 c:'#fb923c'},
-      {l:'=',    v:lastD.aErr||0,                  c:'#ef4444'},
-    ],
-    prevD&&prevD.aT>0?'Sesión anterior: '+prevD.aEff+'% EFF':null
-  );
+  sesiones.forEach(function(s, i){
+    var esP = (s.tipo||'P')==='P';
+    var res = s.resultado||{};
+    var ganado = (res.casla||0)>(res.rival||0);
+    gridHTML += '<button class="hs-ses-btn" onclick="hsSelectSesion('+i+',this)" style="'+
+      'padding:10px 14px;border-radius:10px;border:1px solid var(--b);background:var(--card);'+
+      'cursor:pointer;text-align:left;font-family:Barlow Condensed,sans-serif;color:#e2e8f0;transition:all .15s">'+
+      '<div style="font-size:9px;color:var(--mut);letter-spacing:1.5px;text-transform:uppercase">'+(esP?'🏆':'🏋️')+' '+s.fecha+'</div>'+
+      '<div style="font-size:13px;font-weight:800;letter-spacing:1px">'+(esP?'vs '+(s.rival||'RIVAL'):'Entrenamiento')+'</div>'+
+      (esP?'<div style="font-size:10px;color:'+(ganado?'#22c55e':'#ef4444')+'">CASLA '+(res.casla||0)+' — '+(res.rival||0)+'</div>':'')+'</button>';
+  });
 
-  const trendsHTML=[sCard,rCard,aCard].filter(Boolean).join('');
-
-  // Player ranking (last entrenamiento)
-  const lastE=D.entrenamientos[D.entrenamientos.length-1];
-  const players=getAllPlayers();
-  const rankRows=players.map(p=>{
-    const hist=getPlayerHistory(p.n);
-    if(!hist.length)return null;
-    const last=hist[hist.length-1];
-    const sEffVals=hist.filter(h=>h.sT>0).map(h=>h.sEff);
-    const rEffVals=hist.filter(h=>h.rT>0).map(h=>h.rEff);
-    const aEffVals=hist.filter(h=>h.aT>0).map(h=>h.aEff);
-    const sT=trendArrow(sEffVals),rT=trendArrow(rEffVals),aT=trendArrow(aEffVals);
-    return{p,last,sEffVals,rEffVals,aEffVals,sT,rT,aT,sessions:hist.length};
-  }).filter(Boolean).sort((a,b)=>(b.last.rEff||0)-(a.last.rEff||0));
-
-  function fmtEff(val, tot, trend){
-    if(!tot) return '<td style="color:var(--mut)">—</td>';
-    return '<td><span class=eff-val style="color:'+ec(val)+'">'+val+'%</span><span class=trend-badge style="color:'+trend.c+'"> '+trend.sym+'</span></td>';
-  }
-  function fmtN(val){ return '<td style="font-size:11px">'+( val||0)+'</td>'; }
-  function fmtNd(val,tot){ return '<td style="font-size:11px;color:'+(tot>0?'var(--txt)':'var(--mut)')+'">'+( tot>0?(val||0):'—')+'</td>'; }
-
-  const rankHTML=rankRows.map((row,i)=>{
-    const l=row.last;
-    return '<tr>'
-      +'<td><div class=t-name><div class=rank-cam>'+row.p.c+'</div><div class=rank-nom>'+row.p.n+'</div></div></td>'
-      +'<td style="font-size:11px;color:var(--mut)">'+row.sessions+'</td>'
-      // SAQUE
-      +fmtEff(l.sEff,l.sT,row.sT)
-      +fmtN(l.sT)
-      +fmtNd(l.sPunto,l.sT)
-      +fmtNd(l.sVend,l.sT)
-      +fmtNd(l.sErr,l.sT)
-      // RECEPCION
-      +fmtEff(l.rEff,l.rT,row.rT)
-      +fmtN(l.rT)
-      +fmtNd(l.rPunto,l.rT)
-      +fmtNd(l.rVend,l.rT)
-      +fmtNd(l.rErr,l.rT)
-      // ATAQUE
-      +fmtEff(l.aEff,l.aT,row.aT)
-      +fmtN(l.aT)
-      +fmtNd(l.aPunto,l.aT)
-      +fmtNd(l.aVend,l.aT)
-      +fmtNd(l.aErr,l.aT)
-      // BLOQUEO
-      +fmtN(l.bT)
-      +fmtNd(l.bPt,l.bT)
-      +'</tr>';
+  // Tab buttons
+  var tabsHTML = ['resumen','saque','recepcion','ataque','bloqueo'].map(function(t){
+    var labels = {resumen:'📊 RESUMEN',saque:'⚡ SAQUE',recepcion:'🛡 RECEPCIÓN',ataque:'💥 ATAQUE',bloqueo:'🤚 BLOQUEO'};
+    var activo = t===HS_TAB ? ' activo' : '';
+    return '<button class="tab-btn hs-tab-btn'+activo+'" onclick="hsSetTab(\''+t+'\',this)">'+labels[t]+'</button>';
   }).join('');
 
-  document.getElementById('eq-content').innerHTML=`
-    <div class=eq-hero>
-      <div>
-        <div class=eq-hero-title>Evolucion del <span>Equipo</span></div>
-        <div class=eq-hero-sub>ULTIMO ENTRENAMIENTO: ${lastDate} &nbsp;·&nbsp; ${totalSess} SESIONES REGISTRADAS</div>
-      </div>
-      <div class=eq-kpis>
-        <div class=eq-kpi>
-          <div class=eq-kpi-n style="color:${ec(lastSEff)}">${lastSEff!=='--'?lastSEff+'%':'--'}</div>
-          <div class=eq-kpi-l>Eff Saque</div>
-        </div>
-        <div class=eq-kpi>
-          <div class=eq-kpi-n style="color:${ec(lastREff)}">${lastREff!=='--'?lastREff+'%':'--'}</div>
-          <div class=eq-kpi-l>Eff Recep.</div>
-        </div>
-        <div class=eq-kpi>
-          <div class=eq-kpi-n style="color:${ec(lastAEff)}">${lastAEff!=='--'?lastAEff+'%':'--'}</div>
-          <div class=eq-kpi-l>Eff Ataque</div>
-        </div>
-        <div class=eq-kpi>
-          <div class=eq-kpi-n>${totalAcc}</div>
-          <div class=eq-kpi-l>Acciones tot.</div>
-        </div>
-      </div>
-    </div>
+  document.getElementById('eq-content').innerHTML =
+    '<div class="section-title">SESIONES</div>'+
+    '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:20px" id="hs-sesiones-grid">'+gridHTML+'</div>'+
+    '<style>.hs-ses-btn:hover{border-color:rgba(255,255,255,.2)!important;background:rgba(255,255,255,.05)!important}.hs-ses-btn.activo{border-color:rgba(129,140,248,.6)!important;background:rgba(129,140,248,.12)!important}</style>'+
+    '<div class="tabs" style="margin-bottom:16px">'+tabsHTML+'</div>'+
+    '<div id="hs-tab-content"></div>'+
+    '<div class="section-title" style="margin-top:20px">COMBOS DV4 — ACUMULADO</div>'+
+    renderTeamDV4Historial();
 
-    <div class=section-title>STATS DEL EQUIPO — ÚLTIMA SESIÓN</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1rem;margin-bottom:1.5rem">${trendsHTML}</div>
-
-    <div class=section-title>RANKING DE MEJORA RECIENTE</div>
-    <div id="monthly-ranking" style="background:var(--card);border:1px solid var(--b);border-radius:12px;overflow:hidden;margin-bottom:1.5rem"></div>
-
-    <div class=section-title>ESTADO ACTUAL POR JUGADOR</div>
-    <div class=rank-table>
-      <div style="overflow-x:auto">
-      <table>
-        <thead>
-          <tr>
-            <th rowspan="2" style="text-align:left;vertical-align:bottom">JUGADOR</th>
-            <th rowspan="2" style="vertical-align:bottom">SES.</th>
-            <th colspan="5" style="color:${C.amber};border-bottom:2px solid ${C.amber}33;padding-bottom:4px">SAQUE</th>
-            <th colspan="5" style="color:${C.green};border-bottom:2px solid ${C.green}33;padding-bottom:4px">RECEPCIÓN</th>
-            <th colspan="5" style="color:${C.indigo};border-bottom:2px solid ${C.indigo}33;padding-bottom:4px">ATAQUE</th>
-            <th colspan="2" style="color:${C.purple};border-bottom:2px solid ${C.purple}33;padding-bottom:4px">BLOQUEO</th>
-          </tr>
-          <tr>
-            <th style="color:${C.amber};font-size:8px">EFF</th>
-            <th style="color:${C.amber};font-size:8px">TOT</th>
-            <th style="color:${C.amber};font-size:8px">#</th>
-            <th style="color:${C.amber};font-size:8px">/</th>
-            <th style="color:${C.amber};font-size:8px">=</th>
-            <th style="color:${C.green};font-size:8px">EFF</th>
-            <th style="color:${C.green};font-size:8px">TOT</th>
-            <th style="color:${C.green};font-size:8px">#</th>
-            <th style="color:${C.green};font-size:8px">/</th>
-            <th style="color:${C.green};font-size:8px">=</th>
-            <th style="color:${C.indigo};font-size:8px">EFF</th>
-            <th style="color:${C.indigo};font-size:8px">TOT</th>
-            <th style="color:${C.indigo};font-size:8px">#</th>
-            <th style="color:${C.indigo};font-size:8px">/</th>
-            <th style="color:${C.indigo};font-size:8px">=</th>
-            <th style="color:${C.purple};font-size:8px">TOT</th>
-            <th style="color:${C.purple};font-size:8px">BLK</th>
-          </tr>
-        </thead>
-        <tbody>${rankHTML}</tbody>
-      </table>
-      </div>
-    </div>
-
-    <div class=section-title>DETALLE DV4 EQUIPO — ACUMULADO</div>
-    ${renderTeamDV4Historial()}`;
+  hsRenderTab();
 }
 
 // ═══════════════════════════════════════════
