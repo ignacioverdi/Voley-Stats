@@ -1021,7 +1021,7 @@ function hsRenderTab(){
   var configs = {
     saque:{
       color:'#f59e0b', label:'SAQUE',
-      ths:['EFF%','TOT','# Pto','+Pos','! Ntr','– Neg','/ Vnd','= Err'],
+      ths:['EFF%','TOT','# Pto','/ Vnd','+Pos','! Ntr','– Neg','= Err'],
       fields:['sT','sPunto','sPos','sOvp','sNeg','sVend','sErr'],
       totField:'sT',
       render:function(j){
@@ -1031,10 +1031,10 @@ function hsRenderTab(){
           '<span style="font-family:Barlow Condensed,sans-serif;font-size:18px;font-weight:900;color:'+hsEffColor(e)+'">'+e+'%</span>',
           '<span style="font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:800;color:#f59e0b">'+j.sT+'</span>',
           '<span style="font-family:Barlow Condensed,sans-serif;font-size:14px;font-weight:700;color:#22c55e">'+j.sPunto+'</span>',
+          '<span style="font-family:Barlow Condensed,sans-serif;font-size:14px;color:#86efac;font-weight:700">'+j.sVend+'</span>',
           '<span style="font-family:Barlow Condensed,sans-serif;font-size:14px;color:#86efac">'+j.sPos+'</span>',
           '<span style="font-family:Barlow Condensed,sans-serif;font-size:14px;color:#94a3b8">'+( j.sOvp||0)+'</span>',
           '<span style="font-family:Barlow Condensed,sans-serif;font-size:14px;color:#f97316">'+j.sNeg+'</span>',
-          '<span style="font-family:Barlow Condensed,sans-serif;font-size:14px;color:#fbbf24">'+j.sVend+'</span>',
           '<span style="font-family:Barlow Condensed,sans-serif;font-size:14px;color:#ef4444">'+j.sErr+'</span>',
         ];
       },
@@ -1043,9 +1043,9 @@ function hsRenderTab(){
         return [
           e!==null?'<span style="font-family:Barlow Condensed,sans-serif;font-size:18px;font-weight:900;color:'+hsEffColor(e)+'">'+e+'%</span>':'—',
           '<span style="font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:900;color:#f59e0b">'+t.sT+'</span>',
-          '<b style="color:#22c55e">'+t.sPunto+'</b>','<b style="color:#86efac">'+t.sPos+'</b>',
-          '<b style="color:#94a3b8">'+(t.sOvp||0)+'</b>','<b style="color:#f97316">'+t.sNeg+'</b>',
-          '<b style="color:#fbbf24">'+t.sVend+'</b>','<b style="color:#ef4444">'+t.sErr+'</b>',
+          '<b style="color:#22c55e">'+t.sPunto+'</b>','<b style="color:#86efac">'+t.sVend+'</b>',
+          '<b style="color:#86efac">'+t.sPos+'</b>','<b style="color:#94a3b8">'+(t.sOvp||0)+'</b>',
+          '<b style="color:#f97316">'+t.sNeg+'</b>','<b style="color:#ef4444">'+t.sErr+'</b>',
         ];
       }
     },
