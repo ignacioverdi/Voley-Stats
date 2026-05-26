@@ -29,7 +29,7 @@ NOMBRES_SISTEMA = {
 }
 
 VAL_MAP = {
-    '#':('punto',2),'!':('punto',2),'+':('pos',1),
+    '#':('punto',2),'!':('ovp',0),'+':('pos',1),
     '-':('neg',-1),'/':('vend',-2),'=':('err',-2),'p':('adm',0)
 }
 
@@ -75,16 +75,20 @@ def detectar_casla_char(lines):
     print(f"  CASLA es: {'LOCAL (*)' if casla_char=='*' else 'VISITANTE (a)'} (H:{en_h} V:{en_v})")
     return casla_char
 
-def get_jugadores(lines):
+def get_jugadores(lines, tipo='P'):
     casla_char = detectar_casla_char(lines)
-    seccion = '[3PLAYERS-H]' if casla_char == '*' else '[3PLAYERS-V]'
+    # For training (E): read ALL players from both sections
+    secciones = ['[3PLAYERS-H]', '[3PLAYERS-V]'] if tipo == 'E' else (
+        ['[3PLAYERS-H]'] if casla_char == '*' else ['[3PLAYERS-V]']
+    )
     jugs = {}
-    for line in get_seccion(lines, seccion):
-        p = line.split(';')
-        if len(p) >= 10:
-            num = p[1].strip().zfill(2)
-            nombre = NOMBRES_SISTEMA.get(num, p[9].strip().upper())
-            jugs[num] = nombre
+    for seccion in secciones:
+        for line in get_seccion(lines, seccion):
+            p = line.split(';')
+            if len(p) >= 10:
+                num = p[1].strip().zfill(2)
+                nombre = NOMBRES_SISTEMA.get(num, p[9].strip().upper())
+                jugs[num] = nombre
     return jugs, casla_char
 
 # ── Parsear combos DV4 ────────────────────────────────────────
@@ -123,10 +127,10 @@ def get_sets(lines, casla_char='*'):
 def init_jug(num, nombre):
     return {
         'c':int(num), 'n':nombre,
-        'sT':0,'sEff':0,'sPunto':0,'sPos':0,'sVend':0,'sAdm':0,'sNeg':0,'sErr':0,
+        'sT':0,'sEff':0,'sPunto':0,'sPos':0,'sVend':0,'sOvp':0,'sNeg':0,'sErr':0,
         'sOrig':'','sDest':'',
-        'rT':0,'rEff':0,'rPunto':0,'rPos':0,'rAdm':0,'rNeg':0,'rVend':0,'rErr':0,
-        'aT':0,'aEff':0,'aPunto':0,'aPos':0,'aAdm':0,'aNeg':0,'aVend':0,'aErr':0,'aTCQ':0,'aEffAlta':0,
+        'rT':0,'rEff':0,'rPunto':0,'rPos':0,'rOvp':0,'rNeg':0,'rVend':0,'rErr':0,
+        'aT':0,'aEff':0,'aPunto':0,'aPos':0,'aOvp':0,'aNeg':0,'aVend':0,'aErr':0,'aTCQ':0,'aEffAlta':0,
         'bT':0,'bPt':0,'bPtPos':0,
         'dv4':{},
         '_sdir':{}
@@ -136,10 +140,10 @@ def init_jug(num, nombre):
 def calc_eff(j):
     # SAQUE: (#×1 + /×0.5 + +×0.25 - =×1) / Total
     if j['sT'] > 0:
-        j['sEff'] = round((j['sPunto']*1 + j['sVend']*0.5 + j['sPos']*0.25 - j['sErr']*1) / j['sT'] * 100)
+        j['sEff'] = round((1*j['sPunto'] + 0.5*j['sVend'] + 0.25*j['sPos'] - 1*j['sErr']) / j['sT'] * 100)
     # RECEPCION: (#×1 + +×0.5 - /×0.5 - =×1) / Total
     if j['rT'] > 0:
-        j['rEff'] = round((j['rPunto']*1 + j['rPos']*0.5 - j['rVend']*0.5 - j['rErr']*1) / j['rT'] * 100)
+        j['rEff'] = round((1*j['rPunto'] + 0.5*j['rPos'] - 0.5*j['rVend'] - 1*j['rErr']) / j['rT'] * 100)
     # ATAQUE: (# - / - =) / Total
     if j['aT'] > 0:
         j['aEff'] = round((j['aPunto'] - j['aVend'] - j['aErr']) / j['aT'] * 100)
@@ -153,7 +157,7 @@ def calc_eff(j):
         j['sOrig'] = partes[0]
         j['sDest'] = partes[1] if len(partes) > 1 else ''
 
-def parsear_scout(lines, jugadores_casla, casla_char='*'):
+def parsear_scout(lines, jugadores_casla, casla_char='*', tipo='P'):
     stats = {}
     for num, nom in NOMBRES_SISTEMA.items():
         stats[num] = init_jug(num, nom)
@@ -164,16 +168,25 @@ def parsear_scout(lines, jugadores_casla, casla_char='*'):
         if '[3SCOUT]' in line: in_scout = True; continue
         if in_scout and line.startswith('[3'): break
         if not in_scout or not line.strip(): continue
-        if line[0] != casla_char: continue  # Solo CASLA (home=*)
+        if tipo != 'E' and line[0] != casla_char: continue  # Partido: solo CASLA
         if len(line) < 6: continue
 
-        camisa = line[1:3].strip().zfill(2)
+        camisa_raw = line[1:3].strip()
+        if not camisa_raw.isdigit(): continue  # Skip $$, -- etc
+        camisa = camisa_raw.zfill(2)
         fund_c = line[3]
         tipo_c = line[4] if len(line) > 4 else ''
         val_c  = line[5] if len(line) > 5 else ''
 
         if fund_c not in 'SRABE': continue
-        if camisa not in stats: continue
+        # Skip sparrings (non-official players) in training
+        if tipo == 'E' and camisa not in CASLA_NUMS: continue
+        if camisa not in stats:
+            # Skip special DVW codes ($$, etc)
+            if not camisa.isdigit(): continue
+            # Jugador no oficial (entrenamiento con extras) — agregar dinámicamente
+            nombre_raw = jugadores_casla.get(camisa, f'#{int(camisa)} Extra')
+            stats[camisa] = init_jug(camisa, nombre_raw)
 
         j = stats[camisa]
         val_sym, _ = VAL_MAP.get(val_c, ('?', 0))
@@ -195,32 +208,32 @@ def parsear_scout(lines, jugadores_casla, casla_char='*'):
 
         def add(j_dict, fund, val_c, combo, zona_orig, zona_dest):
             if fund == 'S':
-                # # = Perfecta, + = Positiva, / = Vendida, ! = Admirable, - = Negativa, = = Error
+                # SAQUE: # punto, + positivo, ! neutro, / vendido, - negativo, = error
                 j_dict['sT'] += 1
                 if   val_c == '#': j_dict['sPunto'] += 1
                 elif val_c == '+': j_dict['sPos'] += 1
                 elif val_c == '/': j_dict['sVend'] += 1
-                elif val_c == '!': j_dict['sAdm'] += 1
+                elif val_c == '!': j_dict['sOvp'] += 1
                 elif val_c == '-': j_dict['sNeg'] += 1
                 elif val_c == '=': j_dict['sErr'] += 1
                 if zona_orig and zona_dest:
                     dk = f"{zona_orig}-{zona_dest}"
                     j_dict['_sdir'][dk] = j_dict['_sdir'].get(dk,0) + 1
             elif fund == 'R':
-                # # = Perfecta, + = Positiva, ! = Admirable, - = Negativa, / = Vendida, = = Error
+                # RECEPCION: # perfecta, + positiva, ! neutra, - negativa, / vendida, = error
                 j_dict['rT'] += 1
                 if   val_c == '#': j_dict['rPunto'] += 1
                 elif val_c == '+': j_dict['rPos'] += 1
-                elif val_c == '!': j_dict['rAdm'] += 1
+                elif val_c == '!': j_dict['rOvp'] += 1
                 elif val_c == '-': j_dict['rNeg'] += 1
                 elif val_c == '/': j_dict['rVend'] += 1
                 elif val_c == '=': j_dict['rErr'] += 1
             elif fund == 'A':
-                # # = Punto, + = Positivo, ! = Admirable, - = Negativo, / = Bloqueado, = = Error
+                # ATAQUE: # punto, + positivo, ! neutro, - negativo, / bloqueado, = error
                 j_dict['aT'] += 1
                 if   val_c == '#': j_dict['aPunto'] += 1
                 elif val_c == '+': j_dict['aPos'] += 1
-                elif val_c == '!': j_dict['aAdm'] += 1
+                elif val_c == '!': j_dict['aOvp'] += 1
                 elif val_c == '-': j_dict['aNeg'] += 1
                 elif val_c == '/': j_dict['aVend'] += 1
                 elif val_c == '=': j_dict['aErr'] += 1
@@ -333,19 +346,29 @@ def main():
                     fecha = line.split(':')[1].strip()[:10].replace('.','/')
                 except: pass
 
-    jugadores_casla, casla_char = get_jugadores(lines)
+    jugadores_casla, casla_char = get_jugadores(lines, tipo)
     combos = get_combos(lines)
-    sets, casla_sets, rival_sets = get_sets(lines, casla_char)
+    if tipo == 'E':
+        # Training: sets are between same team, just count them
+        sets_raw, _, _ = get_sets(lines, casla_char)
+        sets = sets_raw
+        casla_sets = len(sets_raw)
+        rival_sets = 0
+    else:
+        sets, casla_sets, rival_sets = get_sets(lines, casla_char)
 
     print(f"Fecha: {fecha}")
     print(f"Tipo: {'Partido' if tipo=='P' else 'Entrenamiento'}")
-    print(f"Resultado: CASLA {casla_sets} - {rival or 'RIVAL'} {rival_sets}")
+    if tipo == 'E':
+        print(f"Entrenamiento: {casla_sets} set(s)")
+    else:
+        print(f"Resultado: CASLA {casla_sets} - {rival or 'RIVAL'} {rival_sets}")
     print(f"Sets: {chr(32).join(sets)}")
     print(f"Jugadores CASLA: {len(jugadores_casla)}")
     print()
 
     # Parsear acciones
-    jugadores_out = parsear_scout(lines, jugadores_casla, casla_char)
+    jugadores_out = parsear_scout(lines, jugadores_casla, casla_char, tipo)
 
     # Mostrar resumen
     for j in jugadores_out:
