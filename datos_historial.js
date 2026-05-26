@@ -1,5 +1,5 @@
 window.HISTORIAL_DATA = {
-  "generado": "26/05/2026 14:33:22",
+  "generado": "26/05/2026 15:36:20",
   "entrenamientos": [
     {
         "fecha": "01/05/2026",
@@ -94,7 +94,10 @@ window.HISTORIAL_DATA = {
                         "dest": ""
                     }
                 },
-                "bEff": 50
+                "bEff": 50,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 3,
@@ -130,7 +133,10 @@ window.HISTORIAL_DATA = {
                 "bT": 0,
                 "bPt": 0,
                 "bPtPos": 0,
-                "dv4": {}
+                "dv4": {},
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 4,
@@ -166,7 +172,10 @@ window.HISTORIAL_DATA = {
                 "bT": 0,
                 "bPt": 0,
                 "bPtPos": 0,
-                "dv4": {}
+                "dv4": {},
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 5,
@@ -232,7 +241,10 @@ window.HISTORIAL_DATA = {
                         "dest": ""
                     }
                 },
-                "bEff": 18
+                "bEff": 18,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 9,
@@ -277,7 +289,10 @@ window.HISTORIAL_DATA = {
                         "dest": ""
                     }
                 },
-                "bEff": 58
+                "bEff": 58,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 11,
@@ -336,7 +351,10 @@ window.HISTORIAL_DATA = {
                         "dest": "6"
                     }
                 },
-                "bEff": 56
+                "bEff": 56,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 13,
@@ -372,7 +390,10 @@ window.HISTORIAL_DATA = {
                 "bT": 0,
                 "bPt": 0,
                 "bPtPos": 0,
-                "dv4": {}
+                "dv4": {},
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 14,
@@ -431,7 +452,10 @@ window.HISTORIAL_DATA = {
                         "dest": ""
                     }
                 },
-                "bEff": 33
+                "bEff": 33,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 15,
@@ -483,7 +507,10 @@ window.HISTORIAL_DATA = {
                         "dest": "6"
                     }
                 },
-                "bEff": 60
+                "bEff": 60,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 17,
@@ -519,7 +546,10 @@ window.HISTORIAL_DATA = {
                 "bT": 0,
                 "bPt": 0,
                 "bPtPos": 0,
-                "dv4": {}
+                "dv4": {},
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 0,
@@ -648,7 +678,10 @@ window.HISTORIAL_DATA = {
                         "dest": ""
                     }
                 },
-                "bEff": 42
+                "bEff": 42,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             }
         ]
     },
@@ -716,7 +749,10 @@ window.HISTORIAL_DATA = {
                         "dest": "6"
                     }
                 },
-                "bEff": 20
+                "bEff": 20,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 3,
@@ -752,7 +788,10 @@ window.HISTORIAL_DATA = {
                 "bT": 0,
                 "bPt": 0,
                 "bPtPos": 0,
-                "dv4": {}
+                "dv4": {},
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 5,
@@ -818,7 +857,10 @@ window.HISTORIAL_DATA = {
                         "dest": "5"
                     }
                 },
-                "bEff": 30
+                "bEff": 30,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 9,
@@ -855,7 +897,10 @@ window.HISTORIAL_DATA = {
                 "bPt": 0,
                 "bPtPos": 2,
                 "dv4": {},
-                "bEff": 67
+                "bEff": 67,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 11,
@@ -921,7 +966,10 @@ window.HISTORIAL_DATA = {
                         "dest": ""
                     }
                 },
-                "bEff": 0
+                "bEff": 0,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 13,
@@ -957,7 +1005,10 @@ window.HISTORIAL_DATA = {
                 "bT": 0,
                 "bPt": 0,
                 "bPtPos": 0,
-                "dv4": {}
+                "dv4": {},
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 14,
@@ -1009,7 +1060,10 @@ window.HISTORIAL_DATA = {
                         "dest": "2"
                     }
                 },
-                "bEff": 33
+                "bEff": 33,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 17,
@@ -1054,7 +1108,10 @@ window.HISTORIAL_DATA = {
                         "dest": "1"
                     }
                 },
-                "bEff": 0
+                "bEff": 0,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 0,
@@ -1162,7 +1219,10 @@ window.HISTORIAL_DATA = {
                         "dest": ""
                     }
                 },
-                "bEff": 27
+                "bEff": 27,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             }
         ]
     },
@@ -1231,7 +1291,10 @@ window.HISTORIAL_DATA = {
                         "dest": "3"
                     }
                 },
-                "bEff": 100
+                "bEff": 100,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 4,
@@ -1276,7 +1339,10 @@ window.HISTORIAL_DATA = {
                         "dest": "4"
                     }
                 },
-                "bEff": 50
+                "bEff": 50,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 5,
@@ -1349,7 +1415,10 @@ window.HISTORIAL_DATA = {
                         "dest": ""
                     }
                 },
-                "bEff": 12
+                "bEff": 12,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 9,
@@ -1401,7 +1470,10 @@ window.HISTORIAL_DATA = {
                         "dest": "6"
                     }
                 },
-                "bEff": 17
+                "bEff": 17,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 11,
@@ -1481,7 +1553,10 @@ window.HISTORIAL_DATA = {
                         "dest": "2"
                     }
                 },
-                "bEff": 43
+                "bEff": 43,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 12,
@@ -1517,7 +1592,10 @@ window.HISTORIAL_DATA = {
                 "bT": 0,
                 "bPt": 0,
                 "bPtPos": 0,
-                "dv4": {}
+                "dv4": {},
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 13,
@@ -1553,7 +1631,10 @@ window.HISTORIAL_DATA = {
                 "bT": 0,
                 "bPt": 0,
                 "bPtPos": 0,
-                "dv4": {}
+                "dv4": {},
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 14,
@@ -1612,7 +1693,10 @@ window.HISTORIAL_DATA = {
                         "dest": "5"
                     }
                 },
-                "bEff": 33
+                "bEff": 33,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 17,
@@ -1664,7 +1748,10 @@ window.HISTORIAL_DATA = {
                         "dest": "7"
                     }
                 },
-                "bEff": 25
+                "bEff": 25,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 18,
@@ -1708,7 +1795,10 @@ window.HISTORIAL_DATA = {
                         "orig": 2,
                         "dest": "4"
                     }
-                }
+                },
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 0,
@@ -1837,7 +1927,10 @@ window.HISTORIAL_DATA = {
                         "dest": "2"
                     }
                 },
-                "bEff": 36
+                "bEff": 36,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             }
         ]
     },
@@ -1920,7 +2013,10 @@ window.HISTORIAL_DATA = {
                         "dest": "6"
                     }
                 },
-                "bEff": 62
+                "bEff": 62,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 3,
@@ -1956,7 +2052,10 @@ window.HISTORIAL_DATA = {
                 "bT": 0,
                 "bPt": 0,
                 "bPtPos": 0,
-                "dv4": {}
+                "dv4": {},
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 4,
@@ -2008,7 +2107,10 @@ window.HISTORIAL_DATA = {
                         "dest": "5"
                     }
                 },
-                "bEff": 50
+                "bEff": 50,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 5,
@@ -2095,7 +2197,10 @@ window.HISTORIAL_DATA = {
                         "dest": "3"
                     }
                 },
-                "bEff": 71
+                "bEff": 71,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 9,
@@ -2131,7 +2236,10 @@ window.HISTORIAL_DATA = {
                 "bT": 0,
                 "bPt": 0,
                 "bPtPos": 0,
-                "dv4": {}
+                "dv4": {},
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 11,
@@ -2204,7 +2312,10 @@ window.HISTORIAL_DATA = {
                         "dest": "2"
                     }
                 },
-                "bEff": 0
+                "bEff": 0,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 12,
@@ -2240,7 +2351,10 @@ window.HISTORIAL_DATA = {
                 "bT": 0,
                 "bPt": 0,
                 "bPtPos": 0,
-                "dv4": {}
+                "dv4": {},
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 14,
@@ -2313,7 +2427,10 @@ window.HISTORIAL_DATA = {
                         "dest": ""
                     }
                 },
-                "bEff": 47
+                "bEff": 47,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 15,
@@ -2372,7 +2489,10 @@ window.HISTORIAL_DATA = {
                         "dest": "7"
                     }
                 },
-                "bEff": 40
+                "bEff": 40,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 18,
@@ -2438,7 +2558,10 @@ window.HISTORIAL_DATA = {
                         "dest": "4"
                     }
                 },
-                "bEff": 0
+                "bEff": 0,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 0,
@@ -2574,7 +2697,10 @@ window.HISTORIAL_DATA = {
                         "dest": "6"
                     }
                 },
-                "bEff": 48
+                "bEff": 48,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             }
         ]
     },
@@ -2665,7 +2791,10 @@ window.HISTORIAL_DATA = {
                         "dest": "5"
                     }
                 },
-                "bEff": 70
+                "bEff": 70,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 4,
@@ -2710,7 +2839,10 @@ window.HISTORIAL_DATA = {
                         "dest": "4"
                     }
                 },
-                "bEff": 33
+                "bEff": 33,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 5,
@@ -2769,7 +2901,10 @@ window.HISTORIAL_DATA = {
                         "dest": "8"
                     }
                 },
-                "bEff": 33
+                "bEff": 33,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 6,
@@ -2813,7 +2948,10 @@ window.HISTORIAL_DATA = {
                         "orig": 4,
                         "dest": "1"
                     }
-                }
+                },
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 9,
@@ -2865,7 +3003,10 @@ window.HISTORIAL_DATA = {
                         "dest": "3"
                     }
                 },
-                "bEff": 20
+                "bEff": 20,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 11,
@@ -2924,7 +3065,10 @@ window.HISTORIAL_DATA = {
                         "dest": "1"
                     }
                 },
-                "bEff": 20
+                "bEff": 20,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 12,
@@ -2960,7 +3104,10 @@ window.HISTORIAL_DATA = {
                 "bT": 0,
                 "bPt": 0,
                 "bPtPos": 0,
-                "dv4": {}
+                "dv4": {},
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 14,
@@ -3012,7 +3159,10 @@ window.HISTORIAL_DATA = {
                         "dest": "1"
                     }
                 },
-                "bEff": 33
+                "bEff": 33,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 17,
@@ -3071,7 +3221,10 @@ window.HISTORIAL_DATA = {
                         "dest": "1"
                     }
                 },
-                "bEff": 40
+                "bEff": 40,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 18,
@@ -3144,7 +3297,10 @@ window.HISTORIAL_DATA = {
                         "dest": ""
                     }
                 },
-                "bEff": 50
+                "bEff": 50,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 19,
@@ -3180,7 +3336,10 @@ window.HISTORIAL_DATA = {
                 "bT": 0,
                 "bPt": 0,
                 "bPtPos": 0,
-                "dv4": {}
+                "dv4": {},
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             },
             {
                 "c": 0,
@@ -3309,7 +3468,10 @@ window.HISTORIAL_DATA = {
                         "dest": "3"
                     }
                 },
-                "bEff": 41
+                "bEff": 41,
+                "sOvp": 0,
+                "rOvp": 0,
+                "aOvp": 0
             }
         ]
     },
