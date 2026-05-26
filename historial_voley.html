@@ -621,9 +621,9 @@ function getTeamByDate(){
     if(teamRow){
       return Object.assign({fecha: e.fecha, tipo: e.tipo||'E', n: e.jugadores.filter(function(j){return j.c>0;}).length}, teamRow);
     }
-    var tot={sT:0,sPunto:0,sPos:0,sAdm:0,sNeg:0,sVend:0,sErr:0,sEff:0,
-             rT:0,rPunto:0,rPos:0,rAdm:0,rNeg:0,rVend:0,rErr:0,rEff:0,
-             aT:0,aPunto:0,aPos:0,aAdm:0,aNeg:0,aVend:0,aErr:0,aTCQ:0,aEff:0,
+    var tot={sT:0,sPunto:0,sPos:0,sOvp:0,sNeg:0,sVend:0,sErr:0,sEff:0,
+             rT:0,rPunto:0,rPos:0,rOvp:0,rNeg:0,rVend:0,rErr:0,rEff:0,
+             aT:0,aPunto:0,aPos:0,aOvp:0,aNeg:0,aVend:0,aErr:0,aTCQ:0,aEff:0,
              bT:0,bPtPos:0};
     e.jugadores.filter(function(j){return j.c>0;}).forEach(function(j){
       Object.keys(tot).forEach(function(k){ if(j[k]!==undefined) tot[k]+=(j[k]||0); });
@@ -663,15 +663,15 @@ function _getTeamByDateBase(){
         fecha:e.fecha,
         sT:teamRow.sT||0, sEff:teamRow.sEff||0,
         sPunto:teamRow.sPunto||0, sPos:teamRow.sPos||0,
-        sAdm:teamRow.sAdm||0, sNeg:teamRow.sNeg||0,
+        sOvp:teamRow.sOvp||0, sNeg:teamRow.sNeg||0,
         sVend:teamRow.sVend||0, sErr:teamRow.sErr||0,
         rT:teamRow.rT||0, rEff:teamRow.rEff||0,
         rPunto:teamRow.rPunto||0, rPos:teamRow.rPos||0,
-        rAdm:teamRow.rAdm||0, rNeg:teamRow.rNeg||0,
+        rOvp:teamRow.rOvp||0, rNeg:teamRow.rNeg||0,
         rVend:teamRow.rVend||0, rErr:teamRow.rErr||0,
         aT:teamRow.aT||0, aEff:teamRow.aEff||0,
         aPunto:teamRow.aPunto||0, aPos:teamRow.aPos||0,
-        aAdm:teamRow.aAdm||0, aNeg:teamRow.aNeg||0,
+        aOvp:teamRow.aOvp||0, aNeg:teamRow.aNeg||0,
         aVend:teamRow.aVend||0, aErr:teamRow.aErr||0,
         aTCQ:teamRow.aTCQ||0,
         bT:teamRow.bT||0, bPtPos:teamRow.bPtPos||0,
@@ -679,27 +679,31 @@ function _getTeamByDateBase(){
       };
     }
     // Fallback: sumar solo jugadores reales (c>0)
-    const tot={sT:0,sPunto:0,sPos:0,sAdm:0,sNeg:0,sVend:0,sErr:0,sEff:[],
-               rT:0,rPunto:0,rPos:0,rAdm:0,rNeg:0,rVend:0,rErr:0,rEff:[],
-               aT:0,aPunto:0,aPos:0,aAdm:0,aNeg:0,aVend:0,aErr:0,aTCQ:0,aEff:[],
+    const tot={sT:0,sPunto:0,sPos:0,sOvp:0,sNeg:0,sVend:0,sErr:0,sEff:[],
+               rT:0,rPunto:0,rPos:0,rOvp:0,rNeg:0,rVend:0,rErr:0,rEff:[],
+               aT:0,aPunto:0,aPos:0,aOvp:0,aNeg:0,aVend:0,aErr:0,aTCQ:0,aEff:[],
                bT:0,bPtPos:[]};
     e.jugadores.filter(j=>j.c>0).forEach(j=>{
       tot.sT+=j.sT||0; tot.sPunto+=(j.sPunto||0); tot.sPos+=(j.sPos||0);
-      tot.sAdm+=(j.sAdm||0); tot.sNeg+=(j.sNeg||0);
+      tot.sOvp+=(j.sOvp||0); tot.sNeg+=(j.sNeg||0);
       tot.sVend+=(j.sVend||0); tot.sErr+=(j.sErr||0);
       if(j.sT>0)tot.sEff.push(j.sEff);
       tot.rT+=j.rT||0; tot.rPunto+=(j.rPunto||0); tot.rPos+=(j.rPos||0);
-      tot.rAdm+=(j.rAdm||0); tot.rNeg+=(j.rNeg||0);
+      tot.rOvp+=(j.rOvp||0); tot.rNeg+=(j.rNeg||0);
       tot.rVend+=(j.rVend||0); tot.rErr+=(j.rErr||0);
       if(j.rT>0)tot.rEff.push(j.rEff);
       tot.aT+=j.aT||0; tot.aPunto+=(j.aPunto||0); tot.aPos+=(j.aPos||0);
-      tot.aAdm+=(j.aAdm||0); tot.aNeg+=(j.aNeg||0);
+      tot.aOvp+=(j.aOvp||0); tot.aNeg+=(j.aNeg||0);
       tot.aVend+=(j.aVend||0); tot.aErr+=(j.aErr||0); tot.aTCQ+=(j.aTCQ||0);
       if(j.aT>0)tot.aEff.push(j.aEff);
       tot.bT+=j.bT||0; if(j.bT>0)tot.bPtPos.push(j.bPtPos||0);
     });
+    // Recalculate EFF from totals (not average of individual effs)
+    const sEffTeam = tot.sT>0 ? Math.round((1*tot.sPunto + 0.5*tot.sVend + 0.25*tot.sPos - 1*tot.sErr)/tot.sT*100) : 0;
+    const rEffTeam = tot.rT>0 ? Math.round((1*tot.rPunto + 0.5*tot.rPos - 0.5*tot.rVend - 1*tot.rErr)/tot.rT*100) : 0;
+    const aEffTeam = tot.aT>0 ? Math.round((tot.aPunto - tot.aVend - tot.aErr)/tot.aT*100) : 0;
     const avg=arr=>arr.length?Math.round(arr.reduce((a,b)=>a+b,0)/arr.length):0;
-    return{fecha:e.fecha,...tot,sEff:avg(tot.sEff),rEff:avg(tot.rEff),aEff:avg(tot.aEff),bPtPos:avg(tot.bPtPos),n:e.jugadores.filter(j=>j.c>0).length};
+    return{fecha:e.fecha,...tot,sEff:sEffTeam,rEff:rEffTeam,aEff:aEffTeam,bPtPos:avg(tot.bPtPos),n:e.jugadores.filter(j=>j.c>0).length};
   });
 }
 
@@ -901,7 +905,7 @@ function renderEquipo(){
       {l:'TOT',  v:lastD.rT||0,                    c:C.green},
       {l:'#',    v:lastD.rPunto||0,                c:'#22c55e'},
       {l:'+',    v:lastD.rPos||0,                  c:'#86efac'},
-      {l:'!',    v:lastD.rAdm||0,                  c:'#fbbf24'},
+      {l:'!',    v:lastD.rOvp||0,                  c:'#fbbf24'},
       {l:'-',    v:lastD.rNeg||0,                  c:'#f97316'},
       {l:'/',    v:lastD.rVend||0,                 c:'#fb923c'},
       {l:'=',    v:lastD.rErr||0,                  c:'#ef4444'},
@@ -916,7 +920,7 @@ function renderEquipo(){
       {l:'TOT',  v:lastD.aT||0,                    c:C.indigo},
       {l:'#',    v:lastD.aPunto||0,                c:'#22c55e'},
       {l:'+',    v:lastD.aPos||0,                  c:'#86efac'},
-      {l:'!',    v:lastD.aAdm||0,                  c:'#fbbf24'},
+      {l:'!',    v:lastD.aOvp||0,                  c:'#fbbf24'},
       {l:'-',    v:lastD.aNeg||0,                  c:'#f97316'},
       {l:'/',    v:lastD.aVend||0,                 c:'#fb923c'},
       {l:'=',    v:lastD.aErr||0,                  c:'#ef4444'},
@@ -940,22 +944,41 @@ function renderEquipo(){
     return{p,last,sEffVals,rEffVals,aEffVals,sT,rT,aT,sessions:hist.length};
   }).filter(Boolean).sort((a,b)=>(b.last.rEff||0)-(a.last.rEff||0));
 
-  const rankHTML=rankRows.map((row,i)=>`<tr>
-    <td><div class=t-name>
-      <div class=rank-cam>${row.p.c}</div>
-      <div class=rank-nom>${row.p.n}</div>
-    </div></td>
-    <td style="font-size:11px;color:var(--mut)">${row.sessions}</td>
-    <td><span class=eff-val style="color:${ec(row.last.sEff)}">${row.last.sT>0?row.last.sEff+'%':'--'}</span>
-        <span class=trend-badge style="color:${row.sT.c}"> ${row.sT.sym}</span></td>
-    <td><span class=eff-val style="color:${ec(row.last.rEff)}">${row.last.rT>0?row.last.rEff+'%':'--'}</span>
-        <span class=trend-badge style="color:${row.rT.c}"> ${row.rT.sym}</span></td>
-    <td><span class=eff-val style="color:${ec(row.last.aEff)}">${row.last.aT>0?row.last.aEff+'%':'--'}</span>
-        <span class=trend-badge style="color:${row.aT.c}"> ${row.aT.sym}</span></td>
-    <td>${row.last.bT>0?row.last.bPtPos+'%':'--'}</td>
-    <td>${row.last.aTCQ||0}</td>
-    <td>${row.last.bT>0?row.last.bPt:'--'}</td>
-  </tr>`).join('');
+  function fmtEff(val, tot, trend){
+    if(!tot) return '<td style="color:var(--mut)">—</td>';
+    return '<td><span class=eff-val style="color:'+ec(val)+'">'+val+'%</span><span class=trend-badge style="color:'+trend.c+'"> '+trend.sym+'</span></td>';
+  }
+  function fmtN(val){ return '<td style="font-size:11px">'+( val||0)+'</td>'; }
+  function fmtNd(val,tot){ return '<td style="font-size:11px;color:'+(tot>0?'var(--txt)':'var(--mut)')+'">'+( tot>0?(val||0):'—')+'</td>'; }
+
+  const rankHTML=rankRows.map((row,i)=>{
+    const l=row.last;
+    return '<tr>'
+      +'<td><div class=t-name><div class=rank-cam>'+row.p.c+'</div><div class=rank-nom>'+row.p.n+'</div></div></td>'
+      +'<td style="font-size:11px;color:var(--mut)">'+row.sessions+'</td>'
+      // SAQUE
+      +fmtEff(l.sEff,l.sT,row.sT)
+      +fmtN(l.sT)
+      +fmtNd(l.sPunto,l.sT)
+      +fmtNd(l.sVend,l.sT)
+      +fmtNd(l.sErr,l.sT)
+      // RECEPCION
+      +fmtEff(l.rEff,l.rT,row.rT)
+      +fmtN(l.rT)
+      +fmtNd(l.rPunto,l.rT)
+      +fmtNd(l.rVend,l.rT)
+      +fmtNd(l.rErr,l.rT)
+      // ATAQUE
+      +fmtEff(l.aEff,l.aT,row.aT)
+      +fmtN(l.aT)
+      +fmtNd(l.aPunto,l.aT)
+      +fmtNd(l.aVend,l.aT)
+      +fmtNd(l.aErr,l.aT)
+      // BLOQUEO
+      +fmtN(l.bT)
+      +fmtNd(l.bPt,l.bT)
+      +'</tr>';
+  }).join('');
 
   document.getElementById('eq-content').innerHTML=`
     <div class=eq-hero>
@@ -991,19 +1014,40 @@ function renderEquipo(){
 
     <div class=section-title>ESTADO ACTUAL POR JUGADOR</div>
     <div class=rank-table>
+      <div style="overflow-x:auto">
       <table>
-        <thead><tr>
-          <th style="text-align:left">JUGADOR</th>
-          <th>SESIONES</th>
-          <th style="color:${C.amber}">EFF SAQUE</th>
-          <th style="color:${C.green}">EFF REC.</th>
-          <th style="color:${C.indigo}">EFF ATAQUE</th>
-          <th style="color:${C.purple}">BLQ +%</th>
-          <th style="color:${C.purple}">TCQ</th>
-          <th style="color:${C.green}">BLOCK OUT</th>
-        </tr></thead>
+        <thead>
+          <tr>
+            <th rowspan="2" style="text-align:left;vertical-align:bottom">JUGADOR</th>
+            <th rowspan="2" style="vertical-align:bottom">SES.</th>
+            <th colspan="5" style="color:${C.amber};border-bottom:2px solid ${C.amber}33;padding-bottom:4px">SAQUE</th>
+            <th colspan="5" style="color:${C.green};border-bottom:2px solid ${C.green}33;padding-bottom:4px">RECEPCIÓN</th>
+            <th colspan="5" style="color:${C.indigo};border-bottom:2px solid ${C.indigo}33;padding-bottom:4px">ATAQUE</th>
+            <th colspan="2" style="color:${C.purple};border-bottom:2px solid ${C.purple}33;padding-bottom:4px">BLOQUEO</th>
+          </tr>
+          <tr>
+            <th style="color:${C.amber};font-size:8px">EFF</th>
+            <th style="color:${C.amber};font-size:8px">TOT</th>
+            <th style="color:${C.amber};font-size:8px">#</th>
+            <th style="color:${C.amber};font-size:8px">/</th>
+            <th style="color:${C.amber};font-size:8px">=</th>
+            <th style="color:${C.green};font-size:8px">EFF</th>
+            <th style="color:${C.green};font-size:8px">TOT</th>
+            <th style="color:${C.green};font-size:8px">#</th>
+            <th style="color:${C.green};font-size:8px">/</th>
+            <th style="color:${C.green};font-size:8px">=</th>
+            <th style="color:${C.indigo};font-size:8px">EFF</th>
+            <th style="color:${C.indigo};font-size:8px">TOT</th>
+            <th style="color:${C.indigo};font-size:8px">#</th>
+            <th style="color:${C.indigo};font-size:8px">/</th>
+            <th style="color:${C.indigo};font-size:8px">=</th>
+            <th style="color:${C.purple};font-size:8px">TOT</th>
+            <th style="color:${C.purple};font-size:8px">BLK</th>
+          </tr>
+        </thead>
         <tbody>${rankHTML}</tbody>
       </table>
+      </div>
     </div>
 
     <div class=section-title>DETALLE DV4 EQUIPO — ACUMULADO</div>
@@ -1096,17 +1140,17 @@ function renderIndividual(nom,cam){
   }
 
   // Acumular stats del jugador a lo largo de todas las sesiones
-  var sTot=0,sPt=0,sPos=0,sAdm=0,sNeg=0,sVend=0,sErr=0;
-  var rTot=0,rPt=0,rPos=0,rAdm=0,rNeg=0,rVend=0,rErr=0;
-  var aTot=0,aPt=0,aPos=0,aAdm=0,aNeg=0,aVend=0,aErr=0,aTcq=0;
+  var sTot=0,sPt=0,sPos=0,sOvp=0,sNeg=0,sVend=0,sErr=0;
+  var rTot=0,rPt=0,rPos=0,rOvp=0,rNeg=0,rVend=0,rErr=0;
+  var aTot=0,aPt=0,aPos=0,aOvp=0,aNeg=0,aVend=0,aErr=0,aTcq=0;
   var sEffVals=[],rEffVals=[],aEffVals=[];
   hist.forEach(function(s){
-    if(s.sT>0){sTot+=s.sT;sPt+=(s.sPunto||0);sPos+=(s.sPos||0);sAdm+=(s.sAdm||0);sNeg+=(s.sNeg||0);sVend+=(s.sVend||0);sErr+=(s.sErr||0);sEffVals.push(s.sEff);}
-    if(s.rT>0){rTot+=s.rT;rPt+=(s.rPunto||0);rPos+=(s.rPos||0);rAdm+=(s.rAdm||0);rNeg+=(s.rNeg||0);rVend+=(s.rVend||0);rErr+=(s.rErr||0);rEffVals.push(s.rEff);}
-    if(s.aT>0){aTot+=s.aT;aPt+=(s.aPunto||0);aPos+=(s.aPos||0);aAdm+=(s.aAdm||0);aNeg+=(s.aNeg||0);aVend+=(s.aVend||0);aErr+=(s.aErr||0);aTcq+=(s.aTCQ||0);aEffVals.push(s.aEff);}
+    if(s.sT>0){sTot+=s.sT;sPt+=(s.sPunto||0);sPos+=(s.sPos||0);sOvp+=(s.sOvp||0);sNeg+=(s.sNeg||0);sVend+=(s.sVend||0);sErr+=(s.sErr||0);sEffVals.push(s.sEff);}
+    if(s.rT>0){rTot+=s.rT;rPt+=(s.rPunto||0);rPos+=(s.rPos||0);rOvp+=(s.rOvp||0);rNeg+=(s.rNeg||0);rVend+=(s.rVend||0);rErr+=(s.rErr||0);rEffVals.push(s.rEff);}
+    if(s.aT>0){aTot+=s.aT;aPt+=(s.aPunto||0);aPos+=(s.aPos||0);aOvp+=(s.aOvp||0);aNeg+=(s.aNeg||0);aVend+=(s.aVend||0);aErr+=(s.aErr||0);aTcq+=(s.aTCQ||0);aEffVals.push(s.aEff);}
   });
   var sEffAcum=sTot>0?Math.round((sPt-sVend-sErr)/sTot*100):0;
-  var rEffAcum=rTot>0?Math.round((rPt+rPos*0.5+rAdm*0.25-rVend*0.5-rErr)/rTot*100):0;
+  var rEffAcum=rTot>0?Math.round((rPt+rPos*0.5+rOvp*0.25-rVend*0.5-rErr)/rTot*100):0;
   var aEffAcum=aTot>0?Math.round((aPt-aVend-aErr)/aTot*100):0;
 
   const sCardInd=indFundCard('SAQUE', C.amber, sTot, [
@@ -1123,7 +1167,7 @@ function renderIndividual(nom,cam){
     {l:'TOT',v:rTot,c:C.green},
     {l:'#',v:rPt,c:'#22c55e'},
     {l:'+',v:rPos,c:'#86efac'},
-    {l:'!',v:rAdm,c:'#fbbf24'},
+    {l:'!',v:rOvp,c:'#fbbf24'},
     {l:'-',v:rNeg,c:'#f97316'},
     {l:'/',v:rVend,c:'#fb923c'},
     {l:'=',v:rErr,c:'#ef4444'},
@@ -1133,7 +1177,7 @@ function renderIndividual(nom,cam){
     {l:'TOT',v:aTot,c:C.indigo},
     {l:'#',v:aPt,c:'#22c55e'},
     {l:'+',v:aPos,c:'#86efac'},
-    {l:'!',v:aAdm,c:'#fbbf24'},
+    {l:'!',v:aOvp,c:'#fbbf24'},
     {l:'-',v:aNeg,c:'#f97316'},
     {l:'/',v:aVend,c:'#fb923c'},
     {l:'=',v:aErr,c:'#ef4444'},
@@ -1283,7 +1327,7 @@ function renderRecepcionBlock(hist){
     tot  +=(parseInt(s.rT)     ||0);
     pt   +=(parseInt(s.rPunto) ||0);
     pos  +=(parseInt(s.rPos)   ||0);
-    adm  +=(parseInt(s.rAdm)   ||0);
+    adm  +=(parseInt(s.rOvp)   ||0);
     neg  +=(parseInt(s.rNeg)   ||0);
     vend +=(parseInt(s.rVend)  ||0);
     err  +=(parseInt(s.rErr)   ||0);
@@ -1316,7 +1360,7 @@ function renderAtaqueBlock(hist){
     tot  +=(parseInt(s.aT)     ||0);
     pt   +=(parseInt(s.aPunto) ||0);
     pos  +=(parseInt(s.aPos)   ||0);
-    adm  +=(parseInt(s.aAdm)   ||0);
+    adm  +=(parseInt(s.aOvp)   ||0);
     neg  +=(parseInt(s.aNeg)   ||0);
     vend +=(parseInt(s.aVend)  ||0);
     err  +=(parseInt(s.aErr)   ||0);
@@ -1353,7 +1397,7 @@ function renderSaqueBlock(hist, playerName){
     totSaque  += t;
     ptSaque   += (parseInt(s.sPunto)||0);
     posS      += (parseInt(s.sPos)  ||0);
-    admS      += (parseInt(s.sAdm)  ||0);
+    admS      += (parseInt(s.sOvp)  ||0);
     negS      += (parseInt(s.sNeg)  ||0);
     vendSaque += (parseInt(s.sVend) ||0);
     errSaque  += (parseInt(s.sErr)  ||0);
@@ -1858,24 +1902,24 @@ function renderComparison(){
 
   // Acumular stats totales
   function acumPlayer(hist){
-    var r={sT:0,sPunto:0,sPos:0,sAdm:0,sNeg:0,sVend:0,sErr:0,
-           rT:0,rPunto:0,rPos:0,rAdm:0,rNeg:0,rVend:0,rErr:0,
-           aT:0,aPunto:0,aPos:0,aAdm:0,aNeg:0,aVend:0,aErr:0,aTCQ:0,
+    var r={sT:0,sPunto:0,sPos:0,sOvp:0,sNeg:0,sVend:0,sErr:0,
+           rT:0,rPunto:0,rPos:0,rOvp:0,rNeg:0,rVend:0,rErr:0,
+           aT:0,aPunto:0,aPos:0,aOvp:0,aNeg:0,aVend:0,aErr:0,aTCQ:0,
            bT:0,bPt:0,sEffVals:[],rEffVals:[],aEffVals:[]};
     hist.forEach(function(s){
       r.sT+=(s.sT||0);r.sPunto+=(s.sPunto||0);r.sPos+=(s.sPos||0);
-      r.sAdm+=(s.sAdm||0);r.sNeg+=(s.sNeg||0);r.sVend+=(s.sVend||0);r.sErr+=(s.sErr||0);
+      r.sOvp+=(s.sOvp||0);r.sNeg+=(s.sNeg||0);r.sVend+=(s.sVend||0);r.sErr+=(s.sErr||0);
       if(s.sT>0)r.sEffVals.push(s.sEff);
       r.rT+=(s.rT||0);r.rPunto+=(s.rPunto||0);r.rPos+=(s.rPos||0);
-      r.rAdm+=(s.rAdm||0);r.rNeg+=(s.rNeg||0);r.rVend+=(s.rVend||0);r.rErr+=(s.rErr||0);
+      r.rOvp+=(s.rOvp||0);r.rNeg+=(s.rNeg||0);r.rVend+=(s.rVend||0);r.rErr+=(s.rErr||0);
       if(s.rT>0)r.rEffVals.push(s.rEff);
       r.aT+=(s.aT||0);r.aPunto+=(s.aPunto||0);r.aPos+=(s.aPos||0);
-      r.aAdm+=(s.aAdm||0);r.aNeg+=(s.aNeg||0);r.aVend+=(s.aVend||0);r.aErr+=(s.aErr||0);
+      r.aOvp+=(s.aOvp||0);r.aNeg+=(s.aNeg||0);r.aVend+=(s.aVend||0);r.aErr+=(s.aErr||0);
       r.aTCQ+=(s.aTCQ||0);if(s.aT>0)r.aEffVals.push(s.aEff);
       r.bT+=(s.bT||0);r.bPt+=(s.bPt||0);
     });
     r.sEff=r.sT>0?Math.round((r.sPunto-r.sVend-r.sErr)/r.sT*100):null;
-    r.rEff=r.rT>0?Math.round((r.rPunto+r.rPos*0.5+r.rAdm*0.25-r.rVend*0.5-r.rErr)/r.rT*100):null;
+    r.rEff=r.rT>0?Math.round((r.rPunto+r.rPos*0.5+r.rOvp*0.25-r.rVend*0.5-r.rErr)/r.rT*100):null;
     r.aEff=r.aT>0?Math.round((r.aPunto-r.aVend-r.aErr)/r.aT*100):null;
     return r;
   }
@@ -1942,7 +1986,7 @@ function renderComparison(){
           ${row('Total',a1.rT,a2.rT,'')}
           ${row('#  Perfectas',a1.rPunto,a2.rPunto,'')}
           ${row('+  Positivas',a1.rPos,a2.rPos,'')}
-          ${row('!  Admiración',a1.rAdm,a2.rAdm,'')}
+          ${row('!  Admiración',a1.rOvp,a2.rOvp,'')}
           ${row('-  Negativas',a1.rNeg,a2.rNeg,'',false)}
           ${row('=  Errores',a1.rErr,a2.rErr,'',false)}
           ${sectionHdr('ATAQUE','#818cf8')}
