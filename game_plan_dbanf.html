@@ -221,20 +221,30 @@ select, select option {
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   body { background: #07080f !important; color: #e2e8f0 !important; }
   .page-header { position: relative !important; }
-  .back-btn, .pdf-btn, .lang-switcher, #lang-switcher { display: none !important; }
-  .section-block, .player-card, .tactic-block { page-break-inside: avoid !important; }
+  .back-btn, .pdf-btn, .lang-switcher, #lang-switcher, #nav-dots,
+  [style*="position:fixed"], .modal-overlay { display: none !important; }
+  .jugador-section { page-break-inside: avoid !important; }
+  .jugador-section .canchitas-wrap { display: block !important; }
   .section-title { page-break-after: avoid !important; }
-  @page { margin: 1.5cm; }
+  canvas { display: block !important; }
+  @page { margin: 1cm; size: A4 portrait; }
 }
 
 </style>
 <script src="lang.js" onerror="void 0"></script>
 </head>
 <body>
+<script>
+// Preload canvas fonts immediately
+if(document.fonts && document.fonts.load){
+  document.fonts.load("800 16px Inter").catch(function(){});
+  document.fonts.load("bold 16px 'Bebas Neue'").catch(function(){});
+}
+</script>
 
 <header class="page-header">
   <a href="index.html" class="back-btn">← Inicio</a>
-  <button onclick="descargarPDF()" class="pdf-btn">📄 Descargar PDF</button>
+  <button onclick="descargarPDF()" class="pdf-btn" id="pdf-btn">📄 Descargar PDF</button>
   <div>
     <div class="page-title"><span data-t="game_plan">Plan de Juego</span></div>
     <div style="font-size:10px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;margin-top:1px">Análisis táctico de rivales — CASL Voley</div>
@@ -282,7 +292,7 @@ select, select option {
     </div>
     <div class="modal-stats-row" id="modal-stats"></div>
     <div class="legend">
-      <div class="lg-item"><div class="lg-dot" style="background:#ff8c00"></div>1° zona</div>
+      <div class="lg-item"><div class="lg-dot" style="background:#a855f7"></div>1° zona</div>
       <div class="lg-item"><div class="lg-dot" style="background:#a855f7"></div>2° zona</div>
     </div>
   </div>
@@ -327,10 +337,11 @@ const JUGADORES = [
         ],
         "eff": 27,
         "tot": 11,
-        "pts": 36,
+        "pts": 4,
         "slash": 0,
         "err": 1,
-        "video": null
+        "video": null,
+        "pts_pct": 36
       },
       {
         "cod": "X7",
@@ -347,10 +358,11 @@ const JUGADORES = [
         ],
         "eff": -5,
         "tot": 19,
-        "pts": 26,
+        "pts": 5,
         "slash": 3,
         "err": 3,
-        "video": "https://youtu.be/A89Hy9iI1jA"
+        "video": "https://youtu.be/A89Hy9iI1jA",
+        "pts_pct": 26
       },
       {
         "cod": "XM",
@@ -367,10 +379,11 @@ const JUGADORES = [
         ],
         "eff": 57,
         "tot": 23,
-        "pts": 61,
+        "pts": 14,
         "slash": 1,
         "err": 0,
-        "video": "https://youtu.be/8oQHvlemVlU"
+        "video": "https://youtu.be/8oQHvlemVlU",
+        "pts_pct": 61
       },
       {
         "cod": "X2",
@@ -378,10 +391,11 @@ const JUGADORES = [
         "destinos": [],
         "eff": 100,
         "tot": 1,
-        "pts": 100,
+        "pts": 1,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 100
       }
     ],
     "saques": [
@@ -405,7 +419,8 @@ const JUGADORES = [
         "plus": 12,
         "slash": 4,
         "err": 0,
-        "video": "https://youtu.be/_oqWK184Kw8"
+        "video": "https://youtu.be/_oqWK184Kw8",
+        "pts_pct": 0
       },
       {
         "cod": "SQ",
@@ -421,13 +436,14 @@ const JUGADORES = [
             "pct": 25
           }
         ],
-        "eff": null,
+        "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "plus": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       }
     ],
     "video": null
@@ -452,10 +468,11 @@ const JUGADORES = [
         "destinos": [],
         "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "V5",
@@ -463,10 +480,11 @@ const JUGADORES = [
         "destinos": [],
         "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "X6",
@@ -483,10 +501,11 @@ const JUGADORES = [
         ],
         "eff": 67,
         "tot": 9,
-        "pts": 67,
+        "pts": 6,
         "slash": 0,
         "err": 0,
-        "video": "https://youtu.be/ILZSs7b0VMk"
+        "video": "https://youtu.be/ILZSs7b0VMk",
+        "pts_pct": 67
       },
       {
         "cod": "V6",
@@ -502,11 +521,12 @@ const JUGADORES = [
           }
         ],
         "eff": 0,
-        "tot": 0,
-        "pts": null,
+        "tot": 3,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "X8",
@@ -519,10 +539,11 @@ const JUGADORES = [
         ],
         "eff": 0,
         "tot": 9,
-        "pts": 44,
+        "pts": 4,
         "slash": 2,
         "err": 2,
-        "video": "https://youtu.be/u5v_YqmT3do"
+        "video": "https://youtu.be/u5v_YqmT3do",
+        "pts_pct": 44
       },
       {
         "cod": "V8",
@@ -533,7 +554,8 @@ const JUGADORES = [
         "pts": 0,
         "slash": 0,
         "err": 1,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       }
     ],
     "saques": [
@@ -551,13 +573,14 @@ const JUGADORES = [
             "pct": 25
           }
         ],
-        "eff": null,
+        "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "plus": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "SQ",
@@ -575,11 +598,12 @@ const JUGADORES = [
         ],
         "eff": -7,
         "tot": 11,
-        "pts": 27,
+        "pts": 3,
         "plus": 1,
         "slash": 0,
         "err": 4,
-        "video": "https://youtu.be/qWmEh4tA1xI"
+        "video": "https://youtu.be/qWmEh4tA1xI",
+        "pts_pct": 100
       }
     ],
     "video": null
@@ -611,12 +635,13 @@ const JUGADORES = [
             "pct": 28
           }
         ],
-        "eff": null,
-        "tot": 0,
-        "pts": null,
+        "eff": 50,
+        "tot": 72,
+        "pts": 44,
         "slash": 0,
         "err": 0,
-        "video": "https://youtu.be/KwwGy2JinBw"
+        "video": "https://youtu.be/KwwGy2JinBw",
+        "pts_pct": 61
       },
       {
         "cod": "V5",
@@ -631,45 +656,49 @@ const JUGADORES = [
             "pct": 23
           }
         ],
-        "eff": null,
-        "tot": 0,
-        "pts": null,
+        "eff": 0,
+        "tot": 16,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "X6",
         "orig": 2,
         "destinos": [],
-        "eff": null,
+        "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "V6",
         "orig": 2,
         "destinos": [],
-        "eff": null,
+        "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "XP",
         "orig": 8,
         "destinos": [],
-        "eff": null,
-        "tot": 0,
-        "pts": null,
+        "eff": 25,
+        "tot": 63,
+        "pts": 26,
         "slash": 0,
         "err": 0,
-        "video": "https://youtu.be/2Bsz3D6AZcw"
+        "video": "https://youtu.be/2Bsz3D6AZcw",
+        "pts_pct": 41
       }
     ],
     "saques": [
@@ -687,13 +716,14 @@ const JUGADORES = [
             "pct": 22
           }
         ],
-        "eff": null,
+        "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "plus": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "SQ",
@@ -709,13 +739,14 @@ const JUGADORES = [
             "pct": 24
           }
         ],
-        "eff": null,
+        "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "plus": 0,
         "slash": 0,
         "err": 0,
-        "video": "https://youtu.be/sGmA3K0uY9g"
+        "video": "https://youtu.be/sGmA3K0uY9g",
+        "pts_pct": 0
       }
     ],
     "video": null
@@ -751,11 +782,12 @@ const JUGADORES = [
         ],
         "eff": 38,
         "tot": 4,
-        "pts": 25,
+        "pts": 1,
         "plus": 0,
         "slash": 1,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "SQ",
@@ -773,11 +805,12 @@ const JUGADORES = [
         ],
         "eff": 0,
         "tot": 4,
-        "pts": 25,
+        "pts": 1,
         "plus": 0,
         "slash": 0,
         "err": 1,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       }
     ],
     "video": null
@@ -809,12 +842,13 @@ const JUGADORES = [
             "pct": 25
           }
         ],
-        "eff": 0,
-        "tot": 0,
-        "pts": null,
+        "eff": 46,
+        "tot": 28,
+        "pts": 17,
         "slash": 0,
         "err": 0,
-        "video": "https://youtu.be/5tTn1SARR5A"
+        "video": "https://youtu.be/5tTn1SARR5A",
+        "pts_pct": 61
       },
       {
         "cod": "X7",
@@ -829,12 +863,13 @@ const JUGADORES = [
             "pct": 33
           }
         ],
-        "eff": 0,
-        "tot": 0,
-        "pts": null,
+        "eff": 50,
+        "tot": 6,
+        "pts": 3,
         "slash": 0,
         "err": 0,
-        "video": "https://youtu.be/gE1gfnk4Lvs"
+        "video": "https://youtu.be/gE1gfnk4Lvs",
+        "pts_pct": 50
       },
       {
         "cod": "XM",
@@ -849,12 +884,13 @@ const JUGADORES = [
             "pct": 33
           }
         ],
-        "eff": 0,
-        "tot": 0,
-        "pts": null,
+        "eff": 43,
+        "tot": 7,
+        "pts": 4,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 57
       },
       {
         "cod": "X2",
@@ -862,10 +898,11 @@ const JUGADORES = [
         "destinos": [],
         "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       }
     ],
     "saques": [
@@ -885,11 +922,12 @@ const JUGADORES = [
         ],
         "eff": 19,
         "tot": 13,
-        "pts": 15,
+        "pts": 2,
         "plus": 2,
         "slash": 0,
         "err": 0,
-        "video": "https://youtu.be/XWXc0OyQ-L0"
+        "video": "https://youtu.be/XWXc0OyQ-L0",
+        "pts_pct": 15
       },
       {
         "cod": "SQ",
@@ -907,11 +945,12 @@ const JUGADORES = [
         ],
         "eff": -14,
         "tot": 57,
-        "pts": 5,
+        "pts": 3,
         "plus": 9,
         "slash": 3,
         "err": 15,
-        "video": null
+        "video": null,
+        "pts_pct": 5
       }
     ],
     "video": null
@@ -943,12 +982,13 @@ const JUGADORES = [
             "pct": 20
           }
         ],
-        "eff": null,
-        "tot": 0,
-        "pts": null,
+        "eff": 18,
+        "tot": 17,
+        "pts": 7,
         "slash": 0,
         "err": 0,
-        "video": "https://youtu.be/3BJd_EDbiUQ"
+        "video": "https://youtu.be/3BJd_EDbiUQ",
+        "pts_pct": 41
       },
       {
         "cod": "V5",
@@ -959,45 +999,49 @@ const JUGADORES = [
             "pct": 100
           }
         ],
-        "eff": null,
-        "tot": 0,
-        "pts": null,
+        "eff": 0,
+        "tot": 3,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "X6",
         "orig": 2,
         "destinos": [],
-        "eff": null,
-        "tot": 0,
-        "pts": null,
+        "eff": 0,
+        "tot": 2,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "V6",
         "orig": 2,
         "destinos": [],
-        "eff": null,
+        "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "XP",
         "orig": 8,
         "destinos": [],
-        "eff": null,
-        "tot": 0,
-        "pts": null,
+        "eff": 29,
+        "tot": 17,
+        "pts": 7,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 41
       }
     ],
     "saques": [
@@ -1015,13 +1059,14 @@ const JUGADORES = [
             "pct": 22
           }
         ],
-        "eff": null,
+        "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "plus": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "SQ",
@@ -1037,13 +1082,14 @@ const JUGADORES = [
             "pct": 22
           }
         ],
-        "eff": null,
+        "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "plus": 0,
         "slash": 0,
         "err": 0,
-        "video": "https://youtu.be/Lg0nOPQ6C-o"
+        "video": "https://youtu.be/Lg0nOPQ6C-o",
+        "pts_pct": 0
       }
     ],
     "video": null
@@ -1083,7 +1129,8 @@ const JUGADORES = [
         "plus": 2,
         "slash": 0,
         "err": 1,
-        "video": "https://youtu.be/SIVDkx3Z9MA"
+        "video": "https://youtu.be/SIVDkx3Z9MA",
+        "pts_pct": 0
       },
       {
         "cod": "SQ",
@@ -1099,13 +1146,14 @@ const JUGADORES = [
             "pct": 22
           }
         ],
-        "eff": null,
+        "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "plus": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       }
     ],
     "video": null
@@ -1145,7 +1193,8 @@ const JUGADORES = [
         "plus": 1,
         "slash": 0,
         "err": 1,
-        "video": null
+        "video": null,
+        "pts_pct": 100
       },
       {
         "cod": "SQ",
@@ -1161,13 +1210,14 @@ const JUGADORES = [
             "pct": 23
           }
         ],
-        "eff": null,
+        "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "plus": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       }
     ],
     "video": null
@@ -1192,10 +1242,11 @@ const JUGADORES = [
         "destinos": [],
         "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "V5",
@@ -1203,10 +1254,11 @@ const JUGADORES = [
         "destinos": [],
         "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "X6",
@@ -1223,10 +1275,11 @@ const JUGADORES = [
         ],
         "eff": 43,
         "tot": 44,
-        "pts": 55,
+        "pts": 24,
         "slash": 3,
         "err": 2,
-        "video": null
+        "video": null,
+        "pts_pct": 55
       },
       {
         "cod": "V6",
@@ -1243,10 +1296,11 @@ const JUGADORES = [
         ],
         "eff": 33,
         "tot": 36,
-        "pts": 44,
+        "pts": 16,
         "slash": 1,
         "err": 3,
-        "video": null
+        "video": null,
+        "pts_pct": 44
       },
       {
         "cod": "X8",
@@ -1263,10 +1317,11 @@ const JUGADORES = [
         ],
         "eff": 22,
         "tot": 37,
-        "pts": 43,
+        "pts": 16,
         "slash": 2,
         "err": 6,
-        "video": null
+        "video": null,
+        "pts_pct": 43
       },
       {
         "cod": "V8",
@@ -1283,10 +1338,11 @@ const JUGADORES = [
         ],
         "eff": 27,
         "tot": 15,
-        "pts": 60,
+        "pts": 9,
         "slash": 3,
         "err": 2,
-        "video": null
+        "video": null,
+        "pts_pct": 60
       }
     ],
     "saques": [
@@ -1310,7 +1366,8 @@ const JUGADORES = [
         "plus": 1,
         "slash": 2,
         "err": 4,
-        "video": null
+        "video": null,
+        "pts_pct": 100
       },
       {
         "cod": "SQ",
@@ -1328,11 +1385,12 @@ const JUGADORES = [
         ],
         "eff": -32,
         "tot": 25,
-        "pts": 8,
+        "pts": 2,
         "plus": 2,
         "slash": 1,
         "err": 11,
-        "video": null
+        "video": null,
+        "pts_pct": 8
       }
     ],
     "video": null
@@ -1372,7 +1430,8 @@ const JUGADORES = [
         "plus": 1,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "SQ",
@@ -1388,13 +1447,14 @@ const JUGADORES = [
             "pct": 26
           }
         ],
-        "eff": null,
+        "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "plus": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       }
     ],
     "video": null
@@ -1428,10 +1488,11 @@ const JUGADORES = [
         ],
         "eff": 67,
         "tot": 3,
-        "pts": 67,
+        "pts": 2,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 67
       },
       {
         "cod": "X7",
@@ -1442,7 +1503,8 @@ const JUGADORES = [
         "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "XM",
@@ -1455,10 +1517,11 @@ const JUGADORES = [
         ],
         "eff": 75,
         "tot": 4,
-        "pts": 75,
+        "pts": 3,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 75
       },
       {
         "cod": "X2",
@@ -1466,10 +1529,11 @@ const JUGADORES = [
         "destinos": [],
         "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       }
     ],
     "saques": [
@@ -1489,11 +1553,12 @@ const JUGADORES = [
         ],
         "eff": -3,
         "tot": 24,
-        "pts": 4,
+        "pts": 1,
         "plus": 5,
         "slash": 0,
         "err": 3,
-        "video": null
+        "video": null,
+        "pts_pct": 4
       },
       {
         "cod": "SQ",
@@ -1509,13 +1574,14 @@ const JUGADORES = [
             "pct": 28
           }
         ],
-        "eff": null,
+        "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "plus": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       }
     ],
     "video": null
@@ -1549,10 +1615,11 @@ const JUGADORES = [
         ],
         "eff": 21,
         "tot": 39,
-        "pts": 41,
+        "pts": 16,
         "slash": 4,
         "err": 4,
-        "video": "https://youtu.be/lzCMOJQGsC4"
+        "video": "https://youtu.be/lzCMOJQGsC4",
+        "pts_pct": 41
       },
       {
         "cod": "V5",
@@ -1568,11 +1635,12 @@ const JUGADORES = [
           }
         ],
         "eff": 0,
-        "tot": 0,
-        "pts": null,
+        "tot": 12,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "X6",
@@ -1580,10 +1648,11 @@ const JUGADORES = [
         "destinos": [],
         "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "V6",
@@ -1591,10 +1660,11 @@ const JUGADORES = [
         "destinos": [],
         "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       },
       {
         "cod": "XP",
@@ -1602,10 +1672,11 @@ const JUGADORES = [
         "destinos": [],
         "eff": 0,
         "tot": 0,
-        "pts": null,
+        "pts": 0,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 0
       }
     ],
     "saques": [
@@ -1629,7 +1700,8 @@ const JUGADORES = [
         "plus": 1,
         "slash": 0,
         "err": 0,
-        "video": null
+        "video": null,
+        "pts_pct": 100
       },
       {
         "cod": "SQ",
@@ -1647,11 +1719,12 @@ const JUGADORES = [
         ],
         "eff": -16,
         "tot": 49,
-        "pts": 6,
+        "pts": 3,
         "plus": 7,
         "slash": 1,
         "err": 13,
-        "video": "https://youtu.be/qU12sAdfKvo"
+        "video": "https://youtu.be/qU12sAdfKvo",
+        "pts_pct": 6
       }
     ],
     "video": null
@@ -1709,7 +1782,7 @@ function drawCone(ctx,ox,oy,dx,dy,col,bw,pct,showPct,label,W){
     ctx.globalAlpha=1;ctx.strokeStyle=col;ctx.lineWidth=1.5;
     ctx.shadowColor=col;ctx.shadowBlur=8;ctx.stroke();
     if(showPct && W>140){
-      ctx.font='bold '+Math.round(W*0.065)+'px Barlow Condensed';
+      ctx.font='800 '+Math.round(W*0.062)+'px Inter';
       ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';
       ctx.shadowColor='rgba(0,0,0,.95)';ctx.shadowBlur=4;
       ctx.fillText(label,dx,dy);
@@ -1748,7 +1821,7 @@ function drawAtaqueCourt(ctx,W,H,ataque,color,pct){
   ctx.beginPath();ctx.moveTo(CL,NET+4+OWN_H*2/3);ctx.lineTo(CR,NET+4+OWN_H*2/3);ctx.stroke();
   ctx.restore();
 
-  if(ataque.tot>0 && ataque.destinos && ataque.destinos.length>0){
+  if(ataque.destinos && ataque.destinos.length>0){
     // Origen en franja rival
     var origZ=ataque.orig||8;
     var origXmap={1:CL+CW/6,9:CL+CW/6,2:CL+CW/6,6:CL+CW/2,8:CL+CW/2,3:CL+CW/2,5:CL+CW*5/6,7:CL+CW*5/6,4:CL+CW*5/6};
@@ -1760,7 +1833,7 @@ function drawAtaqueCourt(ctx,W,H,ataque,color,pct){
     var O6=NET+4;
     var destX={4:CL+CW/6,3:CL+CW/2,2:CL+CW*5/6,7:CL+CW/6,8:CL+CW/2,9:CL+CW*5/6,5:CL+CW/6,6:CL+CW/2,1:CL+CW*5/6};
     var destY={4:O6+OWN_H/6,3:O6+OWN_H/6,2:O6+OWN_H/6,7:O6+OWN_H/2,8:O6+OWN_H/2,9:O6+OWN_H/2,5:O6+OWN_H*5/6,6:O6+OWN_H*5/6,1:O6+OWN_H*5/6};
-    var cones=['#ff8c00','#a855f7'];
+    var cones=['#a855f7','#22c55e'];
 
     ataque.destinos.slice(0,2).forEach(function(d,i){
       var dx=destX[d.z]||CL+CW/2, dy=destY[d.z]||O6+OWN_H/2;
@@ -1773,14 +1846,14 @@ function drawAtaqueCourt(ctx,W,H,ataque,color,pct){
     ctx.fillStyle=color;ctx.globalAlpha=0.25;ctx.fill();
     ctx.globalAlpha=1;ctx.strokeStyle=color;ctx.lineWidth=1.5;
     ctx.shadowColor=color;ctx.shadowBlur=8;ctx.stroke();
-    ctx.font='bold '+Math.round(W*0.068)+'px Bebas Neue';
+    ctx.font='bold '+Math.round(W*0.07)+'px \'Bebas Neue\', Impact, sans-serif';
     ctx.fillStyle=color;ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.shadowColor='rgba(0,0,0,.95)';ctx.shadowBlur=3;
     ctx.fillText(ataque.cod,ox,oy);
     ctx.restore();
   } else {
     ctx.save();
-    ctx.font='bold '+Math.round(W*0.075)+'px Barlow Condensed';
+    ctx.font='800 '+Math.round(W*0.065)+'px Inter';
     ctx.fillStyle='rgba(255,255,255,.13)';ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText('—',CL+CW/2,NET+4+OWN_H/2);
     ctx.restore();
@@ -1820,7 +1893,7 @@ function drawSaqueCourt(ctx,W,H,saque,color,pct){
   ctx.beginPath();ctx.moveTo(CL,NET+OWN_H*2/3);ctx.lineTo(CR,NET+OWN_H*2/3);ctx.stroke();
   ctx.restore();
 
-  if(saque.tot>0 && saque.destinos && saque.destinos.length>0){
+  if(saque.destinos && saque.destinos.length>0){
     // Origen: zona de fondo propio
     var origZone=saque.orig||1;
     var origXmap={1:CL+CW*5/6,6:CL+CW/2,5:CL+CW/6};
@@ -1830,7 +1903,7 @@ function drawSaqueCourt(ctx,W,H,saque,color,pct){
     // Destinos en campo rival
     var destX={1:CL+CW/6,9:CL+CW/6,2:CL+CW/6,6:CL+CW/2,8:CL+CW/2,3:CL+CW/2,5:CL+CW*5/6,7:CL+CW*5/6,4:CL+CW*5/6};
     var destY={1:CT+RIVAL_H/6,6:CT+RIVAL_H/6,5:CT+RIVAL_H/6,9:CT+RIVAL_H/2,8:CT+RIVAL_H/2,7:CT+RIVAL_H/2,2:CT+RIVAL_H*5/6,3:CT+RIVAL_H*5/6,4:CT+RIVAL_H*5/6};
-    var cones=['#f59e0b','#a855f7'];
+    var cones=['#a855f7','#22c55e'];
 
     saque.destinos.slice(0,2).forEach(function(d,i){
       var dx=destX[d.z]||CL+CW/2,dy=destY[d.z]||CT+RIVAL_H/2;
@@ -1843,14 +1916,14 @@ function drawSaqueCourt(ctx,W,H,saque,color,pct){
     ctx.fillStyle=color;ctx.globalAlpha=0.25;ctx.fill();
     ctx.globalAlpha=1;ctx.strokeStyle=color;ctx.lineWidth=1.5;
     ctx.shadowColor=color;ctx.shadowBlur=8;ctx.stroke();
-    ctx.font='bold '+Math.round(W*0.068)+'px Bebas Neue';
+    ctx.font='bold '+Math.round(W*0.07)+'px \'Bebas Neue\', Impact, sans-serif';
     ctx.fillStyle=color;ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.shadowColor='rgba(0,0,0,.95)';ctx.shadowBlur=3;
     ctx.fillText(saque.cod,ox,oy);
     ctx.restore();
   } else {
     ctx.save();
-    ctx.font='bold '+Math.round(W*0.075)+'px Barlow Condensed';
+    ctx.font='800 '+Math.round(W*0.065)+'px Inter';
     ctx.fillStyle='rgba(255,255,255,.13)';ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText('SIN DATOS',CL+CW/2,NET+OWN_H/2);
     ctx.restore();
@@ -1864,7 +1937,7 @@ function buildCanchita(item,jIdx,i,prefix,W,H,drawFn,color,j){
   var card=document.createElement('div');
   card.className='canchita-card';
   var effC=effColor(item.eff);
-  var hasDatos=item.tot>0;
+  var hasDatos=item.tot>0||(item.destinos&&item.destinos.length>0);
 
   var hdr=document.createElement('div');
   hdr.className='canchita-hdr';
@@ -1892,12 +1965,15 @@ function buildCanchita(item,jIdx,i,prefix,W,H,drawFn,color,j){
   var cv=document.createElement('canvas');
   cv.className='mini-court';
   cv.id=prefix+'-'+jIdx+'-'+i;
-  cv.width=W;cv.height=H;
+  // HiDPI: render at 2x for crisp text and lines
+  var dpr=window.devicePixelRatio||2;
+  cv.width=W*dpr;cv.height=H*dpr;
+  cv.style.width=W+'px';cv.style.height=H+'px';
   wrap.appendChild(cv);card.appendChild(wrap);
 
   var stats=document.createElement('div');
   stats.className='canchita-stats';
-  [{l:'EFF',v:hasDatos?item.eff+'%':'—',c:effC},{l:'TOT',v:item.tot,c:color},{l:'#%',v:hasDatos?item.pts+'%':'—',c:'#22c55e'}].forEach(function(s){
+  [{l:'EFF',v:hasDatos&&item.eff!=null?item.eff+'%':'—',c:effC},{l:'TOT',v:item.tot,c:color},{l:'#%',v:hasDatos&&item.pts!=null?item.pts+'%':'—',c:'#22c55e'}].forEach(function(s){
     var ci=document.createElement('div');ci.className='cs-item';
     var cv2=document.createElement('div');cv2.className='cs-val';cv2.style.color=s.c;cv2.textContent=s.v;
     var cl=document.createElement('div');cl.className='cs-lbl';cl.textContent=s.l;
@@ -2049,7 +2125,7 @@ function renderPanelAtaque(j,jIdx,grid){
   j.ataques.forEach(function(a){ ataqueMap[a.cod] = a; });
   var ataquesMostrar = ordenCombos.length > 0
     ? ordenCombos.map(function(cod){ return ataqueMap[cod] || {cod:cod,orig:8,destinos:[],eff:null,tot:0,pts:null,slash:0,err:0,video:null}; })
-    : j.ataques.filter(function(a){ return a.tot>0 || (a.destinos && a.destinos.length>0); });
+    : j.ataques.filter(function(a){ return a.destinos && a.destinos.length>0; });
   ataquesMostrar.forEach(function(a,i){
     var card=buildCanchita(a,jIdx,i,'ma',180,140,drawAtaqueCourt,j.color,j);
     grid.appendChild(card);
@@ -2058,7 +2134,7 @@ function renderPanelAtaque(j,jIdx,grid){
       if(!cv) return;
       var ctx=cv.getContext('2d');
       var start=null;
-      function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/500,1),e=1-Math.pow(1-p,3);ctx.clearRect(0,0,180,140);drawAtaqueCourt(ctx,180,140,a,j.color,e);if(p<1)requestAnimationFrame(step);}
+      function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/500,1),e=1-Math.pow(1-p,3);var _dpr=window.devicePixelRatio||2;ctx.setTransform(_dpr,0,0,_dpr,0,0);ctx.clearRect(0,0,180,140);drawAtaqueCourt(ctx,180,140,a,j.color,e);if(p<1)requestAnimationFrame(step);}
       requestAnimationFrame(step);
     },i*70);
   });
@@ -2078,7 +2154,7 @@ function renderPanelSaque(j,jIdx,grid){
       if(!cv) return;
       var ctx=cv.getContext('2d');
       var start=null;
-      function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/520,1),e=1-Math.pow(1-p,3);ctx.clearRect(0,0,180,160);drawSaqueCourt(ctx,180,160,s,j.color,e);if(p<1)requestAnimationFrame(step);}
+      function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/520,1),e=1-Math.pow(1-p,3);var _dpr=window.devicePixelRatio||2;ctx.setTransform(_dpr,0,0,_dpr,0,0);ctx.clearRect(0,0,180,160);drawSaqueCourt(ctx,180,160,s,j.color,e);if(p<1)requestAnimationFrame(step);}
       requestAnimationFrame(step);
     },i*70);
   });
@@ -2118,7 +2194,7 @@ function openModal(item,j,tipo){
   var statsEl=document.getElementById('modal-stats');
   statsEl.innerHTML='';
   if(hasDatos){
-    [{l:'EFF',v:item.eff+'%',c:effColor(item.eff)},{l:'TOT',v:item.tot,c:j.color},{l:'#%',v:item.pts+'%',c:'#22c55e'}].forEach(function(s){
+    [{l:'EFF',v:item.eff!=null?item.eff+'%':'—',c:effColor(item.eff)},{l:'TOT',v:item.tot,c:j.color},{l:'#%',v:item.pts!=null?item.pts+'%':'—',c:'#22c55e'}].forEach(function(s){
       var el=document.createElement('div');el.className='modal-stat';
       var v=document.createElement('div');v.className='modal-stat-val';v.style.color=s.c;v.textContent=s.v;
       var l=document.createElement('div');l.className='modal-stat-lbl';l.textContent=s.l;
@@ -2332,8 +2408,10 @@ function renderArmador(){
       // Canvas
       var cvW=document.createElement('div');cvW.style.cssText='padding:5px;background:rgba(0,0,0,.2);cursor:pointer;position:relative';
       var cv=document.createElement('canvas');
-      cv.width=200;cv.height=160;
-      cv.style.cssText='display:block;border-radius:6px;width:100%';
+      var dpr4=window.devicePixelRatio||2;
+  cv.width=200*dpr4;cv.height=220*dpr4;
+  cv.style.width='200px';cv.style.height='220px';
+      cv.style.cssText='display:block;border-radius:6px;width:100%;height:220px';
       var expandHint=document.createElement('div');
       expandHint.style.cssText='position:absolute;top:8px;right:8px;background:rgba(0,0,0,.5);color:rgba(255,255,255,.4);font-size:9px;padding:2px 5px;border-radius:4px;letter-spacing:.5px;pointer-events:none';
       expandHint.textContent='2x clic';
@@ -2344,7 +2422,7 @@ function renderArmador(){
         };
       })(rot,color,arm.pills));
 
-      // Zaguero atacante — pill HTML entre canvas y stats
+      // Zaguero atacante
       var rotForm=FORMACION_ATAQUE[rot.pos]||null;
 
       // Dropdowns bloqueo
@@ -2386,8 +2464,15 @@ function renderArmador(){
       rotGrid.appendChild(card);
 
       setTimeout((function(canvas,rotation,clr,blq){
-        return function(){ redrawArmadorCourt(canvas,rotation,clr,blq); };
-      })(cv,rot,color,blqDat),50);
+        return function(){
+          // ensure canvas has been laid out
+          var cssW=canvas.offsetWidth||200;
+          var cssH=canvas.offsetHeight||220;
+          var _dpr=window.devicePixelRatio||2;
+          canvas.width=cssW*_dpr; canvas.height=cssH*_dpr;
+          redrawArmadorCourt(canvas,rotation,clr,blq);
+        };
+      })(cv,rot,color,blqDat),80);
     });
     panel.appendChild(rotGrid);
     sec.appendChild(panel);
@@ -2395,175 +2480,137 @@ function renderArmador(){
 }
 
 function redrawArmadorCourt(canvas,rot,color,blqData){
-  var W=canvas.width,H=canvas.height,ctx=canvas.getContext('2d');
+  var dprA=window.devicePixelRatio||2;
+  var W=canvas.offsetWidth||200, H=canvas.offsetHeight||220;
+  var ctx=canvas.getContext('2d');
+  ctx.setTransform(dprA,0,0,dprA,0,0);
   ctx.clearRect(0,0,W,H);
-  var PAD=5,CL=PAD,CR=W-PAD,CT=PAD,CB=H-PAD,CW=CR-CL,CH=CB-CT;
-  var NET=CT+CH*0.20,OWN=CB-NET,c1=CL+CW/3,c2=CL+CW*2/3;
 
-  // Background
-  ctx.fillStyle='#111827';ctx.fillRect(0,0,W,H);
+  var PAD=4,CL=PAD,CR=W-PAD,CT=PAD,CB=H-PAD,CW=CR-CL,CH=CB-CT;
+  // Red a 18% de la altura total — zona rival pequeña, cancha propia grande
+  var NET=CT+CH*0.18, OWN=CB-NET;
+  var c1=CL+CW/3, c2=CL+CW*2/3;
 
-  // Cancha propia (piso naranja)
+  // ── Fondo ────────────────────────────────────────────────────
+  ctx.fillStyle='#0d1117'; ctx.fillRect(0,0,W,H);
+
+  // ── Piso naranja ─────────────────────────────────────────────
   var bg=ctx.createLinearGradient(CL,NET,CL,CB);
-  bg.addColorStop(0,'#B87428');bg.addColorStop(0.5,'#D4893A');bg.addColorStop(1,'#B87428');
-  ctx.fillStyle=bg;ctx.fillRect(CL,NET,CW,OWN);
+  bg.addColorStop(0,'#b87428'); bg.addColorStop(0.5,'#d4893a'); bg.addColorStop(1,'#b87428');
+  ctx.fillStyle=bg; ctx.fillRect(CL,NET,CW,OWN);
 
-  // Grilla sutil
-  ctx.save();ctx.globalAlpha=0.05;ctx.strokeStyle='#000';ctx.lineWidth=0.5;
-  for(var iy=NET+5;iy<CB;iy+=5){ctx.beginPath();ctx.moveTo(CL,iy);ctx.lineTo(CR,iy);ctx.stroke();}
-  ctx.restore();
+  // ── Red ──────────────────────────────────────────────────────
+  var ng=ctx.createLinearGradient(0,NET-3,0,NET+5);
+  ng.addColorStop(0,'#1a1a2e'); ng.addColorStop(0.4,'#c8c8d8'); ng.addColorStop(1,'#1a1a2e');
+  ctx.fillStyle=ng; ctx.fillRect(CL-2,NET-3,CW+4,6);
+  ctx.fillStyle='#cc1515'; ctx.fillRect(CL-2,NET-5,CW+4,3);
 
-  // Red
-  var ng=ctx.createLinearGradient(0,NET-3,0,NET+4);
-  ng.addColorStop(0,'#1a1a2e');ng.addColorStop(0.4,'#c8c8d8');ng.addColorStop(1,'#1a1a2e');
-  ctx.fillStyle=ng;ctx.fillRect(CL-2,NET-3,CW+4,6);
-  ctx.fillStyle='#cc1515';ctx.fillRect(CL-2,NET-5,CW+4,3);
-
-  // Líneas cancha
+  // ── Líneas cancha ────────────────────────────────────────────
   ctx.save();
-  ctx.strokeStyle='rgba(255,255,255,.65)';ctx.lineWidth=1.5;ctx.setLineDash([]);
+  ctx.strokeStyle='rgba(255,255,255,.5)'; ctx.lineWidth=1; ctx.setLineDash([]);
   ctx.strokeRect(CL,NET,CW,OWN);
-  ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=0.7;ctx.setLineDash([3,3]);
-  [c1,c2].forEach(function(x){ctx.beginPath();ctx.moveTo(x,NET);ctx.lineTo(x,CB);ctx.stroke();});
-  ctx.beginPath();ctx.moveTo(CL,NET+OWN/3);ctx.lineTo(CR,NET+OWN/3);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(CL,NET+OWN*2/3);ctx.lineTo(CR,NET+OWN*2/3);ctx.stroke();
+  ctx.strokeStyle='rgba(255,255,255,.18)'; ctx.lineWidth=0.6; ctx.setLineDash([3,3]);
+  [c1,c2].forEach(function(x){
+    ctx.beginPath(); ctx.moveTo(x,NET); ctx.lineTo(x,CB); ctx.stroke();
+  });
+  // Línea de 3m
+  var L3=NET+OWN*0.33;
+  ctx.beginPath(); ctx.moveTo(CL,L3); ctx.lineTo(CR,L3); ctx.stroke();
+  ctx.setLineDash([]);
   ctx.restore();
 
-  // ── Formacion de ataque ─────────────────────────────────────────
-  var FORM = FORMACION_ATAQUE;
+  // ── Formación atacantes ──────────────────────────────────────
+  var FORM=FORMACION_ATAQUE;
   var armDelantero=(rot.pos==='P4'||rot.pos==='P3'||rot.pos==='P2');
-  var rotForm = FORM[rot.pos];
+  var rotForm=FORM[rot.pos]||null;
 
-  // Posiciones X de zonas delanteras sobre la red (zona del rival)
-  // IZQ=P4, CEN=P3, DER=P2/P1(opp)
-  var frontY = NET - (NET-CT)*0.52;
-  var backY  = NET + OWN*0.58;
+  var zoneX={1:armDelantero?CR-CW/6:CL+CW/6, 2:CR-CW/6, 3:CL+CW/2, 4:CL+CW/6, 6:CL+CW/2};
+  var PILL_Y = NET - (NET-CT)*0.45;  // delanteros sobre la red
+  var BACK_Y = NET + OWN*0.52;       // zaguero en el medio, entre fila 1 y fila 3
 
-  var zoneX = {
-    1: armDelantero ? CL+CW*5/6 : CL+CW/6,   // opuesto lado opp
-    2: CL+CW*5/6,
-    3: CL+CW/2,
-    4: CL+CW/6,
-    6: CL+CW/2
-  };
+  function drawPill(x,y,label,solid){
+    var pw=Math.min(CW*0.28,52), ph=13;
+    ctx.save();
+    ctx.shadowColor='rgba(0,0,0,.7)'; ctx.shadowBlur=4;
+    ctx.fillStyle=solid?'rgba(10,14,30,.95)':'rgba(6,9,20,.75)';
+    ctx.beginPath();
+    if(ctx.roundRect) ctx.roundRect(x-pw/2,y-ph/2,pw,ph,6);
+    else ctx.rect(x-pw/2,y-ph/2,pw,ph);
+    ctx.fill();
+    ctx.globalAlpha=solid?1:0.55;
+    ctx.shadowColor=color; ctx.shadowBlur=solid?5:0;
+    ctx.strokeStyle=color; ctx.lineWidth=solid?1.2:0.8;
+    if(!solid) ctx.setLineDash([2,2]);
+    ctx.beginPath();
+    if(ctx.roundRect) ctx.roundRect(x-pw/2,y-ph/2,pw,ph,6);
+    else ctx.rect(x-pw/2,y-ph/2,pw,ph);
+    ctx.stroke(); ctx.setLineDash([]);
+    ctx.globalAlpha=solid?1:0.7;
+    ctx.font='800 7px Inter,system-ui,sans-serif';
+    ctx.fillStyle='#fff'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.shadowColor='rgba(0,0,0,.9)'; ctx.shadowBlur=2;
+    ctx.fillText(label,x,y+0.5);
+    ctx.restore();
+  }
 
   if(rotForm){
-    // Jugadores delanteros (sobre la red, lado rival)
-    rotForm.front.forEach(function(jug){
-      var x = zoneX[jug.z] || CL+CW/2;
-      var y = frontY;
-      
-      // Capsule background
-      var tw = ctx.measureText(jug.n).width;
-      var capsW = Math.max(tw + 14, 44);
-      var capsH = 14;
-      
-      ctx.save();
-      ctx.globalAlpha = 0.92;
-      // Shadow
-      ctx.shadowColor = 'rgba(0,0,0,.6)';
-      ctx.shadowBlur = 6;
-      
-      // Capsule fill
-      var grad = ctx.createLinearGradient(x-capsW/2, y-capsH/2, x+capsW/2, y+capsH/2);
-      grad.addColorStop(0, 'rgba(15,20,35,.95)');
-      grad.addColorStop(1, 'rgba(25,30,50,.95)');
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.roundRect ? ctx.roundRect(x-capsW/2, y-capsH/2, capsW, capsH, 7)
-                    : ctx.rect(x-capsW/2, y-capsH/2, capsW, capsH);
-      ctx.fill();
-      
-      // Capsule border (color del equipo)
-      ctx.globalAlpha = 1;
-      ctx.shadowBlur = 4;
-      ctx.shadowColor = color;
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 1.2;
-      ctx.beginPath();
-      ctx.roundRect ? ctx.roundRect(x-capsW/2, y-capsH/2, capsW, capsH, 7)
-                    : ctx.rect(x-capsW/2, y-capsH/2, capsW, capsH);
-      ctx.stroke();
-      
-      // Nombre
-      ctx.shadowColor = 'rgba(0,0,0,.9)';
-      ctx.shadowBlur = 3;
-      ctx.font = 'bold 7.5px Barlow Condensed';
-      ctx.fillStyle = '#fff';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(jug.n, x, y+0.5);
-      ctx.restore();
-    });
-
+    rotForm.front.forEach(function(jug){ drawPill(zoneX[jug.z]||CL+CW/2, PILL_Y, jug.n, true); });
+    rotForm.back.forEach(function(jug){  drawPill(zoneX[jug.z]||CL+CW/2, BACK_Y, jug.n, false); });
   }
 
-  // ── Bubbles distribución ────────────────────────────────────────
-  var zoneCoords={
-    4:{x:CL+CW/6,   y:NET+OWN*0.25},
-    3:{x:CL+CW/2,   y:NET+OWN*0.25},
-    2:{x:CL+CW*5/6, y:armDelantero ? NET+OWN*0.58 : NET+OWN*0.25},
-    6:{x:CL+CW/2,   y:NET+OWN*0.58}
+  // ── Datos por zona — 1 por celda, centrados ──────────────────
+  // Zonas: 4=IZQ, 3=CEN, 2=DER, 6=CEN-BAJO
+  // Cada zona ocupa 1/3 del ancho. Zona 6 comparte x con zona 3.
+  // Y: zona delantera a 55% del OWN, zona 6 a 75% del OWN
+  // Layout: 3 columnas x 3 filas
+  // Fila 1 (cuadrante superior): Z4=IZQ, Z3=CEN, Z2=DER  → y = NET + OWN*0.22
+  // Fila 2 (medio): libre — nombres atacantes ya están sobre la red
+  // Fila 3 (inferior): Z6=CEN, Z1=DER(opp delantero)     → y = NET + OWN*0.78
+
+  var ROW_TOP = NET + OWN*0.26;
+  var ROW_BOT = NET + OWN*0.76;
+
+  var zonePosMap={
+    4:{x:CL+CW/6,   y:ROW_TOP},
+    3:{x:CL+CW/2,   y:ROW_TOP},
+    // Zona 2: arriba cuando armador zaguero, abajo cuando armador delantero (opuesto ataca desde P1)
+    2:{x:CL+CW*5/6, y:armDelantero ? ROW_BOT : ROW_TOP},
+    6:{x:CL+CW/2,   y:ROW_BOT},
+    1:{x:CL+CW*5/6, y:ROW_BOT}
   };
 
-  if(rot.dist) rot.dist.forEach(function(d){
-    if(d.pct<=0||d.tot<=0) return;
-    var zc=zoneCoords[d.zona];if(!zc) return;
-    var r=Math.max(W*0.11,12)*(0.55+d.pct/100*0.45);
-    
+  var distMap={};
+  if(rot.dist) rot.dist.forEach(function(d){ distMap[d.zona]=d; });
+
+  var fs1=Math.round(OWN*0.155);
+  var fs2=Math.round(OWN*0.105);
+
+  [4,3,2,6,1].forEach(function(z){
+    var d=distMap[z]; if(!d||d.pct<=0||d.tot<=0) return;
+    var zp=zonePosMap[z]; if(!zp) return;
+
     ctx.save();
-    // Glow
-    ctx.shadowColor=color;ctx.shadowBlur=16;
-    ctx.beginPath();ctx.arc(zc.x,zc.y,r,0,Math.PI*2);
-    ctx.fillStyle=color;ctx.globalAlpha=0.08+d.pct/100*0.12;ctx.fill();
-    ctx.globalAlpha=1;ctx.strokeStyle=color;ctx.lineWidth=2;ctx.stroke();
-    ctx.shadowBlur=0;
-    
-    // % distribución (grande, blanco)
-    ctx.font='bold '+Math.round(W*0.075)+'px Barlow Condensed';
-    ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.shadowColor='rgba(0,0,0,.95)';ctx.shadowBlur=4;
-    ctx.fillText(d.pct+'%',zc.x,zc.y-5);
-    
-    // % puntos (coloreado, más chico)
+
+    // % distribución — blanco con outline negro
+    ctx.font='bold '+fs1+'px \'Bebas Neue\',Impact,sans-serif';
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.lineWidth=3; ctx.strokeStyle='rgba(0,0,0,.85)';
+    ctx.shadowColor='rgba(0,0,0,1)'; ctx.shadowBlur=5;
+    ctx.strokeText(d.pct+'%', zp.x, zp.y-fs1*0.35);
+    ctx.fillStyle='#fff'; ctx.shadowBlur=2;
+    ctx.fillText(d.pct+'%', zp.x, zp.y-fs1*0.35);
+
+    // % puntos — coloreado con outline
     var ptCol=d.pct_p>=60?'#22c55e':d.pct_p>=40?'#fbbf24':d.pct_p>=20?'#f97316':'#ef4444';
-    ctx.font='bold '+Math.round(W*0.058)+'px Barlow Condensed';
-    ctx.fillStyle=ptCol;ctx.shadowBlur=2;
-    ctx.fillText(d.pct_p+'%',zc.x,zc.y+7);
+    ctx.font='800 '+fs2+'px Inter,system-ui,sans-serif';
+    ctx.lineWidth=2.5; ctx.strokeStyle='rgba(0,0,0,.9)';
+    ctx.shadowBlur=4;
+    ctx.strokeText(d.pct_p+'%', zp.x, zp.y+fs1*0.52);
+    ctx.fillStyle=ptCol; ctx.shadowBlur=2;
+    ctx.fillText(d.pct_p+'%', zp.x, zp.y+fs1*0.52);
+
     ctx.restore();
   });
-
-  // ── Zaguero atacante — entre zona 3 y zona 6 ──────────────────
-  if(rotForm && rotForm.back && rotForm.back.length){
-    // Posición: entre burbuja zona 3 (y=OWN*0.25) y zona 6 (y=OWN*0.58)
-    // exactamente en el medio: OWN*0.415
-    var bzX = CL + CW/2;
-    var bzY = NET + OWN * 0.415;
-    rotForm.back.forEach(function(jug){
-      var capsW = Math.min(CW * 0.44, 60);
-      var capsH = 13;
-      ctx.save();
-      ctx.shadowColor='rgba(0,0,0,.7)';ctx.shadowBlur=5;
-      ctx.fillStyle='rgba(8,12,28,.9)';
-      ctx.beginPath();
-      if(ctx.roundRect) ctx.roundRect(bzX-capsW/2, bzY-capsH/2, capsW, capsH, 6);
-      else ctx.rect(bzX-capsW/2, bzY-capsH/2, capsW, capsH);
-      ctx.fill();
-      ctx.shadowBlur=0;ctx.globalAlpha=0.75;ctx.setLineDash([2,2]);
-      ctx.strokeStyle=color;ctx.lineWidth=1;
-      ctx.beginPath();
-      if(ctx.roundRect) ctx.roundRect(bzX-capsW/2, bzY-capsH/2, capsW, capsH, 6);
-      else ctx.rect(bzX-capsW/2, bzY-capsH/2, capsW, capsH);
-      ctx.stroke();ctx.setLineDash([]);
-      ctx.globalAlpha=0.9;
-      ctx.font='700 7.5px Barlow Condensed';
-      ctx.fillStyle='rgba(255,255,255,.85)';
-      ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.shadowColor='rgba(0,0,0,.9)';ctx.shadowBlur=2;
-      ctx.fillText(jug.n, bzX, bzY);
-      ctx.restore();
-    });
-  }
 
   // ── Bloqueadores ────────────────────────────────────────────────
   if(blqData){
@@ -2694,7 +2741,12 @@ function jArea(ph,color,rows){
 }
 
 // Llamar armador y juego
-setTimeout(function(){renderArmador();renderJuego();},300);
+// Wait for fonts before rendering canvases
+document.fonts.ready.then(function(){
+  setTimeout(function(){renderArmador();renderJuego();},100);
+}).catch(function(){
+  setTimeout(function(){renderArmador();renderJuego();},400);
+});
 
 function abrirModalArmador(rot, color, pills){
   var modal = document.getElementById('modal-armador');
@@ -2879,7 +2931,7 @@ function redrawArmadorCourtLarge(ctx, W, H, rot, color){
       else ctx.rect(x-capsW/2,y-capsH/2,capsW,capsH);
       ctx.stroke();
       ctx.shadowBlur=3;ctx.shadowColor='rgba(0,0,0,.9)';
-      ctx.font='bold 10px Barlow Condensed';
+      ctx.font='800 10px Inter';
       ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';
       ctx.fillText(jug.n,x,y+0.5);
       ctx.restore();
@@ -2907,23 +2959,23 @@ function redrawArmadorCourtLarge(ctx, W, H, rot, color){
     ctx.shadowBlur=0;
 
     // % distrib grande
-    ctx.font='bold '+Math.round(W*0.048)+'px Bebas Neue';
+    ctx.font='bold '+Math.round(W*0.055)+'px \'Bebas Neue\', Impact, sans-serif';
     ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.shadowColor='rgba(0,0,0,.95)';ctx.shadowBlur=6;
     ctx.fillText(d.pct+'%',zc.x,zc.y-14);
 
     // total ataques
-    ctx.font='bold '+Math.round(W*0.024)+'px Barlow Condensed';
+    ctx.font='700 '+Math.round(W*0.022)+'px Inter';
     ctx.fillStyle='rgba(255,255,255,.65)';ctx.shadowBlur=2;
     ctx.fillText(d.tot+' ataques',zc.x,zc.y-2);
 
     // % puntos
     var ptCol=d.pct_p>=60?'#22c55e':d.pct_p>=40?'#fbbf24':d.pct_p>=20?'#f97316':'#ef4444';
-    ctx.font='bold '+Math.round(W*0.032)+'px Bebas Neue';
+    ctx.font='bold '+Math.round(W*0.034)+'px \'Bebas Neue\', Impact, sans-serif';
     ctx.fillStyle=ptCol;ctx.shadowColor='rgba(0,0,0,.9)';ctx.shadowBlur=4;
     ctx.fillText(d.pct_p+'% pts',zc.x,zc.y+11);
 
-    ctx.font='bold '+Math.round(W*0.022)+'px Barlow Condensed';
+    ctx.font='700 '+Math.round(W*0.020)+'px Inter';
     ctx.fillStyle='rgba(255,255,255,.45)';ctx.shadowBlur=2;
     ctx.fillText('('+d.pts+' puntos)',zc.x,zc.y+22);
     ctx.restore();
@@ -2950,7 +3002,7 @@ function redrawArmadorCourtLarge(ctx, W, H, rot, color){
       else ctx.rect(bzX2-bcapsW/2,bzY2-bcapsH/2,bcapsW,bcapsH);
       ctx.stroke();ctx.setLineDash([]);
       ctx.globalAlpha=0.9;
-      ctx.font='700 11px Barlow Condensed';
+      ctx.font='800 11px Inter';
       ctx.fillStyle='rgba(255,255,255,.85)';
       ctx.textAlign='center';ctx.textBaseline='middle';
       ctx.shadowColor='rgba(0,0,0,.9)';ctx.shadowBlur=3;
@@ -2991,7 +3043,7 @@ function dibujarIconoBloqueo(ctx, x, y, r, tipo, color){
   ctx.shadowColor = 'rgba(0,0,0,.8)';
   ctx.shadowBlur = 4;
   if(tipo === '6-5' || tipo === '6-1'){
-    ctx.font = 'bold ' + Math.round(r*0.75) + 'px Barlow Condensed';
+    ctx.font = 'bold ' + Math.round(r*0.72) + 'px Inter';
     ctx.fillStyle = color;
     ctx.fillText(icon, x, y);
   } else {
@@ -3101,7 +3153,7 @@ function redrawSOTRCourt(ctx, W, H, data, color){
   Object.keys(zoneCoords).forEach(function(z){
     var zc=zoneCoords[z];
     ctx.save();
-    ctx.font='bold 12px Barlow Condensed';
+    ctx.font='800 12px Inter';
     ctx.fillStyle='rgba(255,255,255,.12)';
     ctx.textAlign='center';ctx.textBaseline='bottom';
     ctx.fillText(zoneNames[z],zc.x,zc.y-22);
@@ -3119,21 +3171,21 @@ function redrawSOTRCourt(ctx, W, H, data, color){
     ctx.globalAlpha=1;ctx.strokeStyle=color;ctx.lineWidth=2;
     ctx.shadowColor=color;ctx.shadowBlur=10;ctx.stroke();
     // % distribución
-    ctx.font='bold '+Math.round(W*0.052)+'px Bebas Neue';
+    ctx.font='bold '+Math.round(W*0.055)+'px \'Bebas Neue\', Impact, sans-serif';
     ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.shadowColor='rgba(0,0,0,.9)';ctx.shadowBlur=6;
     ctx.fillText(d.pct+'%',zc.x,zc.y-18);
     // cantidad
-    ctx.font='bold '+Math.round(W*0.028)+'px Barlow Condensed';
+    ctx.font='700 '+Math.round(W*0.026)+'px Inter';
     ctx.fillStyle='rgba(255,255,255,.7)';ctx.shadowBlur=3;
     ctx.fillText(d.tot+' att',zc.x,zc.y-4);
     // % puntos
     var ptCol=d.pct_p>=50?'#22c55e':d.pct_p>=30?'#fbbf24':'#f97316';
-    ctx.font='bold '+Math.round(W*0.034)+'px Bebas Neue';
+    ctx.font='bold '+Math.round(W*0.034)+'px \'Bebas Neue\', Impact, sans-serif';
     ctx.fillStyle=ptCol;ctx.shadowColor='rgba(0,0,0,.9)';ctx.shadowBlur=4;
     ctx.fillText(d.pct_p+'%',zc.x,zc.y+11);
     // puntos
-    ctx.font='bold '+Math.round(W*0.026)+'px Barlow Condensed';
+    ctx.font='700 '+Math.round(W*0.024)+'px Inter';
     ctx.fillStyle='rgba(255,255,255,.55)';ctx.shadowBlur=2;
     ctx.fillText('('+d.pts+' pts)',zc.x,zc.y+23);
     ctx.restore();
@@ -3142,10 +3194,173 @@ function redrawSOTRCourt(ctx, W, H, data, color){
 
 
 function descargarPDF() {
-  var rival = document.querySelector('.rival-name, .page-subtitle, [data-rival]');
-  var rivalNombre = rival ? rival.textContent.trim() : 'GamePlan';
-  document.title = 'CASLA Voley - Game Plan vs ' + rivalNombre;
-  setTimeout(function() { window.print(); }, 100);
+  var btn = document.getElementById('pdf-btn');
+  if(btn){ btn.textContent = '⏳ Generando...'; btn.disabled = true; }
+
+  // Load html2canvas + jsPDF if not loaded
+  function loadScript(src, cb){
+    if(document.querySelector('script[src="'+src+'"]')){ cb(); return; }
+    var s = document.createElement('script'); s.src = src;
+    s.onload = cb; s.onerror = function(){ console.error('Failed to load '+src); cb(); };
+    document.head.appendChild(s);
+  }
+
+  loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js', function(){
+    loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js', function(){
+      generarPDFConLibrerias();
+    });
+  });
+}
+
+function generarPDFConLibrerias(){
+  var btn = document.getElementById('pdf-btn');
+  var rival = RIVAL.nombre || 'GamePlan';
+  var { jsPDF } = window.jspdf;
+
+  // Sections to capture
+  var secciones = [];
+
+  // Header
+  var header = document.querySelector('.page-header');
+  if(header) secciones.push(header);
+
+  // Each jugador section - force open all
+  document.querySelectorAll('.jugador-section').forEach(function(s){
+    s.classList.add('open');
+    secciones.push(s);
+  });
+
+  // Armador section
+  var armador = document.getElementById('seccion-armador');
+  if(armador) secciones.push(armador);
+
+  // Estrategia section
+  var estrategia = document.getElementById('seccion-juego');
+  if(estrategia) secciones.push(estrategia);
+
+  var pdf = new jsPDF('p', 'mm', 'a4');
+  var pageW = pdf.internal.pageSize.getWidth();
+  var pageH = pdf.internal.pageSize.getHeight();
+  var margin = 10;
+  var usableW = pageW - margin*2;
+  var yPos = margin;
+  var first = true;
+
+  // Cover page
+  pdf.setFillColor(7, 8, 15);
+  pdf.rect(0, 0, pageW, pageH, 'F');
+  pdf.setTextColor(232, 25, 44);
+  pdf.setFontSize(28);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('PLAN DE JUEGO', pageW/2, 40, {align:'center'});
+  pdf.setTextColor(245, 158, 11);
+  pdf.setFontSize(20);
+  pdf.text('vs ' + rival, pageW/2, 55, {align:'center'});
+  pdf.setTextColor(100, 116, 139);
+  pdf.setFontSize(10);
+  pdf.text(RIVAL.info || '', pageW/2, 64, {align:'center'});
+  pdf.setTextColor(255,255,255);
+  pdf.setFontSize(8);
+  pdf.text('CASLA VOLEY · Análisis Táctico', pageW/2, pageH-15, {align:'center'});
+
+  // Links summary page
+  pdf.addPage();
+  pdf.setFillColor(7, 8, 15);
+  pdf.rect(0, 0, pageW, pageH, 'F');
+  pdf.setTextColor(245, 158, 11);
+  pdf.setFontSize(14);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('VIDEOS DE REFERENCIA', margin, 20);
+  pdf.setDrawColor(245, 158, 11);
+  pdf.setLineWidth(0.3);
+  pdf.line(margin, 23, pageW-margin, 23);
+
+  var vy = 32;
+  pdf.setFontSize(8);
+  JUGADORES.forEach(function(j){
+    var hasVideo = false;
+    var combos = (j.ataques||[]).concat(j.saques||[]);
+    combos.forEach(function(c){
+      if(c.video){
+        if(!hasVideo){
+          pdf.setTextColor(255,255,255);
+          pdf.setFont('helvetica','bold');
+          pdf.setFontSize(9);
+          pdf.text(j.nombre + ' (' + j.pos + ')', margin, vy);
+          vy += 5;
+          hasVideo = true;
+        }
+        pdf.setTextColor(100,116,139);
+        pdf.setFont('helvetica','normal');
+        pdf.setFontSize(7);
+        pdf.text('  ' + c.cod + (c.tipo?' ('+c.tipo+')':'') + ':', margin, vy);
+        pdf.setTextColor(129,140,248);
+        pdf.text('  ' + c.video, margin+25, vy);
+        vy += 4;
+        if(vy > pageH - 15){
+          pdf.addPage();
+          pdf.setFillColor(7,8,15);
+          pdf.rect(0,0,pageW,pageH,'F');
+          vy = 20;
+        }
+      }
+    });
+    if(hasVideo) vy += 3;
+  });
+
+  // Capture each section as image
+  var idx = 0;
+  function captureNext(){
+    if(idx >= secciones.length){
+      var fecha = new Date().toISOString().slice(0,10);
+      pdf.save('GamePlan_vs_' + rival.replace(/[^a-z0-9]/gi,'_') + '_' + fecha + '.pdf');
+      var btn2 = document.getElementById('pdf-btn');
+      if(btn2){ btn2.textContent = '📄 Descargar PDF'; btn2.disabled = false; }
+
+      // Re-close jugador sections
+      document.querySelectorAll('.jugador-section').forEach(function(s){
+        s.classList.remove('open');
+      });
+      return;
+    }
+
+    var el = secciones[idx];
+    idx++;
+    html2canvas(el, {
+      backgroundColor: '#07080f',
+      scale: 1.5,
+      useCORS: true,
+      logging: false
+    }).then(function(canvas){
+      var imgData = canvas.toDataURL('image/jpeg', 0.85);
+      var imgW = usableW;
+      var imgH = imgW * canvas.height / canvas.width;
+
+      if(yPos + imgH > pageH - margin){
+        pdf.addPage();
+        pdf.setFillColor(7,8,15);
+        pdf.rect(0,0,pageW,pageH,'F');
+        yPos = margin;
+      }
+      pdf.addImage(imgData, 'JPEG', margin, yPos, imgW, imgH);
+      yPos += imgH + 4;
+      captureNext();
+    }).catch(function(){ captureNext(); });
+  }
+
+  pdf.addPage();
+  pdf.setFillColor(7,8,15);
+  pdf.rect(0,0,pageW,pageH,'F');
+  pdf.setTextColor(245,158,11);
+  pdf.setFontSize(14);
+  pdf.setFont('helvetica','bold');
+  pdf.text('ANÁLISIS POR JUGADOR', margin, 20);
+  pdf.setDrawColor(245,158,11);
+  pdf.setLineWidth(0.3);
+  pdf.line(margin, 23, pageW-margin, 23);
+  yPos = 30;
+
+  captureNext();
 }
 
 </script>

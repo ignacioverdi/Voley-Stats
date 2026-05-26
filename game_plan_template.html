@@ -221,10 +221,13 @@ select, select option {
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   body { background: #07080f !important; color: #e2e8f0 !important; }
   .page-header { position: relative !important; }
-  .back-btn, .pdf-btn, .lang-switcher, #lang-switcher { display: none !important; }
-  .section-block, .player-card, .tactic-block { page-break-inside: avoid !important; }
+  .back-btn, .pdf-btn, .lang-switcher, #lang-switcher, #nav-dots,
+  [style*="position:fixed"], .modal-overlay { display: none !important; }
+  .jugador-section { page-break-inside: avoid !important; }
+  .jugador-section .canchitas-wrap { display: block !important; }
   .section-title { page-break-after: avoid !important; }
-  @page { margin: 1.5cm; }
+  canvas { display: block !important; }
+  @page { margin: 1cm; size: A4 portrait; }
 }
 
 </style>
@@ -234,7 +237,7 @@ select, select option {
 
 <header class="page-header">
   <a href="index.html" class="back-btn">← Inicio</a>
-  <button onclick="descargarPDF()" class="pdf-btn">📄 Descargar PDF</button>
+  <button onclick="descargarPDF()" class="pdf-btn" id="pdf-btn">📄 Descargar PDF</button>
   <div>
     <div class="page-title"><span data-t="game_plan">Plan de Juego</span></div>
     <div style="font-size:10px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;margin-top:1px">Análisis táctico de rivales — CASL Voley</div>
@@ -282,7 +285,7 @@ select, select option {
     </div>
     <div class="modal-stats-row" id="modal-stats"></div>
     <div class="legend">
-      <div class="lg-item"><div class="lg-dot" style="background:#ff8c00"></div>1° zona</div>
+      <div class="lg-item"><div class="lg-dot" style="background:#a855f7"></div>1° zona</div>
       <div class="lg-item"><div class="lg-dot" style="background:#a855f7"></div>2° zona</div>
     </div>
   </div>
@@ -403,7 +406,7 @@ function drawAtaqueCourt(ctx,W,H,ataque,color,pct){
     var O6=NET+4;
     var destX={4:CL+CW/6,3:CL+CW/2,2:CL+CW*5/6,7:CL+CW/6,8:CL+CW/2,9:CL+CW*5/6,5:CL+CW/6,6:CL+CW/2,1:CL+CW*5/6};
     var destY={4:O6+OWN_H/6,3:O6+OWN_H/6,2:O6+OWN_H/6,7:O6+OWN_H/2,8:O6+OWN_H/2,9:O6+OWN_H/2,5:O6+OWN_H*5/6,6:O6+OWN_H*5/6,1:O6+OWN_H*5/6};
-    var cones=['#ff8c00','#a855f7'];
+    var cones=['#a855f7','#22c55e'];
 
     ataque.destinos.slice(0,2).forEach(function(d,i){
       var dx=destX[d.z]||CL+CW/2, dy=destY[d.z]||O6+OWN_H/2;
@@ -473,7 +476,7 @@ function drawSaqueCourt(ctx,W,H,saque,color,pct){
     // Destinos en campo rival
     var destX={1:CL+CW/6,9:CL+CW/6,2:CL+CW/6,6:CL+CW/2,8:CL+CW/2,3:CL+CW/2,5:CL+CW*5/6,7:CL+CW*5/6,4:CL+CW*5/6};
     var destY={1:CT+RIVAL_H/6,6:CT+RIVAL_H/6,5:CT+RIVAL_H/6,9:CT+RIVAL_H/2,8:CT+RIVAL_H/2,7:CT+RIVAL_H/2,2:CT+RIVAL_H*5/6,3:CT+RIVAL_H*5/6,4:CT+RIVAL_H*5/6};
-    var cones=['#f59e0b','#a855f7'];
+    var cones=['#a855f7','#22c55e'];
 
     saque.destinos.slice(0,2).forEach(function(d,i){
       var dx=destX[d.z]||CL+CW/2,dy=destY[d.z]||CT+RIVAL_H/2;
@@ -540,7 +543,7 @@ function buildCanchita(item,jIdx,i,prefix,W,H,drawFn,color,j){
 
   var stats=document.createElement('div');
   stats.className='canchita-stats';
-  [{l:'EFF',v:hasDatos?item.eff+'%':'—',c:effC},{l:'TOT',v:item.tot,c:color},{l:'#%',v:hasDatos?item.pts+'%':'—',c:'#22c55e'}].forEach(function(s){
+  [{l:'EFF',v:hasDatos&&item.eff!=null?item.eff+'%':'—',c:effC},{l:'TOT',v:item.tot,c:color},{l:'#%',v:hasDatos&&item.pts!=null?item.pts+'%':'—',c:'#22c55e'}].forEach(function(s){
     var ci=document.createElement('div');ci.className='cs-item';
     var cv2=document.createElement('div');cv2.className='cs-val';cv2.style.color=s.c;cv2.textContent=s.v;
     var cl=document.createElement('div');cl.className='cs-lbl';cl.textContent=s.l;
@@ -835,12 +838,21 @@ var BLQ_OPCIONES=[
   {v:"6-5",   label:"6-5"},
   {v:"6-1",   label:"6-1"},
 ];
-const ARMADOR_DATA={"titular":null,"suplente":null};
+const ARMADOR_DATA=/*__ARM_START__*/{"titular":null,"suplente":null}/*__ARM_END__*/;
 const JUEGO_DATA={
   imagenes:[]
 };
 
 // ═══ ARMADOR ═══════════════════════════════════════════════════
+var FORMACION_ATAQUE = {
+  'P1': { front:[{n:'WAGNER',z:4},{n:'BARRIOS',z:3},{n:'CORZO',z:2}], back:[{n:'MANSILLA',z:6}] },
+  'P6': { front:[{n:'MANSILLA',z:4},{n:'BARRIOS',z:3},{n:'CORZO',z:2}], back:[{n:'WAGNER',z:6}] },
+  'P5': { front:[{n:'MANSILLA',z:4},{n:'GALLARDO',z:3},{n:'CORZO',z:2}], back:[{n:'WAGNER',z:6}] },
+  'P4': { front:[{n:'MANSILLA',z:4},{n:'GALLARDO',z:3},{n:'CORZO',z:1}], back:[{n:'WAGNER',z:6}] },
+  'P3': { front:[{n:'MANSILLA',z:4},{n:'GALLARDO',z:3},{n:'CORZO',z:1}], back:[{n:'WAGNER',z:6}] },
+  'P2': { front:[{n:'WAGNER',z:4},{n:'BARRIOS',z:3},{n:'CORZO',z:1}], back:[{n:'MANSILLA',z:6}] }
+};
+
 function renderArmador(){
   var sec=document.getElementById('seccion-armador');
   if(!sec||!ARMADOR_DATA) return;
@@ -1210,7 +1222,11 @@ function jArea(ph,color,rows){
 }
 
 // Llamar armador y juego
-setTimeout(function(){renderArmador();renderJuego();},300);
+document.fonts.ready.then(function(){
+  setTimeout(function(){renderArmador();renderJuego();},100);
+}).catch(function(){
+  setTimeout(function(){renderArmador();renderJuego();},400);
+});
 
 function abrirModalArmador(rot, color, pills){
   var modal = document.getElementById('modal-armador');
@@ -1379,8 +1395,9 @@ function cerrarModalArmador(){
   document.getElementById('modal-armador').style.display='none';
   document.body.style.overflow='';
 }
-document.getElementById('modal-armador').addEventListener('click',function(e){
-  if(e.target===this) cerrarModalArmador();
+document.addEventListener('DOMContentLoaded', function(){
+  var mArm = document.getElementById('modal-armador');
+  if(mArm) mArm.addEventListener('click',function(e){ if(e.target===this) cerrarModalArmador(); });
 });
 
 
@@ -1555,10 +1572,173 @@ function redrawSOTRCourt(ctx, W, H, data, color){
 
 
 function descargarPDF() {
-  var rival = document.querySelector('.rival-name, .page-subtitle, [data-rival]');
-  var rivalNombre = rival ? rival.textContent.trim() : 'GamePlan';
-  document.title = 'CASLA Voley - Game Plan vs ' + rivalNombre;
-  setTimeout(function() { window.print(); }, 100);
+  var btn = document.getElementById('pdf-btn');
+  if(btn){ btn.textContent = '⏳ Generando...'; btn.disabled = true; }
+
+  // Load html2canvas + jsPDF if not loaded
+  function loadScript(src, cb){
+    if(document.querySelector('script[src="'+src+'"]')){ cb(); return; }
+    var s = document.createElement('script'); s.src = src;
+    s.onload = cb; s.onerror = function(){ console.error('Failed to load '+src); cb(); };
+    document.head.appendChild(s);
+  }
+
+  loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js', function(){
+    loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js', function(){
+      generarPDFConLibrerias();
+    });
+  });
+}
+
+function generarPDFConLibrerias(){
+  var btn = document.getElementById('pdf-btn');
+  var rival = RIVAL.nombre || 'GamePlan';
+  var { jsPDF } = window.jspdf;
+
+  // Sections to capture
+  var secciones = [];
+
+  // Header
+  var header = document.querySelector('.page-header');
+  if(header) secciones.push(header);
+
+  // Each jugador section - force open all
+  document.querySelectorAll('.jugador-section').forEach(function(s){
+    s.classList.add('open');
+    secciones.push(s);
+  });
+
+  // Armador section
+  var armador = document.getElementById('seccion-armador');
+  if(armador) secciones.push(armador);
+
+  // Estrategia section
+  var estrategia = document.getElementById('seccion-juego');
+  if(estrategia) secciones.push(estrategia);
+
+  var pdf = new jsPDF('p', 'mm', 'a4');
+  var pageW = pdf.internal.pageSize.getWidth();
+  var pageH = pdf.internal.pageSize.getHeight();
+  var margin = 10;
+  var usableW = pageW - margin*2;
+  var yPos = margin;
+  var first = true;
+
+  // Cover page
+  pdf.setFillColor(7, 8, 15);
+  pdf.rect(0, 0, pageW, pageH, 'F');
+  pdf.setTextColor(232, 25, 44);
+  pdf.setFontSize(28);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('PLAN DE JUEGO', pageW/2, 40, {align:'center'});
+  pdf.setTextColor(245, 158, 11);
+  pdf.setFontSize(20);
+  pdf.text('vs ' + rival, pageW/2, 55, {align:'center'});
+  pdf.setTextColor(100, 116, 139);
+  pdf.setFontSize(10);
+  pdf.text(RIVAL.info || '', pageW/2, 64, {align:'center'});
+  pdf.setTextColor(255,255,255);
+  pdf.setFontSize(8);
+  pdf.text('CASLA VOLEY · Análisis Táctico', pageW/2, pageH-15, {align:'center'});
+
+  // Links summary page
+  pdf.addPage();
+  pdf.setFillColor(7, 8, 15);
+  pdf.rect(0, 0, pageW, pageH, 'F');
+  pdf.setTextColor(245, 158, 11);
+  pdf.setFontSize(14);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('VIDEOS DE REFERENCIA', margin, 20);
+  pdf.setDrawColor(245, 158, 11);
+  pdf.setLineWidth(0.3);
+  pdf.line(margin, 23, pageW-margin, 23);
+
+  var vy = 32;
+  pdf.setFontSize(8);
+  JUGADORES.forEach(function(j){
+    var hasVideo = false;
+    var combos = (j.ataques||[]).concat(j.saques||[]);
+    combos.forEach(function(c){
+      if(c.video){
+        if(!hasVideo){
+          pdf.setTextColor(255,255,255);
+          pdf.setFont('helvetica','bold');
+          pdf.setFontSize(9);
+          pdf.text(j.nombre + ' (' + j.pos + ')', margin, vy);
+          vy += 5;
+          hasVideo = true;
+        }
+        pdf.setTextColor(100,116,139);
+        pdf.setFont('helvetica','normal');
+        pdf.setFontSize(7);
+        pdf.text('  ' + c.cod + (c.tipo?' ('+c.tipo+')':'') + ':', margin, vy);
+        pdf.setTextColor(129,140,248);
+        pdf.text('  ' + c.video, margin+25, vy);
+        vy += 4;
+        if(vy > pageH - 15){
+          pdf.addPage();
+          pdf.setFillColor(7,8,15);
+          pdf.rect(0,0,pageW,pageH,'F');
+          vy = 20;
+        }
+      }
+    });
+    if(hasVideo) vy += 3;
+  });
+
+  // Capture each section as image
+  var idx = 0;
+  function captureNext(){
+    if(idx >= secciones.length){
+      var fecha = new Date().toISOString().slice(0,10);
+      pdf.save('GamePlan_vs_' + rival.replace(/[^a-z0-9]/gi,'_') + '_' + fecha + '.pdf');
+      var btn2 = document.getElementById('pdf-btn');
+      if(btn2){ btn2.textContent = '📄 Descargar PDF'; btn2.disabled = false; }
+
+      // Re-close jugador sections
+      document.querySelectorAll('.jugador-section').forEach(function(s){
+        s.classList.remove('open');
+      });
+      return;
+    }
+
+    var el = secciones[idx];
+    idx++;
+    html2canvas(el, {
+      backgroundColor: '#07080f',
+      scale: 1.5,
+      useCORS: true,
+      logging: false
+    }).then(function(canvas){
+      var imgData = canvas.toDataURL('image/jpeg', 0.85);
+      var imgW = usableW;
+      var imgH = imgW * canvas.height / canvas.width;
+
+      if(yPos + imgH > pageH - margin){
+        pdf.addPage();
+        pdf.setFillColor(7,8,15);
+        pdf.rect(0,0,pageW,pageH,'F');
+        yPos = margin;
+      }
+      pdf.addImage(imgData, 'JPEG', margin, yPos, imgW, imgH);
+      yPos += imgH + 4;
+      captureNext();
+    }).catch(function(){ captureNext(); });
+  }
+
+  pdf.addPage();
+  pdf.setFillColor(7,8,15);
+  pdf.rect(0,0,pageW,pageH,'F');
+  pdf.setTextColor(245,158,11);
+  pdf.setFontSize(14);
+  pdf.setFont('helvetica','bold');
+  pdf.text('ANÁLISIS POR JUGADOR', margin, 20);
+  pdf.setDrawColor(245,158,11);
+  pdf.setLineWidth(0.3);
+  pdf.line(margin, 23, pageW-margin, 23);
+  yPos = 30;
+
+  captureNext();
 }
 
 </script>

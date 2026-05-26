@@ -219,3 +219,101 @@ else:
 print("\n✓ Todo listo. Subí a GitHub:")
 print(f"  - {html_nombre}")
 print(f"  - jugador.html")
+
+# ── 14. Actualizar index.html ────────────────────────────────────────
+index_path = os.path.join(BASE, "index.html")
+if os.path.exists(index_path):
+    with open(index_path, encoding='utf-8', errors='replace') as f:
+        idx_content = f.read()
+
+    cambios_idx = 0
+
+    # A) Actualizar card PLAN DE JUEGO (entre los marcadores que ya tiene la macro)
+    import re as _re
+    idx_content = _re.sub(
+        r'(<!-- PLAN DE JUEGO -->[\s\S]*?href=")[^"]+(")',
+        r'\g<1>' + html_nombre_gp + r'\g<2>',
+        idx_content, count=1
+    )
+    idx_content = _re.sub(
+        r'(<!-- PLAN DE JUEGO -->[\s\S]*?card-badge[^>]*>vs )[^<]+(<)',
+        r'\g<1>vs ' + rival + r'\g<2>',
+        idx_content, count=1
+    )
+    idx_content = _re.sub(
+        r'(<!-- PLAN DE JUEGO -->[\s\S]*?Fecha )\d+',
+        r'\g<1>' + str(fecha),
+        idx_content, count=1
+    )
+    cambios_idx += 1
+
+    # B) Actualizar bloque PROXIMO-GP (si existe el marcador)
+    if '<!-- PROXIMO-GP-INI -->' in idx_content:
+        nuevo_proximo = (
+            '<!-- PROXIMO-GP-INI -->\n'
+            '  <div>\n'
+            '    <div class="section-lbl"><span data-t="calendario">Calendario</span></div>\n'
+            '    <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">\n'
+            '      <div style="display:flex;align-items:center;gap:16px;flex:1;min-width:260px">\n'
+            '        <div style="text-align:center;padding:12px 20px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);border-radius:10px">\n'
+            f'          <div style="font-family:\'Bebas Neue\',sans-serif;font-size:32px;color:#f59e0b;line-height:1">{fecha}</div>\n'
+            '          <div style="font-size:9px;color:var(--mut);letter-spacing:2px;text-transform:uppercase">Fecha</div>\n'
+            '        </div>\n'
+            '        <div>\n'
+            f'          <div style="font-size:10px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px">{torneo}</div>\n'
+            f'          <div style="font-family:\'Bebas Neue\',sans-serif;font-size:20px;letter-spacing:2px">vs {rival}</div>\n'
+            '          <div style="font-size:11px;color:var(--mut);margin-top:3px">Game Plan disponible · 12 jugadores analizados</div>\n'
+            '        </div>\n'
+            '      </div>\n'
+            f'      <a href="{html_nombre_gp}" style="padding:10px 20px;border-radius:9px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:#f59e0b;font-family:\'Barlow Condensed\',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all .2s;white-space:nowrap">\n'
+            '        Ver Plan de Juego →\n'
+            '      </a>\n'
+            '    </div>\n'
+            '  </div>\n'
+            '  <!-- PROXIMO-GP-FIN -->'
+        )
+        idx_content = _re.sub(
+            r'<!-- PROXIMO-GP-INI -->[\s\S]*?<!-- PROXIMO-GP-FIN -->',
+            nuevo_proximo, idx_content, count=1
+        )
+        cambios_idx += 1
+
+    with open(index_path, 'w', encoding='utf-8') as f:
+        f.write(idx_content)
+    print(f"✓ index.html actualizado ({cambios_idx} secciones)")
+else:
+    print(f"AVISO: no se encontró index.html en {BASE}")
+
+print("\n" + "="*50)
+print("✓ TODO LISTO. Subí a GitHub:")
+print(f"  1. {html_nombre}")
+print(f"  2. jugador.html")
+print(f"  3. index.html")
+print("="*50)
+
+# ── 15. Fix nulls en pts/eff/pts_pct ────────────────────────────────
+# La macro a veces genera null cuando no hay datos — el HTML muestra "#null%"
+fixed_nulls = 0
+for j in jugadores:
+    for combo in j.get('ataques', []) + j.get('saques', []):
+        if combo.get('pts') is None:
+            combo['pts'] = 0; fixed_nulls += 1
+        if combo.get('eff') is None:
+            combo['eff'] = 0; fixed_nulls += 1
+        if combo.get('pts_pct') is None:
+            tot = combo.get('tot', 0)
+            pts = combo.get('pts', 0)
+            combo['pts_pct'] = round(pts/tot*100) if tot > 0 else 0
+            fixed_nulls += 1
+
+if fixed_nulls > 0:
+    print(f"✓ Corregidos {fixed_nulls} valores null en pts/eff")
+
+# ── 16. Regenerar JUGADORES con nulls corregidos ─────────────────────
+# Re-apply JUGADORES replacement with fixed data
+new_jug_fixed = 'const JUGADORES = ' + __import__('json').dumps(jugadores, ensure_ascii=False, indent=2) + ';'
+import re as _re2
+content = _re2.sub(r'const JUGADORES = \[[\s\S]*?\];(?=\s*\n//)', new_jug_fixed, content, count=1)
+with open(html_path, 'w', encoding='utf-8') as f:
+    f.write(content)
+print("✓ JUGADORES actualizado con nulls corregidos")
