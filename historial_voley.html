@@ -714,9 +714,12 @@ function renderTeamDV4Historial(){
   const D=window.HISTORIAL_DATA;
   if(!D)return'';
 
-  // Acumular DV4 de todas las sesiones y todos los jugadores
+  // Acumular DV4 respetando filtro activo
   const totals={};
-  D.entrenamientos.forEach(e=>{
+  var sesionesD = D.entrenamientos.filter(function(s){
+    return typeof HS_FILTRO==='undefined' || HS_FILTRO==='todos' || (s.tipo||'P')===HS_FILTRO;
+  });
+  sesionesD.forEach(e=>{
     e.jugadores.forEach(j=>{
       if(!j.dv4)return;
       Object.keys(j.dv4).forEach(cod=>{
@@ -1261,7 +1264,13 @@ function renderEquipo(){
     // Table content
     +'<div id="hs-tab-content"></div>'
     +'<div class="section-title" style="margin-top:24px">COMBOS DV4 — ACUMULADO</div>'
-    +renderTeamDV4Historial();
+    +renderTeamDV4Historial()
+    +'<div id="objetivos-panel" style="margin-top:24px"></div>';
+
+  // Render objetivos after DOM is set
+  setTimeout(function(){
+    if(typeof renderObjetivos!=="undefined") renderObjetivos("objetivos-panel");
+  }, 0);
 
   hsRebuildDropdown();
   hsRenderTab();

@@ -337,6 +337,7 @@ select, select option { color: #111111 !important; background-color: #ffffff !im
 </div>
 
 <main class="main" id="main-content">
+  <div id="objetivos-panel" style="margin-bottom:16px"></div>
   <div id="team-bar" style="display:none"></div>
   <div id="team-dv4" style="display:none;margin-bottom:1rem"></div>
   <div class="grid normal" id="grid"></div>
@@ -1287,5 +1288,10 @@ document.getElementById('cancha-modal').addEventListener('click',function(e){if(
 
 
 <button onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:24px;right:24px;z-index:200;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(7,8,15,.95);backdrop-filter:blur(10px);color:#64748b;font-size:18px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.5)" onmouseover="this.style.color='#e2e8f0'" onmouseout="this.style.color='#64748b'" title="Volver al inicio">↑</button>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  if(typeof renderObjetivos!=="undefined") renderObjetivos("objetivos-panel");
+});
+</script>
 </body>
 </html>
