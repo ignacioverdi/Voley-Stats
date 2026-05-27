@@ -1368,12 +1368,10 @@ function hsSetTab(tab, btn){
 
 function hsSetFiltro(filtro, btn){
   HS_FILTRO = filtro;
-  HS_SESION_IDX = -2; // reset to accumulated
+  HS_SESION_IDX = -2;
   document.querySelectorAll('.hs-filtro-btn').forEach(function(b){ b.classList.remove('on'); });
   if(btn) btn.classList.add('on');
-  hsRebuildDropdown();
-  hsRenderTab();
-  setTimeout(function(){if(typeof renderObjetivos!=='undefined')renderObjetivos('objetivos-panel');},50);
+  renderEquipo(); // full rebuild — updates DV4 + objetivos + dropdown
 }
 
 function hsRebuildDropdown(){
@@ -1421,14 +1419,13 @@ function renderEquipo(){
     +'<div class="nav-tabs" style="margin-bottom:20px;margin-left:0">'+tabsHTML+'</div>'
     // Table content
     +'<div id="hs-tab-content"></div>'
-    +'<div class="section-title" style="margin-top:24px">COMBOS DV4 — ACUMULADO</div>'
+    +'<div class="section-title" style="margin-top:24px">COMBOS DV4 — '+(HS_FILTRO==='P'?'PARTIDOS':HS_FILTRO==='E'?'ENTRENAMIENTOS':'ACUMULADO')+'</div>'
     +renderTeamDV4Historial()
     +'<div id="objetivos-panel" style="margin:20px 0 8px"></div>';
-  setTimeout(function(){if(typeof renderObjetivos!=="undefined")renderObjetivos("objetivos-panel");},100);
-
-  setTimeout(function(){if(typeof renderObjetivos!=="undefined")renderObjetivos("objetivos-panel");},50);
   hsRebuildDropdown();
   hsRenderTab();
+  // Render objetivos AFTER DOM is updated
+  setTimeout(function(){if(typeof renderObjetivos!=="undefined")renderObjetivos("objetivos-panel");},150);
 }
 
 // ═══════════════════════════════════════════
