@@ -1,5 +1,5 @@
 window.HISTORIAL_DATA = {
-  "generado": "26/05/2026 15:36:20",
+  "generado": "27/05/2026 20:49:11",
   "entrenamientos": [
     {
         "fecha": "01/05/2026",
@@ -3490,13 +3490,39 @@ window.HISTORIAL_DATA = {
             {
                 "c": 5,
                 "n": "RAMOS",
+                "dv4": {
+                    "W2": {
+                        "tot": 4,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 0
+                    },
+                    "G2": {
+                        "tot": 4,
+                        "pt": 0,
+                        "err": 1,
+                        "orig": 0
+                    },
+                    "Y8": {
+                        "tot": 1,
+                        "pt": 0,
+                        "err": 0,
+                        "orig": 0
+                    },
+                    "G8": {
+                        "tot": 1,
+                        "pt": 0,
+                        "err": 1,
+                        "orig": 0
+                    }
+                },
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -3518,19 +3544,19 @@ window.HISTORIAL_DATA = {
                 "aErr": 2,
                 "bT": 3,
                 "bPt": 1,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 9,
                 "n": "GODOY",
+                "dv4": {},
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -3552,19 +3578,19 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 1,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 10,
                 "n": "VIERA",
+                "dv4": {},
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -3586,19 +3612,32 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 1,
                 "bPt": 1,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 11,
                 "n": "DURDOS",
+                "dv4": {
+                    "W4": {
+                        "tot": 10,
+                        "pt": 6,
+                        "err": 1,
+                        "orig": 0
+                    },
+                    "G4": {
+                        "tot": 8,
+                        "pt": 3,
+                        "err": 1,
+                        "orig": 0
+                    }
+                },
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -3620,19 +3659,32 @@ window.HISTORIAL_DATA = {
                 "aErr": 2,
                 "bT": 0,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 14,
                 "n": "NIELSON",
+                "dv4": {
+                    "G4": {
+                        "tot": 11,
+                        "pt": 6,
+                        "err": 1,
+                        "orig": 4
+                    },
+                    "W4": {
+                        "tot": 16,
+                        "pt": 10,
+                        "err": 1,
+                        "orig": 4
+                    }
+                },
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -3654,19 +3706,32 @@ window.HISTORIAL_DATA = {
                 "aErr": 2,
                 "bT": 5,
                 "bPt": 1,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 15,
                 "n": "ROTEZZI",
+                "dv4": {
+                    "J3": {
+                        "tot": 2,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 3
+                    },
+                    "J1": {
+                        "tot": 4,
+                        "pt": 4,
+                        "err": 0,
+                        "orig": 3
+                    }
+                },
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -3688,19 +3753,32 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 3,
                 "bPt": 1,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 17,
                 "n": "HERBSOMMER",
+                "dv4": {
+                    "J1": {
+                        "tot": 1,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 3
+                    },
+                    "J2": {
+                        "tot": 2,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 4
+                    }
+                },
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -3722,19 +3800,44 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 0,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 18,
                 "n": "ACOSTA",
+                "dv4": {
+                    "W2": {
+                        "tot": 8,
+                        "pt": 3,
+                        "err": 1,
+                        "orig": 0
+                    },
+                    "G2": {
+                        "tot": 2,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 0
+                    },
+                    "Y8": {
+                        "tot": 2,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 8
+                    },
+                    "G8": {
+                        "tot": 1,
+                        "pt": 0,
+                        "err": 1,
+                        "orig": 0
+                    }
+                },
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -3756,19 +3859,19 @@ window.HISTORIAL_DATA = {
                 "aErr": 2,
                 "bT": 2,
                 "bPt": 1,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 19,
                 "n": "DIAZ BOLLI",
+                "dv4": {},
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -3790,19 +3893,74 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 2,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 0,
                 "n": "TOTALES EQUIPO",
+                "dv4": {
+                    "W2": {
+                        "tot": 12,
+                        "pt": 4,
+                        "err": 1,
+                        "orig": 0
+                    },
+                    "G2": {
+                        "tot": 6,
+                        "pt": 1,
+                        "err": 1,
+                        "orig": 0
+                    },
+                    "Y8": {
+                        "tot": 3,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 0
+                    },
+                    "G8": {
+                        "tot": 2,
+                        "pt": 0,
+                        "err": 2,
+                        "orig": 0
+                    },
+                    "W4": {
+                        "tot": 26,
+                        "pt": 16,
+                        "err": 2,
+                        "orig": 0
+                    },
+                    "G4": {
+                        "tot": 19,
+                        "pt": 9,
+                        "err": 2,
+                        "orig": 0
+                    },
+                    "J3": {
+                        "tot": 2,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 3
+                    },
+                    "J1": {
+                        "tot": 5,
+                        "pt": 5,
+                        "err": 0,
+                        "orig": 3
+                    },
+                    "J2": {
+                        "tot": 2,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 4
+                    }
+                },
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -3824,8 +3982,7 @@ window.HISTORIAL_DATA = {
                 "aErr": 8,
                 "bT": 17,
                 "bPt": 5,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             }
         ]
     },
@@ -3844,13 +4001,14 @@ window.HISTORIAL_DATA = {
             {
                 "c": 3,
                 "n": "WINER",
+                "dv4": {},
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -3872,19 +4030,19 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 0,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 6,
                 "n": "VILLARRUEL",
+                "dv4": {},
                 "sT": 30,
                 "sEff": -13,
                 "sPunto": 0,
                 "sPos": 2,
                 "sOvp": 2,
-                "sVend": 3,
                 "sNeg": 17,
+                "sVend": 3,
                 "sErr": 6,
                 "sOrig": "",
                 "sDest": "",
@@ -3906,19 +4064,19 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 0,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 9,
                 "n": "GODOY",
+                "dv4": {},
                 "sT": 41,
                 "sEff": 6,
                 "sPunto": 4,
                 "sPos": 12,
                 "sOvp": 4,
-                "sVend": 3,
                 "sNeg": 12,
+                "sVend": 3,
                 "sErr": 6,
                 "sOrig": "",
                 "sDest": "",
@@ -3940,19 +4098,19 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 0,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 10,
                 "n": "VIERA",
+                "dv4": {},
                 "sT": 41,
                 "sEff": -4,
                 "sPunto": 7,
                 "sPos": 7,
                 "sOvp": 3,
-                "sVend": 1,
                 "sNeg": 12,
+                "sVend": 1,
                 "sErr": 11,
                 "sOrig": "",
                 "sDest": "",
@@ -3974,19 +4132,19 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 0,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 12,
                 "n": "ZANOTTI",
+                "dv4": {},
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -4008,19 +4166,19 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 0,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 15,
                 "n": "ROTEZZI",
+                "dv4": {},
                 "sT": 39,
                 "sEff": -21,
                 "sPunto": 1,
                 "sPos": 4,
                 "sOvp": 1,
-                "sVend": 0,
                 "sNeg": 23,
+                "sVend": 0,
                 "sErr": 10,
                 "sOrig": "",
                 "sDest": "",
@@ -4042,19 +4200,19 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 0,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 18,
                 "n": "ACOSTA",
+                "dv4": {},
                 "sT": 39,
                 "sEff": 3,
                 "sPunto": 4,
                 "sPos": 8,
                 "sOvp": 5,
-                "sVend": 4,
                 "sNeg": 11,
+                "sVend": 4,
                 "sErr": 7,
                 "sOrig": "",
                 "sDest": "",
@@ -4076,19 +4234,19 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 0,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 19,
                 "n": "DIAZ BOLLI",
+                "dv4": {},
                 "sT": 46,
                 "sEff": 0,
                 "sPunto": 2,
                 "sPos": 8,
                 "sOvp": 7,
-                "sVend": 4,
                 "sNeg": 19,
+                "sVend": 4,
                 "sErr": 6,
                 "sOrig": "",
                 "sDest": "",
@@ -4110,19 +4268,19 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 0,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 0,
                 "n": "TOTALES EQUIPO",
+                "dv4": {},
                 "sT": 236,
                 "sEff": -4,
                 "sPunto": 18,
                 "sPos": 41,
                 "sOvp": 22,
-                "sVend": 15,
                 "sNeg": 94,
+                "sVend": 15,
                 "sErr": 46,
                 "sOrig": "",
                 "sDest": "",
@@ -4144,8 +4302,7 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 0,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             }
         ]
     },
@@ -4164,13 +4321,39 @@ window.HISTORIAL_DATA = {
             {
                 "c": 2,
                 "n": "OJUEZ",
+                "dv4": {
+                    "V3": {
+                        "tot": 1,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 0
+                    },
+                    "J2": {
+                        "tot": 2,
+                        "pt": 0,
+                        "err": 1,
+                        "orig": 0
+                    },
+                    "J1": {
+                        "tot": 1,
+                        "pt": 0,
+                        "err": 1,
+                        "orig": 3
+                    },
+                    "J3": {
+                        "tot": 2,
+                        "pt": 2,
+                        "err": 0,
+                        "orig": 3
+                    }
+                },
                 "sT": 4,
                 "sEff": -19,
                 "sPunto": 0,
                 "sPos": 1,
                 "sOvp": 1,
-                "sVend": 0,
                 "sNeg": 1,
+                "sVend": 0,
                 "sErr": 1,
                 "sOrig": "",
                 "sDest": "",
@@ -4192,19 +4375,19 @@ window.HISTORIAL_DATA = {
                 "aErr": 2,
                 "bT": 6,
                 "bPt": 5,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 3,
                 "n": "WINER",
+                "dv4": {},
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -4226,19 +4409,32 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 1,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 4,
                 "n": "VAZQUEZ",
+                "dv4": {
+                    "G2": {
+                        "tot": 1,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 0
+                    },
+                    "JJ": {
+                        "tot": 1,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 3
+                    }
+                },
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -4260,19 +4456,50 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 2,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 5,
                 "n": "RAMOS",
+                "dv4": {
+                    "G2": {
+                        "tot": 9,
+                        "pt": 4,
+                        "err": 1,
+                        "orig": 2
+                    },
+                    "W2": {
+                        "tot": 6,
+                        "pt": 4,
+                        "err": 0,
+                        "orig": 2
+                    },
+                    "Y8": {
+                        "tot": 1,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 8
+                    },
+                    "Y9": {
+                        "tot": 2,
+                        "pt": 0,
+                        "err": 0,
+                        "orig": 9
+                    },
+                    "G9": {
+                        "tot": 1,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 9
+                    }
+                },
                 "sT": 4,
                 "sEff": -25,
                 "sPunto": 1,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 1,
+                "sVend": 0,
                 "sErr": 2,
                 "sOrig": "",
                 "sDest": "",
@@ -4294,19 +4521,38 @@ window.HISTORIAL_DATA = {
                 "aErr": 1,
                 "bT": 9,
                 "bPt": 3,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 6,
                 "n": "VILLARRUEL",
+                "dv4": {
+                    "W4": {
+                        "tot": 13,
+                        "pt": 2,
+                        "err": 1,
+                        "orig": 0
+                    },
+                    "G4": {
+                        "tot": 11,
+                        "pt": 4,
+                        "err": 0,
+                        "orig": 0
+                    },
+                    "Y8": {
+                        "tot": 5,
+                        "pt": 2,
+                        "err": 0,
+                        "orig": 0
+                    }
+                },
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -4328,19 +4574,26 @@ window.HISTORIAL_DATA = {
                 "aErr": 1,
                 "bT": 1,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 9,
                 "n": "GODOY",
+                "dv4": {
+                    "Y9": {
+                        "tot": 1,
+                        "pt": 0,
+                        "err": 1,
+                        "orig": 9
+                    }
+                },
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -4362,19 +4615,32 @@ window.HISTORIAL_DATA = {
                 "aErr": 1,
                 "bT": 2,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 10,
                 "n": "VIERA",
+                "dv4": {
+                    "J2": {
+                        "tot": 3,
+                        "pt": 2,
+                        "err": 1,
+                        "orig": 0
+                    },
+                    "J1": {
+                        "tot": 1,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 0
+                    }
+                },
                 "sT": 3,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 2,
-                "sVend": 0,
                 "sNeg": 1,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -4396,19 +4662,50 @@ window.HISTORIAL_DATA = {
                 "aErr": 1,
                 "bT": 1,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 11,
                 "n": "DURDOS",
+                "dv4": {
+                    "G4": {
+                        "tot": 12,
+                        "pt": 4,
+                        "err": 4,
+                        "orig": 0
+                    },
+                    "W4": {
+                        "tot": 11,
+                        "pt": 8,
+                        "err": 1,
+                        "orig": 4
+                    },
+                    "Y9": {
+                        "tot": 1,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 0
+                    },
+                    "Y8": {
+                        "tot": 5,
+                        "pt": 3,
+                        "err": 1,
+                        "orig": 0
+                    },
+                    "V4": {
+                        "tot": 1,
+                        "pt": 0,
+                        "err": 1,
+                        "orig": 0
+                    }
+                },
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -4430,19 +4727,19 @@ window.HISTORIAL_DATA = {
                 "aErr": 7,
                 "bT": 2,
                 "bPt": 1,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 12,
                 "n": "ZANOTTI",
+                "dv4": {},
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -4464,19 +4761,38 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 1,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 14,
                 "n": "NIELSON",
+                "dv4": {
+                    "Y8": {
+                        "tot": 6,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 0
+                    },
+                    "W4": {
+                        "tot": 13,
+                        "pt": 6,
+                        "err": 0,
+                        "orig": 4
+                    },
+                    "G4": {
+                        "tot": 7,
+                        "pt": 3,
+                        "err": 1,
+                        "orig": 0
+                    }
+                },
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -4498,19 +4814,32 @@ window.HISTORIAL_DATA = {
                 "aErr": 1,
                 "bT": 3,
                 "bPt": 1,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 15,
                 "n": "ROTEZZI",
+                "dv4": {
+                    "J2": {
+                        "tot": 8,
+                        "pt": 5,
+                        "err": 0,
+                        "orig": 4
+                    },
+                    "J1": {
+                        "tot": 1,
+                        "pt": 0,
+                        "err": 1,
+                        "orig": 0
+                    }
+                },
                 "sT": 4,
                 "sEff": -25,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 2,
-                "sVend": 0,
                 "sNeg": 1,
+                "sVend": 0,
                 "sErr": 1,
                 "sOrig": "",
                 "sDest": "",
@@ -4532,19 +4861,44 @@ window.HISTORIAL_DATA = {
                 "aErr": 1,
                 "bT": 2,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 18,
                 "n": "ACOSTA",
+                "dv4": {
+                    "G2": {
+                        "tot": 7,
+                        "pt": 2,
+                        "err": 0,
+                        "orig": 0
+                    },
+                    "W2": {
+                        "tot": 10,
+                        "pt": 4,
+                        "err": 0,
+                        "orig": 0
+                    },
+                    "Y9": {
+                        "tot": 3,
+                        "pt": 0,
+                        "err": 2,
+                        "orig": 0
+                    },
+                    "G9": {
+                        "tot": 5,
+                        "pt": 3,
+                        "err": 0,
+                        "orig": 9
+                    }
+                },
                 "sT": 0,
                 "sEff": 0,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 0,
                 "sNeg": 0,
+                "sVend": 0,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -4566,19 +4920,19 @@ window.HISTORIAL_DATA = {
                 "aErr": 2,
                 "bT": 4,
                 "bPt": 1,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 19,
                 "n": "DIAZ BOLLI",
+                "dv4": {},
                 "sT": 3,
                 "sEff": 17,
                 "sPunto": 0,
                 "sPos": 0,
                 "sOvp": 0,
-                "sVend": 1,
                 "sNeg": 2,
+                "sVend": 1,
                 "sErr": 0,
                 "sOrig": "",
                 "sDest": "",
@@ -4600,19 +4954,98 @@ window.HISTORIAL_DATA = {
                 "aErr": 0,
                 "bT": 0,
                 "bPt": 0,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             },
             {
                 "c": 0,
                 "n": "TOTALES EQUIPO",
+                "dv4": {
+                    "V3": {
+                        "tot": 1,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 0
+                    },
+                    "J2": {
+                        "tot": 13,
+                        "pt": 7,
+                        "err": 2,
+                        "orig": 0
+                    },
+                    "J1": {
+                        "tot": 3,
+                        "pt": 1,
+                        "err": 2,
+                        "orig": 3
+                    },
+                    "J3": {
+                        "tot": 2,
+                        "pt": 2,
+                        "err": 0,
+                        "orig": 3
+                    },
+                    "G2": {
+                        "tot": 17,
+                        "pt": 7,
+                        "err": 1,
+                        "orig": 0
+                    },
+                    "JJ": {
+                        "tot": 1,
+                        "pt": 1,
+                        "err": 0,
+                        "orig": 3
+                    },
+                    "W2": {
+                        "tot": 16,
+                        "pt": 8,
+                        "err": 0,
+                        "orig": 2
+                    },
+                    "Y8": {
+                        "tot": 17,
+                        "pt": 7,
+                        "err": 1,
+                        "orig": 8
+                    },
+                    "Y9": {
+                        "tot": 7,
+                        "pt": 1,
+                        "err": 3,
+                        "orig": 9
+                    },
+                    "G9": {
+                        "tot": 6,
+                        "pt": 4,
+                        "err": 0,
+                        "orig": 9
+                    },
+                    "W4": {
+                        "tot": 37,
+                        "pt": 16,
+                        "err": 2,
+                        "orig": 0
+                    },
+                    "G4": {
+                        "tot": 30,
+                        "pt": 11,
+                        "err": 5,
+                        "orig": 0
+                    },
+                    "V4": {
+                        "tot": 1,
+                        "pt": 0,
+                        "err": 1,
+                        "orig": 0
+                    }
+                },
                 "sT": 18,
                 "sEff": -12,
                 "sPunto": 1,
                 "sPos": 1,
                 "sOvp": 5,
-                "sVend": 1,
                 "sNeg": 6,
+                "sVend": 1,
                 "sErr": 4,
                 "sOrig": "",
                 "sDest": "",
@@ -4634,8 +5067,7 @@ window.HISTORIAL_DATA = {
                 "aErr": 17,
                 "bT": 34,
                 "bPt": 11,
-                "bPtPos": 0,
-                "dv4": {}
+                "bPtPos": 0
             }
         ]
     }

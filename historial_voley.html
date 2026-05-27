@@ -880,6 +880,7 @@ function renderTeamDV4Historial(){
   sesionesD.forEach(e=>{
     e.jugadores.forEach(j=>{
       if(!j.dv4)return;
+      if(j.n==='TOTALES EQUIPO')return; // skip to avoid double counting
       Object.keys(j.dv4).forEach(cod=>{
         const d=j.dv4[cod];
         if(!d||!d.tot)return;
@@ -1424,8 +1425,8 @@ function renderEquipo(){
     +'<div id="objetivos-panel" style="margin:20px 0 8px"></div>';
   hsRebuildDropdown();
   hsRenderTab();
-  // Render objetivos AFTER DOM is updated
-  setTimeout(function(){if(typeof renderObjetivos!=="undefined")renderObjetivos("objetivos-panel");},150);
+  // Render objetivos directly — div already in DOM from innerHTML above
+  if(typeof renderObjetivos!=="undefined") renderObjetivos("objetivos-panel");
 }
 
 // ═══════════════════════════════════════════
