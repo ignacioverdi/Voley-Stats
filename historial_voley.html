@@ -1371,9 +1371,9 @@ function hsSetFiltro(filtro, btn){
   HS_SESION_IDX = -2; // reset to accumulated
   document.querySelectorAll('.hs-filtro-btn').forEach(function(b){ b.classList.remove('on'); });
   if(btn) btn.classList.add('on');
-  // Rebuild session dropdown
   hsRebuildDropdown();
   hsRenderTab();
+  setTimeout(function(){if(typeof renderObjetivos!=='undefined')renderObjetivos('objetivos-panel');},50);
 }
 
 function hsRebuildDropdown(){

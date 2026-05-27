@@ -145,7 +145,16 @@ function objCalcVals(nombreJugador){
   var D=window.HISTORIAL_DATA; if(!D) return {};
   var acum={sT:0,sPunto:0,sPos:0,sVend:0,sErr:0,rT:0,rPunto:0,rPos:0,rVend:0,rErr:0,aT:0,aPunto:0,aVend:0,aErr:0,bT:0,bPt:0,bPtPos:0,mbT:0,mbPt:0,mbVnd:0,mbErr:0};
   var CENTRALES=[2,10,15,17];
-  D.entrenamientos.forEach(function(s){
+  // Respect current filter (PARTIDO_IDX, FILTRO_INDICES)
+  var sesiones;
+  if(typeof PARTIDO_IDX!=='undefined' && PARTIDO_IDX!==null && PARTIDO_IDX>=0){
+    sesiones=[D.entrenamientos[PARTIDO_IDX]].filter(Boolean);
+  } else if(typeof FILTRO_INDICES!=='undefined' && FILTRO_INDICES){
+    sesiones=FILTRO_INDICES.map(function(i){return D.entrenamientos[i];}).filter(Boolean);
+  } else {
+    sesiones=D.entrenamientos;
+  }
+  sesiones.forEach(function(s){
     s.jugadores.forEach(function(j){
       if(j.n==='TOTALES EQUIPO') return;
       if(nombreJugador && j.n!==nombreJugador) return;
@@ -363,6 +372,8 @@ function selectPartido(idx, btn){
 function activarPartidoBtns(btn){
   document.querySelectorAll('.partido-btn').forEach(function(b){ b.classList.remove('activo'); });
   btn.classList.add('activo');
+  // Update objetivos with current filter
+  setTimeout(function(){if(typeof renderObjetivos!=='undefined')renderObjetivos('objetivos-panel');},50);
   document.getElementById('tabs-equipo').style.display='flex';
   document.getElementById('tabs').style.display='flex';
   document.getElementById('contenido').style.display='block';
