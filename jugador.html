@@ -509,7 +509,7 @@ function renderNextMatch(){
   if(!window.GAMEPLAN_DATA) return;
   var gp = window.GAMEPLAN_DATA;
   wrap.innerHTML =
-    '<a class="next-match" href="game_plan_dbanf.html">' +
+    '<a class="next-match" href="game_plan_lomas.html">' +
       '<div class="next-match-dot"></div>' +
       '<div class="next-match-info">' +
         '<div class="next-match-label">Próximo partido · F' + (gp.fecha||'') + '</div>' +
@@ -556,7 +556,7 @@ function renderAccesos(j){
   var items = [
     {icon:'📈', title:'Historial',     desc:'Mis estadísticas',       url:'historial_voley.html?player='+encodeURIComponent(j.nombre), color:'#818cf8'},
     {icon:'💪', title:'Rutina',        desc:'Mi preparación física',  url:'prep_fisica.html?player='+encodeURIComponent(j.nombre),    color:'#e8192c'},
-    {icon:'🎯', title:'Game Plan',     desc:'Plan del próximo partido',url:'game_plan_dbanf.html',                                    color:'#f59e0b'},
+    {icon:'🎯', title:'Game Plan',     desc:'Plan del próximo partido',url:'game_plan_lomas.html',                                    color:'#f59e0b'},
     {icon:'📊', title:'Panel en Vivo', desc:'Sesión actual',           url:'panel_voley.html',                                        color:'#22c55e'},
     {icon:'🏠', title:'Hub',           desc:'Todo el sistema',         url:'index.html',                                              color:'#64748b', full:true},
   ];
