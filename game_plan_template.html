@@ -260,6 +260,19 @@ select, select option {
     <div id="seccion-armador"></div>
   </div>
 
+  <!-- RECEPCIÓN RIVAL -->
+  <div style="margin-top:32px" id="seccion-recepcion">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:#e2e8f0;margin-bottom:16px">
+      RECEPCIÓN DEL RIVAL
+      <span style="font-size:11px;font-family:'Barlow Condensed',sans-serif;color:#475569;letter-spacing:1px;margin-left:12px;font-weight:400">Cómo reciben · dónde atacar</span>
+    </div>
+    <div id="rec-rival-content">
+      <div style="color:#475569;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1px;padding:24px;border:1px solid rgba(255,255,255,.06);border-radius:12px;text-align:center">
+        Sin datos de recepción rival cargados
+      </div>
+    </div>
+  </div>
+
   <!-- COMO VAMOS A JUGAR -->
   <div style="margin-top:40px;padding-top:28px;border-top:2px solid rgba(232,25,44,.15)" id="anchor-juego">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
@@ -839,6 +852,8 @@ var BLQ_OPCIONES=[
   {v:"6-1",   label:"6-1"},
 ];
 const ARMADOR_DATA=/*__ARM_START__*/{"titular":null,"suplente":null}/*__ARM_END__*/;
+var RECEPCION_RIVAL_DATA = window.RECEPCION_RIVAL_DATA || null;
+
 const JUEGO_DATA={
   imagenes:[]
 };
@@ -1759,6 +1774,7 @@ function generarPDFConLibrerias(){
 </div>
 
 <button onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:20px;right:20px;z-index:200;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(13,14,26,.95);backdrop-filter:blur(10px);color:#64748b;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.5)" title="Volver al inicio">↑</button>
+      <button onclick="document.getElementById('seccion-recepcion').scrollIntoView({behavior:'smooth'})" style="display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#64748b;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer">🛡 RECEPCIÓN RIVAL</button>
 
 <!-- MODAL ARMADOR -->
 <div id="modal-armador" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.92);backdrop-filter:blur(20px);align-items:center;justify-content:center">
