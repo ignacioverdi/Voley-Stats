@@ -1,3 +1,8 @@
 @echo off
-py "C:\Users\User\Desktop\STATS 2\actualizar_gameplan.py"
+cd /d "%~dp0"
+echo =============================================
+echo CASLA VOLEY - Generando Game Plan
+echo =============================================
+python actualizar_gameplan.py
+echo.
 pause

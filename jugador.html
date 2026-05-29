@@ -509,7 +509,7 @@ function renderNextMatch(){
   if(!window.GAMEPLAN_DATA) return;
   var gp = window.GAMEPLAN_DATA;
   wrap.innerHTML =
-    '<a class="next-match" href="game_plan_lomas.html">' +
+    '<a class="next-match" href="game_plan_dbanf.html">' +
       '<div class="next-match-dot"></div>' +
       '<div class="next-match-info">' +
         '<div class="next-match-label">Próximo partido · F' + (gp.fecha||'') + '</div>' +
@@ -556,10 +556,21 @@ function renderAccesos(j){
   var items = [
     {icon:'📈', title:'Historial',     desc:'Mis estadísticas',       url:'historial_voley.html?player='+encodeURIComponent(j.nombre), color:'#818cf8'},
     {icon:'💪', title:'Rutina',        desc:'Mi preparación física',  url:'prep_fisica.html?player='+encodeURIComponent(j.nombre),    color:'#e8192c'},
-    {icon:'🎯', title:'Game Plan',     desc:'Plan del próximo partido',url:'game_plan_lomas.html',                                    color:'#f59e0b'},
+    {icon:'🎯', title:'Game Plan',     desc:'Plan del próximo partido',url:'game_plan_dbanf.html',                                    color:'#f59e0b'},
     {icon:'📊', title:'Panel en Vivo', desc:'Sesión actual',           url:'panel_voley.html',                                        color:'#22c55e'},
     {icon:'🏠', title:'Hub',           desc:'Todo el sistema',         url:'index.html',                                              color:'#64748b', full:true},
   ];
+
+  // Armadores: Vazquez(4), Godoy(9), Diaz Bolli(19)
+  var SETTER_NUMS = [4, 9, 19];
+  if(SETTER_NUMS.indexOf(parseInt(j.num)) >= 0){
+    items.splice(items.length-1, 0, {icon:'🎯', title:'Distribución', desc:'Mi armado de juego', url:'armadores.html', color:'#f59e0b'});
+  }
+  // Receptores: PUNTA o LIBERO
+  var REC_POS = ['PUNTA','LIBERO'];
+  if(REC_POS.indexOf((j.pos||'').toUpperCase()) >= 0){
+    items.splice(items.length-1, 0, {icon:'🛡', title:'Recepción', desc:'Mi recepción por zona', url:'recepcion.html?jug='+encodeURIComponent((j.nombre||'').toUpperCase()), color:'#22c55e'});
+  }
 
   grid.innerHTML = items.map(function(a){
     return '<a class="acceso-card'+(a.full?' full':'')+'" href="'+a.url+'" style="border-color:'+a.color+'18">' +
