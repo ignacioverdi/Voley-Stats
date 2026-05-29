@@ -405,14 +405,14 @@ function renderObjetivosJugador(cid,nombre,extra){
 <!-- TAB: ANÁLISIS -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div class="view" id="view-analisis">
-  <iframe id="iframe-analisis" src="" style="width:100%;height:82vh;border:none;border-radius:12px;background:var(--bg)"></iframe>
+  <iframe id="iframe-analisis" src="analisis.html" style="width:100%;height:82vh;border:none;border-radius:12px;background:var(--bg)"></iframe>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- TAB: HISTORIAL -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div class="view" id="view-historial">
-  <iframe id="iframe-historial" src="" style="width:100%;height:82vh;border:none;border-radius:12px;background:var(--bg)"></iframe>
+  <iframe id="iframe-historial" src="historial_voley.html" style="width:100%;height:82vh;border:none;border-radius:12px;background:var(--bg)"></iframe>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
@@ -433,28 +433,37 @@ function renderObjetivosJugador(cid,nombre,extra){
 <!-- TAB: ARMADORES -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div class="view" id="view-armadores">
-  <iframe id="iframe-armadores" src="" style="width:100%;height:82vh;border:none;border-radius:12px;background:var(--bg)"></iframe>
+  <iframe id="iframe-armadores" src="armadores.html" style="width:100%;height:82vh;border:none;border-radius:12px;background:var(--bg)"></iframe>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- TAB: RECEPCIÓN -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div class="view" id="view-recepcion">
-  <iframe id="iframe-recepcion" src="" style="width:100%;height:82vh;border:none;border-radius:12px;background:var(--bg)"></iframe>
+  <iframe id="iframe-recepcion" src="recepcion.html" style="width:100%;height:82vh;border:none;border-radius:12px;background:var(--bg)"></iframe>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- TAB: BAGGERONE -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div class="view" id="view-baggerone">
-  <iframe id="iframe-baggerone" src="" style="width:100%;height:82vh;border:none;border-radius:12px;background:var(--bg)"></iframe>
+  <iframe id="iframe-baggerone" src="baggerone.html" style="width:100%;height:82vh;border:none;border-radius:12px;background:var(--bg)"></iframe>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- TAB: PREP FÍSICA -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div class="view" id="view-prep">
-  <iframe id="iframe-prep" src="" style="width:100%;height:82vh;border:none;border-radius:12px;background:var(--bg)"></iframe>
+  <iframe id="iframe-prep" src="panel_voley.html" style="width:100%;height:82vh;border:none;border-radius:12px;background:var(--bg)"></iframe>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB: GAME PLANS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="view" id="view-gameplans">
+  <div class="sec-lbl">Análisis de Rivales</div>
+  <div id="gp-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px"></div>
 </div>
 
 </div><!-- /main -->
@@ -922,6 +931,63 @@ function init(){
   renderEqTab();
 }
 init();
+
+// ════════════════════════════════════════════════════════════
+// TAB: GAME PLANS
+// ════════════════════════════════════════════════════════════
+function renderGamePlans(){
+  var cont = document.getElementById('gp-list');
+  if(!cont) return;
+  var plans = typeof GAME_PLANS !== 'undefined' ? GAME_PLANS : [];
+  if(!plans.length){
+    cont.innerHTML='<div class="empty">Todavía no hay game plans cargados. Subí game_plans.js al repo.</div>';
+    return;
+  }
+  var sorted = plans.slice().sort(function(a,b){
+    return (b.fecha||'') > (a.fecha||'') ? 1 : -1;
+  });
+  cont.innerHTML = '';
+  sorted.forEach(function(gp){
+    var done = !!gp.resultado;
+    var card = document.createElement('a');
+    card.href = gp.archivo;
+    card.style.cssText = 'display:block;background:var(--card);border:1px solid var(--b);border-radius:12px;overflow:hidden;text-decoration:none;color:inherit;transition:border-color .2s,transform .15s';
+    card.onmouseover = function(){ this.style.borderColor='var(--red)'; this.style.transform='translateY(-2px)'; };
+    card.onmouseout  = function(){ this.style.borderColor=''; this.style.transform=''; };
+
+    var meses=['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    var fp = (gp.fecha||'').split('-');
+    var fechaFmt = fp.length===3 ? fp[2]+' '+meses[parseInt(fp[1])]+' '+fp[0] : gp.fecha||'';
+
+    var resHtml = '';
+    if(gp.resultado){
+      var win = gp.resultado.casla > gp.resultado.rival;
+      var col = win ? '#22c55e' : '#ef4444';
+      resHtml = '<div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(255,255,255,.03);border-radius:7px;margin-bottom:10px">'
+        +'<div style="font-family:Bebas Neue,sans-serif;font-size:20px;color:'+col+'">'+gp.resultado.casla+' — '+gp.resultado.rival+'</div>'
+        +'<div style="font-size:8px;color:#475569;text-transform:uppercase;letter-spacing:1px">'+(win?'✓ Victoria':'✗ Derrota')+'</div>'
+        +'</div>';
+    }
+
+    card.innerHTML =
+      '<div style="height:3px;background:linear-gradient(90deg,var(--red),transparent)"></div>'
+      +'<div style="padding:14px 16px">'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">'
+      +'<div style="font-family:Bebas Neue,sans-serif;font-size:22px;letter-spacing:2px">vs '+gp.rival+'</div>'
+      +'<div style="font-size:8px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:20px;'
+      +(done?'background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#22c55e':'background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:#f59e0b')
+      +'">'+( done?'Jugado':'Próximo')+'</div>'
+      +'</div>'
+      +'<div style="font-size:10px;color:#475569;margin-bottom:10px">'+gp.torneo+' · '+fechaFmt+'</div>'
+      +resHtml
+      +'<div style="display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--b)">'
+      +'<span style="font-size:9px;color:#475569;letter-spacing:1px;text-transform:uppercase">Ver Game Plan</span>'
+      +'<span style="color:var(--red);font-size:14px">→</span>'
+      +'</div></div>';
+    cont.appendChild(card);
+  });
+}
+
 </script>
 
 <!-- Objetivos inline -->

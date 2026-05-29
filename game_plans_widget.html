@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Game Plans — CASLA Voley</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:     #07080f;
+    --card:   #0d0e1a;
+    --border: rgba(255,255,255,.07);
+    --red:    #e8192c;
+    --amber:  #f59e0b;
+    --indigo: #818cf8;
+    --green:  #22c55e;
+    --muted:  #475569;
+    --text:   #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Barlow Condensed', sans-serif;
+    min-height: 100vh;
+    padding: 24px 16px;
+  }
+
+  /* ── Header ── */
+  .hdr {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hdr-logo {
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 2px solid var(--red);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--red);
+  }
+  .hdr-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: 3px; color: var(--text);
+  }
+  .hdr-sub {
+    font-size: 11px; color: var(--muted);
+    letter-spacing: 1.5px; text-transform: uppercase;
+  }
+
+  /* ── Section label ── */
+  .sec-label {
+    font-size: 9px; color: var(--muted);
+    letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  /* ── Grid game plans ── */
+  .gp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .gp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color .2s, transform .15s;
+    display: block;
+  }
+  .gp-card:hover {
+    border-color: var(--red);
+    transform: translateY(-2px);
+  }
+
+  /* Strip rojo superior */
+  .gp-strip {
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), transparent);
+  }
+
+  .gp-body { padding: 14px 16px; }
+
+  .gp-top {
+    display: flex; align-items: center;
+    justify-content: space-between; margin-bottom: 10px;
+  }
+  .gp-rival {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: 2px; color: var(--text);
+  }
+  .gp-badge {
+    font-size: 8px; font-weight: 800; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 8px; border-radius: 20px;
+  }
+  .badge-upcoming {
+    background: rgba(245,158,11,.12);
+    border: 1px solid rgba(245,158,11,.3);
+    color: var(--amber);
+  }
+  .badge-done {
+    background: rgba(34,197,94,.1);
+    border: 1px solid rgba(34,197,94,.25);
+    color: var(--green);
+  }
+
+  .gp-meta {
+    font-size: 10px; color: var(--muted);
+    letter-spacing: .5px; margin-bottom: 10px;
+  }
+
+  /* Resultado */
+  .gp-result {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 10px;
+    background: rgba(255,255,255,.03);
+    border-radius: 7px;
+    margin-bottom: 10px;
+  }
+  .gp-result-score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px; letter-spacing: 1px;
+  }
+  .gp-result-lbl {
+    font-size: 8px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+
+  /* Footer link */
+  .gp-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+  .gp-link-lbl {
+    font-size: 9px; color: var(--muted);
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .gp-arrow {
+    font-size: 14px; color: var(--red);
+  }
+
+  /* ── Empty state ── */
+  .empty {
+    text-align: center; padding: 40px;
+    color: var(--muted); font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  /* ── Back link ── */
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 8px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.03);
+    color: var(--muted); font-size: 11px;
+    font-weight: 700; letter-spacing: 1px;
+    text-decoration: none; text-transform: uppercase;
+    margin-bottom: 24px;
+    transition: color .2s, border-color .2s;
+  }
+  .back-btn:hover { color: var(--text); border-color: rgba(255,255,255,.15); }
+</style>
+</head>
+<body>
+
+<a href="dashboard.html" class="back-btn">← Dashboard</a>
+
+<div class="hdr">
+  <div class="hdr-logo">GP</div>
+  <div>
+    <div class="hdr-title">GAME PLANS</div>
+    <div class="hdr-sub">CASLA Voley · Análisis de Rivales</div>
+  </div>
+</div>
+
+<div class="sec-label">Game Plans Disponibles</div>
+<div class="gp-grid" id="gp-grid">
+  <div class="empty">Cargando...</div>
+</div>
+
+<script src="game_plans.js"></script>
+<script>
+  function formatFecha(f) {
+    if (!f) return '';
+    var p = f.split('-');
+    var meses = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    return p[2] + ' ' + meses[parseInt(p[1])] + ' ' + p[0];
+  }
+
+  function renderGP() {
+    var grid = document.getElementById('gp-grid');
+    if (!GAME_PLANS || !GAME_PLANS.length) {
+      grid.innerHTML = '<div class="empty">No hay game plans disponibles aún.</div>';
+      return;
+    }
+
+    // Ordenar por fecha descendente (más reciente primero)
+    var sorted = GAME_PLANS.slice().sort(function(a, b) {
+      return (b.fecha || '') > (a.fecha || '') ? 1 : -1;
+    });
+
+    grid.innerHTML = '';
+    sorted.forEach(function(gp) {
+      var done = !!gp.resultado;
+      var card = document.createElement('a');
+      card.className = 'gp-card';
+      card.href = gp.archivo;
+
+      var resultHtml = '';
+      if (gp.resultado) {
+        var casla = gp.resultado.casla;
+        var rival = gp.resultado.rival;
+        var win   = casla > rival;
+        var col   = win ? '#22c55e' : '#ef4444';
+        resultHtml = '<div class="gp-result">'
+          + '<div class="gp-result-score" style="color:' + col + '">'
+          + casla + ' — ' + rival + '</div>'
+          + '<div class="gp-result-lbl">' + (win ? '✓ Victoria' : '✗ Derrota') + '</div>'
+          + '</div>';
+      }
+
+      card.innerHTML =
+        '<div class="gp-strip"></div>'
+        + '<div class="gp-body">'
+        +   '<div class="gp-top">'
+        +     '<div class="gp-rival">vs ' + gp.rival + '</div>'
+        +     '<div class="gp-badge ' + (done ? 'badge-done' : 'badge-upcoming') + '">'
+        +       (done ? 'Jugado' : 'Próximo') + '</div>'
+        +   '</div>'
+        +   '<div class="gp-meta">' + gp.torneo + ' · ' + formatFecha(gp.fecha) + '</div>'
+        +   resultHtml
+        +   '<div class="gp-footer">'
+        +     '<span class="gp-link-lbl">Ver Game Plan</span>'
+        +     '<span class="gp-arrow">→</span>'
+        +   '</div>'
+        + '</div>';
+
+      grid.appendChild(card);
+    });
+  }
+
+  renderGP();
+</script>
+</body>
+</html>
