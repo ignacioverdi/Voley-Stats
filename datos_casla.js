@@ -1,17 +1,17 @@
 // datos_casla.js — generado automáticamente por generar_datos_casla.py
-// 30/05/2026 00:53 — División de Honor 2026 — LOMAS
+// 30/05/2026 01:23 — División de Honor 2026 — LOMAS
 // NO EDITAR MANUALMENTE
 
 const CASLA_EQUIPO = "División de Honor 2026";
 const CASLA_TEMPORADA = "LOMAS";
-const CASLA_GENERADO = "30/05/2026 00:53";
+const CASLA_GENERADO = "30/05/2026 01:23";
 
 const CASLA_JUGADORES = [
   {
     "num": 2,
     "nombre": "2 Ojuez A.",
-    "pos": "",
-    "color": "#64748b",
+    "pos": "CENTRAL",
+    "color": "#f97316",
     "info": {
       "bloqueo": "",
       "defensa": "",
@@ -146,8 +146,8 @@ const CASLA_JUGADORES = [
   {
     "num": 3,
     "nombre": "3 Romeo Winer A.",
-    "pos": "",
-    "color": "#64748b",
+    "pos": "LIBERO",
+    "color": "#06b6d4",
     "info": {
       "bloqueo": "",
       "defensa": "",
@@ -355,8 +355,8 @@ const CASLA_JUGADORES = [
   {
     "num": 4,
     "nombre": "4 Vazquez E.",
-    "pos": "",
-    "color": "#64748b",
+    "pos": "ARMADOR",
+    "color": "#f59e0b",
     "info": {
       "bloqueo": "",
       "defensa": "",
@@ -419,8 +419,8 @@ const CASLA_JUGADORES = [
   {
     "num": 5,
     "nombre": "5 Ramos I.",
-    "pos": "",
-    "color": "#64748b",
+    "pos": "OPUESTO",
+    "color": "#818cf8",
     "info": {
       "bloqueo": "",
       "defensa": "",
@@ -605,8 +605,8 @@ const CASLA_JUGADORES = [
   {
     "num": 6,
     "nombre": "6 Villarruel J.",
-    "pos": "",
-    "color": "#64748b",
+    "pos": "PUNTA",
+    "color": "#22c55e",
     "info": {
       "bloqueo": "",
       "defensa": "",
@@ -868,8 +868,8 @@ const CASLA_JUGADORES = [
   {
     "num": 9,
     "nombre": "9 Godoy M.",
-    "pos": "",
-    "color": "#64748b",
+    "pos": "ARMADOR",
+    "color": "#f59e0b",
     "info": {
       "bloqueo": "",
       "defensa": "",
@@ -932,8 +932,8 @@ const CASLA_JUGADORES = [
   {
     "num": 10,
     "nombre": "10 Viera M.",
-    "pos": "",
-    "color": "#64748b",
+    "pos": "CENTRAL",
+    "color": "#f97316",
     "info": {
       "bloqueo": "",
       "defensa": "",
@@ -979,8 +979,8 @@ const CASLA_JUGADORES = [
   {
     "num": 11,
     "nombre": "11 Durdos V.",
-    "pos": "",
-    "color": "#64748b",
+    "pos": "PUNTA",
+    "color": "#22c55e",
     "info": {
       "bloqueo": "",
       "defensa": "",
@@ -1047,13 +1047,13 @@ const CASLA_JUGADORES = [
         "cod": "XP",
         "orig": 8,
         "destinos": [],
-        "eff": 0,
-        "tot": 0,
-        "pts": 0,
+        "eff": 16,
+        "tot": 19,
+        "pts": 8,
         "slash": 0,
         "err": 0,
         "video": 0,
-        "pts_pct": 0
+        "pts_pct": 42
       }
     ],
     "saques": [
@@ -1288,8 +1288,8 @@ const CASLA_JUGADORES = [
   {
     "num": 12,
     "nombre": "12 Zanotti J.",
-    "pos": "",
-    "color": "#64748b",
+    "pos": "LIBERO",
+    "color": "#06b6d4",
     "info": {
       "bloqueo": "",
       "defensa": "",
@@ -1497,8 +1497,8 @@ const CASLA_JUGADORES = [
   {
     "num": 13,
     "nombre": "13 Rojas Caruso M.",
-    "pos": "",
-    "color": "#64748b",
+    "pos": "PUNTA",
+    "color": "#22c55e",
     "info": {
       "bloqueo": "",
       "defensa": "",
@@ -1764,8 +1764,8 @@ const CASLA_JUGADORES = [
   {
     "num": 14,
     "nombre": "14 Nielson R.",
-    "pos": "",
-    "color": "#64748b",
+    "pos": "PUNTA",
+    "color": "#22c55e",
     "info": {
       "bloqueo": "",
       "defensa": "",
@@ -1832,8 +1832,8 @@ const CASLA_JUGADORES = [
         "cod": "XP",
         "orig": 8,
         "destinos": [],
-        "eff": 0,
-        "tot": 0,
+        "eff": -100,
+        "tot": 1,
         "pts": 0,
         "slash": 0,
         "err": 0,
@@ -2073,8 +2073,8 @@ const CASLA_JUGADORES = [
   {
     "num": 15,
     "nombre": "15 Rotezzi R.",
-    "pos": "",
-    "color": "#64748b",
+    "pos": "CENTRAL",
+    "color": "#f97316",
     "info": {
       "bloqueo": "",
       "defensa": "",
@@ -2191,8 +2191,8 @@ const CASLA_JUGADORES = [
   {
     "num": 17,
     "nombre": "17 Herbsommer L.",
-    "pos": "",
-    "color": "#64748b",
+    "pos": "CENTRAL",
+    "color": "#f97316",
     "info": {
       "bloqueo": "",
       "defensa": "",
@@ -2201,7 +2201,74 @@ const CASLA_JUGADORES = [
       "pos1": "",
       "extra": ""
     },
-    "ataques": [],
+    "ataques": [
+      {
+        "cod": "X7",
+        "orig": 3,
+        "destinos": [
+          {
+            "z": 9,
+            "pct": 50
+          },
+          {
+            "z": 2,
+            "pct": 25
+          },
+          {
+            "z": 8,
+            "pct": 25
+          }
+        ],
+        "eff": 50,
+        "tot": 4,
+        "pts": 4,
+        "slash": 0,
+        "err": 0,
+        "video": 0,
+        "pts_pct": 100
+      },
+      {
+        "cod": "XM",
+        "orig": 3,
+        "destinos": [
+          {
+            "z": 9,
+            "pct": 29
+          },
+          {
+            "z": 7,
+            "pct": 29
+          },
+          {
+            "z": 6,
+            "pct": 21
+          },
+          {
+            "z": 8,
+            "pct": 14
+          }
+        ],
+        "eff": 0,
+        "tot": 14,
+        "pts": 0,
+        "slash": 0,
+        "err": 0,
+        "video": 0,
+        "pts_pct": 0
+      },
+      {
+        "cod": "X2",
+        "orig": 3,
+        "destinos": [],
+        "eff": 0,
+        "tot": 0,
+        "pts": 0,
+        "slash": 0,
+        "err": 0,
+        "video": 0,
+        "pts_pct": 0
+      }
+    ],
     "saques": [
       {
         "cod": "SM",
@@ -2255,8 +2322,8 @@ const CASLA_JUGADORES = [
   {
     "num": 18,
     "nombre": "18 Acosta W.",
-    "pos": "",
-    "color": "#64748b",
+    "pos": "OPUESTO",
+    "color": "#818cf8",
     "info": {
       "bloqueo": "",
       "defensa": "",

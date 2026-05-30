@@ -484,7 +484,7 @@ function initPage(){
   var nm = j.nombre.replace(/^\d+\s*/, '');
   document.getElementById('jug-title').textContent = '⚡ SAQUES — ' + nm;
   var datos = j.saques;
-  if(!datos || !datos.length || datos.every(function(x){return !x.tot;})){
+  if(!datos || !datos.length){
     cont.innerHTML = '<div class="empty">Sin datos de saque para ' + nm + '</div>';
     return;
   }

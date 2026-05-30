@@ -261,24 +261,29 @@ def read_casla():
         recepcion[name] = {'num':num, 'flotado':flotado, 'potencia':potencia}
 
     # ── BUILD JUGADORES ───────────────────────────────────────────
-    # Leer roster desde PLANTILLA_RIVAL para tener posiciones
-    ws_pl = wb['PLANTILLA_RIVAL']
+    # Leer plantel desde hoja CASLA_PLANTEL (col A=num, B=nombre, C=posicion)
     roster_pos = {}
-    for row in ws_pl.iter_rows(min_row=6, max_row=25, values_only=True):
-        if row[2] and row[3]:
-            nm = cn(row[2])
-            if nm:
-                roster_pos[nm] = str(row[3]).strip()
+    try:
+        ws_pl = wb['CASLA_PLANTEL']
+        for row in ws_pl.iter_rows(min_row=1, max_row=30, values_only=True):
+            if row[1] and row[2]:
+                nm = str(row[1]).strip().upper()
+                pos = str(row[2]).strip().upper()
+                if nm and pos:
+                    roster_pos[nm] = pos
+        print(f"  Plantel: {len(roster_pos)} jugadores cargados")
+    except Exception as e:
+        print(f"  AVISO: No se encontró hoja CASLA_PLANTEL ({e})")
 
     all_names = {}
     for nm, data in attack.items():
-        all_names[nm] = {'num':data['num'], 'pos':roster_pos.get(nm,'')}
+        all_names[nm] = {'num':data['num'], 'pos':(next((v for k,v in roster_pos.items() if k in nm.upper() or nm.upper().split()[0] in k), ''))}
     for nm, data in serve.items():
         if nm not in all_names:
-            all_names[nm] = {'num':data['num'], 'pos':roster_pos.get(nm,'')}
+            all_names[nm] = {'num':data['num'], 'pos':(next((v for k,v in roster_pos.items() if k in nm.upper() or nm.upper().split()[0] in k), ''))}
     for nm in recepcion:
         if nm not in all_names:
-            all_names[nm] = {'num':recepcion[nm]['num'], 'pos':roster_pos.get(nm,'')}
+            all_names[nm] = {'num':recepcion[nm]['num'], 'pos':(next((v for k,v in roster_pos.items() if k in nm.upper() or nm.upper().split()[0] in k), ''))}
 
     jugadores = []
     for nm in sorted(all_names, key=lambda n: all_names[n]['num']):

@@ -468,21 +468,43 @@ function renderPanelAtaque(j,jIdx,grid){
     'ARMADOR': [],
     'LIBERO':  []
   };
-  var ordenCombos = combosPos[j.pos.toUpperCase()] || [];
+
+  // Auto-detect position from attack codes if pos is empty
+  var pos = (j.pos || '').toUpperCase();
+  if(!pos && j.ataques && j.ataques.length){
+    var codes = j.ataques.map(function(a){ return a.cod; });
+    if(codes.some(function(c){ return ['X8','V8'].indexOf(c)>=0; })) pos='OPUESTO';
+    else if(codes.some(function(c){ return ['X1','X7','XM','X2'].indexOf(c)>=0; })) pos='CENTRAL';
+    else if(codes.some(function(c){ return ['X5','V5','X6','V6','XP'].indexOf(c)>=0; })) pos='PUNTA';
+  }
+
+  var ordenCombos = combosPos[pos] || [];
   var ataqueMap = {};
   j.ataques.forEach(function(a){ ataqueMap[a.cod] = a; });
-  var ataquesMostrar = ordenCombos.length > 0
-    ? ordenCombos.map(function(cod){ return ataqueMap[cod] || {cod:cod,orig:8,destinos:[],eff:null,tot:0,pts:null,slash:0,err:0,video:null}; })
-    : j.ataques.filter(function(a){ return a.tot>0 || (a.destinos && a.destinos.length>0); });
+
+  // Show ALL combos for position (even zeros), plus any extra combos the player has
+  var ataquesMostrar;
+  if(ordenCombos.length > 0){
+    ataquesMostrar = ordenCombos.map(function(cod){
+      return ataqueMap[cod] || {cod:cod,orig:8,destinos:[],eff:null,tot:0,pts:null,slash:0,err:0,video:null};
+    });
+    // Add extra combos not in standard list
+    j.ataques.forEach(function(a){
+      if(ordenCombos.indexOf(a.cod) < 0 && a.tot > 0) ataquesMostrar.push(a);
+    });
+  } else {
+    ataquesMostrar = j.ataques;
+  }
+
   ataquesMostrar.forEach(function(a,i){
-    var card=buildCanchita(a,jIdx,i,'ma',180,140,drawAtaqueCourt,j.color,j);
+    var card=buildCanchita(a,jIdx,i,'ma',180,140,drawAtaqueCourt,j.color||'#818cf8',j);
     grid.appendChild(card);
     setTimeout(function(){
       var cv=document.getElementById('ma-'+jIdx+'-'+i);
       if(!cv) return;
       var ctx=cv.getContext('2d');
       var start=null;
-      function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/500,1),e=1-Math.pow(1-p,3);ctx.clearRect(0,0,180,140);drawAtaqueCourt(ctx,180,140,a,j.color,e);if(p<1)requestAnimationFrame(step);}
+      function step(ts){if(!start)start=ts;var pr=Math.min((ts-start)/500,1),e=1-Math.pow(1-pr,3);ctx.clearRect(0,0,180,140);drawAtaqueCourt(ctx,180,140,a,j.color||'#818cf8',e);if(pr<1)requestAnimationFrame(step);}
       requestAnimationFrame(step);
     },i*70);
   });
@@ -500,7 +522,7 @@ function initPage(){
   var nm = j.nombre.replace(/^\d+\s*/, '');
   document.getElementById('jug-title').textContent = '💥 ATAQUES — ' + nm;
   var datos = j.ataques;
-  if(!datos || !datos.length || datos.every(function(x){return !x.tot;})){
+  if(!datos || !datos.length){
     cont.innerHTML = '<div class="empty">Sin datos de ataque para ' + nm + '</div>';
     return;
   }
