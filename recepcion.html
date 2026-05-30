@@ -291,6 +291,7 @@ canvas.panel-court{position:absolute;inset:0;width:100%;height:100%;opacity:.28;
 </div>
 <div class="content" id="content"></div>
 
+<script src="datos_casla.js" onerror="void 0"></script>
 <script>
 // ================================================================
 // CASLA VOLEY — Datos de recepción
@@ -298,95 +299,61 @@ canvas.panel-court{position:absolute;inset:0;width:100%;height:100%;opacity:.28;
 // Cargado por: recepcion.html, jugador.html
 // ================================================================
 
-window.RECEPCION_DATA = {
+// Datos cargados dinámicamente desde datos_casla.js
+window.RECEPCION_DATA = {};
 
-  // RECEPTORES: PUNTAS Y LIBEROS
-  // Posiciones: PUNTA = NIELSON, DURDOS, RAMOS, WINER, ACOSTA
-  //             LIBERO = ZANOTTI
-
-  "NIELSON": {
-    flotado: {
-      desde_z5: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z6: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z1: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} }
-    },
-    potencia: {
-      desde_z5: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z6: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z1: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} }
+function cargarRecepcionCasla(){
+  if(typeof CASLA_JUGADORES === 'undefined') return;
+  CASLA_JUGADORES.forEach(function(j){
+    if(!j.recepcion || !j.recepcion.flotado) return;
+    var apellido = j.nombre.replace(/^\d+\s*/,'').split(' ')[0].toUpperCase();
+    var rec = j.recepcion;
+    // Convertir estructura desde_z1/z6/z5 → desde_z1/z6/z5 con p1/p6/p5
+    function convZona(zd){
+      if(!zd) return {p5:{tot:0,eff:0,pos:0,neg:0},p6:{tot:0,eff:0,pos:0,neg:0},p1:{tot:0,eff:0,pos:0,neg:0}};
+      return {p1:zd.p1||{tot:0,eff:0,pos:0,neg:0}, p6:zd.p6||{tot:0,eff:0,pos:0,neg:0}, p5:zd.p5||{tot:0,eff:0,pos:0,neg:0}};
     }
-  },
+    window.RECEPCION_DATA[apellido] = {
+      flotado: {
+        desde_z1: convZona(rec.flotado && rec.flotado.desde_z1),
+        desde_z6: convZona(rec.flotado && rec.flotado.desde_z6),
+        desde_z5: convZona(rec.flotado && rec.flotado.desde_z5),
+      },
+      potencia: {
+        desde_z1: convZona(rec.potencia && rec.potencia.desde_z1),
+        desde_z6: convZona(rec.potencia && rec.potencia.desde_z6),
+        desde_z5: convZona(rec.potencia && rec.potencia.desde_z5),
+      }
+    };
+  });
+}
 
-  "DURDOS": {
-    flotado: {
-      desde_z5: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z6: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z1: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} }
-    },
-    potencia: {
-      desde_z5: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z6: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z1: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} }
-    }
-  },
 
-  "RAMOS": {
-    flotado: {
-      desde_z5: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z6: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z1: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} }
-    },
-    potencia: {
-      desde_z5: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z6: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z1: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} }
-    }
-  },
 
-  "WINER": {
-    flotado: {
-      desde_z5: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z6: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z1: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} }
-    },
-    potencia: {
-      desde_z5: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z6: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z1: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} }
-    }
-  },
 
-  "ACOSTA": {
-    flotado: {
-      desde_z5: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z6: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z1: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} }
-    },
-    potencia: {
-      desde_z5: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z6: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z1: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} }
-    }
-  },
-
-  "ZANOTTI": {
-    flotado: {
-      desde_z5: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z6: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z1: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} }
-    },
-    potencia: {
-      desde_z5: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z6: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} },
-      desde_z1: { p5:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0} }
-    }
+function initReceptores(){
+  cargarRecepcionCasla();
+  RECEPTORES = Object.keys(window.RECEPCION_DATA);
+  if(RECEPTORES.length === 0){
+    RECEPTORES = ['NIELSON','DURDOS','RAMOS','WINER','ACOSTA','ZANOTTI'];
   }
-
-};
-
-
-var RECEPTORES = ['NIELSON','DURDOS','RAMOS','WINER','ACOSTA','ZANOTTI'];
-var CUR = 'NIELSON';
+  CUR = RECEPTORES[0];
+  // Build player buttons dynamically
+  var jbtns=document.getElementById('jbtns');
+  if(jbtns){
+    jbtns.innerHTML='';
+    RECEPTORES.forEach(function(p,i){
+      var b=document.createElement('button');
+      b.className='jbtn'+(i===0?' on':'');
+      b.textContent=p;
+      b.onclick=function(){
+        document.querySelectorAll('.jbtn').forEach(function(x){x.classList.remove('on');});
+        b.classList.add('on'); CUR=p; render();
+      };
+      jbtns.appendChild(b);
+    });
+  }
+}
 
 function ec(v){return v>=25?'#22c55e':v>=5?'#86efac':v>=0?'#94a3b8':v>=-15?'#f97316':'#ef4444';}
 function bgc(v){return v>=25?'rgba(34,197,94,.13)':v>=5?'rgba(134,239,172,.08)':v>=0?'rgba(148,163,184,.05)':v>=-15?'rgba(249,115,22,.15)':'rgba(239,68,68,.18)';}
@@ -555,18 +522,7 @@ function render(){
   });
 }
 
-// Selector
-var jbtns=document.getElementById('jbtns');
-RECEPTORES.forEach(function(p,i){
-  var b=document.createElement('button');
-  b.className='jbtn'+(i===0?' on':'');
-  b.textContent=p;
-  b.onclick=function(){
-    document.querySelectorAll('.jbtn').forEach(function(x){x.classList.remove('on');});
-    b.classList.add('on'); CUR=p; render();
-  };
-  jbtns.appendChild(b);
-});
+// Selector built in initReceptores()
 
 // Read ?jug= param if coming from jugador.html
 var urlParams = new URLSearchParams(window.location.search);
@@ -581,7 +537,8 @@ if(jugParam){
     });
   }
 }
-document.fonts.ready.then(function(){ setTimeout(render,100); }).catch(function(){ setTimeout(render,400); });
+document.fonts.ready.then(function(){
+  initReceptores(); setTimeout(render,100); }).catch(function(){ setTimeout(render,400); });
 </script>
 </body>
 </html>

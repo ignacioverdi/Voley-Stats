@@ -279,6 +279,7 @@ body{padding-top:56px}
   </div>
 </div>
 
+<script src="datos_casla.js" onerror="void 0"></script>
 <script>
 // ================================================================
 // CASLA VOLEY — Datos armadores propios
@@ -286,108 +287,38 @@ body{padding-top:56px}
 // Cargado por: jugador.html, dashboard.html
 // ================================================================
 
-window.ARMADORES_DATA = {
+// Datos cargados dinámicamente desde datos_casla.js
+window.ARMADORES_DATA = {};
 
-  "04": {
-    "nombre": "VAZQUEZ",
-    "numero": 4,
-    "rotaciones": [
-      {"pos":"P1","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-      {"pos":"P6","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-      {"pos":"P5","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-      {"pos":"P4","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-      {"pos":"P3","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-      {"pos":"P2","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]}
-    ],
-    "pills": [
-      {"label":"P1","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"P6","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"P5","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"P4","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"P3","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"P2","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"SO","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"TR","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0}
-    ],
-    "recepcion": [
-      {"label":"SO",    "eff":0},
-      {"label":"REC #", "eff":0},
-      {"label":"REC +", "eff":0},
-      {"label":"REC !", "eff":0},
-      {"label":"REC -", "eff":0},
-      {"label":"TRANS", "eff":0}
-    ],
-    "so": {"label":"SO","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":8,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":9,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-    "tr":  {"label":"TR","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":8,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":9,"tot":0,"pts":0,"pct":0,"pct_p":0}]}
-  },
+function cargarDatosCasla(){
+  if(typeof CASLA_ARMADOR === 'undefined') return;
+  // CASLA_ARMADOR tiene {titular:{nombre,rotaciones,pills,recepcion,...}, suplente:{...}}
+  // Convertir a formato ARMADORES_DATA por número de jugador
+  ['titular','suplente'].forEach(function(tipo){
+    var arm = CASLA_ARMADOR[tipo];
+    if(!arm || !arm.nombre) return;
+    // Buscar número del jugador en CASLA_JUGADORES
+    var num = null;
+    if(typeof CASLA_JUGADORES !== 'undefined'){
+      var found = CASLA_JUGADORES.find(function(j){
+        return j.nombre.indexOf(arm.nombre) >= 0 || arm.nombre.indexOf(j.nombre.split(' ').pop()) >= 0;
+      });
+      if(found) num = String(found.num).padStart(2,'0');
+    }
+    if(!num) num = tipo === 'titular' ? '04' : '09';
+    window.ARMADORES_DATA[num] = {
+      nombre: arm.nombre,
+      numero: parseInt(num),
+      rotaciones: arm.rotaciones || [],
+      pills: arm.pills || [],
+      recepcion: arm.recepcion || [],
+      so: arm.so || {},
+      tr: arm.tr || {}
+    };
+  });
+}
 
-  "09": {
-    "nombre": "GODOY",
-    "numero": 9,
-    "rotaciones": [
-      {"pos":"P1","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-      {"pos":"P6","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-      {"pos":"P5","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-      {"pos":"P4","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-      {"pos":"P3","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-      {"pos":"P2","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]}
-    ],
-    "pills": [
-      {"label":"P1","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"P6","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"P5","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"P4","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"P3","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"P2","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"SO","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"TR","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0}
-    ],
-    "recepcion": [
-      {"label":"SO",    "eff":0},
-      {"label":"REC #", "eff":0},
-      {"label":"REC +", "eff":0},
-      {"label":"REC !", "eff":0},
-      {"label":"REC -", "eff":0},
-      {"label":"TRANS", "eff":0}
-    ],
-    "so": {"label":"SO","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":8,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":9,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-    "tr":  {"label":"TR","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":8,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":9,"tot":0,"pts":0,"pct":0,"pct_p":0}]}
-  },
 
-  "19": {
-    "nombre": "DIAZ BOLLI",
-    "numero": 19,
-    "rotaciones": [
-      {"pos":"P1","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-      {"pos":"P6","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-      {"pos":"P5","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-      {"pos":"P4","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-      {"pos":"P3","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-      {"pos":"P2","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":6,"tot":0,"pts":0,"pct":0,"pct_p":0}]}
-    ],
-    "pills": [
-      {"label":"P1","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"P6","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"P5","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"P4","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"P3","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"P2","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"SO","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0},
-      {"label":"TR","eff":0,"tot":0,"pts":0,"pts_pct":0,"err_pct":0}
-    ],
-    "recepcion": [
-      {"label":"SO",    "eff":0},
-      {"label":"REC #", "eff":0},
-      {"label":"REC +", "eff":0},
-      {"label":"REC !", "eff":0},
-      {"label":"REC -", "eff":0},
-      {"label":"TRANS", "eff":0}
-    ],
-    "so": {"label":"SO","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":8,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":9,"tot":0,"pts":0,"pct":0,"pct_p":0}]},
-    "tr":  {"label":"TR","total":0,"dist":[{"zona":4,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":3,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":2,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":8,"tot":0,"pts":0,"pct":0,"pct_p":0},{"zona":9,"tot":0,"pts":0,"pct":0,"pct_p":0}]}
-  }
-
-};
 
 
 var ARMADOR_DATA = {"titular": {"nombre": "4 VAZQUEZ", "rotaciones": [{"pos": "P1", "total": 0, "dist": [{"zona": 4, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 3, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 2, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 6, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}]}, {"pos": "P6", "total": 0, "dist": [{"zona": 4, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 3, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 2, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 6, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}]}, {"pos": "P5", "total": 0, "dist": [{"zona": 4, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 3, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 2, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 6, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}]}, {"pos": "P4", "total": 0, "dist": [{"zona": 4, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 3, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 2, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 6, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}]}, {"pos": "P3", "total": 0, "dist": [{"zona": 4, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 3, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 2, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 6, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}]}, {"pos": "P2", "total": 0, "dist": [{"zona": 4, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 3, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 2, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 6, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}]}], "pills": [{"label": "P1", "eff": 0, "tot": 0, "pts": 0, "pts_pct": 0, "err_pct": 0}, {"label": "P6", "eff": 0, "tot": 0, "pts": 0, "pts_pct": 0, "err_pct": 0}, {"label": "P5", "eff": 0, "tot": 0, "pts": 0, "pts_pct": 0, "err_pct": 0}, {"label": "P4", "eff": 0, "tot": 0, "pts": 0, "pts_pct": 0, "err_pct": 0}, {"label": "P3", "eff": 0, "tot": 0, "pts": 0, "pts_pct": 0, "err_pct": 0}, {"label": "P2", "eff": 0, "tot": 0, "pts": 0, "pts_pct": 0, "err_pct": 0}, {"label": "SO", "eff": 0, "tot": 0, "pts": 0, "pts_pct": 0, "err_pct": 0}, {"label": "TR", "eff": 0, "tot": 0, "pts": 0, "pts_pct": 0, "err_pct": 0}], "recepcion": [{"label": "SO", "eff": 0}, {"label": "REC #", "eff": 0}, {"label": "REC +", "eff": 0}, {"label": "REC !", "eff": 0}, {"label": "REC -", "eff": 0}, {"label": "TRANS", "eff": 0}], "so": {"label": "SO", "total": 0, "dist": [{"zona": 4, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 3, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 2, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 8, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 9, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}]}, "tr": {"label": "TR", "total": 0, "dist": [{"zona": 4, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 3, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 2, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 8, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}, {"zona": 9, "tot": 0, "pts": 0, "pct": 0, "pct_p": 0}]}}, "suplente": null};
