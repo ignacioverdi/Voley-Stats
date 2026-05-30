@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ATAQUES — CASLA Voley</title>
+<title>Ataques — CASLA Voley</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <script src="datos_casla.js" onerror="void 0"></script>
+<script src="datos_historial.js" onerror="void 0"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -264,10 +265,15 @@ select, select option {
 </style>
 <style>
 body{background:#07080f;color:#e2e8f0;font-family:'Barlow Condensed',sans-serif;min-height:100vh;padding:0;margin:0}
-.hdr{padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:14px;background:rgba(7,8,15,.9);position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
+.hdr{padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:14px;background:rgba(7,8,15,.9);position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);flex-wrap:wrap}
 .back-btn{padding:6px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#475569;font-size:11px;font-weight:700;letter-spacing:1px;text-decoration:none;text-transform:uppercase}
+.filter-row{display:flex;gap:6px;margin-left:auto}
+.fbtn{padding:6px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#475569;font-size:11px;font-weight:800;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase;transition:all .15s}
+.fbtn.active-partido{background:rgba(232,25,44,.12);border-color:rgba(232,25,44,.4);color:#e8192c}
+.fbtn.active-entrenamiento{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.4);color:#22c55e}
 .main{max-width:960px;margin:0 auto;padding:20px 16px}
 .empty{text-align:center;padding:60px;color:#475569;font-size:13px;letter-spacing:1px}
+.no-dest-note{font-size:10px;color:#475569;letter-spacing:1px;text-align:center;padding:8px;background:rgba(255,255,255,.02);border-radius:6px;margin-bottom:12px;border:1px solid rgba(255,255,255,.04)}
 </style>
 </head>
 <body>
@@ -276,6 +282,10 @@ body{background:#07080f;color:#e2e8f0;font-family:'Barlow Condensed',sans-serif;
   <div>
     <div id="jug-title" style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#e2e8f0">ATAQUES</div>
     <div style="font-size:9px;color:#475569;letter-spacing:2px;text-transform:uppercase">CASLA VOLEY</div>
+  </div>
+  <div class="filter-row">
+    <button class="fbtn active-partido" id="btn-partido" onclick="setFiltro('partido')">🏆 PARTIDO</button>
+    <button class="fbtn" id="btn-entrenamiento" onclick="setFiltro('entrenamiento')">🏋️ ENTRENAMIENTO</button>
   </div>
 </div>
 <div class="main">
@@ -461,81 +471,228 @@ function buildCanchita(item,jIdx,i,prefix,W,H,drawFn,color,j){
   return card;
 }
 function renderPanelAtaque(j,jIdx,grid){
-  var combosPos = {
-    'PUNTA':   ['X5','V5','X6','V6','XP'],
-    'CENTRAL': ['X1','X7','XM','X2'],
-    'OPUESTO': ['X5','V5','X6','V6','X8','V8'],
-    'ARMADOR': [],
-    'LIBERO':  []
-  };
-
-  // Auto-detect position from attack codes if pos is empty
-  var pos = (j.pos || '').toUpperCase();
-  if(!pos && j.ataques && j.ataques.length){
-    var codes = j.ataques.map(function(a){ return a.cod; });
-    if(codes.some(function(c){ return ['X8','V8'].indexOf(c)>=0; })) pos='OPUESTO';
-    else if(codes.some(function(c){ return ['X1','X7','XM','X2'].indexOf(c)>=0; })) pos='CENTRAL';
-    else if(codes.some(function(c){ return ['X5','V5','X6','V6','XP'].indexOf(c)>=0; })) pos='PUNTA';
+  var combosPos={'PUNTA':['X5','V5','X6','V6','XP'],'CENTRAL':['X1','X7','XM','X2'],
+    'OPUESTO':['X5','V5','X6','V6','X8','V8'],'ARMADOR':[],'LIBERO':[]};
+  var pos=(j.pos||'').toUpperCase();
+  if(!pos&&j.ataques&&j.ataques.length){
+    var codes=j.ataques.map(function(a){return a.cod;});
+    if(codes.some(function(c){return['X8','V8'].indexOf(c)>=0;})) pos='OPUESTO';
+    else if(codes.some(function(c){return['X1','X7','XM','X2'].indexOf(c)>=0;})) pos='CENTRAL';
+    else if(codes.some(function(c){return['X5','V5','X6','V6','XP'].indexOf(c)>=0;})) pos='PUNTA';
   }
-
-  var ordenCombos = combosPos[pos] || [];
-  var ataqueMap = {};
-  j.ataques.forEach(function(a){ ataqueMap[a.cod] = a; });
-
-  // Show ALL combos for position (even zeros), plus any extra combos the player has
-  var ataquesMostrar;
-  if(ordenCombos.length > 0){
-    ataquesMostrar = ordenCombos.map(function(cod){
-      return ataqueMap[cod] || {cod:cod,orig:8,destinos:[],eff:null,tot:0,pts:null,slash:0,err:0,video:null};
-    });
-    // Add extra combos not in standard list
-    j.ataques.forEach(function(a){
-      if(ordenCombos.indexOf(a.cod) < 0 && a.tot > 0) ataquesMostrar.push(a);
-    });
-  } else {
-    ataquesMostrar = j.ataques;
-  }
-
+  var ordenCombos=combosPos[pos]||[];
+  var ataqueMap={};
+  j.ataques.forEach(function(a){ataqueMap[a.cod]=a;});
+  var ataquesMostrar=ordenCombos.length>0
+    ?ordenCombos.map(function(cod){return ataqueMap[cod]||{cod:cod,orig:8,destinos:[],eff:null,tot:0,pts:null,slash:0,err:0,video:null};})
+    :j.ataques;
+  j.ataques.forEach(function(a){if(ordenCombos.length>0&&ordenCombos.indexOf(a.cod)<0&&a.tot>0)ataquesMostrar.push(a);});
   ataquesMostrar.forEach(function(a,i){
     var card=buildCanchita(a,jIdx,i,'ma',180,140,drawAtaqueCourt,j.color||'#818cf8',j);
     grid.appendChild(card);
     setTimeout(function(){
       var cv=document.getElementById('ma-'+jIdx+'-'+i);
-      if(!cv) return;
-      var ctx=cv.getContext('2d');
-      var start=null;
-      function step(ts){if(!start)start=ts;var pr=Math.min((ts-start)/500,1),e=1-Math.pow(1-pr,3);ctx.clearRect(0,0,180,140);drawAtaqueCourt(ctx,180,140,a,j.color||'#818cf8',e);if(pr<1)requestAnimationFrame(step);}
+      if(!cv)return;
+      var ctx=cv.getContext('2d');var start=null;
+      function step(ts){if(!start)start=ts;var pr=Math.min((ts-start)/500,1),e=1-Math.pow(1-pr,3);
+        ctx.clearRect(0,0,180,140);drawAtaqueCourt(ctx,180,140,a,j.color||'#818cf8',e);
+        if(pr<1)requestAnimationFrame(step);}
       requestAnimationFrame(step);
     },i*70);
   });
 }
 
-function initPage(){
-  var params = new URLSearchParams(window.location.search);
-  var num = parseInt(params.get('num')) || 0;
+var DVW_MAP = {
+  'J1':['X1',3], 'J2':['X7',3], 'J3':['X2',3], 'J4':['XM',3], 'JJ':['XM',3],
+  'W4':['X5',4], 'G4':['V5',4], 'W2':['X6',2], 'G2':['V6',2],
+  'W3':['X6',2], 'G3':['V6',2],
+  'Y9':['X8',9], 'G9':['V8',9], 'Y8':['XP',8], 'G8':['VP',8],
+  'V3':['X6',2], 'V4':['X8',9]
+};
+
+var COMBOS_POS = {
+  'PUNTA':   ['X5','V5','X6','V6','XP'],
+  'CENTRAL': ['X1','X7','XM','X2'],
+  'OPUESTO': ['X5','V5','X6','V6','X8','V8'],
+  'ARMADOR': [], 'LIBERO': []
+};
+
+var CASLA_POSICIONES = {
+  2:'LIBERO', 3:'CENTRAL', 4:'ARMADOR', 5:'PUNTA', 6:'OPUESTO',
+  9:'ARMADOR', 10:'CENTRAL', 11:'PUNTA', 12:'LIBERO', 13:'CENTRAL',
+  14:'PUNTA', 15:'PUNTA', 17:'CENTRAL', 18:'PUNTA', 19:'ARMADOR'
+};
+
+function buildFromHistorial(num){
+  if(typeof window.HISTORIAL_DATA === 'undefined') return null;
+  var sesiones = window.HISTORIAL_DATA.entrenamientos || [];
+  var ataques = {};
+  var saques = {sm:{tot:0,pt:0,pos:0,neg:0,err:0,destCounts:{}}};
+
+  sesiones.forEach(function(s){
+    if(s.tipo !== 'E') return;
+    (s.jugadores||[]).forEach(function(j){
+      if(j.c !== num) return;
+      // Ataques
+      Object.keys(j.dv4||{}).forEach(function(dvw){
+        if(!DVW_MAP[dvw]) return;
+        var mapped = DVW_MAP[dvw];
+        var cod = mapped[0], orig = mapped[1];
+        var v = j.dv4[dvw];
+        if(!ataques[cod]) ataques[cod] = {cod:cod,orig:orig,tot:0,pts:0,destCounts:{}};
+        ataques[cod].tot += v.tot||0;
+        ataques[cod].pts += v.pt||0;
+        ataques[cod].orig = orig;
+        var dest = String(v.dest||'');
+        dest.replace(/,/g,' ').split(/\s+/).forEach(function(d){
+          if(/^\d+$/.test(d)){
+            var z=parseInt(d);
+            ataques[cod].destCounts[z] = (ataques[cod].destCounts[z]||0) + (v.tot||0);
+          }
+        });
+      });
+      // Saques
+      saques.sm.tot += j.sT||0;
+      saques.sm.pt  += j.sPunto||0;
+      saques.sm.pos += j.sPos||0;
+      saques.sm.neg += j.sNeg||0;
+      saques.sm.err += j.sErr||0;
+      var sd = String(j.sDest||'');
+      sd.replace(/,/g,' ').split(/\s+/).forEach(function(d){
+        if(/^\d+$/.test(d)){
+          var z=parseInt(d);
+          saques.sm.destCounts[z] = (saques.sm.destCounts[z]||0) + (j.sT||0);
+        }
+      });
+    });
+  });
+
+  // Convert to CASLA_JUGADORES format
+  var pos = CASLA_POSICIONES[num] || '';
+  var ordenCombos = COMBOS_POS[pos] || [];
+  var ataquesArr = [];
+
+  // Show all position combos (even zeros)
+  if(ordenCombos.length > 0){
+    ordenCombos.forEach(function(cod){
+      var a = ataques[cod] || {cod:cod,orig:8,tot:0,pts:0,destCounts:{}};
+      var totDest = Object.values(a.destCounts).reduce(function(s,v){return s+v;},0)||1;
+      var destinos = Object.entries(a.destCounts)
+        .filter(function(e){return e[1]>0;})
+        .sort(function(a,b){return b[1]-a[1];})
+        .slice(0,4)
+        .map(function(e){return {z:parseInt(e[0]),pct:Math.round(e[1]/totDest*100)};});
+      var eff = a.tot>0?Math.round((a.pts)/a.tot*100):0;
+      ataquesArr.push({cod:cod,orig:a.orig||8,destinos:destinos,
+        eff:eff,tot:a.tot,pts:a.pts,slash:0,err:0,video:null,
+        pts_pct:a.tot>0?Math.round(a.pts/a.tot*100):0});
+    });
+    // Extra combos not in list
+    Object.values(ataques).forEach(function(a){
+      if(ordenCombos.indexOf(a.cod)<0 && a.tot>0){
+        var totDest=Object.values(a.destCounts).reduce(function(s,v){return s+v;},0)||1;
+        var destinos=Object.entries(a.destCounts).filter(function(e){return e[1]>0;})
+          .sort(function(a,b){return b[1]-a[1];}).slice(0,4)
+          .map(function(e){return {z:parseInt(e[0]),pct:Math.round(e[1]/totDest*100)};});
+        ataquesArr.push({cod:a.cod,orig:a.orig,destinos:destinos,
+          eff:Math.round(a.pts/a.tot*100),tot:a.tot,pts:a.pts,slash:0,err:0,video:null,
+          pts_pct:Math.round(a.pts/a.tot*100)});
+      }
+    });
+  } else {
+    ataquesArr = Object.values(ataques).map(function(a){
+      var totDest=Object.values(a.destCounts).reduce(function(s,v){return s+v;},0)||1;
+      var destinos=Object.entries(a.destCounts).filter(function(e){return e[1]>0;})
+        .sort(function(a,b){return b[1]-a[1];}).slice(0,4)
+        .map(function(e){return {z:parseInt(e[0]),pct:Math.round(e[1]/totDest*100)};});
+      return {cod:a.cod,orig:a.orig,destinos:destinos,
+        eff:a.tot>0?Math.round(a.pts/a.tot*100):0,tot:a.tot,pts:a.pts,
+        slash:0,err:0,video:null,pts_pct:a.tot>0?Math.round(a.pts/a.tot*100):0};
+    });
+  }
+
+  // Saques
+  var saqArr = [];
+  ['sm'].forEach(function(tipo){
+    var sq = saques[tipo];
+    var totDest=Object.values(sq.destCounts).reduce(function(s,v){return s+v;},0)||1;
+    var destinos=Object.entries(sq.destCounts).filter(function(e){return e[1]>0;})
+      .sort(function(a,b){return b[1]-a[1];}).slice(0,4)
+      .map(function(e){return {z:parseInt(e[0]),pct:Math.round(e[1]/totDest*100)};});
+    var eff=sq.tot>0?Math.round((sq.pt+0.5*sq.pos-sq.neg-sq.err)/sq.tot*100):0;
+    saqArr.push({cod:'SM',tipo:'FLOTADO',orig:6,destinos:destinos,
+      eff:eff,tot:sq.tot,pts:sq.pt,plus:sq.pos,slash:sq.neg,err:sq.err,
+      video:null,pts_pct:sq.tot>0?Math.round(sq.pt/sq.tot*100):0});
+  });
+
+  return {
+    num:num, nombre:String(num)+' '+j_nombre(num),
+    pos:pos, color:POS_COLOR[pos]||'#64748b',
+    ataques:ataquesArr, saques:saqArr, recepcion:{}, info:{}
+  };
+}
+
+function j_nombre(num){
+  if(typeof CASLA_JUGADORES!=='undefined'){
+    var j=CASLA_JUGADORES.find(function(x){return x.num===num;});
+    if(j) return j.nombre.replace(/^\d+\s*/,'');
+  }
+  return '#'+num;
+}
+
+
+var currentNum = 0;
+var currentFiltro = 'partido';
+
+function setFiltro(filtro){
+  currentFiltro = filtro;
+  document.getElementById('btn-partido').className = 'fbtn' + (filtro==='partido'?' active-partido':'');
+  document.getElementById('btn-entrenamiento').className = 'fbtn' + (filtro==='entrenamiento'?' active-entrenamiento':'');
+  renderPage();
+}
+
+function renderPage(){
   var cont = document.getElementById('content');
-  var j = CASLA_JUGADORES.find(function(x){ return x.num === num; });
-  if(!j){
-    cont.innerHTML = '<div class="empty">Jugador #'+num+' no encontrado</div>';
-    return;
+  var j = null;
+
+  if(currentFiltro === 'partido'){
+    if(typeof CASLA_JUGADORES === 'undefined'){ cont.innerHTML='<div class="empty">Sin datos de partidos</div>'; return; }
+    j = CASLA_JUGADORES.find(function(x){ return x.num === currentNum; });
+    if(!j){ cont.innerHTML='<div class="empty">Jugador #'+currentNum+' no encontrado</div>'; return; }
+  } else {
+    j = buildFromHistorial(currentNum);
+    if(!j){ cont.innerHTML='<div class="empty">Sin datos de entrenamiento</div>'; return; }
+    if(!j.ataques.some(function(a){return a.tot>0;})){
+      cont.innerHTML='<div class="empty">Sin ataques registrados en entrenamientos</div>'; return;
+    }
   }
-  var nm = j.nombre.replace(/^\d+\s*/, '');
-  document.getElementById('jug-title').textContent = '💥 ATAQUES — ' + nm;
-  var datos = j.ataques;
-  if(!datos || !datos.length){
-    cont.innerHTML = '<div class="empty">Sin datos de ataque para ' + nm + '</div>';
-    return;
+
+  var nm = j.nombre.replace(/^\d+\s*/,'');
+  document.getElementById('jug-title').textContent = '💥 ATAQUES — ' + nm + (currentFiltro==='entrenamiento'?' (ENT)':'');
+
+  cont.innerHTML = '';
+
+  // Note if no destinos in entrenamiento
+  if(currentFiltro==='entrenamiento' && j.ataques.every(function(a){return !a.destinos||!a.destinos.length;})){
+    var note = document.createElement('div');
+    note.className = 'no-dest-note';
+    note.textContent = 'ℹ️  Los destinos de ataque no están registrados en este scout — solo se muestra origen y EFF';
+    cont.appendChild(note);
   }
+
   var grid = document.createElement('div');
   grid.className = 'canchitas-grid';
   renderPanelAtaque(j, 0, grid);
-  cont.innerHTML = '';
   cont.appendChild(grid);
 }
 
 function waitAndInit(tries){
-  if(typeof CASLA_JUGADORES !== 'undefined'){
-    document.fonts.ready.then(initPage).catch(initPage);
+  var caslaOk = typeof CASLA_JUGADORES !== 'undefined';
+  var histOk  = typeof window.HISTORIAL_DATA !== 'undefined';
+  if(caslaOk || histOk){
+    var params = new URLSearchParams(window.location.search);
+    currentNum = parseInt(params.get('num')) || 0;
+    document.fonts.ready.then(renderPage).catch(renderPage);
   } else if(tries > 0){
     setTimeout(function(){ waitAndInit(tries-1); }, 200);
   } else {
