@@ -600,37 +600,52 @@ function renderStats(j){
   var grid = document.getElementById('stats-grid');
   if(!window.HISTORIAL_DATA) return;
 
-  var sT=0,sEff=0,rT=0,rEff=0,aT=0,aEff=0,aPunto=0,count=0;
+  // Accumulate separately for Partidos (P) and Entrenamientos (E)
+  var acc = {
+    P: {sT:0,sEff:0,rT:0,rEff:0,aT:0,aEff:0,aPunto:0,count:0},
+    E: {sT:0,sEff:0,rT:0,rEff:0,aT:0,aEff:0,aPunto:0,count:0}
+  };
   window.HISTORIAL_DATA.entrenamientos.forEach(function(e){
+    var t = e.tipo||'P';
+    if(!acc[t]) return;
     e.jugadores.forEach(function(jh){
       if(jh.n===j.nombre){
-        sT+=jh.sT||0; sEff+=(jh.sEff||0)*(jh.sT||0);
-        rT+=jh.rT||0; rEff+=(jh.rEff||0)*(jh.rT||0);
-        aT+=jh.aT||0; aEff+=(jh.aEff||0)*(jh.aT||0);
-        aPunto+=jh.aPunto||0; count++;
+        acc[t].sT+=jh.sT||0; acc[t].sEff+=(jh.sEff||0)*(jh.sT||0);
+        acc[t].rT+=jh.rT||0; acc[t].rEff+=(jh.rEff||0)*(jh.rT||0);
+        acc[t].aT+=jh.aT||0; acc[t].aEff+=(jh.aEff||0)*(jh.aT||0);
+        acc[t].aPunto+=jh.aPunto||0; acc[t].count++;
       }
     });
   });
-  if(count===0) return;
+
+  if(acc.P.count===0 && acc.E.count===0) return;
 
   var color = POS_COLOR[j.pos]||'#64748b';
-  grid.innerHTML =
+
+  function makeCards(a, label, labelColor){
+    if(a.count===0) return '';
+    return '<div style="grid-column:1/-1;font-size:9px;font-weight:800;letter-spacing:2px;color:'+labelColor+';text-transform:uppercase;padding:4px 0 2px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:2px">'+label+'</div>'+
     '<div class="stat-card">' +
       '<div class="stat-card-title" style="color:'+color+'">⬆️ Saque</div>' +
-      '<div class="stat-row"><span class="stat-row-lbl">Total</span><span class="stat-row-val" style="color:'+color+'">'+sT+'</span></div>' +
-      '<div class="stat-row"><span class="stat-row-lbl">Eficiencia</span><span class="stat-row-val">'+(sT>0?Math.round(sEff/sT)+'%':'—')+'</span></div>' +
+      '<div class="stat-row"><span class="stat-row-lbl">Total</span><span class="stat-row-val" style="color:'+color+'">'+a.sT+'</span></div>' +
+      '<div class="stat-row"><span class="stat-row-lbl">EFF</span><span class="stat-row-val">'+(a.sT>0?Math.round(a.sEff/a.sT)+'%':'—')+'</span></div>' +
     '</div>' +
     '<div class="stat-card">' +
       '<div class="stat-card-title" style="color:#22c55e">🛡 Recepción</div>' +
-      '<div class="stat-row"><span class="stat-row-lbl">Total</span><span class="stat-row-val" style="color:#22c55e">'+rT+'</span></div>' +
-      '<div class="stat-row"><span class="stat-row-lbl">Eficiencia</span><span class="stat-row-val">'+(rT>0?Math.round(rEff/rT)+'%':'—')+'</span></div>' +
+      '<div class="stat-row"><span class="stat-row-lbl">Total</span><span class="stat-row-val" style="color:#22c55e">'+a.rT+'</span></div>' +
+      '<div class="stat-row"><span class="stat-row-lbl">EFF</span><span class="stat-row-val">'+(a.rT>0?Math.round(a.rEff/a.rT)+'%':'—')+'</span></div>' +
     '</div>' +
     '<div class="stat-card">' +
       '<div class="stat-card-title" style="color:#818cf8">⚡ Ataque</div>' +
-      '<div class="stat-row"><span class="stat-row-lbl">Total</span><span class="stat-row-val" style="color:#818cf8">'+aT+'</span></div>' +
-      '<div class="stat-row"><span class="stat-row-lbl">Puntos</span><span class="stat-row-val" style="color:#22c55e">'+aPunto+'</span></div>' +
-      '<div class="stat-row"><span class="stat-row-lbl">Eficiencia</span><span class="stat-row-val">'+(aT>0?Math.round(aEff/aT)+'%':'—')+'</span></div>' +
+      '<div class="stat-row"><span class="stat-row-lbl">Total</span><span class="stat-row-val" style="color:#818cf8">'+a.aT+'</span></div>' +
+      '<div class="stat-row"><span class="stat-row-lbl">Puntos</span><span class="stat-row-val" style="color:#22c55e">'+a.aPunto+'</span></div>' +
+      '<div class="stat-row"><span class="stat-row-lbl">EFF</span><span class="stat-row-val">'+(a.aT>0?Math.round(a.aEff/a.aT)+'%':'—')+'</span></div>' +
     '</div>';
+  }
+
+  grid.innerHTML =
+    makeCards(acc.P, '🏆 PARTIDOS', '#e8192c') +
+    makeCards(acc.E, '🏋️ ENTRENAMIENTOS', '#22c55e');
 }
 
 // ── RUTINA ─────────────────────────────────────────────────────────
