@@ -587,7 +587,26 @@ if(jugParam){
   }
 }
 document.fonts.ready.then(function(){
-  initReceptores(); setTimeout(render,100); }).catch(function(){ setTimeout(render,400); });
+  initReceptores();
+  // Read ?jug= param to preselect player
+  var params = new URLSearchParams(window.location.search);
+  var jugParam = params.get('jug');
+  if(jugParam){
+    var jugUpper = jugParam.toUpperCase();
+    // Try exact match first, then partial
+    var found = RECEPTORES.find(function(r){ return r === jugUpper; });
+    if(!found) found = RECEPTORES.find(function(r){ return jugUpper.indexOf(r) >= 0 || r.indexOf(jugUpper.split(' ')[0]) >= 0; });
+    if(found){
+      CUR = found;
+      document.querySelectorAll('.jbtn').forEach(function(b){
+        b.classList.remove('on');
+        b.style.cssText = '';
+        if(b.textContent === found) b.classList.add('on');
+      });
+    }
+  }
+  setTimeout(render,100);
+}).catch(function(){ setTimeout(render,400); });
 </script>
 </body>
 </html>

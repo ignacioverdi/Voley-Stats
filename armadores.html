@@ -1041,18 +1041,9 @@ function abrirModalSOTR(data, tipo, color, allPills){
   pillsEl.appendChild(statsRow);
 
   // ── Canvas (hide if no dist data) ───────────────────────
+  // Canvas oculto — datos de distribución por zona no disponibles aún
   var cv = document.getElementById('modal-arm-canvas');
-  if(cv){
-    if(data.dist && data.dist.length > 0){
-      cv.style.display = 'block';
-      cv.width=480; cv.height=340;
-      var ctx = cv.getContext('2d');
-      ctx.clearRect(0,0,480,340);
-      if(typeof redrawSOTRCourt === 'function') redrawSOTRCourt(ctx,480,340,data,sotrColor);
-    } else {
-      cv.style.display = 'none';
-    }
-  }
+  if(cv) cv.style.display = 'none';
 
   // ── Grid P4-P3-P2 / P5-P6-P1 ───────────────────────────
   if(allPills && allPills.length){

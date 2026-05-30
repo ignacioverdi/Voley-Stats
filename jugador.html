@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>PERFIL — CASL VOLEY</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="datos_casla.js" onerror="void 0"></script>
 <script src="firebase.js" onerror="void 0"></script>
 <script src="lang.js" onerror="void 0"></script>
 <script src="datos_equipo.js" onerror="window.EQUIPO_DATA=null"></script>
@@ -570,6 +571,15 @@ function renderAccesos(j){
   var REC_POS = ['PUNTA','LIBERO'];
   if(REC_POS.indexOf((j.pos||'').toUpperCase()) >= 0){
     items.splice(items.length-1, 0, {icon:'🛡', title:'Recepción', desc:'Mi recepción por zona', url:'recepcion.html?jug='+encodeURIComponent((j.nombre||'').toUpperCase()), color:'#22c55e'});
+  }
+
+  // Saques: todos los jugadores
+  items.splice(items.length-1, 0, {icon:'⚡', title:'Saque', desc:'Mis saques por zona', url:'saque_jugador.html?num='+j.num, color:'#f97316'});
+
+  // Ataques: puntas, opuestos y centrales
+  var ATK_POS = ['PUNTA','OPUESTO','CENTRAL'];
+  if(ATK_POS.indexOf((j.pos||'').toUpperCase()) >= 0){
+    items.splice(items.length-1, 0, {icon:'💥', title:'Ataque', desc:'Mis ataques por zona', url:'ataque_jugador.html?num='+j.num, color:'#818cf8'});
   }
 
   grid.innerHTML = items.map(function(a){
