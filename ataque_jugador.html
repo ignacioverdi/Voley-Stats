@@ -561,17 +561,7 @@ function buildFromHistorial(num){
       tot:a.tot,pts:a.pts,slash:0,err:0,video:null,
       pts_pct:a.tot>0?Math.round(a.pts/a.tot*100):0};
   });
-  Object.values(ataques).forEach(function(a){
-    if(ordenCombos.indexOf(a.cod)<0&&a.tot>0){
-      var totDest=Object.values(a.destCounts).reduce(function(s,v){return s+v;},0)||1;
-      var destinos=Object.entries(a.destCounts).filter(function(e){return e[1]>0;})
-        .sort(function(a,b){return b[1]-a[1];}).slice(0,4)
-        .map(function(e){return {z:parseInt(e[0]),pct:Math.round(e[1]/totDest*100)};});
-      ataquesArr.push({cod:a.cod,orig:a.orig,destinos:destinos,
-        eff:Math.round(a.pts/a.tot*100),tot:a.tot,pts:a.pts,
-        slash:0,err:0,video:null,pts_pct:Math.round(a.pts/a.tot*100)});
-    }
-  });
+  // No agregar combos fuera de la posicion del jugador
   if(!ataquesArr.some(function(a){return a.tot>0;})) return null;
   return {num:num,nombre:num+' '+jNombre,pos:pos,color:POS_COLOR[pos]||'#818cf8',
     ataques:ataquesArr,saques:[],recepcion:{},info:{}};
