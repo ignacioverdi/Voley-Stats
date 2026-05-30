@@ -419,7 +419,7 @@ function renderPanelSaque(j,jIdx,grid){
   });
 }
 
-document.fonts.ready.then(function(){
+function initPage(){
   var params = new URLSearchParams(window.location.search);
   var num = parseInt(params.get('num')) || 0;
   var cont = document.getElementById('content');
@@ -457,7 +457,19 @@ document.fonts.ready.then(function(){
       if(s && cv._drawFn) cv._drawFn();
     });
   }, 100);
-});
+}
+
+// Wait for both fonts and datos_casla.js
+function waitAndInit(tries){
+  if(typeof CASLA_JUGADORES !== 'undefined'){
+    document.fonts.ready.then(initPage).catch(initPage);
+  } else if(tries > 0){
+    setTimeout(function(){ waitAndInit(tries-1); }, 150);
+  } else {
+    document.getElementById('content').innerHTML = '<div class="empty">No se pudieron cargar los datos. Verificá que datos_casla.js esté subido.</div>';
+  }
+}
+waitAndInit(20);
 </script>
 </body>
 </html>
