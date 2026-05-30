@@ -761,8 +761,16 @@ function renderArmador(){
         pill.appendChild(hintSO);
         pill.addEventListener('dblclick',(function(pLabel,armData,clr){
           return function(){
+            var sotrPill = armData.pills ? armData.pills.find(function(x){ return x.label===pLabel; }) : null;
             var sotrData = pLabel==='SO' ? armData.so : armData.tr;
-            if(sotrData) abrirModalSOTR(sotrData, pLabel, clr);
+            if(!sotrData || !sotrData.total) {
+              sotrData = sotrPill ? {
+                total: sotrPill.tot||0, eff: sotrPill.eff||0,
+                pts: sotrPill.pts||0, pts_pct: sotrPill.pts_pct||0,
+                err_pct: sotrPill.err_pct||0, dist: []
+              } : {total:0,eff:0,pts:0,pts_pct:0,err_pct:0,dist:[]};
+            }
+            abrirModalSOTR(sotrData, pLabel, clr, armData.pills);
           };
         })(p.label, arm, color));
       }
@@ -999,7 +1007,7 @@ function abrirModalArmador(rot, color, pills){
 }
 
 // ── abrirModalSOTR ──
-function abrirModalSOTR(data, tipo, color){
+function abrirModalSOTR(data, tipo, color, allPills){
   var modal = document.getElementById('modal-armador');
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
@@ -1049,6 +1057,38 @@ function abrirModalSOTR(data, tipo, color){
   var ctx = cv.getContext('2d');
   ctx.clearRect(0,0,480,340);
   redrawSOTRCourt(ctx, 480, 340, data, color);
+
+  // Per-rotation breakdown from pills
+  if(allPills && allPills.length){
+    var pillsEl2 = document.getElementById('modal-arm-pills');
+    if(pillsEl2){
+      var rotLbl = document.createElement('div');
+      rotLbl.style.cssText = 'font-size:8px;color:#475569;letter-spacing:3px;text-transform:uppercase;margin:14px 0 8px';
+      rotLbl.textContent = 'EFF POR ROTACIÓN';
+      pillsEl2.appendChild(rotLbl);
+      var grid = document.createElement('div');
+      grid.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:8px';
+      var sotrColor2 = tipo==='SO' ? '#22c55e' : '#818cf8';
+      ['P4','P3','P2','P5','P6','P1'].forEach(function(pos){
+        var p = allPills.find(function(x){ return x.label===pos; }) || {};
+        var eff = p.eff !== undefined ? p.eff : null;
+        var effC = eff===null?'#475569':eff>=50?'#22c55e':eff>=25?'#fbbf24':eff>=0?'#f97316':'#ef4444';
+        var bgC  = eff===null?'rgba(255,255,255,.02)':eff>=50?'rgba(34,197,94,.08)':eff>=25?'rgba(251,191,36,.06)':eff>=0?'rgba(249,115,22,.08)':'rgba(239,68,68,.1)';
+        var card = document.createElement('div');
+        card.style.cssText = 'background:'+bgC+';border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:3px';
+        card.innerHTML =
+          '<div style="font-family:Bebas Neue,sans-serif;font-size:16px;color:'+sotrColor2+'">'+pos+'</div>'
+          +'<div style="font-family:Bebas Neue,sans-serif;font-size:26px;line-height:1;color:'+effC+'">'+(eff!==null?eff+'%':'—')+'</div>'
+          +'<div style="display:flex;gap:8px;margin-top:4px">'
+          +'<div style="display:flex;flex-direction:column;align-items:center"><div style="font-family:Bebas Neue,sans-serif;font-size:12px;color:#94a3b8">'+(p.tot||0)+'</div><div style="font-size:6px;color:#475569;text-transform:uppercase">TOT</div></div>'
+          +'<div style="display:flex;flex-direction:column;align-items:center"><div style="font-family:Bebas Neue,sans-serif;font-size:12px;color:#22c55e">'+(p.pts||0)+'</div><div style="font-size:6px;color:#475569;text-transform:uppercase">#</div></div>'
+          +'<div style="display:flex;flex-direction:column;align-items:center"><div style="font-family:Bebas Neue,sans-serif;font-size:12px;color:#ef4444">'+(p.err_pct||0)+'%</div><div style="font-size:6px;color:#475569;text-transform:uppercase">/=</div></div>'
+          +'</div>';
+        grid.appendChild(card);
+      });
+      pillsEl2.appendChild(grid);
+    }
+  }
 }
 
 // ── cerrarModalArmador ──
