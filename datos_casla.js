@@ -1,10 +1,10 @@
 // datos_casla.js — generado automáticamente por generar_datos_casla.py
-// 30/05/2026 01:23 — División de Honor 2026 — LOMAS
+// 30/05/2026 01:42 — División de Honor 2026 — LOMAS
 // NO EDITAR MANUALMENTE
 
 const CASLA_EQUIPO = "División de Honor 2026";
 const CASLA_TEMPORADA = "LOMAS";
-const CASLA_GENERADO = "30/05/2026 01:23";
+const CASLA_GENERADO = "30/05/2026 01:42";
 
 const CASLA_JUGADORES = [
   {
@@ -21,6 +21,35 @@ const CASLA_JUGADORES = [
       "extra": ""
     },
     "ataques": [
+      {
+        "cod": "X1",
+        "orig": 3,
+        "destinos": [
+          {
+            "z": 6,
+            "pct": 33
+          },
+          {
+            "z": 8,
+            "pct": 20
+          },
+          {
+            "z": 7,
+            "pct": 20
+          },
+          {
+            "z": 5,
+            "pct": 13
+          }
+        ],
+        "eff": 48,
+        "tot": 15,
+        "pts": 15,
+        "slash": 0,
+        "err": 0,
+        "video": 0,
+        "pts_pct": 100
+      },
       {
         "cod": "X7",
         "orig": 3,
@@ -431,6 +460,23 @@ const CASLA_JUGADORES = [
     },
     "ataques": [
       {
+        "cod": "X5",
+        "orig": 4,
+        "destinos": [
+          {
+            "z": 8,
+            "pct": 100
+          }
+        ],
+        "eff": 100,
+        "tot": 1,
+        "pts": 1,
+        "slash": 0,
+        "err": 0,
+        "video": 0,
+        "pts_pct": 100
+      },
+      {
         "cod": "V5",
         "orig": 4,
         "destinos": [],
@@ -616,6 +662,23 @@ const CASLA_JUGADORES = [
       "extra": ""
     },
     "ataques": [
+      {
+        "cod": "X5",
+        "orig": 4,
+        "destinos": [
+          {
+            "z": 2,
+            "pct": 100
+          }
+        ],
+        "eff": -29,
+        "tot": 1,
+        "pts": 1,
+        "slash": 0,
+        "err": 0,
+        "video": 0,
+        "pts_pct": 100
+      },
       {
         "cod": "V5",
         "orig": 4,
@@ -990,6 +1053,35 @@ const CASLA_JUGADORES = [
       "extra": ""
     },
     "ataques": [
+      {
+        "cod": "X5",
+        "orig": 4,
+        "destinos": [
+          {
+            "z": 7,
+            "pct": 21
+          },
+          {
+            "z": 8,
+            "pct": 19
+          },
+          {
+            "z": 1,
+            "pct": 14
+          },
+          {
+            "z": 6,
+            "pct": 9
+          }
+        ],
+        "eff": 31,
+        "tot": 43,
+        "pts": 43,
+        "slash": 0,
+        "err": 0,
+        "video": 0,
+        "pts_pct": 100
+      },
       {
         "cod": "V5",
         "orig": 4,
@@ -1509,6 +1601,18 @@ const CASLA_JUGADORES = [
     },
     "ataques": [
       {
+        "cod": "X5",
+        "orig": 4,
+        "destinos": [],
+        "eff": 0,
+        "tot": 0,
+        "pts": 0,
+        "slash": 0,
+        "err": 0,
+        "video": 0,
+        "pts_pct": 0
+      },
+      {
         "cod": "V5",
         "orig": 4,
         "destinos": [],
@@ -1775,6 +1879,35 @@ const CASLA_JUGADORES = [
       "extra": ""
     },
     "ataques": [
+      {
+        "cod": "X5",
+        "orig": 4,
+        "destinos": [
+          {
+            "z": 1,
+            "pct": 23
+          },
+          {
+            "z": 2,
+            "pct": 18
+          },
+          {
+            "z": 7,
+            "pct": 14
+          },
+          {
+            "z": 9,
+            "pct": 9
+          }
+        ],
+        "eff": 34,
+        "tot": 44,
+        "pts": 44,
+        "slash": 0,
+        "err": 0,
+        "video": 0,
+        "pts_pct": 100
+      },
       {
         "cod": "V5",
         "orig": 4,
@@ -2085,6 +2218,31 @@ const CASLA_JUGADORES = [
     },
     "ataques": [
       {
+        "cod": "X1",
+        "orig": 3,
+        "destinos": [
+          {
+            "z": 9,
+            "pct": 40
+          },
+          {
+            "z": 7,
+            "pct": 40
+          },
+          {
+            "z": 1,
+            "pct": 20
+          }
+        ],
+        "eff": 44,
+        "tot": 5,
+        "pts": 5,
+        "slash": 0,
+        "err": 0,
+        "video": 0,
+        "pts_pct": 100
+      },
+      {
         "cod": "X7",
         "orig": 3,
         "destinos": [],
@@ -2202,6 +2360,35 @@ const CASLA_JUGADORES = [
       "extra": ""
     },
     "ataques": [
+      {
+        "cod": "X1",
+        "orig": 3,
+        "destinos": [
+          {
+            "z": 9,
+            "pct": 33
+          },
+          {
+            "z": 5,
+            "pct": 33
+          },
+          {
+            "z": 8,
+            "pct": 17
+          },
+          {
+            "z": 7,
+            "pct": 17
+          }
+        ],
+        "eff": 50,
+        "tot": 6,
+        "pts": 6,
+        "slash": 0,
+        "err": 0,
+        "video": 0,
+        "pts_pct": 100
+      },
       {
         "cod": "X7",
         "orig": 3,
@@ -2333,6 +2520,18 @@ const CASLA_JUGADORES = [
       "extra": ""
     },
     "ataques": [
+      {
+        "cod": "X5",
+        "orig": 4,
+        "destinos": [],
+        "eff": 0,
+        "tot": 0,
+        "pts": 0,
+        "slash": 0,
+        "err": 0,
+        "video": 0,
+        "pts_pct": 0
+      },
       {
         "cod": "V5",
         "orig": 4,
