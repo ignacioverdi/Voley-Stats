@@ -1012,82 +1012,87 @@ function abrirModalSOTR(data, tipo, color, allPills){
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 
-  var title = document.getElementById('modal-arm-title');
+  var sotrColor = tipo==='SO' ? '#22c55e' : '#818cf8';
   var tipoLabel = tipo==='SO' ? 'SIDE OUT' : 'TRANSICIÓN';
-  title.textContent = tipoLabel + ' — ' + data.total + ' acciones';
-  title.style.color = tipo==='SO' ? '#22c55e' : '#818cf8';
+
+  var title = document.getElementById('modal-arm-title');
+  title.textContent = tipoLabel + ' — ' + (data.total||0) + ' acciones';
+  title.style.color = sotrColor;
 
   var pillsEl = document.getElementById('modal-arm-pills');
   pillsEl.innerHTML = '';
 
-  // Header de columnas
-  var hdrRow = document.createElement('div');
-  hdrRow.style.cssText = 'display:grid;grid-template-columns:110px 1fr 48px 10px 64px 64px;gap:6px;align-items:center;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.06)';
-  ['ZONA','DISTRIBUCIÓN','DIST%','','ATAQUES','% PTS / PTS'].forEach(function(lbl){
-    var h2=document.createElement('div');
-    h2.style.cssText='font-size:7px;color:#475569;letter-spacing:1px;text-transform:uppercase;text-align:center';
-    h2.textContent=lbl; pillsEl.appendChild(h2);
+  // ── Stats generales ─────────────────────────────────────
+  var statsRow = document.createElement('div');
+  statsRow.style.cssText = 'display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap';
+  var effC = data.eff>=50?'#22c55e':data.eff>=25?'#fbbf24':data.eff>=0?'#f97316':'#ef4444';
+  [{l:'EFF TOTAL',v:(data.eff||0)+'%',c:effC},
+   {l:'ACCIONES', v:data.total||0,    c:sotrColor},
+   {l:'PUNTOS',   v:data.pts||0,      c:'#22c55e'},
+   {l:'PTS %',    v:(data.pts_pct||0)+'%', c:'#22c55e'},
+   {l:'ERR %',    v:(data.err_pct||0)+'%', c:'#ef4444'}
+  ].forEach(function(s){
+    var el = document.createElement('div');
+    el.style.cssText = 'flex:1;min-width:60px;padding:8px 6px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;display:flex;flex-direction:column;align-items:center;gap:2px';
+    el.innerHTML = '<div style="font-family:Bebas Neue,sans-serif;font-size:20px;line-height:1;color:'+s.c+'">'+s.v+'</div>'
+      +'<div style="font-size:7px;color:#475569;letter-spacing:1px;text-transform:uppercase;margin-top:2px">'+s.l+'</div>';
+    statsRow.appendChild(el);
   });
+  pillsEl.appendChild(statsRow);
 
-  // Filas por zona
-  var zoneNames={4:'POS 4 — IZQ',3:'POS 3 — CEN',2:'POS 2 — DER',8:'POS 8 — CEN MED',9:'POS 9 — DER MED'};
-  var sorted = data.dist.slice().sort(function(a,b){return b.pct-a.pct;});
-  sorted.forEach(function(d){
-    if(d.tot<=0) return;
-    var ptCol = d.pct_p>=50?'#22c55e':d.pct_p>=30?'#fbbf24':'#f97316';
-    var row = document.createElement('div');
-    row.style.cssText = 'display:grid;grid-template-columns:110px 1fr 48px 10px 64px 64px;gap:6px;align-items:center;margin-bottom:8px';
-    var lbl=document.createElement('div');lbl.style.cssText='font-size:10px;color:#94a3b8;letter-spacing:.5px;font-weight:700';lbl.textContent=zoneNames[d.zona]||'Zona '+d.zona;
-    var bw=document.createElement('div');bw.style.cssText='height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden';
-    var bf=document.createElement('div');bf.style.cssText='height:100%;border-radius:3px;background:'+color+';width:'+d.pct+'%';
-    bw.appendChild(bf);
-    var pd=document.createElement('div');pd.style.cssText='font-family:Bebas Neue,sans-serif;font-size:16px;color:'+color+';text-align:right';pd.textContent=d.pct+'%';
-    var sp=document.createElement('div');sp.style.cssText='color:rgba(255,255,255,.1);text-align:center;font-size:10px';sp.textContent='|';
-    var ta=document.createElement('div');ta.style.cssText='text-align:center';
-    ta.innerHTML='<span style="font-family:Bebas Neue,sans-serif;font-size:15px;color:#e2e8f0">'+d.tot+'</span><span style="font-size:9px;color:#475569"> att</span>';
-    var pp=document.createElement('div');pp.style.cssText='text-align:center';
-    pp.innerHTML='<span style="font-family:Bebas Neue,sans-serif;font-size:16px;color:'+ptCol+'">'+d.pct_p+'%</span><span style="font-size:9px;color:#475569;display:block;margin-top:-2px">'+d.pts+' pts</span>';
-    row.appendChild(lbl);row.appendChild(bw);row.appendChild(pd);row.appendChild(sp);row.appendChild(ta);row.appendChild(pp);
-    pillsEl.appendChild(row);
-  });
-
-  // Canvas
+  // ── Canvas (hide if no dist data) ───────────────────────
   var cv = document.getElementById('modal-arm-canvas');
-  cv.width=480; cv.height=340;
-  var ctx = cv.getContext('2d');
-  ctx.clearRect(0,0,480,340);
-  redrawSOTRCourt(ctx, 480, 340, data, color);
-
-  // Per-rotation breakdown from pills
-  if(allPills && allPills.length){
-    var pillsEl2 = document.getElementById('modal-arm-pills');
-    if(pillsEl2){
-      var rotLbl = document.createElement('div');
-      rotLbl.style.cssText = 'font-size:8px;color:#475569;letter-spacing:3px;text-transform:uppercase;margin:14px 0 8px';
-      rotLbl.textContent = 'EFF POR ROTACIÓN';
-      pillsEl2.appendChild(rotLbl);
-      var grid = document.createElement('div');
-      grid.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:8px';
-      var sotrColor2 = tipo==='SO' ? '#22c55e' : '#818cf8';
-      ['P4','P3','P2','P5','P6','P1'].forEach(function(pos){
-        var p = allPills.find(function(x){ return x.label===pos; }) || {};
-        var eff = p.eff !== undefined ? p.eff : null;
-        var effC = eff===null?'#475569':eff>=50?'#22c55e':eff>=25?'#fbbf24':eff>=0?'#f97316':'#ef4444';
-        var bgC  = eff===null?'rgba(255,255,255,.02)':eff>=50?'rgba(34,197,94,.08)':eff>=25?'rgba(251,191,36,.06)':eff>=0?'rgba(249,115,22,.08)':'rgba(239,68,68,.1)';
-        var card = document.createElement('div');
-        card.style.cssText = 'background:'+bgC+';border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:3px';
-        card.innerHTML =
-          '<div style="font-family:Bebas Neue,sans-serif;font-size:16px;color:'+sotrColor2+'">'+pos+'</div>'
-          +'<div style="font-family:Bebas Neue,sans-serif;font-size:26px;line-height:1;color:'+effC+'">'+(eff!==null?eff+'%':'—')+'</div>'
-          +'<div style="display:flex;gap:8px;margin-top:4px">'
-          +'<div style="display:flex;flex-direction:column;align-items:center"><div style="font-family:Bebas Neue,sans-serif;font-size:12px;color:#94a3b8">'+(p.tot||0)+'</div><div style="font-size:6px;color:#475569;text-transform:uppercase">TOT</div></div>'
-          +'<div style="display:flex;flex-direction:column;align-items:center"><div style="font-family:Bebas Neue,sans-serif;font-size:12px;color:#22c55e">'+(p.pts||0)+'</div><div style="font-size:6px;color:#475569;text-transform:uppercase">#</div></div>'
-          +'<div style="display:flex;flex-direction:column;align-items:center"><div style="font-family:Bebas Neue,sans-serif;font-size:12px;color:#ef4444">'+(p.err_pct||0)+'%</div><div style="font-size:6px;color:#475569;text-transform:uppercase">/=</div></div>'
-          +'</div>';
-        grid.appendChild(card);
-      });
-      pillsEl2.appendChild(grid);
+  if(cv){
+    if(data.dist && data.dist.length > 0){
+      cv.style.display = 'block';
+      cv.width=480; cv.height=340;
+      var ctx = cv.getContext('2d');
+      ctx.clearRect(0,0,480,340);
+      if(typeof redrawSOTRCourt === 'function') redrawSOTRCourt(ctx,480,340,data,sotrColor);
+    } else {
+      cv.style.display = 'none';
     }
+  }
+
+  // ── Grid P4-P3-P2 / P5-P6-P1 ───────────────────────────
+  if(allPills && allPills.length){
+    var rotLbl = document.createElement('div');
+    rotLbl.style.cssText = 'font-size:8px;color:#475569;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;padding-top:4px;border-top:1px solid rgba(255,255,255,.06)';
+    rotLbl.textContent = 'EFF POR ROTACIÓN';
+    pillsEl.appendChild(rotLbl);
+
+    var grid = document.createElement('div');
+    grid.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:8px';
+
+    ['P4','P3','P2','P5','P6','P1'].forEach(function(pos){
+      var p = allPills.find(function(x){ return x.label===pos; }) || {};
+      var eff = (p.eff !== undefined && p.eff !== null) ? p.eff : null;
+      var effC2 = eff===null?'#475569':eff>=50?'#22c55e':eff>=25?'#fbbf24':eff>=0?'#f97316':'#ef4444';
+      var bgC   = eff===null?'rgba(255,255,255,.02)':
+                  eff>=50?'rgba(34,197,94,.1)':eff>=25?'rgba(251,191,36,.07)':
+                  eff>=0?'rgba(249,115,22,.08)':'rgba(239,68,68,.1)';
+
+      var card = document.createElement('div');
+      card.style.cssText = 'background:'+bgC+';border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:4px';
+      card.innerHTML =
+        '<div style="font-family:Bebas Neue,sans-serif;font-size:18px;color:'+sotrColor+'">'+pos+'</div>'
+        +'<div style="font-family:Bebas Neue,sans-serif;font-size:28px;line-height:1;color:'+effC2+'">'+(eff!==null?eff+'%':'—')+'</div>'
+        +'<div style="display:flex;gap:10px;margin-top:4px">'
+        +['TOT|'+( p.tot||0)+'|#94a3b8','#|'+(p.pts||0)+'|#22c55e','ERR|'+(p.err_pct||0)+'%|#ef4444']
+          .map(function(s){ var parts=s.split('|');
+            return '<div style="display:flex;flex-direction:column;align-items:center;gap:1px">'
+              +'<div style="font-family:Bebas Neue,sans-serif;font-size:14px;color:'+parts[2]+'">'+parts[1]+'</div>'
+              +'<div style="font-size:6px;color:#475569;text-transform:uppercase;letter-spacing:.5px">'+parts[0]+'</div>'
+              +'</div>';}).join('')
+        +'</div>';
+      grid.appendChild(card);
+    });
+    pillsEl.appendChild(grid);
+  } else {
+    var noData = document.createElement('div');
+    noData.style.cssText = 'color:#475569;text-align:center;padding:20px;font-size:12px;letter-spacing:1px';
+    noData.textContent = 'Sin datos de rotación disponibles';
+    pillsEl.appendChild(noData);
   }
 }
 
