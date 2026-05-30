@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ataques — CASLA Voley</title>
+<title>ATAQUES — CASLA Voley</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <script src="datos_casla.js" onerror="void 0"></script>
 <style>
@@ -288,7 +288,7 @@ function effColor(v){
   if(v===null||v===undefined||isNaN(v)) return '#475569';
   return v>=40?'#22c55e':v>=20?'#86efac':v>=0?'#e2e8f0':v>=-20?'#f97316':'#ef4444';
 }
-function pct(a,b){ return b>0?Math.round(a*100/b):0; }
+function calcPct(a,b){ return b>0?Math.round(a*100/b):0; }
 
 var FORMACION_ATAQUE = {
   'P1': { front:[{n:'WAGNER',z:4},{n:'BARRIOS',z:3},{n:'CORZO',z:2}], back:[{n:'MANSILLA',z:6}] },
@@ -299,6 +299,118 @@ var FORMACION_ATAQUE = {
   'P2': { front:[{n:'WAGNER',z:4},{n:'BARRIOS',z:3},{n:'CORZO',z:1}], back:[{n:'MANSILLA',z:6}] }
 };
 
+function drawWood(ctx,x,y,w,h,c1,c2){
+  var bg=ctx.createLinearGradient(x,y,x,y+h);
+  bg.addColorStop(0,c1);bg.addColorStop(0.5,c2);bg.addColorStop(1,c1);
+  ctx.fillStyle=bg;ctx.fillRect(x,y,w,h);
+  ctx.save();ctx.globalAlpha=0.07;ctx.strokeStyle='#3a1800';ctx.lineWidth=0.5;
+  for(var iy=y+5;iy<y+h;iy+=5){ctx.beginPath();ctx.moveTo(x,iy);ctx.lineTo(x+w,iy);ctx.stroke();}
+  ctx.restore();
+}
+function drawNet(ctx,CL,CW,Y){
+  var ng=ctx.createLinearGradient(0,Y-3,0,Y+7);
+  ng.addColorStop(0,'#2a2a3a');ng.addColorStop(0.4,'#d0d0e0');ng.addColorStop(1,'#2a2a3a');
+  ctx.fillStyle=ng;ctx.fillRect(CL-3,Y-3,CW+6,8);
+  ctx.fillStyle='#cc1515';ctx.fillRect(CL-3,Y-5,CW+6,3);
+}
+function drawCone(ctx,ox,oy,dx,dy,col,bw,pct,showPct,label,W){
+  var ex=ox+(dx-ox)*pct, ey=oy+(dy-oy)*pct;
+  var vx=dx-ox,vy=dy-oy,len=Math.sqrt(vx*vx+vy*vy);
+  if(len===0) return;
+  var px=-vy/len,py=vx/len;
+  var bwP=bw*pct;
+  var cg=ctx.createLinearGradient(ox,oy,dx,dy);
+  cg.addColorStop(0,col+'08');cg.addColorStop(0.5,col+'55');cg.addColorStop(1,col+'bb');
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(ox,oy);
+  ctx.lineTo(ex+px*bwP/2,ey+py*bwP/2);
+  ctx.lineTo(ex-px*bwP/2,ey-py*bwP/2);
+  ctx.closePath();
+  ctx.fillStyle=cg;ctx.fill();
+  ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.globalAlpha=0.85;ctx.stroke();
+  ctx.restore();
+  if(pct>=0.85){
+    var r=Math.max(bwP*0.42,8);
+    ctx.save();
+    ctx.beginPath();ctx.arc(dx,dy,r,0,Math.PI*2);
+    ctx.fillStyle=col;ctx.globalAlpha=0.12;ctx.fill();
+    ctx.globalAlpha=1;ctx.strokeStyle=col;ctx.lineWidth=1.5;
+    ctx.shadowColor=col;ctx.shadowBlur=8;ctx.stroke();
+    if(showPct && W>140){
+      ctx.font='bold '+Math.round(W*0.065)+'px Barlow Condensed';
+      ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.shadowColor='rgba(0,0,0,.95)';ctx.shadowBlur=4;
+      ctx.fillText(label,dx,dy);
+    }
+    ctx.restore();
+  }
+}
+function drawAtaqueCourt(ctx,W,H,ataque,color,pct){
+  pct=pct===undefined?1:pct;
+  var PAD=8,CL=PAD,CR=W-PAD,CT=PAD,CB=H-PAD;
+  var CW=CR-CL;
+  var RIVAL_H=Math.round(H*0.20);
+  var NET=CT+RIVAL_H;
+  var OWN_H=CB-NET-4;
+  var c1=CL+CW/3,c2=CL+CW*2/3;
+
+  ctx.fillStyle='#1a2a40';ctx.fillRect(0,0,W,H);
+  drawWood(ctx,CL,CT,CW,RIVAL_H,'#6B4510','#8B5A18');
+  drawWood(ctx,CL,NET+4,CW,OWN_H,'#C88030','#E09840');
+  drawNet(ctx,CL,CW,NET);
+
+  ctx.save();ctx.setLineDash([]);
+  ctx.strokeStyle='rgba(255,255,255,.6)';ctx.lineWidth=1.2;
+  ctx.strokeRect(CL,CT,CW,RIVAL_H);
+  ctx.strokeStyle='rgba(255,255,255,.45)';ctx.lineWidth=0.8;
+  [c1,c2].forEach(function(x){ctx.beginPath();ctx.moveTo(x,CT);ctx.lineTo(x,CT+RIVAL_H);ctx.stroke();});
+  ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=1.5;ctx.setLineDash([]);
+  ctx.strokeRect(CL,NET+4,CW,OWN_H);
+  ctx.setLineDash([3,3]);ctx.strokeStyle='rgba(255,255,255,.35)';ctx.lineWidth=0.8;
+  [c1,c2].forEach(function(x){ctx.beginPath();ctx.moveTo(x,NET+4);ctx.lineTo(x,CB);ctx.stroke();});
+  ctx.beginPath();ctx.moveTo(CL,NET+4+OWN_H/3);ctx.lineTo(CR,NET+4+OWN_H/3);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(CL,NET+4+OWN_H*2/3);ctx.lineTo(CR,NET+4+OWN_H*2/3);ctx.stroke();
+  ctx.restore();
+
+  if(ataque.tot>0 && ataque.destinos && ataque.destinos.length>0){
+    // Origen en franja rival
+    var origZ=ataque.orig||8;
+    var origXmap={1:CL+CW/6,9:CL+CW/6,2:CL+CW/6,6:CL+CW/2,8:CL+CW/2,3:CL+CW/2,5:CL+CW*5/6,7:CL+CW*5/6,4:CL+CW*5/6};
+    var origYmap={1:CT+RIVAL_H*0.85,6:CT+RIVAL_H*0.85,5:CT+RIVAL_H*0.85,9:CT+RIVAL_H*0.55,8:CT+RIVAL_H*0.55,7:CT+RIVAL_H*0.55,2:CT+RIVAL_H*0.2,3:CT+RIVAL_H*0.2,4:CT+RIVAL_H*0.2};
+    var ox=origXmap[origZ]||CL+CW/2;
+    var oy=CT+RIVAL_H*0.58;
+
+    // Destinos en campo propio
+    var O6=NET+4;
+    var destX={4:CL+CW/6,3:CL+CW/2,2:CL+CW*5/6,7:CL+CW/6,8:CL+CW/2,9:CL+CW*5/6,5:CL+CW/6,6:CL+CW/2,1:CL+CW*5/6};
+    var destY={4:O6+OWN_H/6,3:O6+OWN_H/6,2:O6+OWN_H/6,7:O6+OWN_H/2,8:O6+OWN_H/2,9:O6+OWN_H/2,5:O6+OWN_H*5/6,6:O6+OWN_H*5/6,1:O6+OWN_H*5/6};
+    var cones=['#a855f7','#22c55e'];
+
+    ataque.destinos.slice(0,2).forEach(function(d,i){
+      var dx=destX[d.z]||CL+CW/2, dy=destY[d.z]||O6+OWN_H/2;
+      drawCone(ctx,ox,oy,dx,dy,cones[i],(i===0?26:20),pct,true,d.pct+'%',W);
+    });
+
+    // Círculo origen
+    ctx.save();
+    ctx.beginPath();ctx.arc(ox,oy,Math.max(W*0.052,5),0,Math.PI*2);
+    ctx.fillStyle=color;ctx.globalAlpha=0.25;ctx.fill();
+    ctx.globalAlpha=1;ctx.strokeStyle=color;ctx.lineWidth=1.5;
+    ctx.shadowColor=color;ctx.shadowBlur=8;ctx.stroke();
+    ctx.font='bold '+Math.round(W*0.068)+'px Bebas Neue';
+    ctx.fillStyle=color;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.shadowColor='rgba(0,0,0,.95)';ctx.shadowBlur=3;
+    ctx.fillText(ataque.cod,ox,oy);
+    ctx.restore();
+  } else {
+    ctx.save();
+    ctx.font='bold '+Math.round(W*0.075)+'px Barlow Condensed';
+    ctx.fillStyle='rgba(255,255,255,.13)';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('—',CL+CW/2,NET+4+OWN_H/2);
+    ctx.restore();
+  }
+}
 function buildCanchita(item,jIdx,i,prefix,W,H,drawFn,color,j){
   var card=document.createElement('div');
   card.className='canchita-card';
@@ -348,7 +460,6 @@ function buildCanchita(item,jIdx,i,prefix,W,H,drawFn,color,j){
   card.addEventListener('click',function(){openModal(item,j,tipo2);});
   return card;
 }
-
 function renderPanelAtaque(j,jIdx,grid){
   var combosPos = {
     'PUNTA':   ['X5','V5','X6','V6','XP'],
@@ -381,21 +492,18 @@ function initPage(){
   var params = new URLSearchParams(window.location.search);
   var num = parseInt(params.get('num')) || 0;
   var cont = document.getElementById('content');
-
   var j = CASLA_JUGADORES.find(function(x){ return x.num === num; });
   if(!j){
     cont.innerHTML = '<div class="empty">Jugador #'+num+' no encontrado</div>';
     return;
   }
-
   var nm = j.nombre.replace(/^\d+\s*/, '');
   document.getElementById('jug-title').textContent = '💥 ATAQUES — ' + nm;
-
-  if(!j.ataques || !j.ataques.length || j.ataques.every(function(a){return !a.tot;})){
+  var datos = j.ataques;
+  if(!datos || !datos.length || datos.every(function(x){return !x.tot;})){
     cont.innerHTML = '<div class="empty">Sin datos de ataque para ' + nm + '</div>';
     return;
   }
-
   var grid = document.createElement('div');
   grid.className = 'canchitas-grid';
   renderPanelAtaque(j, 0, grid);
@@ -412,7 +520,7 @@ function waitAndInit(tries){
     document.getElementById('content').innerHTML = '<div class="empty">No se pudieron cargar los datos.</div>';
   }
 }
-waitAndInit(20);
+waitAndInit(25);
 </script>
 </body>
 </html>
