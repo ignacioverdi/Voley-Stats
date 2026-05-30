@@ -246,6 +246,9 @@ body::before{content:'';position:fixed;inset:0;
 .nav-tab{padding:6px 16px;border-radius:8px;border:1px solid transparent;
   font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;
   letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;color:var(--mut)}
+.ind-fbtn{padding:5px 14px;border-radius:7px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:var(--mut);font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;text-transform:uppercase;transition:all .15s}
+.ind-fbtn:hover{color:var(--txt)}
+.ind-fbtn.on{background:rgba(129,140,248,.12);border-color:rgba(129,140,248,.4);color:#818cf8}
 .nav-tab:hover{color:var(--txt);border-color:var(--b2)}
 .nav-tab.on{background:rgba(99,102,241,.15);border-color:var(--indigo);color:var(--indigo)}
 .nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
@@ -577,6 +580,12 @@ select, select option {
   <!-- VISTA INDIVIDUAL -->
   <div class="view" id="view-individual">
     <div class="player-select" id="player-select"></div>
+    <div id="ind-filter-row" style="display:none;gap:6px;margin:0 0 12px;flex-wrap:wrap">
+      <span style="font-size:9px;color:var(--mut);letter-spacing:2px;text-transform:uppercase;align-self:center">Ver:</span>
+      <button class="ind-fbtn on" id="ind-fbtn-all" onclick="setIndFiltro('all',this)">Todos</button>
+      <button class="ind-fbtn" id="ind-fbtn-P" onclick="setIndFiltro('P',this)">🏆 Partidos</button>
+      <button class="ind-fbtn" id="ind-fbtn-E" onclick="setIndFiltro('E',this)">🏋️ Entrenamientos</button>
+    </div>
     <div id="ind-content"><div class="empty-msg">Selecciona un jugador</div></div>
   </div>
 </main>
@@ -591,6 +600,14 @@ const FUNDS=[
 ];
 
 let currentPlayer=null;
+var indFiltroTipo = 'all'; // 'all', 'P', 'E'
+
+function setIndFiltro(tipo, btn){
+  indFiltroTipo = tipo;
+  document.querySelectorAll('.ind-fbtn').forEach(function(b){ b.classList.remove('on'); });
+  btn.classList.add('on');
+  if(currentPlayer) renderIndividual(currentPlayer.nom, currentPlayer.cam);
+}
 
 function setView(v,btn){
   document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
@@ -818,6 +835,12 @@ function getPlayerHistory(nom){
   var D = window.HISTORIAL_DATA;
   if(!D) return [];
   var entrenamientosFiltrados = filtrarHistorial(D.entrenamientos);
+  // Apply individual tipo filter
+  if(typeof indFiltroTipo !== 'undefined' && indFiltroTipo !== 'all'){
+    entrenamientosFiltrados = entrenamientosFiltrados.filter(function(e){
+      return (e.tipo||'P') === indFiltroTipo;
+    });
+  }
   return entrenamientosFiltrados.map(function(e){
     var j = e.jugadores.find(function(x){ return x.n === nom; });
     return j ? Object.assign({fecha: e.fecha, tipo: e.tipo||'E', rival: e.rival||'', resultado: e.resultado||null}, j) : null;
@@ -1044,6 +1067,8 @@ function renderEquipo(){
   if(!D){document.getElementById('eq-content').innerHTML='<div class=empty-msg>Sin datos. Ejecuta GuardarEntrenamiento primero.</div>';return;}
   const byDate=getTeamByDate();
   const totalSess=byDate.length;
+  const totalPartidos=byDate.filter(d=>d.tipo==='P').length;
+  const totalEntrenos=byDate.filter(d=>d.tipo==='E').length;
   const totalAcc=byDate.reduce((s,d)=>s+(d.sT+d.rT+d.aT+d.bT),0);
   const lastDate=byDate[byDate.length-1]?.fecha||'--';
   const avgSEff=byDate.filter(d=>d.sEff!==null).map(d=>d.sEff);
@@ -1179,7 +1204,7 @@ function renderEquipo(){
     <div class=eq-hero>
       <div>
         <div class=eq-hero-title>Evolucion del <span>Equipo</span></div>
-        <div class=eq-hero-sub>ULTIMO ENTRENAMIENTO: ${lastDate} &nbsp;·&nbsp; ${totalSess} SESIONES REGISTRADAS</div>
+        <div class=eq-hero-sub>ÚLTIMA SESIÓN: ${lastDate} &nbsp;·&nbsp; ${totalSess} SESIONES (${totalPartidos}P · ${totalEntrenos}E)</div>
       </div>
       <div class=eq-kpis>
         <div class=eq-kpi>
@@ -1244,6 +1269,8 @@ function selectPlayer(nom,cam,btn){
   currentPlayer={nom,cam};
   document.querySelectorAll('.player-btn').forEach(x=>x.classList.remove('on'));
   btn.classList.add('on');
+  var filterRow = document.getElementById('ind-filter-row');
+  if(filterRow) filterRow.style.display='flex';
   renderIndividual(nom,cam);
   setTimeout(()=>loadCoachNote(nom),50);
 }
@@ -1912,7 +1939,11 @@ function renderDV4Block(hist) {
 
 function generateFeedback(hist,nom){
   const fb=[];
-  if(!hist.length)return[{icon:'ℹ️',title:'Sin datos',text:'No hay entrenamientos registrados aún.',bg:'rgba(255,255,255,.03)',bc:'rgba(255,255,255,.08)',color:'var(--txt)'}];
+  if(!hist.length)return[{icon:'ℹ️',title:'Sin datos',text:'No hay sesiones registradas aún.',bg:'rgba(255,255,255,.03)',bc:'rgba(255,255,255,.08)',color:'var(--txt)'}];
+  // Separate P and E for context
+  const partidos = hist.filter(h=>h.tipo==='P');
+  const entrenos  = hist.filter(h=>h.tipo==='E');
+  const tipoLabel = partidos.length>0&&entrenos.length===0?'partidos':entrenos.length>0&&partidos.length===0?'entrenamientos':'sesiones';
   const last=hist[hist.length-1];
   const multi=hist.length>=2;
 
