@@ -214,7 +214,7 @@ function initJug(num, nombre){
     rT:0,rEff:0,rPunto:0,rPos:0,rAdm:0,rNeg:0,rVend:0,rErr:0,
     aT:0,aEff:0,aPunto:0,aPos:0,aAdm:0,aNeg:0,aVend:0,aErr:0,aTCQ:0,aEffAlta:0,
     bT:0,bPt:0,bPtPos:0,
-    dv4:{}, _sdir:{}
+    dv4:{}, _sdir:{}, _sdir_full:{}, _rdir:{}
   };
 }
 
@@ -346,7 +346,17 @@ function procesarDVW(){
             else if(sym==='vend') jd.sVend++;
             else if(sym==='adm') jd.sAdm++;
             else if(sym==='err') jd.sErr++;
-            if(zo&&zd){ var dk=zo+'-'+zd; jd._sdir[dk]=(jd._sdir[dk]||0)+1; }
+            if(zo&&zd){
+              var dk=zo+'-'+zd; jd._sdir[dk]=(jd._sdir[dk]||0)+1;
+              // Full saque distribution: orig -> dest -> sym counts
+              if(!jd._sdir_full[zo]) jd._sdir_full[zo]={};
+              if(!jd._sdir_full[zo][zd]) jd._sdir_full[zo][zd]={tot:0,pt:0,pos:0,neg:0,err:0};
+              jd._sdir_full[zo][zd].tot++;
+              if(sym==='punto') jd._sdir_full[zo][zd].pt++;
+              else if(sym==='pos') jd._sdir_full[zo][zd].pos++;
+              else if(sym==='neg'||sym==='vend') jd._sdir_full[zo][zd].neg++;
+              else if(sym==='err') jd._sdir_full[zo][zd].err++;
+            }
           } else if(fund==='R'){
             jd.rT++;
             if(sym==='punto') jd.rPunto++;
@@ -355,6 +365,15 @@ function procesarDVW(){
             else if(sym==='vend') jd.rVend++;
             else if(sym==='adm') jd.rAdm++;
             else if(sym==='err') jd.rErr++;
+            // Store recepcion by serve origin zone and receive quality
+            if(zo){
+              if(!jd._rdir[zo]) jd._rdir[zo]={tot:0,pt:0,pos:0,neg:0,err:0};
+              jd._rdir[zo].tot++;
+              if(sym==='punto') jd._rdir[zo].pt++;
+              else if(sym==='pos') jd._rdir[zo].pos++;
+              else if(sym==='neg'||sym==='vend') jd._rdir[zo].neg++;
+              else if(sym==='err') jd._rdir[zo].err++;
+            }
           } else if(fund==='A'){
             jd.aT++;
             if(sym==='punto') jd.aPunto++;
@@ -364,10 +383,16 @@ function procesarDVW(){
             else if(sym==='adm') jd.aAdm++;
             else if(sym==='err') jd.aErr++;
             if(combo){
-              if(!jd.dv4[combo]) jd.dv4[combo]={tot:0,pt:0,err:0,orig:zo?parseInt(zo):0,dest:zd};
+              if(!jd.dv4[combo]) jd.dv4[combo]={tot:0,pt:0,err:0,orig:zo?parseInt(zo):0,dest:zd,destCounts:{}};
               jd.dv4[combo].tot++;
               if(sym==='punto') jd.dv4[combo].pt++;
               if(sym==='err') jd.dv4[combo].err++;
+              // Accumulate dest zone counts
+              if(zd){
+                if(!jd.dv4[combo].destCounts) jd.dv4[combo].destCounts={};
+                jd.dv4[combo].destCounts[zd]=(jd.dv4[combo].destCounts[zd]||0)+1;
+                jd.dv4[combo].dest=zd; // keep last for backward compat
+              }
             }
           } else if(fund==='B'){
             jd.bT++;
@@ -391,6 +416,7 @@ function procesarDVW(){
         if(j.sT+j.rT+j.aT+j.bT > 0){
           var j2 = Object.assign({}, j);
           delete j2._sdir;
+          // Keep _sdir_full and _rdir for zone analysis
           jugadoresOut.push(j2);
         }
       });

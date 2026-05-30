@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Saques — CASLA Voley</title>
+<title>Recepción — CASLA Voley</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <script src="datos_casla.js" onerror="void 0"></script>
 <script src="datos_historial.js" onerror="void 0"></script>
@@ -273,13 +273,14 @@ body{background:#07080f;color:#e2e8f0;font-family:'Barlow Condensed',sans-serif;
 .fbtn.active-entrenamiento{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.4);color:#22c55e}
 .main{max-width:960px;margin:0 auto;padding:20px 16px}
 .empty{text-align:center;padding:60px;color:#475569;font-size:13px;letter-spacing:1px}
+.info-note{font-size:10px;color:#475569;letter-spacing:1px;padding:10px 16px;background:rgba(255,255,255,.02);border-radius:6px;margin-bottom:14px;border:1px solid rgba(255,255,255,.04)}
 </style>
 </head>
 <body>
 <div class="hdr">
   <a href="javascript:history.back()" class="back-btn">← Volver</a>
   <div>
-    <div id="jug-title" style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#e2e8f0">SAQUES</div>
+    <div id="jug-title" style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#e2e8f0">RECEPCIÓN</div>
     <div style="font-size:9px;color:#475569;letter-spacing:2px;text-transform:uppercase">CASLA VOLEY</div>
   </div>
   <div class="filter-row">
@@ -293,247 +294,184 @@ body{background:#07080f;color:#e2e8f0;font-family:'Barlow Condensed',sans-serif;
 <script>
 var POS_COLOR={'ARMADOR':'#f59e0b','OPUESTO':'#f97316','PUNTA':'#818cf8','CENTRAL':'#22c55e','LIBERO':'#06b6d4'};
 
-function effColor(v){
-  if(v===null||v===undefined||isNaN(v)) return '#475569';
-  return v>=40?'#22c55e':v>=20?'#86efac':v>=0?'#e2e8f0':v>=-20?'#f97316':'#ef4444';
-}
-function calcPct(a,b){ return b>0?Math.round(a*100/b):0; }
-
-function drawWood(ctx,x,y,w,h,c1,c2){
-  var bg=ctx.createLinearGradient(x,y,x,y+h);
-  bg.addColorStop(0,c1);bg.addColorStop(0.5,c2);bg.addColorStop(1,c1);
-  ctx.fillStyle=bg;ctx.fillRect(x,y,w,h);
-  ctx.save();ctx.globalAlpha=0.07;ctx.strokeStyle='#3a1800';ctx.lineWidth=0.5;
-  for(var iy=y+5;iy<y+h;iy+=5){ctx.beginPath();ctx.moveTo(x,iy);ctx.lineTo(x+w,iy);ctx.stroke();}
-  ctx.restore();
-}
-function drawNet(ctx,CL,CW,Y){
-  var ng=ctx.createLinearGradient(0,Y-3,0,Y+7);
-  ng.addColorStop(0,'#2a2a3a');ng.addColorStop(0.4,'#d0d0e0');ng.addColorStop(1,'#2a2a3a');
-  ctx.fillStyle=ng;ctx.fillRect(CL-3,Y-3,CW+6,8);
-  ctx.fillStyle='#cc1515';ctx.fillRect(CL-3,Y-5,CW+6,3);
-}
-function drawCone(ctx,ox,oy,dx,dy,col,bw,pct,showPct,label,W){
-  var ex=ox+(dx-ox)*pct, ey=oy+(dy-oy)*pct;
-  var vx=dx-ox,vy=dy-oy,len=Math.sqrt(vx*vx+vy*vy);
-  if(len===0) return;
-  var px=-vy/len,py=vx/len;
-  var bwP=bw*pct;
-  var cg=ctx.createLinearGradient(ox,oy,dx,dy);
-  cg.addColorStop(0,col+'08');cg.addColorStop(0.5,col+'55');cg.addColorStop(1,col+'bb');
-  ctx.save();
-  ctx.beginPath();
-  ctx.moveTo(ox,oy);
-  ctx.lineTo(ex+px*bwP/2,ey+py*bwP/2);
-  ctx.lineTo(ex-px*bwP/2,ey-py*bwP/2);
-  ctx.closePath();
-  ctx.fillStyle=cg;ctx.fill();
-  ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.globalAlpha=0.85;ctx.stroke();
-  ctx.restore();
-  if(pct>=0.85){
-    var r=Math.max(bwP*0.42,8);
-    ctx.save();
-    ctx.beginPath();ctx.arc(dx,dy,r,0,Math.PI*2);
-    ctx.fillStyle=col;ctx.globalAlpha=0.12;ctx.fill();
-    ctx.globalAlpha=1;ctx.strokeStyle=col;ctx.lineWidth=1.5;
-    ctx.shadowColor=col;ctx.shadowBlur=8;ctx.stroke();
-    if(showPct && W>140){
-      ctx.font='bold '+Math.round(W*0.065)+'px Barlow Condensed';
-      ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.shadowColor='rgba(0,0,0,.95)';ctx.shadowBlur=4;
-      ctx.fillText(label,dx,dy);
-    }
-    ctx.restore();
-  }
-}
-function drawSaqueCourt(ctx,W,H,saque,color,pct){
-  pct=pct===undefined?1:pct;
-  var PAD=8,CL=PAD,CR=W-PAD,CT=PAD,CB=H-PAD;
-  var CW=CR-CL,CH=CB-CT;
-  var NET=CT+CH*0.5;
-  var RIVAL_H=NET-CT, OWN_H=CB-NET;
-  var c1=CL+CW/3,c2=CL+CW*2/3;
-
-  ctx.fillStyle='#1a2a40';ctx.fillRect(0,0,W,H);
-  drawWood(ctx,CL,CT,CW,RIVAL_H,'#C88030','#E09840');
-  drawWood(ctx,CL,NET,CW,OWN_H,'#8B5E1A','#A06820');
-  drawNet(ctx,CL,CW,NET);
-
-  ctx.save();ctx.setLineDash([]);
-  // Campo rival (destino)
-  ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=1.5;
-  ctx.strokeRect(CL,CT,CW,RIVAL_H);
-  ctx.setLineDash([3,3]);ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=0.8;
-  [c1,c2].forEach(function(x){ctx.beginPath();ctx.moveTo(x,CT);ctx.lineTo(x,NET);ctx.stroke();});
-  ctx.beginPath();ctx.moveTo(CL,CT+RIVAL_H/3);ctx.lineTo(CR,CT+RIVAL_H/3);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(CL,CT+RIVAL_H*2/3);ctx.lineTo(CR,CT+RIVAL_H*2/3);ctx.stroke();
-  // Campo propio (origen)
-  ctx.setLineDash([]);ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=1.5;
-  ctx.strokeRect(CL,NET,CW,OWN_H);
-  ctx.setLineDash([3,3]);ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=0.8;
-  [c1,c2].forEach(function(x){ctx.beginPath();ctx.moveTo(x,NET);ctx.lineTo(x,CB);ctx.stroke();});
-  ctx.beginPath();ctx.moveTo(CL,NET+OWN_H/3);ctx.lineTo(CR,NET+OWN_H/3);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(CL,NET+OWN_H*2/3);ctx.lineTo(CR,NET+OWN_H*2/3);ctx.stroke();
-  ctx.restore();
-
-  if(saque.tot>0 && saque.destinos && saque.destinos.length>0){
-    // Origen: zona de fondo propio
-    var origZone=saque.orig||1;
-    var origXmap={1:CL+CW*5/6,6:CL+CW/2,5:CL+CW/6};
-    var ox=origXmap[origZone]||CL+CW*5/6;
-    var oy=NET+OWN_H*5/6;
-
-    // Destinos en campo rival
-    var destX={1:CL+CW/6,9:CL+CW/6,2:CL+CW/6,6:CL+CW/2,8:CL+CW/2,3:CL+CW/2,5:CL+CW*5/6,7:CL+CW*5/6,4:CL+CW*5/6};
-    var destY={1:CT+RIVAL_H/6,6:CT+RIVAL_H/6,5:CT+RIVAL_H/6,9:CT+RIVAL_H/2,8:CT+RIVAL_H/2,7:CT+RIVAL_H/2,2:CT+RIVAL_H*5/6,3:CT+RIVAL_H*5/6,4:CT+RIVAL_H*5/6};
-    var cones=['#a855f7','#22c55e'];
-
-    saque.destinos.slice(0,2).forEach(function(d,i){
-      var dx=destX[d.z]||CL+CW/2,dy=destY[d.z]||CT+RIVAL_H/2;
-      drawCone(ctx,ox,oy,dx,dy,cones[i],(i===0?30:22),pct,true,d.pct+'%',W);
-    });
-
-    // Círculo origen
-    ctx.save();
-    ctx.beginPath();ctx.arc(ox,oy,W*0.055,0,Math.PI*2);
-    ctx.fillStyle=color;ctx.globalAlpha=0.25;ctx.fill();
-    ctx.globalAlpha=1;ctx.strokeStyle=color;ctx.lineWidth=1.5;
-    ctx.shadowColor=color;ctx.shadowBlur=8;ctx.stroke();
-    ctx.font='bold '+Math.round(W*0.068)+'px Bebas Neue';
-    ctx.fillStyle=color;ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.shadowColor='rgba(0,0,0,.95)';ctx.shadowBlur=3;
-    ctx.fillText(saque.cod,ox,oy);
-    ctx.restore();
-  } else {
-    ctx.save();
-    ctx.font='bold '+Math.round(W*0.075)+'px Barlow Condensed';
-    ctx.fillStyle='rgba(255,255,255,.13)';ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText('SIN DATOS',CL+CW/2,NET+OWN_H/2);
-    ctx.restore();
-  }
-}
-function buildCanchita(item,jIdx,i,prefix,W,H,drawFn,color,j){
-  var card=document.createElement('div');
-  card.className='canchita-card';
-  var effC=effColor(item.eff);
-  var hasDatos=item.tot>0;
-
-  var hdr=document.createElement('div');
-  hdr.className='canchita-hdr';
-  var codWrap=document.createElement('div');
-  codWrap.style.cssText='display:flex;align-items:center;gap:5px';
-  var cod=document.createElement('span');
-  cod.className='canchita-cod';
-  cod.style.color=color;
-  cod.textContent=item.cod;
-  var vbtn=document.createElement('a');
-  vbtn.href=item.video||'#';vbtn.target='_blank';
-  vbtn.title='Ver video';
-  vbtn.style.cssText='font-size:12px;opacity:'+(item.video?'1':'0.2')+';text-decoration:none;line-height:1;cursor:'+(item.video?'pointer':'default');
-  vbtn.textContent='🎬';
-  vbtn.addEventListener('click',function(e){if(!item.video){e.preventDefault();}e.stopPropagation();});
-  codWrap.appendChild(cod);codWrap.appendChild(vbtn);
-  var tipo=document.createElement('span');
-  tipo.className='canchita-tipo';
-  tipo.textContent=item.tipo;
-  hdr.appendChild(codWrap);hdr.appendChild(tipo);
-  card.appendChild(hdr);
-
-  var wrap=document.createElement('div');
-  wrap.className='canchita-canvas-wrap';
-  var cv=document.createElement('canvas');
-  cv.className='mini-court';
-  cv.id=prefix+'-'+jIdx+'-'+i;
-  cv.width=W;cv.height=H;
-  wrap.appendChild(cv);card.appendChild(wrap);
-
-  var stats=document.createElement('div');
-  stats.className='canchita-stats';
-  [{l:'EFF',v:hasDatos&&item.eff!=null?item.eff+'%':'—',c:effC},{l:'TOT',v:item.tot,c:color},{l:'#%',v:hasDatos&&item.pts!=null?item.pts+'%':'—',c:'#22c55e'}].forEach(function(s){
-    var ci=document.createElement('div');ci.className='cs-item';
-    var cv2=document.createElement('div');cv2.className='cs-val';cv2.style.color=s.c;cv2.textContent=s.v;
-    var cl=document.createElement('div');cl.className='cs-lbl';cl.textContent=s.l;
-    ci.appendChild(cv2);ci.appendChild(cl);stats.appendChild(ci);
-  });
-  card.appendChild(stats);
-
-  var tipo2=prefix==='ms'?'saque':'ataque';
-  card.addEventListener('click',function(){openModal(item,j,tipo2);});
-  return card;
-}
-function renderPanelSaque(j,jIdx,grid){
-  var saques=j.saques||[];
-  if(saques.length===0){
-    var nd=document.createElement('div');nd.className='no-data-msg';nd.textContent='Sin datos de saque registrados';
-    grid.appendChild(nd);return;
-  }
-  saques.forEach(function(s,i){
-    var card=buildCanchita(s,jIdx,i,'ms',180,160,drawSaqueCourt,j.color,j);
-    grid.appendChild(card);
-    setTimeout(function(){
-      var cv=document.getElementById('ms-'+jIdx+'-'+i);
-      if(!cv) return;
-      var ctx=cv.getContext('2d');
-      var start=null;
-      function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/520,1),e=1-Math.pow(1-p,3);ctx.clearRect(0,0,180,160);drawSaqueCourt(ctx,180,160,s,j.color,e);if(p<1)requestAnimationFrame(step);}
-      requestAnimationFrame(step);
-    },i*70);
-  });
-}
-
-var CASLA_POSICIONES_SQ = {
-  2:'LIBERO',3:'CENTRAL',4:'ARMADOR',5:'PUNTA',6:'OPUESTO',
-  9:'ARMADOR',10:'CENTRAL',11:'PUNTA',12:'LIBERO',13:'CENTRAL',
-  14:'PUNTA',15:'PUNTA',17:'CENTRAL',18:'PUNTA',19:'ARMADOR'
+var CASLA_POSICIONES_REC = {
+  2:'LIBERO', 3:'CENTRAL', 4:'ARMADOR', 5:'PUNTA', 6:'OPUESTO',
+  9:'ARMADOR', 10:'CENTRAL', 11:'PUNTA', 12:'LIBERO', 13:'CENTRAL',
+  14:'PUNTA', 15:'PUNTA', 17:'CENTRAL', 18:'PUNTA', 19:'ARMADOR'
 };
 
-function buildSaqueFromHistorial(num){
+function buildRecepcionFromHistorial(num){
   if(typeof window.HISTORIAL_DATA==='undefined') return null;
-  var sesiones=window.HISTORIAL_DATA.entrenamientos||[];
-  var sm={tot:0,pt:0,pos:0,neg:0,err:0,destCounts:{}};
-  var jNombre='';
+  var sesiones = window.HISTORIAL_DATA.entrenamientos||[];
+
+  // Accumulate _rdir by serve origin zone
+  // _rdir: {zone: {tot, pt, pos, neg, err}}
+  // Map DVW zones to P1(Z1)/P6(Z6)/P5(Z5) format
+  var acum = {
+    flotado: {
+      desde_z1: {total:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p5:{tot:0,eff:0,pos:0,neg:0}},
+      desde_z6: {total:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p5:{tot:0,eff:0,pos:0,neg:0}},
+      desde_z5: {total:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p5:{tot:0,eff:0,pos:0,neg:0}},
+    },
+    potencia: {
+      desde_z1: {total:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p5:{tot:0,eff:0,pos:0,neg:0}},
+      desde_z6: {total:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p5:{tot:0,eff:0,pos:0,neg:0}},
+      desde_z5: {total:{tot:0,eff:0,pos:0,neg:0}, p1:{tot:0,eff:0,pos:0,neg:0}, p6:{tot:0,eff:0,pos:0,neg:0}, p5:{tot:0,eff:0,pos:0,neg:0}},
+    }
+  };
+
+  var jNombre = '';
+  var hasDrDir = false;
+
   sesiones.forEach(function(s){
-    if(s.tipo!=='E') return;
+    if(s.tipo !== 'E') return;
     (s.jugadores||[]).forEach(function(j){
-      if(j.c!==num) return;
-      jNombre=j.n;
-      sm.tot+=j.sT||0; sm.pt+=j.sPunto||0;
-      sm.pos+=j.sPos||0; sm.neg+=j.sNeg||0; sm.err+=j.sErr||0;
-      // _sdir_full: {orig: {dest: {tot,pt,...}}}
-      if(j._sdir_full){
-        Object.keys(j._sdir_full).forEach(function(zo){
-          Object.keys(j._sdir_full[zo]).forEach(function(zd){
-            var v=j._sdir_full[zo][zd];
-            var z=parseInt(zd);
-            sm.destCounts[z]=(sm.destCounts[z]||0)+(v.tot||0);
-          });
+      if(j.c !== num) return;
+      jNombre = j.n;
+
+      // If _rdir exists (new format with zone data)
+      if(j._rdir && Object.keys(j._rdir).length > 0){
+        hasDrDir = true;
+        // Map zone -> desde_z1/z6/z5
+        var ZONE_MAP = {'1':'desde_z1','6':'desde_z6','5':'desde_z5'};
+        Object.keys(j._rdir).forEach(function(zo){
+          var zKey = ZONE_MAP[zo];
+          if(!zKey) return;
+          var rd = j._rdir[zo];
+          var tipo = 'flotado'; // DVW doesn't distinguish SM/SQ in basic _rdir
+          var tot2 = rd.tot||0;
+          if(!tot2) return;
+          var pos2 = Math.round((rd.pt+rd.pos)/tot2*100);
+          var neg2 = Math.round((rd.neg+rd.err)/tot2*100);
+          var eff2 = Math.round((rd.pt*1 + rd.pos*0.5 - rd.neg*0.5 - rd.err)/tot2*100);
+          // Add to total
+          var t = acum[tipo][zKey].total;
+          var newTot = t.tot + tot2;
+          t.eff = newTot>0?Math.round((t.eff*t.tot + eff2*tot2)/newTot):0;
+          t.pos = newTot>0?Math.round((t.pos*t.tot + pos2*tot2)/newTot):0;
+          t.neg = newTot>0?Math.round((t.neg*t.tot + neg2*tot2)/newTot):0;
+          t.tot = newTot;
         });
-      }
-      // Fallback: sDest simple
-      if(!j._sdir_full){
-        var sd=String(j.sDest||'');
-        sd.replace(/,/g,' ').split(/\s+/).forEach(function(d){
-          if(/^\d+$/.test(d)){var z=parseInt(d);sm.destCounts[z]=(sm.destCounts[z]||0)+(j.sT||0);}
+      } else {
+        // Old format: only totals available - use rT/rEff
+        var tot2 = j.rT||0;
+        if(!tot2) return;
+        var eff2 = j.rEff||0;
+        var pos2 = j.rT>0?Math.round((j.rPunto+j.rPos)/j.rT*100):0;
+        var neg2 = j.rT>0?Math.round((j.rNeg+j.rErr)/j.rT*100):0;
+        // Spread across zones (can't distinguish, put in all)
+        ['desde_z1','desde_z6','desde_z5'].forEach(function(zk){
+          var t = acum.flotado[zk].total;
+          // Don't spread - put in z6 as most common
         });
+        // Put totals in flotado desde_z6 as best guess
+        var t = acum.flotado.desde_z6.total;
+        var newTot = t.tot + tot2;
+        t.eff = newTot>0?Math.round((t.eff*t.tot + eff2*tot2)/newTot):0;
+        t.pos = newTot>0?Math.round((t.pos*t.tot + pos2*tot2)/newTot):0;
+        t.neg = newTot>0?Math.round((t.neg*t.tot + neg2*tot2)/newTot):0;
+        t.tot = newTot;
       }
     });
   });
-  if(!sm.tot) return null;
-  var totDest=Object.values(sm.destCounts).reduce(function(s,v){return s+v;},0)||1;
-  var destinos=Object.entries(sm.destCounts).filter(function(e){return e[1]>0;})
-    .sort(function(a,b){return b[1]-a[1];}).slice(0,6)
-    .map(function(e){return {z:parseInt(e[0]),pct:Math.round(e[1]/totDest*100)};});
-  var eff=Math.round((sm.pt+0.5*sm.pos-sm.neg-sm.err)/sm.tot*100);
-  var pos=CASLA_POSICIONES_SQ[num]||'';
+
+  // Check if any data
+  var hasData = Object.values(acum.flotado).some(function(z){ return z.total.tot > 0; }) ||
+                Object.values(acum.potencia).some(function(z){ return z.total.tot > 0; });
+  if(!hasData) return null;
+
+  var pos = CASLA_POSICIONES_REC[num]||'';
   return {
-    num:num, nombre:num+' '+jNombre, pos:pos, color:POS_COLOR[pos]||'#64748b',
-    saques:[{cod:'SM',tipo:'FLOTADO',orig:6,destinos:destinos,
-      eff:eff,tot:sm.tot,pts:sm.pt,plus:sm.pos,slash:sm.neg,err:sm.err,
-      video:null,pts_pct:sm.tot>0?Math.round(sm.pt/sm.tot*100):0}],
-    ataques:[], recepcion:{}, info:{}
+    num: num,
+    nombre: String(num)+' '+jNombre,
+    pos: pos,
+    color: POS_COLOR[pos]||'#64748b',
+    recepcion: acum,
+    _hasDrDir: hasDrDir
   };
 }
 
+function renderPanelRecepcion(j, container){
+  container.innerHTML = '';
+  var rec = j.recepcion;
+  if(!rec || (!rec.flotado && !rec.potencia)){
+    container.innerHTML='<div style="color:#475569;padding:28px;text-align:center;font-family:Barlow Condensed,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase">Sin datos de recepción</div>';
+    return;
+  }
+
+  function ec(v){return v>=25?'#22c55e':v>=5?'#86efac':v>=0?'#94a3b8':v>=-15?'#f97316':'#ef4444';}
+  function bgc(v){return v>=25?'rgba(34,197,94,.13)':v>=5?'rgba(134,239,172,.08)':v>=0?'rgba(148,163,184,.05)':v>=-15?'rgba(249,115,22,.15)':'rgba(239,68,68,.18)';}
+  function bdc(v){return v>=25?'rgba(34,197,94,.35)':v>=5?'rgba(134,239,172,.2)':v>=0?'rgba(148,163,184,.12)':v>=-15?'rgba(249,115,22,.35)':'rgba(239,68,68,.35)';}
+
+  function zoneCard(d, label, maxTot, typeColor){
+    var vol = maxTot>0 ? Math.round((d.tot||0)/maxTot*100) : 0;
+    var e = d.eff||0, p = d.pos||0, n = d.neg||0, t = d.tot||0;
+    return '<div class="zone-card" style="background:'+bgc(e)+';border:1px solid '+bdc(e)+';border-radius:8px;padding:7px 5px">'
+      +'<div style="font-size:8px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-align:center;color:'+ec(e)+';margin-bottom:3px">'+label+'</div>'
+      +'<div style="font-family:Bebas Neue,sans-serif;font-size:18px;font-weight:900;text-align:center;line-height:1;color:'+ec(e)+';margin-bottom:1px">'+e+'%</div>'
+      +'<div style="font-size:8px;text-align:center;color:#475569;margin-bottom:3px">efectividad</div>'
+      +'<div style="height:3px;border-radius:2px;background:rgba(255,255,255,.08);margin:0 2px 4px"><div style="width:'+vol+'%;height:3px;border-radius:2px;background:'+typeColor+'"></div></div>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px">'
+      +'<div style="text-align:center"><div style="font-size:7px;color:#475569;text-transform:uppercase;letter-spacing:.5px">Total</div><div style="font-size:10px;font-weight:800;line-height:1.3;color:#e2e8f0">'+t+'</div></div>'
+      +'<div style="text-align:center"><div style="font-size:7px;color:#475569;text-transform:uppercase;letter-spacing:.5px"># +</div><div style="font-size:10px;font-weight:800;line-height:1.3;color:#22c55e">'+p+'%</div></div>'
+      +'<div style="text-align:center"><div style="font-size:7px;color:#475569;text-transform:uppercase;letter-spacing:.5px">/ =</div><div style="font-size:10px;font-weight:800;line-height:1.3;color:#ef4444">'+n+'%</div></div>'
+      +'</div></div>';
+  }
+
+  function makeZonePanel(desdeKey, desdeLabel, td, typeColor){
+    var desde = td[desdeKey];
+    if(!desde) return document.createElement('div');
+    var maxTot = Math.max((desde.p5||{}).tot||0,(desde.p6||{}).tot||0,(desde.p1||{}).tot||0,1);
+    var total = desde.total||{};
+    var el = document.createElement('div');
+    el.style.cssText='border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.07);background:#0d0e1a';
+    el.innerHTML=
+      '<div style="padding:7px 12px 6px;border-bottom:1px solid '+typeColor+'22">'
+      +'<div style="font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:'+typeColor+'">'+desdeLabel+'</div>'
+      +'</div>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;padding:7px">'
+      + zoneCard(desde.p1||{},'Pos 1',maxTot,typeColor)
+      + zoneCard(desde.p6||{},'Pos 6',maxTot,typeColor)
+      + zoneCard(desde.p5||{},'Pos 5',maxTot,typeColor)
+      +'</div>'
+      +'<div style="display:grid;grid-template-columns:repeat(4,1fr);padding:5px 10px 7px;border-top:1px solid rgba(255,255,255,.06)">'
+      +'<div style="text-align:center"><div style="font-size:15px;font-weight:900;color:#e2e8f0;font-family:Barlow Condensed,sans-serif">'+( total.tot||0)+'</div><div style="font-size:7px;color:#475569;text-transform:uppercase;letter-spacing:.5px;margin-top:1px">saques</div></div>'
+      +'<div style="text-align:center"><div style="font-size:15px;font-weight:900;color:'+ec(total.eff||0)+';font-family:Barlow Condensed,sans-serif">'+( total.eff||0)+'%</div><div style="font-size:7px;color:#475569;text-transform:uppercase;letter-spacing:.5px;margin-top:1px">EFF</div></div>'
+      +'<div style="text-align:center"><div style="font-size:15px;font-weight:900;color:#22c55e;font-family:Barlow Condensed,sans-serif">'+( total.pos||0)+'%</div><div style="font-size:7px;color:#475569;text-transform:uppercase;letter-spacing:.5px;margin-top:1px"># +</div></div>'
+      +'<div style="text-align:center"><div style="font-size:15px;font-weight:900;color:#ef4444;font-family:Barlow Condensed,sans-serif">'+( total.neg||0)+'%</div><div style="font-size:7px;color:#475569;text-transform:uppercase;letter-spacing:.5px;margin-top:1px">/ =</div></div>'
+      +'</div>';
+    return el;
+  }
+
+  var types=[
+    {key:'flotado', label:'SAQUE FLOTADO', color:'#818cf8'},
+    {key:'potencia',label:'SAQUE POTENCIA', color:'#f97316'}
+  ];
+  var zones=[
+    {key:'desde_z1',label:'Desde Zona 1'},
+    {key:'desde_z6',label:'Desde Zona 6'},
+    {key:'desde_z5',label:'Desde Zona 5'}
+  ];
+
+  var wrapper = document.createElement('div');
+  wrapper.style.cssText = 'padding:14px 4px 4px';
+
+  types.forEach(function(t, ti){
+    var secHdr = document.createElement('div');
+    secHdr.style.cssText='display:flex;align-items:center;gap:10px;margin:0 0 10px';
+    secHdr.innerHTML='<div style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;background:'+t.color+'18;color:'+t.color+';border:0.5px solid '+t.color+'44">'+t.label+' — por zona de origen</div><div style="flex:1;height:.5px;background:rgba(255,255,255,.08)"></div>';
+    wrapper.appendChild(secHdr);
+
+    var row = document.createElement('div');
+    row.style.cssText='display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px';
+    zones.forEach(function(z){
+      if(rec[t.key]) row.appendChild(makeZonePanel(z.key, z.label, rec[t.key], t.color));
+    });
+    wrapper.appendChild(row);
+  });
+
+  container.appendChild(wrapper);
+}
 
 var currentNum=0, currentFiltro='partido';
 
@@ -547,24 +485,38 @@ function setFiltro(filtro){
 function renderPage(){
   var cont=document.getElementById('content');
   var j=null;
+
   if(currentFiltro==='partido'){
-    if(typeof CASLA_JUGADORES==='undefined'){cont.innerHTML='<div class="empty">Sin datos de partidos</div>';return;}
+    if(typeof CASLA_JUGADORES==='undefined'){
+      cont.innerHTML='<div class="empty">Sin datos de partidos</div>'; return;
+    }
     j=CASLA_JUGADORES.find(function(x){return x.num===currentNum;});
-    if(!j){cont.innerHTML='<div class="empty">Jugador no encontrado</div>';return;}
-    if(!j.saques||!j.saques.length||j.saques.every(function(s){return !s.tot;})){
-      cont.innerHTML='<div class="empty">Sin datos de saque en partidos</div>';return;
+    if(!j||!j.recepcion||!j.recepcion.flotado){
+      cont.innerHTML='<div class="empty">Sin datos de recepción en partidos</div>'; return;
     }
   } else {
-    j=buildSaqueFromHistorial(currentNum);
-    if(!j){cont.innerHTML='<div class="empty">Sin saques registrados en entrenamientos</div>';return;}
+    j=buildRecepcionFromHistorial(currentNum);
+    if(!j){
+      cont.innerHTML='<div class="empty">Sin datos de recepción en entrenamientos</div>'; return;
+    }
   }
+
   var nm=j.nombre.replace(/^\d+\s*/,'');
-  document.getElementById('jug-title').textContent='⚡ SAQUES — '+nm+(currentFiltro==='entrenamiento'?' (ENT)':'');
+  document.getElementById('jug-title').textContent='🛡 RECEPCIÓN — '+nm+(currentFiltro==='entrenamiento'?' (ENT)':'');
+
   cont.innerHTML='';
-  var grid=document.createElement('div');
-  grid.className='canchitas-grid';
-  renderPanelSaque(j,0,grid);
-  cont.appendChild(grid);
+
+  // Info note for entrenamiento without zone detail
+  if(currentFiltro==='entrenamiento' && !j._hasDrDir){
+    var note=document.createElement('div');
+    note.className='info-note';
+    note.textContent='ℹ️  El scout no tiene desglose por zona de origen — los datos se muestran en Z6 (zona más común). Con scouts completos aparecerá el detalle por P1/P6/P5.';
+    cont.appendChild(note);
+  }
+
+  var panel=document.createElement('div');
+  renderPanelRecepcion(j, panel);
+  cont.appendChild(panel);
 }
 
 function waitAndInit(tries){

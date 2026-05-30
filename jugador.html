@@ -571,7 +571,7 @@ function renderAccesos(j){
   // Receptores: PUNTA o LIBERO
   var REC_POS = ['PUNTA','LIBERO'];
   if(REC_POS.indexOf((j.pos||'').toUpperCase()) >= 0){
-    items.splice(items.length-1, 0, {icon:'🛡', title:'Recepción', desc:'Mi recepción por zona', url:'recepcion.html?jug='+encodeURIComponent((j.nombre||'').toUpperCase()), color:'#22c55e'});
+    items.splice(items.length-1, 0, {icon:'🛡', title:'Recepción', desc:'Mi recepción por zona', url:'recepcion_jugador.html?num='+j.num, color:'#22c55e'});
   }
 
   // Saques: todos los jugadores
