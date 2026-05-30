@@ -264,9 +264,9 @@ select, select option {
 </style>
 <style>
 body{background:#07080f;color:#e2e8f0;font-family:'Barlow Condensed',sans-serif;min-height:100vh;padding:0;margin:0}
-.hdr{padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:14px;background:rgba(7,8,15,.9);position:sticky;top:0;z-index:100}
+.hdr{padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:14px;background:rgba(7,8,15,.9);position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
 .back-btn{padding:6px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#475569;font-size:11px;font-weight:700;letter-spacing:1px;text-decoration:none;text-transform:uppercase}
-.main{max-width:900px;margin:0 auto;padding:20px 16px}
+.main{max-width:960px;margin:0 auto;padding:20px 16px}
 .empty{text-align:center;padding:60px;color:#475569;font-size:13px;letter-spacing:1px}
 </style>
 </head>
@@ -281,9 +281,15 @@ body{background:#07080f;color:#e2e8f0;font-family:'Barlow Condensed',sans-serif;
 <div class="main">
   <div id="content"><div class="empty">Cargando...</div></div>
 </div>
-
 <script>
 var POS_COLOR={'ARMADOR':'#f59e0b','OPUESTO':'#f97316','PUNTA':'#818cf8','CENTRAL':'#22c55e','LIBERO':'#06b6d4'};
+
+function effColor(v){
+  if(v===null||v===undefined||isNaN(v)) return '#475569';
+  return v>=40?'#22c55e':v>=20?'#86efac':v>=0?'#e2e8f0':v>=-20?'#f97316':'#ef4444';
+}
+function pct(a,b){ return b>0?Math.round(a*100/b):0; }
+
 function buildCanchita(item,jIdx,i,prefix,W,H,drawFn,color,j){
   var card=document.createElement('div');
   card.className='canchita-card';
@@ -424,22 +430,17 @@ function initPage(){
   var num = parseInt(params.get('num')) || 0;
   var cont = document.getElementById('content');
 
-  if(typeof CASLA_JUGADORES === 'undefined'){
-    cont.innerHTML = '<div class="empty">Sin datos cargados</div>';
-    return;
-  }
-
   var j = CASLA_JUGADORES.find(function(x){ return x.num === num; });
   if(!j){
-    cont.innerHTML = '<div class="empty">Jugador no encontrado</div>';
+    cont.innerHTML = '<div class="empty">Jugador #'+num+' no encontrado</div>';
     return;
   }
 
   var nm = j.nombre.replace(/^\d+\s*/, '');
   document.getElementById('jug-title').textContent = '⚡ SAQUES — ' + nm;
 
-  if(!j.saques || !j.saques.length){
-    cont.innerHTML = '<div class="empty">Sin datos de saque</div>';
+  if(!j.saques || !j.saques.length || j.saques.every(function(s){return !s.tot;})){
+    cont.innerHTML = '<div class="empty">Sin datos de saque para ' + nm + '</div>';
     return;
   }
 
@@ -448,25 +449,15 @@ function initPage(){
   renderPanelSaque(j, 0, grid);
   cont.innerHTML = '';
   cont.appendChild(grid);
-
-  // Redibujar canvas
-  setTimeout(function(){
-    cont.querySelectorAll('canvas').forEach(function(cv){
-      var idx2 = parseInt(cv.dataset.idx||'0');
-      var s = j.saques[idx2];
-      if(s && cv._drawFn) cv._drawFn();
-    });
-  }, 100);
 }
 
-// Wait for both fonts and datos_casla.js
 function waitAndInit(tries){
   if(typeof CASLA_JUGADORES !== 'undefined'){
     document.fonts.ready.then(initPage).catch(initPage);
   } else if(tries > 0){
-    setTimeout(function(){ waitAndInit(tries-1); }, 150);
+    setTimeout(function(){ waitAndInit(tries-1); }, 200);
   } else {
-    document.getElementById('content').innerHTML = '<div class="empty">No se pudieron cargar los datos. Verificá que datos_casla.js esté subido.</div>';
+    document.getElementById('content').innerHTML = '<div class="empty">No se pudieron cargar los datos.</div>';
   }
 }
 waitAndInit(20);

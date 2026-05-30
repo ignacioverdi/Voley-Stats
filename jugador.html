@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>PERFIL — CASL VOLEY</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="game_plans.js" onerror="void 0"></script>
 <script src="datos_casla.js" onerror="void 0"></script>
 <script src="firebase.js" onerror="void 0"></script>
 <script src="lang.js" onerror="void 0"></script>
@@ -557,7 +558,7 @@ function renderAccesos(j){
   var items = [
     {icon:'📈', title:'Historial',     desc:'Mis estadísticas',       url:'historial_voley.html?player='+encodeURIComponent(j.nombre), color:'#818cf8'},
     {icon:'💪', title:'Rutina',        desc:'Mi preparación física',  url:'prep_fisica.html?player='+encodeURIComponent(j.nombre),    color:'#e8192c'},
-    {icon:'🎯', title:'Game Plan',     desc:'Plan del próximo partido',url:'game_plan_dbanf.html',                                    color:'#f59e0b'},
+    {icon:'🎯', title:'Game Plan',     desc:'Plan del próximo partido',url:(typeof GAME_PLANS!=='undefined'&&GAME_PLANS.length?GAME_PLANS.slice().sort(function(a,b){return (b.fecha||'')>(a.fecha||'')?1:-1;})[0].archivo:'game_plan_lomas.html'),                                    color:'#f59e0b'},
     {icon:'📊', title:'Panel en Vivo', desc:'Sesión actual',           url:'panel_voley.html',                                        color:'#22c55e'},
     {icon:'🏠', title:'Hub',           desc:'Todo el sistema',         url:'index.html',                                              color:'#64748b', full:true},
   ];
