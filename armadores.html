@@ -292,12 +292,17 @@ window.ARMADORES_DATA = {};
 
 function cargarDatosCasla(){
   if(typeof CASLA_ARMADOR === 'undefined') return;
-  // CASLA_ARMADOR tiene {titular:{nombre,rotaciones,pills,recepcion,...}, suplente:{...}}
-  // Convertir a formato ARMADORES_DATA por número de jugador
+
+  // Setear ARMADOR_DATA que usa renderArmador() directamente
+  window.ARMADOR_DATA = {
+    titular: CASLA_ARMADOR.titular || null,
+    suplente: CASLA_ARMADOR.suplente || null
+  };
+
+  // También llenar ARMADORES_DATA por número (por si lo usan otras funciones)
   ['titular','suplente'].forEach(function(tipo){
     var arm = CASLA_ARMADOR[tipo];
     if(!arm || !arm.nombre) return;
-    // Buscar número del jugador en CASLA_JUGADORES
     var num = null;
     if(typeof CASLA_JUGADORES !== 'undefined'){
       var found = CASLA_JUGADORES.find(function(j){
@@ -1053,8 +1058,10 @@ function cerrarModalArmador(){
 }
 
 document.fonts.ready.then(function(){
+  cargarDatosCasla();
   setTimeout(function(){ renderArmador(); }, 100);
 }).catch(function(){
+  cargarDatosCasla();
   setTimeout(function(){ renderArmador(); }, 400);
 });
 </script>

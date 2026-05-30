@@ -331,23 +331,72 @@ function cargarRecepcionCasla(){
 
 
 
+function calcEquipoData(){
+  // Suma todos los jugadores para vista EQUIPO
+  var eq = {
+    flotado: { desde_z1:{p1:{tot:0,eff:0,pos:0,neg:0},p6:{tot:0,eff:0,pos:0,neg:0},p5:{tot:0,eff:0,pos:0,neg:0}},
+               desde_z6:{p1:{tot:0,eff:0,pos:0,neg:0},p6:{tot:0,eff:0,pos:0,neg:0},p5:{tot:0,eff:0,pos:0,neg:0}},
+               desde_z5:{p1:{tot:0,eff:0,pos:0,neg:0},p6:{tot:0,eff:0,pos:0,neg:0},p5:{tot:0,eff:0,pos:0,neg:0}} },
+    potencia: { desde_z1:{p1:{tot:0,eff:0,pos:0,neg:0},p6:{tot:0,eff:0,pos:0,neg:0},p5:{tot:0,eff:0,pos:0,neg:0}},
+                desde_z6:{p1:{tot:0,eff:0,pos:0,neg:0},p6:{tot:0,eff:0,pos:0,neg:0},p5:{tot:0,eff:0,pos:0,neg:0}},
+                desde_z5:{p1:{tot:0,eff:0,pos:0,neg:0},p6:{tot:0,eff:0,pos:0,neg:0},p5:{tot:0,eff:0,pos:0,neg:0}} }
+  };
+  Object.values(window.RECEPCION_DATA).forEach(function(jug){
+    ['flotado','potencia'].forEach(function(tipo){
+      ['desde_z1','desde_z6','desde_z5'].forEach(function(zona){
+        ['p1','p6','p5'].forEach(function(pos){
+          var src = jug[tipo] && jug[tipo][zona] && jug[tipo][zona][pos];
+          var dst = eq[tipo][zona][pos];
+          if(!src || !src.tot) return;
+          // Weighted average for eff/pos/neg
+          var newTot = dst.tot + src.tot;
+          dst.eff = newTot > 0 ? Math.round((dst.eff*dst.tot + src.eff*src.tot) / newTot) : 0;
+          dst.pos = newTot > 0 ? Math.round((dst.pos*dst.tot + src.pos*src.tot) / newTot) : 0;
+          dst.neg = newTot > 0 ? Math.round((dst.neg*dst.tot + src.neg*src.tot) / newTot) : 0;
+          dst.tot = newTot;
+        });
+      });
+    });
+  });
+  return eq;
+}
+
 function initReceptores(){
   cargarRecepcionCasla();
   RECEPTORES = Object.keys(window.RECEPCION_DATA);
   if(RECEPTORES.length === 0){
     RECEPTORES = ['NIELSON','DURDOS','RAMOS','WINER','ACOSTA','ZANOTTI'];
   }
-  CUR = RECEPTORES[0];
+  CUR = 'EQUIPO';
   // Build player buttons dynamically
   var jbtns=document.getElementById('jbtns');
   if(jbtns){
     jbtns.innerHTML='';
-    RECEPTORES.forEach(function(p,i){
+    // EQUIPO button first
+    var bEq=document.createElement('button');
+    bEq.className='jbtn on';
+    bEq.textContent='EQUIPO';
+    bEq.style.cssText='border-color:rgba(232,25,44,.5);background:rgba(232,25,44,.12);color:#e8192c';
+    bEq.onclick=function(){
+      document.querySelectorAll('.jbtn').forEach(function(x){
+        x.classList.remove('on');
+        x.style.cssText='';
+      });
+      bEq.classList.add('on');
+      bEq.style.cssText='border-color:rgba(232,25,44,.5);background:rgba(232,25,44,.12);color:#e8192c';
+      CUR='EQUIPO'; render();
+    };
+    jbtns.appendChild(bEq);
+    // Individual players
+    RECEPTORES.forEach(function(p){
       var b=document.createElement('button');
-      b.className='jbtn'+(i===0?' on':'');
+      b.className='jbtn';
       b.textContent=p;
       b.onclick=function(){
-        document.querySelectorAll('.jbtn').forEach(function(x){x.classList.remove('on');});
+        document.querySelectorAll('.jbtn').forEach(function(x){
+          x.classList.remove('on');
+          x.style.cssText='';
+        });
         b.classList.add('on'); CUR=p; render();
       };
       jbtns.appendChild(b);
@@ -473,7 +522,7 @@ function makeAcumPanel(td, typeColor, typeLabel){
 }
 
 function render(){
-  var d = window.RECEPCION_DATA && window.RECEPCION_DATA[CUR];
+  var d = CUR === 'EQUIPO' ? calcEquipoData() : (window.RECEPCION_DATA && window.RECEPCION_DATA[CUR]);
   var cont = document.getElementById('content');
   cont.innerHTML = '';
 
