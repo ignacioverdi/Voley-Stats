@@ -254,7 +254,16 @@ body{padding-top:56px}
 </div>
 
 <div style="max-width:1400px;margin:0 auto;padding:20px 24px">
-  <div id="seccion-armador"></div>
+  <div id="arm-filter-row" style="display:flex;gap:6px;flex-wrap:wrap;padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.05)">
+  <span style="font-size:9px;color:#475569;letter-spacing:2px;text-transform:uppercase;align-self:center">Ver:</span>
+  <button class="sfbtn on" id="arm-sf-acum" onclick="setArmPartido('acumulado',this)">Acumulado</button>
+  <div id="arm-sf-partidos" style="display:contents"></div>
+</div>
+<style>
+.sfbtn{padding:4px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);color:#64748b;font-size:10px;font-weight:700;letter-spacing:1px;cursor:pointer;text-transform:uppercase;transition:all .15s;font-family:'Barlow Condensed',sans-serif}
+.sfbtn.on{background:rgba(232,25,44,.1);border-color:rgba(232,25,44,.35);color:#e8192c}
+</style>
+<div id="seccion-armador"></div>
 </div>
 
 <div id="modal-armador" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.92);backdrop-filter:blur(20px);align-items:center;justify-content:center">
@@ -280,6 +289,7 @@ body{padding-top:56px}
 </div>
 
 <script src="datos_casla.js" onerror="void 0"></script>
+<script src="datos_partidos.js" onerror="void 0"></script>
 <script>
 // ================================================================
 // CASLA VOLEY — Datos armadores propios
@@ -1093,11 +1103,57 @@ function cerrarModalArmador(){
   document.body.style.overflow='';
 }
 
+
+var currentArmPartido = 'acumulado';
+
+function setArmPartido(nombre, btn){
+  currentArmPartido = nombre;
+  document.querySelectorAll('.sfbtn').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  renderArmadorConFiltro();
+}
+
+function buildArmSubfiltro(){
+  if(typeof PARTIDOS_META === 'undefined') return;
+  var cont = document.getElementById('arm-sf-partidos');
+  if(!cont) return;
+  cont.innerHTML = '';
+  PARTIDOS_META.forEach(function(m){
+    var btn = document.createElement('button');
+    btn.className = 'sfbtn';
+    var label = m.rival||m.nombre;
+    if(m.resultado) label += ' ('+m.resultado+')';
+    btn.textContent = label;
+    btn.onclick = function(){ setArmPartido(m.nombre, btn); };
+    cont.appendChild(btn);
+  });
+}
+
+function renderArmadorConFiltro(){
+  var arm_data = null;
+  if(currentArmPartido === 'acumulado'){
+    arm_data = typeof CASLA_ARMADOR !== 'undefined' ? CASLA_ARMADOR :
+               typeof PARTIDOS_ARMADOR !== 'undefined' ? PARTIDOS_ARMADOR : null;
+  } else {
+    if(typeof PARTIDOS_INDIVIDUAL !== 'undefined'){
+      var pd = PARTIDOS_INDIVIDUAL.find(function(p){return p.nombre===currentArmPartido;});
+      if(pd && pd.armadores) arm_data = pd.armadores;
+    }
+  }
+  if(arm_data){
+    window.ARMADOR_DATA = arm_data;
+    renderArmador();
+  }
+}
+
+// Init subfiltro
 document.fonts.ready.then(function(){
   cargarDatosCasla();
+  buildArmSubfiltro();
   setTimeout(function(){ renderArmador(); }, 100);
 }).catch(function(){
   cargarDatosCasla();
+  buildArmSubfiltro();
   setTimeout(function(){ renderArmador(); }, 400);
 });
 </script>

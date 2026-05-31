@@ -39,6 +39,11 @@ def gn(v):
 
 def pct(a, b): return round(a*100/b) if b > 0 else 0
 
+def se_pct(v):
+    if v is None or str(v).strip() in ('','----'): return 0
+    try: return int(round(float(v)*100))
+    except: return 0
+
 POS_COLOR = {'CENTRAL':'#f97316','OPUESTO':'#818cf8','PUNTA':'#22c55e',
              'ARMADOR':'#f59e0b','LIBERO':'#06b6d4'}
 
@@ -254,6 +259,88 @@ def parse_saques(ws):
 
     return serve
 
+
+# ── Parser de recepción (rows 89-125, mismo formato que CASLA) ───────
+def parse_recepcion_partido(ws):
+    rec_all = list(ws.iter_rows(min_row=89, max_row=126, values_only=True))
+    if len(rec_all) < 2: return {}
+    rec_header = rec_all[1]
+    rec_cols = []
+    for ci, v in enumerate(rec_header):
+        if v and isinstance(v, str) and any(c.isdigit() for c in str(v)[:3]):
+            rec_cols.append((ci, cn(v), gn(v)))
+
+    recepcion = {}
+    def get_rec(row_idx, col_start):
+        if row_idx >= len(rec_all): return {'tot':0,'eff':0,'pos':0,'neg':0}
+        row = rec_all[row_idx]
+        tot      = si(row[col_start+2] if col_start+2 < len(row) else None)
+        eff      = se_pct(row[col_start+3] if col_start+3 < len(row) else None)
+        cnt_perf = si(row[col_start+4] if col_start+4 < len(row) else None)
+        cnt_pos  = si(row[col_start+5] if col_start+5 < len(row) else None)
+        cnt_neg  = si(row[col_start+6] if col_start+6 < len(row) else None)
+        cnt_err  = si(row[col_start+7] if col_start+7 < len(row) else None)
+        return {'tot':tot,'eff':eff,
+                'pos':pct(cnt_perf+cnt_pos,tot),'neg':pct(cnt_neg+cnt_err,tot)}
+
+    for col_start, name, num in rec_cols:
+        flotado = {
+            'desde_z1':{'total':get_rec(11,col_start),'p1':get_rec(12,col_start),'p6':get_rec(13,col_start),'p5':get_rec(14,col_start)},
+            'desde_z6':{'total':get_rec(15,col_start),'p1':get_rec(16,col_start),'p6':get_rec(17,col_start),'p5':get_rec(18,col_start)},
+            'desde_z5':{'total':get_rec(19,col_start),'p1':get_rec(20,col_start),'p6':get_rec(21,col_start),'p5':get_rec(22,col_start)},
+        }
+        potencia = {
+            'desde_z1':{'total':get_rec(25,col_start),'p1':get_rec(26,col_start),'p6':get_rec(27,col_start),'p5':get_rec(28,col_start)},
+            'desde_z6':{'total':get_rec(29,col_start),'p1':get_rec(30,col_start),'p6':get_rec(31,col_start),'p5':get_rec(32,col_start)},
+            'desde_z5':{'total':get_rec(33,col_start),'p1':get_rec(34,col_start),'p6':get_rec(35,col_start),'p5':get_rec(36,col_start)},
+        }
+        recepcion[name] = {'num':num,'flotado':flotado,'potencia':potencia}
+    return recepcion
+
+# ── Parser de armadores (rows 67-86, mismo formato que CASLA) ─────────
+def parse_armadores_partido(ws):
+    arm_rows = list(ws.iter_rows(min_row=67, max_row=87, values_only=True))
+    if len(arm_rows) < 2: return {}
+    arm_tit_name = cn(arm_rows[0][1]) if len(arm_rows[0])>1 else ''
+    arm_sup_name = cn(arm_rows[0][14]) if len(arm_rows[0])>14 else ''
+    pos_labels = ['P1','P6','P5','P4','P3','P2']
+    pos_data   = [1,3,5,7,9,11]
+
+    def read_arm(col_off, eff_row_off):
+        rots = []
+        for i, pr in enumerate(pos_data):
+            r_tot = arm_rows[pr]  if pr < len(arm_rows) else []
+            r_pts = arm_rows[pr+1] if pr+1 < len(arm_rows) else []
+            tot  = si(r_tot[10+col_off] if 10+col_off < len(r_tot) else None)
+            dZ4  = si(r_tot[2+col_off]  if 2+col_off  < len(r_tot) else None)
+            dZ3  = si(r_tot[4+col_off]  if 4+col_off  < len(r_tot) else None)
+            dZ2  = si(r_tot[6+col_off]  if 6+col_off  < len(r_tot) else None)
+            dZ6  = si(r_tot[8+col_off]  if 8+col_off  < len(r_tot) else None)
+            rots.append({'pos':pos_labels[i],'total':tot,'dist':[
+                {'zona':4,'tot':dZ4,'pts':0,'pct':pct(dZ4,tot),'pct_p':0},
+                {'zona':3,'tot':dZ3,'pts':0,'pct':pct(dZ3,tot),'pct_p':0},
+                {'zona':2,'tot':dZ2,'pts':0,'pct':pct(dZ2,tot),'pct_p':0},
+                {'zona':6,'tot':dZ6,'pts':0,'pct':pct(dZ6,tot),'pct_p':0},
+            ]})
+        pills = [{'label':pos_labels[i],'eff':0,'tot':rots[i]['total'],'pts':0,'pts_pct':0,'err_pct':0}
+                 for i in range(6)]
+        so_row = arm_rows[eff_row_off+6] if eff_row_off+6 < len(arm_rows) else []
+        tr_row = arm_rows[eff_row_off+7] if eff_row_off+7 < len(arm_rows) else []
+        def pill_sotr(row, label):
+            def sp(idx): 
+                v = row[idx] if idx < len(row) else None
+                return int(round(float(v)*100)) if v and str(v).strip() not in ('','None') else 0
+            return {'label':label,'eff':sp(30),'tot':si(row[31] if 31<len(row) else None),
+                    'pts':si(row[32] if 32<len(row) else None),'pts_pct':sp(33),'err_pct':sp(34)}
+        pills.append(pill_sotr(so_row,'SO'))
+        pills.append(pill_sotr(tr_row,'TR'))
+        return {'rotaciones':rots,'pills':pills,'recepcion':[],'so':{},'tr':{}}
+
+    return {
+        'titular':  {'nombre':arm_tit_name, **read_arm(0,  2)},
+        'suplente': {'nombre':arm_sup_name, **read_arm(13, 12)},
+    }
+
 # ── Leer partido completo ─────────────────────────────────────────────
 def leer_partido(ws, meta):
     pos_by_row = leer_posiciones(ws)
@@ -322,6 +409,9 @@ def leer_partido(ws, meta):
     # SQ section: rows 52-64 (indices 16-28)
     read_stat_section(stat_rows[16:29], 'sq')
 
+    recepcion = parse_recepcion_partido(ws)
+    armadores = parse_armadores_partido(ws)
+
     return {
         'rival':      meta.get('rival',''),
         'fecha':      meta.get('fecha',''),
@@ -332,6 +422,8 @@ def leer_partido(ws, meta):
         'attack':     attack,
         'serve':      serve,
         'player_pos': player_pos,
+        'recepcion':  recepcion,
+        'armadores':  armadores,
         'stats':      stats,
     }
 
@@ -378,6 +470,28 @@ def acumular(partidos_data):
                 all_players[nm]['serve_sq'][dz] = all_players[nm]['serve_sq'].get(dz,0)+v
             # stats accumulated below
 
+        # Recepcion: store per jugador (take latest non-empty)
+        for nm, rec in pd.get('recepcion',{}).items():
+            if nm not in all_players: continue
+            if not all_players[nm].get('recepcion'):
+                all_players[nm]['recepcion'] = rec
+
+    # Armadores: accumulate as acumulado
+    all_armadores = {}
+    for pd in partidos_data:
+        arm = pd.get('armadores', {})
+        for tipo in ['titular','suplente']:
+            a = arm.get(tipo,{})
+            if not a or not a.get('nombre'): continue
+            if tipo not in all_armadores:
+                all_armadores[tipo] = {'nombre':a['nombre'],'rotaciones':[],'pills':a.get('pills',[]),
+                                        'recepcion':[],'so':{},'tr':{}}
+            # Accumulate rotaciones
+            for ri, rot in enumerate(a.get('rotaciones',[])):
+                if ri >= len(all_armadores[tipo].get('rotaciones',[])):
+                    all_armadores[tipo]['rotaciones'].append({'pos':rot['pos'],'total':0,'dist':rot['dist'][:] })
+                all_armadores[tipo]['rotaciones'][ri]['total'] += rot['total']
+
     # ── Accumulate stats once per player per partido ─────────────────
     already_done = set()
     for pd in partidos_data:
@@ -403,7 +517,7 @@ def acumular(partidos_data):
                 s[tipo+'_plus'] = s.get(tipo+'_plus',0) + pd_stats.get(tipo+'_plus',0)
             for cod2, av in pd_stats.get('atk',{}).items():
                 if cod2 not in s['atk']:
-                    s['atk'][cod2] = {'eff':0,'tot':0,'pts':0}
+                    s['atk'][cod2] = {'eff':0,'tot':0,'pts':0,'pts_pct':0}
                 new_tot = av.get('tot',0)
                 new_eff = av.get('eff',0) or 0
                 old_tot = s['atk'][cod2]['tot']
@@ -413,8 +527,12 @@ def acumular(partidos_data):
                 s['atk'][cod2]['eff'] = round((old_eff*old_tot + new_eff*new_tot)/combined) if combined else 0
                 s['atk'][cod2]['tot'] = combined
                 s['atk'][cod2]['pts'] += av.get('pts',0)
+                # pts_pct: weighted average of #% from Excel
+                old_pct = s['atk'][cod2].get('pts_pct',0)
+                new_pct = av.get('pts_pct',0)
+                s['atk'][cod2]['pts_pct'] = round((old_pct*old_tot + new_pct*new_tot)/combined) if combined else 0
 
-    return all_players
+    return all_players, all_armadores
 
 # ── Build jugadores array ─────────────────────────────────────────────
 def build_jugadores(all_players, stats_override=None):
@@ -437,18 +555,18 @@ def build_jugadores(all_players, stats_override=None):
             destinos = [{'z':z,'pct':pct(v,tot)} for z,v in dest_sorted[:4]]
             # EFF from stats (X8/V8 only), otherwise null
             atk_st = st.get('atk', {}).get(cod, {})
-            # EFF: weighted average from stats (decimal -> int%)
             eff_raw = atk_st.get('eff', None) if atk_st else None
-            # eff is already int% from se() (e.g. 48 means 48%)
             eff = eff_raw if eff_raw is not None else None
-            # PTS: real count from stats
             pts = atk_st.get('pts', 0) if atk_st else 0
-            # TOT: use stats tot if available (more accurate than zone sum)
             st_tot = atk_st.get('tot', 0) if atk_st else 0
             use_tot = st_tot if st_tot else tot
+            # Use #% directly from Excel (weighted avg across partidos)
+            pts_pct = atk_st.get('pts_pct', 0) if atk_st else 0
+            if not pts_pct and pts and use_tot:
+                pts_pct = pct(pts, use_tot)
             ataques.append({'cod':cod,'orig':orig,'destinos':destinos,
                             'eff':eff,'tot':use_tot,'pts':pts,'slash':0,'err':0,
-                            'video':None,'pts_pct':pct(pts,use_tot) if use_tot else 0})
+                            'video':None,'pts_pct':pts_pct})
 
         # Saques
         saques = []
@@ -463,10 +581,11 @@ def build_jugadores(all_players, stats_override=None):
             s_tot  = st.get(st_key+'_tot', 0) or tot_dest
             s_pts  = st.get(st_key+'_pts', 0)
             s_plus = st.get(st_key+'_plus', 0)
+            s_pts_pct = pct(s_pts, s_tot) if s_tot else 0
             saques.append({'cod':cod,'tipo':tipo_label,'orig':6,'destinos':destinos,
                            'eff':s_eff,'tot':s_tot,'pts':s_pts,
                            'plus':s_plus,'slash':0,'err':0,'video':None,
-                           'pts_pct':pct(s_pts,s_tot) if s_tot else 0})
+                           'pts_pct':s_pts_pct})
 
         j = {'num':num,'nombre':f"{num} {nm}",'pos':pos,'color':color,
              'info':{},'ataques':ataques,'saques':saques,'video':0,'recepcion':{}}
@@ -508,7 +627,7 @@ def main():
         partidos_procesados.append({'nombre':sheet_name, **pd_data})
 
     # Acumulate
-    all_players = acumular(partidos_procesados)
+    all_players, all_armadores = acumular(partidos_procesados)
     jugadores   = build_jugadores(all_players)
 
     print(f"\n✓ {len(jugadores)} jugadores:")
@@ -524,7 +643,7 @@ def main():
         import copy
         pd_copy = dict(pd)
         pd_copy['stats'] = copy.deepcopy(pd.get('stats', {}))
-        pp = acumular([pd_copy])
+        pp, pp_arm = acumular([pd_copy])
         jj = build_jugadores(pp, stats_override=pd.get('stats', {}))
         partidos_list.append({
             'nombre':     pd['nombre'],
@@ -535,6 +654,7 @@ def main():
             'sets_casla': pd['sets_casla'],
             'sets_rival': pd['sets_rival'],
             'jugadores':  jj,
+            'armadores':  pd.get('armadores', {}),
         })
 
     generado = datetime.now().strftime('%d/%m/%Y %H:%M')
@@ -549,6 +669,8 @@ const PARTIDOS_GENERADO = "{generado}";
 const PARTIDOS_TOTAL = {len(partidos_procesados)};
 const PARTIDOS_META = {json.dumps(meta_list, ensure_ascii=False, indent=2)};
 const PARTIDOS_JUGADORES = {json.dumps(jugadores, ensure_ascii=False, indent=2)};
+
+const PARTIDOS_ARMADOR = {json.dumps(all_armadores, ensure_ascii=False, indent=2)};
 const PARTIDOS_INDIVIDUAL = {json.dumps(partidos_list, ensure_ascii=False, indent=2)};
 """
     with open(OUT,'w',encoding='utf-8') as f: f.write(js)
