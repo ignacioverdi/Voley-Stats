@@ -388,6 +388,7 @@ function setRecTipo(tipo, btn){
   }
   buildRecSubfiltro();
   initReceptores();
+  render();
 }
 
 function buildRecSubfiltro(){
@@ -403,7 +404,7 @@ function buildRecSubfiltro(){
   var ba = document.createElement('button');
   ba.style.cssText = 'padding:3px 10px;border-radius:5px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:#e8192c;font-size:9px;font-weight:700;letter-spacing:1px;cursor:pointer;font-family:Barlow Condensed,sans-serif;text-transform:uppercase';
   ba.textContent = 'Acumulado';
-  ba.onclick = function(){ currentRecPartido='acumulado'; initReceptores(); };
+  ba.onclick = function(){ currentRecPartido='acumulado'; initReceptores(); render(); };
   row.appendChild(ba);
   meta.forEach(function(m){
     var btn2 = document.createElement('button');
@@ -621,6 +622,8 @@ function makeAcumPanel(td, typeColor, typeLabel){
 }
 
 function render(){
+  // Always reload RECEPCION_DATA from correct source before rendering
+  initReceptores();
   var d = CUR === 'EQUIPO' ? calcEquipoData() : (window.RECEPCION_DATA && window.RECEPCION_DATA[CUR]);
   var cont = document.getElementById('content');
   cont.innerHTML = '';
