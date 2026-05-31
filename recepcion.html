@@ -369,51 +369,11 @@ function calcEquipoData(){
   return eq;
 }
 
-var currentRecTipo = 'partido';
 
-var currentRecPartido = 'acumulado';
 
-function setRecTipo(tipo, btn){
-  currentRecTipo = tipo;
-  currentRecPartido = 'acumulado';
-  document.querySelectorAll('[id^="rec-tbtn"]').forEach(function(b){
-    b.style.background = 'rgba(255,255,255,.04)';
-    b.style.borderColor = 'rgba(255,255,255,.08)';
-    b.style.color = '#475569';
-  });
-  if(tipo==='partido'){
-    btn.style.background='rgba(232,25,44,.12)'; btn.style.borderColor='rgba(232,25,44,.4)'; btn.style.color='#e8192c';
-  } else {
-    btn.style.background='rgba(34,197,94,.12)'; btn.style.borderColor='rgba(34,197,94,.4)'; btn.style.color='#22c55e';
-  }
-  buildRecSubfiltro();
-  initReceptores();
-  render();
-}
 
-function buildRecSubfiltro(){
-  var row = document.getElementById('rec-subfiltro');
-  if(!row) return;
-  row.innerHTML = '';
-  var meta = currentRecTipo==='entrenamiento'
-    ? (typeof ENTRENAMIENTOS_META!=='undefined' ? ENTRENAMIENTOS_META : [])
-    : (typeof PARTIDOS_META!=='undefined' ? PARTIDOS_META : []);
-  if(!meta.length){ row.style.display='none'; return; }
-  row.style.display = 'flex';
-  // Acumulado button
-  var ba = document.createElement('button');
-  ba.style.cssText = 'padding:3px 10px;border-radius:5px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:#e8192c;font-size:9px;font-weight:700;letter-spacing:1px;cursor:pointer;font-family:Barlow Condensed,sans-serif;text-transform:uppercase';
-  ba.textContent = 'Acumulado';
-  ba.onclick = function(){ currentRecPartido='acumulado'; initReceptores(); render(); };
-  row.appendChild(ba);
-  meta.forEach(function(m){
-    var btn2 = document.createElement('button');
-    btn2.style.cssText = 'padding:3px 10px;border-radius:5px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:#64748b;font-size:9px;font-weight:700;letter-spacing:1px;cursor:pointer;font-family:Barlow Condensed,sans-serif;text-transform:uppercase';
-    btn2.textContent = currentRecTipo==='entrenamiento' ? (m.fecha||m.nombre) : (m.rival||m.nombre);
-    btn2.onclick = function(){ currentRecPartido=m.nombre; initReceptores(); };
-    row.appendChild(btn2);
-  });
-}
+
+
 
 function cargarRecepcionFromSource(jugadores){
   if(!jugadores) return;
@@ -432,73 +392,106 @@ function cargarRecepcionFromSource(jugadores){
   });
 }
 
-function getJugadoresForRec(){
-  var tipo = typeof currentRecTipo!=='undefined' ? currentRecTipo : 'partido';
-  var partido = typeof currentRecPartido!=='undefined' ? currentRecPartido : 'acumulado';
-  // Per-session
-  if(partido !== 'acumulado'){
-    var INDIV = tipo==='entrenamiento'
-      ? (typeof ENTRENAMIENTOS_INDIVIDUAL!=='undefined' ? ENTRENAMIENTOS_INDIVIDUAL : null)
-      : (typeof PARTIDOS_INDIVIDUAL!=='undefined' ? PARTIDOS_INDIVIDUAL : null);
-    if(INDIV){
-      var pd = INDIV.find(function(p){ return p.nombre===partido; });
-      if(pd && pd.jugadores) return pd.jugadores;
-    }
+
+
+
+window._recTipo = 'partido';
+window._recPartido = 'acumulado';
+
+function setRecTipo(tipo, btn){
+  window._recTipo = tipo;
+  window._recPartido = 'acumulado';
+  document.querySelectorAll('[id^="rec-tbtn"]').forEach(function(b){
+    b.style.background='rgba(255,255,255,.04)'; b.style.borderColor='rgba(255,255,255,.08)'; b.style.color='#475569';
+  });
+  btn.style.background = tipo==='partido' ? 'rgba(232,25,44,.12)' : 'rgba(34,197,94,.12)';
+  btn.style.borderColor = tipo==='partido' ? 'rgba(232,25,44,.4)' : 'rgba(34,197,94,.4)';
+  btn.style.color = tipo==='partido' ? '#e8192c' : '#22c55e';
+  buildRecSubfiltro();
+  initReceptores();
+  render();
+}
+
+function buildRecSubfiltro(){
+  var row = document.getElementById('rec-subfiltro');
+  if(!row) return;
+  row.innerHTML = '';
+  var meta = window._recTipo==='entrenamiento'
+    ? (typeof ENTRENAMIENTOS_META!=='undefined' ? ENTRENAMIENTOS_META : [])
+    : (typeof PARTIDOS_META!=='undefined' ? PARTIDOS_META : []);
+  if(!meta.length){ row.style.display='none'; return; }
+  row.style.display = 'flex';
+  
+  function makeBtn(label, nombre){
+    var b = document.createElement('button');
+    b.style.cssText = 'padding:3px 10px;border-radius:5px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:#64748b;font-size:9px;font-weight:700;letter-spacing:1px;cursor:pointer;font-family:Barlow Condensed,sans-serif;text-transform:uppercase';
+    if(nombre === window._recPartido){ b.style.borderColor='rgba(232,25,44,.4)'; b.style.color='#e8192c'; }
+    b.textContent = label;
+    b.onclick = function(){
+      window._recPartido = nombre;
+      row.querySelectorAll('button').forEach(function(x){ x.style.borderColor='rgba(255,255,255,.06)'; x.style.color='#64748b'; });
+      b.style.borderColor='rgba(232,25,44,.4)'; b.style.color='#e8192c';
+      initReceptores();
+      render();
+    };
+    return b;
   }
-  // Acumulado
-  if(tipo==='entrenamiento'){
-    return typeof ENTRENAMIENTOS_JUGADORES!=='undefined' ? ENTRENAMIENTOS_JUGADORES : null;
-  } else {
-    return typeof PARTIDOS_JUGADORES!=='undefined' ? PARTIDOS_JUGADORES :
-           typeof CASLA_JUGADORES!=='undefined' ? CASLA_JUGADORES : null;
-  }
+  
+  row.appendChild(makeBtn('Acumulado', 'acumulado'));
+  meta.forEach(function(m){
+    var label = window._recTipo==='entrenamiento' ? (m.fecha||m.nombre) : (m.rival||m.nombre);
+    if(m.resultado && window._recTipo==='partido') label += ' ('+m.resultado+')';
+    row.appendChild(makeBtn(label, m.nombre));
+  });
 }
 
 function initReceptores(){
+  // Load data from correct source based on filter
   RECEPCION_DATA = {};
-  var src = getJugadoresForRec();
+  var src = null;
+  if(window._recTipo === 'entrenamiento'){
+    if(window._recPartido !== 'acumulado' && typeof ENTRENAMIENTOS_INDIVIDUAL !== 'undefined'){
+      var pd = ENTRENAMIENTOS_INDIVIDUAL.find(function(p){ return p.nombre === window._recPartido; });
+      src = pd ? pd.jugadores : null;
+    }
+    if(!src) src = typeof ENTRENAMIENTOS_JUGADORES !== 'undefined' ? ENTRENAMIENTOS_JUGADORES : null;
+  } else {
+    if(window._recPartido !== 'acumulado' && typeof PARTIDOS_INDIVIDUAL !== 'undefined'){
+      var pd = PARTIDOS_INDIVIDUAL.find(function(p){ return p.nombre === window._recPartido; });
+      src = pd ? pd.jugadores : null;
+    }
+    if(!src) src = typeof PARTIDOS_JUGADORES !== 'undefined' ? PARTIDOS_JUGADORES :
+                   typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : null;
+  }
   if(src){
-    var origCasla = window.CASLA_JUGADORES;
+    var orig = window.CASLA_JUGADORES;
     window.CASLA_JUGADORES = src;
     cargarRecepcionCasla();
-    window.CASLA_JUGADORES = origCasla;
+    window.CASLA_JUGADORES = orig;
   }
   RECEPTORES = Object.keys(window.RECEPCION_DATA);
   if(RECEPTORES.length === 0){
     RECEPTORES = ['NIELSON','DURDOS','RAMOS','WINER','ACOSTA','ZANOTTI'];
   }
-  // Save current CUR before rebuilding
-  var prevCUR = typeof CUR !== 'undefined' ? CUR : 'EQUIPO';
   CUR = 'EQUIPO';
-  // Build player buttons dynamically
-  var jbtns=document.getElementById('jbtns');
+  var jbtns = document.getElementById('jbtns');
   if(jbtns){
-    jbtns.innerHTML='';
-    // EQUIPO button first
-    var bEq=document.createElement('button');
-    bEq.className='jbtn on';
-    bEq.textContent='EQUIPO';
-    bEq.style.cssText='border-color:rgba(232,25,44,.5);background:rgba(232,25,44,.12);color:#e8192c';
-    bEq.onclick=function(){
-      document.querySelectorAll('.jbtn').forEach(function(x){
-        x.classList.remove('on');
-        x.style.cssText='';
-      });
-      bEq.classList.add('on');
-      bEq.style.cssText='border-color:rgba(232,25,44,.5);background:rgba(232,25,44,.12);color:#e8192c';
+    jbtns.innerHTML = '';
+    var bEq = document.createElement('button');
+    bEq.className = 'jbtn on';
+    bEq.textContent = 'EQUIPO';
+    bEq.style.cssText = 'border-color:rgba(232,25,44,.5);background:rgba(232,25,44,.12);color:#e8192c';
+    bEq.onclick = function(){
+      document.querySelectorAll('.jbtn').forEach(function(x){ x.classList.remove('on'); x.style.cssText=''; });
+      bEq.classList.add('on'); bEq.style.cssText='border-color:rgba(232,25,44,.5);background:rgba(232,25,44,.12);color:#e8192c';
       CUR='EQUIPO'; render();
     };
     jbtns.appendChild(bEq);
-    // Individual players
     RECEPTORES.forEach(function(p){
-      var b=document.createElement('button');
-      b.className='jbtn';
-      b.textContent=p;
-      b.onclick=function(){
-        document.querySelectorAll('.jbtn').forEach(function(x){
-          x.classList.remove('on');
-          x.style.cssText='';
-        });
+      var b = document.createElement('button');
+      b.className = 'jbtn'; b.textContent = p;
+      b.onclick = function(){
+        document.querySelectorAll('.jbtn').forEach(function(x){ x.classList.remove('on'); x.style.cssText=''; });
         b.classList.add('on'); CUR=p; render();
       };
       jbtns.appendChild(b);
