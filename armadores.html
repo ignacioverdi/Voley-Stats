@@ -1188,10 +1188,19 @@ function buildArmSubfiltro(){
 function setArmTipo(tipo){
   currentArmTipo = tipo;
   currentArmPartido = 'acumulado';
-  // Update tipo buttons
-  document.querySelectorAll('.arm-tipo-btn').forEach(function(b){ b.classList.remove('on'); });
-  var btn = document.getElementById('arm-tbtn-'+tipo);
-  if(btn) btn.classList.add('on');
+  // Update tipo buttons styling
+  var btnP = document.getElementById('arm-tbtn-partido');
+  var btnE = document.getElementById('arm-tbtn-entrenamiento');
+  if(btnP){
+    btnP.style.background = tipo==='partido' ? 'rgba(232,25,44,.12)' : 'rgba(255,255,255,.04)';
+    btnP.style.borderColor = tipo==='partido' ? 'rgba(232,25,44,.4)' : 'rgba(255,255,255,.08)';
+    btnP.style.color = tipo==='partido' ? '#e8192c' : '#475569';
+  }
+  if(btnE){
+    btnE.style.background = tipo==='entrenamiento' ? 'rgba(34,197,94,.12)' : 'rgba(255,255,255,.04)';
+    btnE.style.borderColor = tipo==='entrenamiento' ? 'rgba(34,197,94,.4)' : 'rgba(255,255,255,.08)';
+    btnE.style.color = tipo==='entrenamiento' ? '#22c55e' : '#475569';
+  }
   // Rebuild subfiltro
   buildArmSubfiltro();
   // Reset to acumulado

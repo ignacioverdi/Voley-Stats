@@ -219,7 +219,10 @@ function renderObjetivosJugador(cid,nombre,extra){
 }
 
 </script>
-<script src="datos_casla.js" onerror="void 0"></script>/script>
+<script src="datos_casla.js" onerror="void 0"></script>/
+<script src="datos_partidos.js" onerror="void 0"></script>
+<script src="datos_entrenamientos.js" onerror="void 0"></script>
+<script src="objetivos_config.js" onerror="void 0"></script>script>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -1063,6 +1066,42 @@ function renderTeamDV4Historial(){
   return html;
 }
 
+
+function renderObjetivosConTipo(cid, tipo){
+  var el = document.getElementById(cid);
+  if(!el || typeof window.OBJETIVOS_CONFIG === 'undefined') return;
+
+  // Get equipo values based on tipo filter
+  var eqVals = {};
+  if(tipo === 'P' || tipo === 'all'){
+    if(typeof PARTIDOS_EQUIPO_OBJ !== 'undefined'){
+      Object.keys(PARTIDOS_EQUIPO_OBJ).forEach(function(k){
+        if(PARTIDOS_EQUIPO_OBJ[k] !== null) eqVals[k] = PARTIDOS_EQUIPO_OBJ[k];
+      });
+    }
+  }
+  if(tipo === 'E' || tipo === 'all'){
+    if(typeof ENTRENAMIENTOS_EQUIPO_OBJ !== 'undefined'){
+      Object.keys(ENTRENAMIENTOS_EQUIPO_OBJ).forEach(function(k){
+        if(ENTRENAMIENTOS_EQUIPO_OBJ[k] !== null){
+          // Average if both exist
+          if(eqVals[k] !== undefined && tipo === 'all'){
+            eqVals[k] = Math.round((eqVals[k] + ENTRENAMIENTOS_EQUIPO_OBJ[k]) / 2);
+          } else {
+            eqVals[k] = ENTRENAMIENTOS_EQUIPO_OBJ[k];
+          }
+        }
+      });
+    }
+  }
+  if(typeof CASLA_JUGADORES !== 'undefined' && Object.keys(eqVals).length === 0){
+    // Fallback: calculate from historial
+    eqVals = typeof objCalcVals === 'function' ? objCalcVals(null) : {};
+  }
+
+  if(typeof renderObjetivos === 'function') renderObjetivos(cid, eqVals);
+}
+
 function renderEquipo(){
   const D=window.HISTORIAL_DATA;
   if(!D){document.getElementById('eq-content').innerHTML='<div class=empty-msg>Sin datos. Ejecuta GuardarEntrenamiento primero.</div>';return;}
@@ -1253,7 +1292,11 @@ function renderEquipo(){
     <div class=section-title>DETALLE DV4 EQUIPO — ACUMULADO</div>
     ${renderTeamDV4Historial()}`;
   document.getElementById('eq-content').innerHTML += '<div id="objetivos-panel" style="margin:20px 0"></div>';
-  if(typeof renderObjetivos!=="undefined") renderObjetivos("objetivos-panel");
+  if(typeof renderObjetivos!=="undefined"){
+    // Use appropriate data source based on filtroActivo.tipo
+    var tipoFiltro = filtroActivo && filtroActivo.tipo !== 'all' ? filtroActivo.tipo : 'all';
+    renderObjetivosConTipo("objetivos-panel", tipoFiltro);
+  }
 }
 
 // ═══════════════════════════════════════════

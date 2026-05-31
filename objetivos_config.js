@@ -104,6 +104,11 @@ function objCalcVals(nombreJugador){
   if(EQUIPO_SRC && !nombreJugador && Object.keys(EQUIPO_SRC).length > 0){
     return EQUIPO_SRC;
   }
+  // If entrenamiento mode and no data found, return nulls (don't show fake data)
+  if(currentObjTipo === 'entrenamiento'){
+    return {sq:null,rec:null,bqpos:null,bqpt:null,atqq:null,atqhb:null,
+            atqx:null,atqrp:null,atqri:null,atqrm:null,atqtr:null};
+  }
   // Fallback: calculate from HISTORIAL_DATA (DVW)
   var D=window.HISTORIAL_DATA;
   if(!D){
