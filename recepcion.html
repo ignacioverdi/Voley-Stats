@@ -467,6 +467,8 @@ function initReceptores(){
   if(RECEPTORES.length === 0){
     RECEPTORES = ['NIELSON','DURDOS','RAMOS','WINER','ACOSTA','ZANOTTI'];
   }
+  // Save current CUR before rebuilding
+  var prevCUR = typeof CUR !== 'undefined' ? CUR : 'EQUIPO';
   CUR = 'EQUIPO';
   // Build player buttons dynamically
   var jbtns=document.getElementById('jbtns');
