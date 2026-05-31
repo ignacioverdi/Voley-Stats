@@ -631,19 +631,57 @@ function renderEqStats(){
   var sEff=sT>0?Math.round((sPunto+0.5*sVend+0.25*sPos-sErr)/sT*100):null;
   var rEff=rT>0?Math.round((rPunto+0.5*rPos-0.5*rVend-rErr)/rT*100):null;
   var aEff=aT>0?Math.round((aPunto-aVend-aErr)/aT*100):null;
-  var cards=[
-    {val:ses.length,lbl:'Sesiones',color:'var(--indigo)'},
-    {val:sEff!==null?fmt(sEff):'—',lbl:'Eff. Saque',color:effColor(sEff)},
-    {val:rEff!==null?fmt(rEff):'—',lbl:'Eff. Recep.',color:effColor(rEff)},
-    {val:aEff!==null?fmt(aEff):'—',lbl:'Eff. Ataque',color:effColor(aEff)},
-    {val:sT,lbl:'Saques',color:'var(--amber)'},
-    {val:rT,lbl:'Recepciones',color:'var(--green)'},
-    {val:aT,lbl:'Ataques',color:'var(--indigo)'},
-    {val:bT,lbl:'Bloqueos',color:'var(--cyan)'},
-    {val:bT>0?fmt(Math.round((bPt+bPtPos)/bT*100))+'%':'—',lbl:'Eff Blq #+',color:'var(--cyan)'},
-  ];
-  document.getElementById('eq-stats-row').innerHTML=cards.map(function(c){
-    return '<div class="stat-card"><div class="stat-val" style="color:'+c.color+'">'+c.val+'</div><div class="stat-lbl">'+c.lbl+'</div></div>';
+  // Build 4 rectangles
+  var sEff_str  = sEff!==null ? fmt(sEff)+'%' : '—';
+  var aEff_str  = aEff!==null ? fmt(aEff)+'%' : '—';
+  var rEff_str  = rEff!==null ? fmt(rEff)+'%' : '—';
+  var bEff_str  = bT>0 ? fmt(Math.round((bPt+bPtPos)/bT*100))+'%' : '—';
+  var rPos_str  = rT>0 ? fmt(Math.round((rPunto+rPos)/rT*100))+'%' : '—';
+  var rNeg_str  = rT>0 ? fmt(Math.round((rVend+rErr)/rT*100))+'%' : '—';
+
+  function mkRect(color, title, stats){
+    var html = '<div style="background:var(--card);border:1px solid var(--b);border-radius:10px;overflow:hidden">';
+    html += '<div style="padding:6px 12px;background:'+color+'11;border-bottom:1px solid '+color+'22;display:flex;align-items:center;gap:6px">';
+    html += '<div style="width:5px;height:5px;border-radius:50%;background:'+color+'"></div>';
+    html += '<span style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:'+color+'">'+title+'</span>';
+    html += '</div>';
+    html += '<div style="padding:10px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px 6px">';
+    stats.forEach(function(s){
+      html += '<div>';
+      html += '<div style="font-family:'Bebas Neue',sans-serif;font-size:20px;line-height:1;color:'+(s.c||'var(--text)')+'">'+s.v+'</div>';
+      html += '<div style="font-size:9px;color:var(--mut);margin-top:1px">'+s.l+'</div>';
+      html += '</div>';
+    });
+    html += '</div></div>';
+    return html;
+  }
+
+  var rectHTML = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">';
+  rectHTML += mkRect('#F59E0B','Saque',[
+    {v:sEff_str, l:'EFF', c:'#F59E0B'},
+    {v:sT,       l:'Total'},
+    {v:sPunto||0,l:'Puntos'},
+    {v:sErr||0,  l:'Errores'},
+  ]);
+  rectHTML += mkRect('#F97316','Ataque',[
+    {v:aEff_str, l:'EFF', c:'#F97316'},
+    {v:aPunto||0,l:'Puntos'},
+    {v:aVend||0, l:'Bloqueados'},
+    {v:aErr||0,  l:'Errores'},
+  ]);
+  rectHTML += mkRect('#22C55E','Recepción',[
+    {v:rEff_str, l:'EFF', c:'#22C55E'},
+    {v:rT,       l:'Total'},
+    {v:rPos_str, l:'Rec. #+'},
+    {v:rNeg_str, l:'Rec. /='},
+  ]);
+  rectHTML += mkRect('#06B6D4','Bloqueo',[
+    {v:bEff_str, l:'EFF #+', c:'#06B6D4'},
+    {v:bT,       l:'Total'},
+  ]);
+  rectHTML += '</div>';
+
+  document.getElementById('eq-stats-row').innerHTML = rectHTML;
   }).join('');
 }
 
