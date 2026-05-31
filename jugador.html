@@ -350,11 +350,17 @@ function objCalcVals(nombreJugador){
   }
   // Acumulado from datos_partidos.js
   if(typeof PARTIDOS_JUGADORES !== 'undefined' && nombreJugador){
+    var nmClean = nombreJugador.replace(/^\d+\s*/,'');
     var pj = PARTIDOS_JUGADORES.find(function(x){
-      return x.nombre && x.nombre.replace(/^\d+\s*/,'') === nombreJugador;
+      if(!x.nombre) return false;
+      var xClean = x.nombre.replace(/^\d+\s*/,'');
+      return xClean === nmClean || x.nombre === nombreJugador;
     });
     if(pj && pj.objetivos && Object.keys(pj.objetivos).length > 0){
+      console.log('PARTIDOS obj found for', nmClean, pj.objetivos);
       return pj.objetivos;
+    } else {
+      console.log('PARTIDOS obj NOT found for', nmClean, 'pj=', pj ? pj.nombre : 'null');
     }
   }
   // Equipo acumulado from datos_partidos.js
