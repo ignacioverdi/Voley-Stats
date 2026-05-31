@@ -772,56 +772,42 @@ function objRenderBaterias(){
   renderObjetivosJugador('objetivos-jugador', nombre, jugVals, eqVals);
 }
 
-function renderObjetivosJugador(cid, nombre, jugVals, eqVals){
-  var el = document.getElementById(cid);
-  if(!el) return;
-  if(!jugVals) jugVals = objGetVals(nombre);
-  if(!eqVals)  eqVals  = objGetVals(null);
-  var metas = window.OBJETIVOS_CONFIG.metas;
-  var nullVals = {sq:null,rec:null,bqpos:null,bqpt:null,atqq:null,atqhb:null,atqx:null,atqrp:null,atqri:null,atqrm:null,atqtr:null};
-  var rows = [
-    {label:'Jugador', vals:jugVals, isJug:true},
-    {label:'Equipo',  vals:eqVals,  isJug:false}
-  ];
-  var html = '<div style="font-family:Barlow Condensed,sans-serif;padding:4px 0 8px">'
-    + '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">'
-    + '<div style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#64748b">MI PERFORMANCE VS EQUIPO</div>'
-    + '<div style="display:flex;gap:10px;flex-wrap:wrap">'
-    + [['#22c55e','Sobre equipo'],['#86efac','Cerca'],['#fbbf24','Neutro'],['#ef4444','Bajo equipo']].map(function(x){
-        return '<div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#64748b">'
-          + '<div style="width:7px;height:7px;border-radius:50%;background:'+x[0]+'"></div>'+x[1]+'</div>';
-      }).join('') + '</div></div>'
-    + '<div style="display:flex;gap:8px;width:100%;margin-bottom:4px">'
-    + '<div style="width:64px;flex-shrink:0"></div>'
-    + Object.keys(metas).map(function(id){
-        return '<div style="flex:1;min-width:60px;max-width:110px;text-align:center;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b">'
-          + metas[id].label + '</div>';
-      }).join('') + '</div>';
-
+function renderObjetivosJugador(cid,nombre,extra){
+  var el=document.getElementById(cid); if(!el) return;
+  var metas=window.OBJETIVOS_CONFIG.metas;
+  var jugVals=Object.assign({},objGetVals(nombre),extra||{});
+  var eqVals=objGetVals(null);
+  var rows=[{label:'Jugador',vals:jugVals,isJug:true},{label:'Equipo',vals:eqVals,isJug:false}];
+  var html='<div style="font-family:Barlow Condensed,sans-serif;padding:4px 0 8px">'
+    +'<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">'
+    +'<div style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#64748b">MI PERFORMANCE VS EQUIPO</div>'
+    +'<div style="display:flex;gap:10px;flex-wrap:wrap">'
+    +[['#22c55e','Sobre equipo'],['#86efac','Cerca'],['#fbbf24','Neutro'],['#ef4444','Bajo equipo']].map(function(x){
+      return'<div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#64748b"><div style="width:7px;height:7px;border-radius:50%;background:'+x[0]+'"></div>'+x[1]+'</div>';
+    }).join('')+'</div></div>'
+    +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px">'
+    +'<div style="width:64px;flex-shrink:0"></div>'
+    +Object.keys(metas).map(function(id){return'<div style="flex:1;min-width:60px;max-width:110px;text-align:center;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b">'+metas[id].label+'</div>';}).join('')
+    +'</div>';
   rows.forEach(function(row){
-    html += '<div style="display:flex;align-items:center;gap:8px;width:100%;margin-bottom:8px">'
-      + '<div style="width:64px;flex-shrink:0;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#94a3b8;text-align:right;padding-right:8px">'
-      + row.label + '</div>'
-      + Object.keys(metas).map(function(id){
-          var val = (row.vals && row.vals[id] !== undefined) ? row.vals[id] : null;
-          var cls, objLine;
-          if(row.isJug){
-            var eq = (eqVals && eqVals[id] !== undefined) ? eqVals[id] : null;
-            cls = val !== null ? objClassifyVsTeam(val, eq) : {color:'#334155',bg:'rgba(51,65,85,.08)',border:'rgba(51,65,85,.2)',label:'—'};
-            objLine = eq !== null ? eq : metas[id].obj;
-          } else {
-            cls = val !== null ? objClassify(id, val) : {color:'#334155',bg:'rgba(51,65,85,.08)',border:'rgba(51,65,85,.2)',label:'—'};
-            objLine = metas[id].obj;
-          }
-          var displayVal = val !== null ? val + '%' : '—';
-          return '<div style="flex:1;min-width:60px;max-width:110px;padding:8px 4px;border-radius:8px;background:'+cls.bg+';border:1px solid '+cls.border+';text-align:center">'
-            + '<div style="font-family:Bebas Neue,sans-serif;font-size:22px;color:'+cls.color+';line-height:1">'+displayVal+'</div>'
-            + '<div style="font-size:8px;color:#475569;margin-top:2px">obj: '+objLine+'%</div>'
-            + '</div>';
-        }).join('') + '</div>';
+    html+='<div style="display:flex;align-items:center;gap:8px;width:100%;margin-bottom:8px">'
+      +'<div style="width:64px;flex-shrink:0;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#94a3b8;text-align:right;padding-right:8px">'+row.label+'</div>'
+      +Object.keys(metas).map(function(id){
+        var m=metas[id],val=row.vals[id]!==undefined?row.vals[id]:null;
+        var cls,objLine;
+        if(row.isJug){
+          var eq=eqVals[id]!==undefined?eqVals[id]:null;
+          cls=val!==null?objClassifyVsTeam(val,eq):{color:'#334155',bg:'rgba(51,65,85,.08)',border:'rgba(51,65,85,.2)',label:'—'};
+          objLine=eq!==null?eq:m.obj;
+        } else {
+          cls=val!==null?objClassify(id,val):{color:'#334155',bg:'rgba(51,65,85,.08)',border:'rgba(51,65,85,.2)',label:'—'};
+          objLine=m.obj;
+        }
+        return objSingleBat(id,val,m,cls,objLine);
+      }).join('')+'</div>';
   });
-  html += '</div>';
-  el.innerHTML = html;
+  html+='</div>';
+  el.innerHTML=html;
 }
 
 </script>
