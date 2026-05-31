@@ -1,5 +1,5 @@
-// datos_partidos.js — 31/05/2026 01:10
-const PARTIDOS_GENERADO = "31/05/2026 01:10";
+// datos_partidos.js — 31/05/2026 02:03
+const PARTIDOS_GENERADO = "31/05/2026 02:03";
 const PARTIDOS_TOTAL = 6;
 const PARTIDOS_META = [
   {
@@ -2767,16 +2767,16 @@ const PARTIDOS_ARMADOR = {
           {
             "zona": 4,
             "tot": 4,
-            "pts": 0,
+            "pts": 2,
             "pct": 50,
-            "pct_p": 0
+            "pct_p": 50
           },
           {
             "zona": 3,
             "tot": 3,
-            "pts": 0,
+            "pts": 2,
             "pct": 38,
-            "pct_p": 0
+            "pct_p": 67
           },
           {
             "zona": 2,
@@ -2801,23 +2801,23 @@ const PARTIDOS_ARMADOR = {
           {
             "zona": 4,
             "tot": 3,
-            "pts": 0,
+            "pts": 1,
             "pct": 38,
-            "pct_p": 0
+            "pct_p": 33
           },
           {
             "zona": 3,
             "tot": 2,
-            "pts": 0,
+            "pts": 1,
             "pct": 25,
-            "pct_p": 0
+            "pct_p": 50
           },
           {
             "zona": 2,
             "tot": 3,
-            "pts": 0,
+            "pts": 3,
             "pct": 38,
-            "pct_p": 0
+            "pct_p": 100
           },
           {
             "zona": 6,
@@ -2835,16 +2835,16 @@ const PARTIDOS_ARMADOR = {
           {
             "zona": 4,
             "tot": 3,
-            "pts": 0,
+            "pts": 2,
             "pct": 43,
-            "pct_p": 0
+            "pct_p": 67
           },
           {
             "zona": 3,
             "tot": 3,
-            "pts": 0,
+            "pts": 3,
             "pct": 43,
-            "pct_p": 0
+            "pct_p": 100
           },
           {
             "zona": 2,
@@ -2869,16 +2869,16 @@ const PARTIDOS_ARMADOR = {
           {
             "zona": 4,
             "tot": 3,
-            "pts": 0,
+            "pts": 2,
             "pct": 60,
-            "pct_p": 0
+            "pct_p": 67
           },
           {
             "zona": 3,
             "tot": 2,
-            "pts": 0,
+            "pts": 2,
             "pct": 40,
-            "pct_p": 0
+            "pct_p": 100
           },
           {
             "zona": 2,
@@ -2910,9 +2910,9 @@ const PARTIDOS_ARMADOR = {
           {
             "zona": 3,
             "tot": 2,
-            "pts": 0,
+            "pts": 1,
             "pct": 50,
-            "pct_p": 0
+            "pct_p": 50
           },
           {
             "zona": 2,
@@ -2937,30 +2937,30 @@ const PARTIDOS_ARMADOR = {
           {
             "zona": 4,
             "tot": 2,
-            "pts": 0,
+            "pts": 2,
             "pct": 40,
-            "pct_p": 0
+            "pct_p": 100
           },
           {
             "zona": 3,
             "tot": 1,
-            "pts": 0,
+            "pts": 1,
             "pct": 20,
-            "pct_p": 0
+            "pct_p": 100
           },
           {
             "zona": 2,
             "tot": 1,
-            "pts": 0,
+            "pts": 1,
             "pct": 20,
-            "pct_p": 0
+            "pct_p": 100
           },
           {
             "zona": 6,
             "tot": 1,
-            "pts": 0,
+            "pts": 1,
             "pct": 20,
-            "pct_p": 0
+            "pct_p": 100
           }
         ]
       }
@@ -2968,50 +2968,50 @@ const PARTIDOS_ARMADOR = {
     "pills": [
       {
         "label": "P1",
-        "eff": 0,
+        "eff": 12,
         "tot": 8,
-        "pts": 0,
-        "pts_pct": 0,
-        "err_pct": 0
+        "pts": 4,
+        "pts_pct": 50,
+        "err_pct": 38
       },
       {
         "label": "P6",
-        "eff": 0,
+        "eff": 62,
         "tot": 8,
-        "pts": 0,
-        "pts_pct": 0,
+        "pts": 5,
+        "pts_pct": 62,
         "err_pct": 0
       },
       {
         "label": "P5",
-        "eff": 0,
+        "eff": 57,
         "tot": 7,
-        "pts": 0,
-        "pts_pct": 0,
-        "err_pct": 0
+        "pts": 5,
+        "pts_pct": 71,
+        "err_pct": 14
       },
       {
         "label": "P4",
-        "eff": 0,
+        "eff": 80,
         "tot": 5,
-        "pts": 0,
-        "pts_pct": 0,
+        "pts": 4,
+        "pts_pct": 80,
         "err_pct": 0
       },
       {
         "label": "P3",
-        "eff": 0,
+        "eff": 50,
         "tot": 4,
-        "pts": 0,
-        "pts_pct": 0,
+        "pts": 2,
+        "pts_pct": 50,
         "err_pct": 0
       },
       {
         "label": "P2",
-        "eff": 0,
+        "eff": 100,
         "tot": 5,
-        "pts": 0,
-        "pts_pct": 0,
+        "pts": 5,
+        "pts_pct": 100,
         "err_pct": 0
       },
       {
@@ -5267,6 +5267,96 @@ const PARTIDOS_INDIVIDUAL = [
             "err_pct": 0
           }
         ],
+        "extra_pills": [
+          {
+            "label": "SO",
+            "eff": 0
+          },
+          {
+            "label": "REC #",
+            "eff": 0
+          },
+          {
+            "label": "REC +",
+            "eff": 0
+          },
+          {
+            "label": "REC !",
+            "eff": 0
+          },
+          {
+            "label": "REC -",
+            "eff": 0
+          },
+          {
+            "label": "TRANS",
+            "eff": 0
+          }
+        ],
+        "so_dist": [
+          {
+            "pos": "P4",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P2",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P6",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          }
+        ],
+        "tr_dist": [
+          {
+            "pos": "P4",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P2",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P6",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          }
+        ],
         "recepcion": [],
         "so": {},
         "tr": {}
@@ -5281,16 +5371,16 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 4,
-                "pts": 0,
+                "pts": 2,
                 "pct": 50,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 3,
                 "tot": 3,
-                "pts": 0,
+                "pts": 2,
                 "pct": 38,
-                "pct_p": 0
+                "pct_p": 67
               },
               {
                 "zona": 2,
@@ -5315,23 +5405,23 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 3,
-                "pts": 0,
+                "pts": 1,
                 "pct": 38,
-                "pct_p": 0
+                "pct_p": 33
               },
               {
                 "zona": 3,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 25,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 2,
                 "tot": 3,
-                "pts": 0,
+                "pts": 3,
                 "pct": 38,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 6,
@@ -5349,16 +5439,16 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 3,
-                "pts": 0,
+                "pts": 2,
                 "pct": 43,
-                "pct_p": 0
+                "pct_p": 67
               },
               {
                 "zona": 3,
                 "tot": 3,
-                "pts": 0,
+                "pts": 3,
                 "pct": 43,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 2,
@@ -5383,16 +5473,16 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 3,
-                "pts": 0,
+                "pts": 2,
                 "pct": 60,
-                "pct_p": 0
+                "pct_p": 67
               },
               {
                 "zona": 3,
                 "tot": 2,
-                "pts": 0,
+                "pts": 2,
                 "pct": 40,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 2,
@@ -5424,9 +5514,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 3,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 50,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 2,
@@ -5451,30 +5541,30 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 2,
-                "pts": 0,
+                "pts": 2,
                 "pct": 40,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 3,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 20,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 2,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 20,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 6,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 20,
-                "pct_p": 0
+                "pct_p": 100
               }
             ]
           }
@@ -5482,50 +5572,50 @@ const PARTIDOS_INDIVIDUAL = [
         "pills": [
           {
             "label": "P1",
-            "eff": 0,
+            "eff": 12,
             "tot": 8,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 4,
+            "pts_pct": 50,
+            "err_pct": 38
           },
           {
             "label": "P6",
-            "eff": 0,
+            "eff": 62,
             "tot": 8,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 5,
+            "pts_pct": 62,
             "err_pct": 0
           },
           {
             "label": "P5",
-            "eff": 0,
+            "eff": 57,
             "tot": 7,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 5,
+            "pts_pct": 71,
+            "err_pct": 14
           },
           {
             "label": "P4",
-            "eff": 0,
+            "eff": 80,
             "tot": 5,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 4,
+            "pts_pct": 80,
             "err_pct": 0
           },
           {
             "label": "P3",
-            "eff": 0,
+            "eff": 50,
             "tot": 4,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 2,
+            "pts_pct": 50,
             "err_pct": 0
           },
           {
             "label": "P2",
-            "eff": 0,
+            "eff": 100,
             "tot": 5,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 5,
+            "pts_pct": 100,
             "err_pct": 0
           },
           {
@@ -5543,6 +5633,96 @@ const PARTIDOS_INDIVIDUAL = [
             "pts": 20,
             "pts_pct": 43,
             "err_pct": 11
+          }
+        ],
+        "extra_pills": [
+          {
+            "label": "SO",
+            "eff": 46
+          },
+          {
+            "label": "REC #",
+            "eff": 56
+          },
+          {
+            "label": "REC +",
+            "eff": 58
+          },
+          {
+            "label": "REC !",
+            "eff": 29
+          },
+          {
+            "label": "REC -",
+            "eff": 17
+          },
+          {
+            "label": "TRANS",
+            "eff": 32
+          }
+        ],
+        "so_dist": [
+          {
+            "pos": "P4",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P2",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P6",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          }
+        ],
+        "tr_dist": [
+          {
+            "pos": "P4",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P2",
+            "tot": 8,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 1,
+            "pts": 6,
+            "pct": 33
+          },
+          {
+            "pos": "P6",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
           }
         ],
         "recepcion": [],
@@ -7714,6 +7894,96 @@ const PARTIDOS_INDIVIDUAL = [
             "err_pct": 0
           }
         ],
+        "extra_pills": [
+          {
+            "label": "SO",
+            "eff": 0
+          },
+          {
+            "label": "REC #",
+            "eff": 0
+          },
+          {
+            "label": "REC +",
+            "eff": 0
+          },
+          {
+            "label": "REC !",
+            "eff": 0
+          },
+          {
+            "label": "REC -",
+            "eff": 0
+          },
+          {
+            "label": "TRANS",
+            "eff": 0
+          }
+        ],
+        "so_dist": [
+          {
+            "pos": "P4",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P2",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P6",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          }
+        ],
+        "tr_dist": [
+          {
+            "pos": "P4",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P2",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P6",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          }
+        ],
         "recepcion": [],
         "so": {},
         "tr": {}
@@ -7762,23 +8032,23 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 2,
-                "pts": 0,
+                "pts": 2,
                 "pct": 29,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 3,
                 "tot": 4,
-                "pts": 0,
+                "pts": 3,
                 "pct": 57,
-                "pct_p": 0
+                "pct_p": 75
               },
               {
                 "zona": 2,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 14,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 6,
@@ -7796,23 +8066,23 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 40,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 3,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 40,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 2,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 20,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 6,
@@ -7830,23 +8100,23 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 3,
-                "pts": 0,
+                "pts": 1,
                 "pct": 38,
-                "pct_p": 0
+                "pct_p": 33
               },
               {
                 "zona": 3,
                 "tot": 3,
-                "pts": 0,
+                "pts": 2,
                 "pct": 38,
-                "pct_p": 0
+                "pct_p": 67
               },
               {
                 "zona": 2,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 25,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 6,
@@ -7885,9 +8155,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 6,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 100,
-                "pct_p": 0
+                "pct_p": 100
               }
             ]
           },
@@ -7898,9 +8168,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 100,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 3,
@@ -7929,50 +8199,50 @@ const PARTIDOS_INDIVIDUAL = [
         "pills": [
           {
             "label": "P1",
-            "eff": 0,
+            "eff": -25,
             "tot": 8,
             "pts": 0,
             "pts_pct": 0,
-            "err_pct": 0
+            "err_pct": 25
           },
           {
             "label": "P6",
-            "eff": 0,
+            "eff": 86,
             "tot": 7,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 6,
+            "pts_pct": 86,
             "err_pct": 0
           },
           {
             "label": "P5",
-            "eff": 0,
+            "eff": 60,
             "tot": 5,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 3,
+            "pts_pct": 60,
             "err_pct": 0
           },
           {
             "label": "P4",
-            "eff": 0,
+            "eff": 12,
             "tot": 8,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 4,
+            "pts_pct": 50,
+            "err_pct": 38
           },
           {
             "label": "P3",
-            "eff": 0,
+            "eff": 100,
             "tot": 1,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 1,
+            "pts_pct": 100,
             "err_pct": 0
           },
           {
             "label": "P2",
-            "eff": 0,
+            "eff": 100,
             "tot": 1,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 1,
+            "pts_pct": 100,
             "err_pct": 0
           },
           {
@@ -7990,6 +8260,96 @@ const PARTIDOS_INDIVIDUAL = [
             "pts": 11,
             "pts_pct": 48,
             "err_pct": 13
+          }
+        ],
+        "extra_pills": [
+          {
+            "label": "SO",
+            "eff": 26
+          },
+          {
+            "label": "REC #",
+            "eff": 14
+          },
+          {
+            "label": "REC +",
+            "eff": 39
+          },
+          {
+            "label": "REC !",
+            "eff": 7
+          },
+          {
+            "label": "REC -",
+            "eff": 33
+          },
+          {
+            "label": "TRANS",
+            "eff": 35
+          }
+        ],
+        "so_dist": [
+          {
+            "pos": "P4",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P2",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P6",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          }
+        ],
+        "tr_dist": [
+          {
+            "pos": "P4",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P2",
+            "tot": 17,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 2,
+            "pts": 3,
+            "pct": 17
+          },
+          {
+            "pos": "P6",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
           }
         ],
         "recepcion": [],
@@ -9925,9 +10285,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 3,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 20,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 2,
@@ -9939,9 +10299,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 6,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 20,
-                "pct_p": 0
+                "pct_p": 100
               }
             ]
           },
@@ -9959,16 +10319,16 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 3,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 50,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 2,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 50,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 6,
@@ -9986,9 +10346,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 67,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 3,
@@ -10054,16 +10414,16 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 67,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 3,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 33,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 2,
@@ -10095,9 +10455,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 3,
                 "tot": 3,
-                "pts": 0,
+                "pts": 2,
                 "pct": 60,
-                "pct_p": 0
+                "pct_p": 67
               },
               {
                 "zona": 2,
@@ -10119,50 +10479,50 @@ const PARTIDOS_INDIVIDUAL = [
         "pills": [
           {
             "label": "P1",
-            "eff": 0,
+            "eff": 40,
             "tot": 5,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 2,
+            "pts_pct": 40,
             "err_pct": 0
           },
           {
             "label": "P6",
-            "eff": 0,
+            "eff": 100,
             "tot": 2,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 2,
+            "pts_pct": 100,
             "err_pct": 0
           },
           {
             "label": "P5",
             "eff": 0,
             "tot": 3,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 1,
+            "pts_pct": 33,
+            "err_pct": 33
           },
           {
             "label": "P4",
-            "eff": 0,
+            "eff": -33,
             "tot": 3,
             "pts": 0,
             "pts_pct": 0,
-            "err_pct": 0
+            "err_pct": 33
           },
           {
             "label": "P3",
-            "eff": 0,
+            "eff": 33,
             "tot": 3,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 2,
+            "pts_pct": 67,
+            "err_pct": 33
           },
           {
             "label": "P2",
-            "eff": 0,
+            "eff": 40,
             "tot": 5,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 2,
+            "pts_pct": 40,
             "err_pct": 0
           },
           {
@@ -10182,6 +10542,96 @@ const PARTIDOS_INDIVIDUAL = [
             "err_pct": 17
           }
         ],
+        "extra_pills": [
+          {
+            "label": "SO",
+            "eff": 26
+          },
+          {
+            "label": "REC #",
+            "eff": 27
+          },
+          {
+            "label": "REC +",
+            "eff": 30
+          },
+          {
+            "label": "REC !",
+            "eff": 0
+          },
+          {
+            "label": "REC -",
+            "eff": -100
+          },
+          {
+            "label": "TRANS",
+            "eff": 33
+          }
+        ],
+        "so_dist": [
+          {
+            "pos": "P4",
+            "tot": 9,
+            "pts": 2,
+            "pct": 22
+          },
+          {
+            "pos": "P3",
+            "tot": 7,
+            "pts": 5,
+            "pct": 71
+          },
+          {
+            "pos": "P2",
+            "tot": 2,
+            "pts": 1,
+            "pct": 50
+          },
+          {
+            "pos": "P1",
+            "tot": 2,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P6",
+            "tot": 1,
+            "pts": 1,
+            "pct": 100
+          }
+        ],
+        "tr_dist": [
+          {
+            "pos": "P4",
+            "tot": 3,
+            "pts": 2,
+            "pct": 67
+          },
+          {
+            "pos": "P3",
+            "tot": 3,
+            "pts": 1,
+            "pct": 33
+          },
+          {
+            "pos": "P2",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P6",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          }
+        ],
         "recepcion": [],
         "so": {},
         "tr": {}
@@ -10196,16 +10646,16 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 3,
-                "pts": 0,
+                "pts": 1,
                 "pct": 43,
-                "pct_p": 0
+                "pct_p": 33
               },
               {
                 "zona": 3,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 14,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 2,
@@ -10230,9 +10680,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 4,
-                "pts": 0,
+                "pts": 2,
                 "pct": 80,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 3,
@@ -10271,9 +10721,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 3,
                 "tot": 7,
-                "pts": 0,
+                "pts": 2,
                 "pct": 78,
-                "pct_p": 0
+                "pct_p": 29
               },
               {
                 "zona": 2,
@@ -10298,9 +10748,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 67,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 3,
@@ -10332,16 +10782,16 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 33,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 3,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 33,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 2,
@@ -10373,16 +10823,16 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 3,
                 "tot": 3,
-                "pts": 0,
+                "pts": 2,
                 "pct": 50,
-                "pct_p": 0
+                "pct_p": 67
               },
               {
                 "zona": 2,
                 "tot": 2,
-                "pts": 0,
+                "pts": 2,
                 "pct": 33,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 6,
@@ -10399,48 +10849,48 @@ const PARTIDOS_INDIVIDUAL = [
             "label": "P1",
             "eff": 0,
             "tot": 7,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 2,
+            "pts_pct": 29,
+            "err_pct": 29
           },
           {
             "label": "P6",
-            "eff": 0,
+            "eff": 20,
             "tot": 5,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 2,
+            "pts_pct": 40,
+            "err_pct": 20
           },
           {
             "label": "P5",
             "eff": 0,
             "tot": 9,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 2,
+            "pts_pct": 22,
+            "err_pct": 22
           },
           {
             "label": "P4",
             "eff": 0,
             "tot": 3,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 1,
+            "pts_pct": 33,
+            "err_pct": 33
           },
           {
             "label": "P3",
-            "eff": 0,
+            "eff": 17,
             "tot": 6,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 2,
+            "pts_pct": 33,
+            "err_pct": 17
           },
           {
             "label": "P2",
-            "eff": 0,
+            "eff": 67,
             "tot": 6,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 4,
+            "pts_pct": 67,
             "err_pct": 0
           },
           {
@@ -10458,6 +10908,96 @@ const PARTIDOS_INDIVIDUAL = [
             "pts": 10,
             "pts_pct": 42,
             "err_pct": 17
+          }
+        ],
+        "extra_pills": [
+          {
+            "label": "SO",
+            "eff": 13
+          },
+          {
+            "label": "REC #",
+            "eff": 28
+          },
+          {
+            "label": "REC +",
+            "eff": 6
+          },
+          {
+            "label": "REC !",
+            "eff": 0
+          },
+          {
+            "label": "REC -",
+            "eff": 0
+          },
+          {
+            "label": "TRANS",
+            "eff": 25
+          }
+        ],
+        "so_dist": [
+          {
+            "pos": "P4",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 13,
+            "pts": 4,
+            "pct": 25
+          },
+          {
+            "pos": "P2",
+            "tot": 6,
+            "pts": 0,
+            "pct": 200
+          },
+          {
+            "pos": "P1",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P6",
+            "tot": 2,
+            "pts": 2,
+            "pct": -50
+          }
+        ],
+        "tr_dist": [
+          {
+            "pos": "P4",
+            "tot": 2,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P2",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P6",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
           }
         ],
         "recepcion": [],
@@ -12522,23 +13062,23 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 2,
-                "pts": 0,
+                "pts": 2,
                 "pct": 22,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 3,
                 "tot": 4,
-                "pts": 0,
+                "pts": 2,
                 "pct": 44,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 2,
                 "tot": 3,
-                "pts": 0,
+                "pts": 1,
                 "pct": 33,
-                "pct_p": 0
+                "pct_p": 33
               },
               {
                 "zona": 6,
@@ -12570,9 +13110,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 2,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 100,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 6,
@@ -12590,23 +13130,23 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 2,
-                "pts": 0,
+                "pts": 2,
                 "pct": 18,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 3,
                 "tot": 7,
-                "pts": 0,
+                "pts": 5,
                 "pct": 64,
-                "pct_p": 0
+                "pct_p": 71
               },
               {
                 "zona": 2,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 18,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 6,
@@ -12624,23 +13164,23 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 3,
-                "pts": 0,
+                "pts": 2,
                 "pct": 30,
-                "pct_p": 0
+                "pct_p": 67
               },
               {
                 "zona": 3,
                 "tot": 5,
-                "pts": 0,
+                "pts": 1,
                 "pct": 50,
-                "pct_p": 0
+                "pct_p": 20
               },
               {
                 "zona": 2,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 20,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 6,
@@ -12658,23 +13198,23 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 3,
-                "pts": 0,
+                "pts": 2,
                 "pct": 30,
-                "pct_p": 0
+                "pct_p": 67
               },
               {
                 "zona": 3,
                 "tot": 3,
-                "pts": 0,
+                "pts": 2,
                 "pct": 30,
-                "pct_p": 0
+                "pct_p": 67
               },
               {
                 "zona": 2,
                 "tot": 4,
-                "pts": 0,
+                "pts": 2,
                 "pct": 40,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 6,
@@ -12699,16 +13239,16 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 3,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 25,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 2,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 25,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 6,
@@ -12723,50 +13263,50 @@ const PARTIDOS_INDIVIDUAL = [
         "pills": [
           {
             "label": "P1",
-            "eff": 0,
+            "eff": 56,
             "tot": 9,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 5,
+            "pts_pct": 56,
             "err_pct": 0
           },
           {
             "label": "P6",
-            "eff": 0,
+            "eff": 100,
             "tot": 1,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 1,
+            "pts_pct": 100,
             "err_pct": 0
           },
           {
             "label": "P5",
-            "eff": 0,
+            "eff": 64,
             "tot": 11,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 8,
+            "pts_pct": 73,
+            "err_pct": 9
           },
           {
             "label": "P4",
-            "eff": 0,
+            "eff": 30,
             "tot": 10,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 4,
+            "pts_pct": 40,
+            "err_pct": 10
           },
           {
             "label": "P3",
-            "eff": 0,
+            "eff": 30,
             "tot": 10,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 6,
+            "pts_pct": 60,
+            "err_pct": 30
           },
           {
             "label": "P2",
-            "eff": 0,
+            "eff": 50,
             "tot": 4,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 2,
+            "pts_pct": 50,
             "err_pct": 0
           },
           {
@@ -12784,6 +13324,96 @@ const PARTIDOS_INDIVIDUAL = [
             "pts": 13,
             "pts_pct": 32,
             "err_pct": 17
+          }
+        ],
+        "extra_pills": [
+          {
+            "label": "SO",
+            "eff": 39
+          },
+          {
+            "label": "REC #",
+            "eff": 45
+          },
+          {
+            "label": "REC +",
+            "eff": 48
+          },
+          {
+            "label": "REC !",
+            "eff": 53
+          },
+          {
+            "label": "REC -",
+            "eff": 0
+          },
+          {
+            "label": "TRANS",
+            "eff": 15
+          }
+        ],
+        "so_dist": [
+          {
+            "pos": "P4",
+            "tot": 12,
+            "pts": 8,
+            "pct": 67
+          },
+          {
+            "pos": "P3",
+            "tot": 20,
+            "pts": 11,
+            "pct": 55
+          },
+          {
+            "pos": "P2",
+            "tot": 6,
+            "pts": 3,
+            "pct": 50
+          },
+          {
+            "pos": "P1",
+            "tot": 7,
+            "pts": 4,
+            "pct": 57
+          },
+          {
+            "pos": "P6",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          }
+        ],
+        "tr_dist": [
+          {
+            "pos": "P4",
+            "tot": 24,
+            "pts": 7,
+            "pct": 29
+          },
+          {
+            "pos": "P3",
+            "tot": 2,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P2",
+            "tot": 4,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 8,
+            "pts": 4,
+            "pct": 50
+          },
+          {
+            "pos": "P6",
+            "tot": 3,
+            "pts": 2,
+            "pct": 67
           }
         ],
         "recepcion": [],
@@ -12807,9 +13437,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 3,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 100,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 2,
@@ -12834,16 +13464,16 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 50,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 3,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 50,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 2,
@@ -13001,27 +13631,27 @@ const PARTIDOS_INDIVIDUAL = [
         "pills": [
           {
             "label": "P1",
-            "eff": 0,
+            "eff": 50,
             "tot": 2,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 1,
+            "pts_pct": 50,
             "err_pct": 0
           },
           {
             "label": "P6",
-            "eff": 0,
+            "eff": 100,
             "tot": 2,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 2,
+            "pts_pct": 100,
             "err_pct": 0
           },
           {
             "label": "P5",
-            "eff": 0,
+            "eff": -50,
             "tot": 2,
             "pts": 0,
             "pts_pct": 0,
-            "err_pct": 0
+            "err_pct": 50
           },
           {
             "label": "P4",
@@ -13062,6 +13692,96 @@ const PARTIDOS_INDIVIDUAL = [
             "pts": 0,
             "pts_pct": 0,
             "err_pct": 0
+          }
+        ],
+        "extra_pills": [
+          {
+            "label": "SO",
+            "eff": 33
+          },
+          {
+            "label": "REC #",
+            "eff": 50
+          },
+          {
+            "label": "REC +",
+            "eff": 25
+          },
+          {
+            "label": "REC !",
+            "eff": 0
+          },
+          {
+            "label": "REC -",
+            "eff": 0
+          },
+          {
+            "label": "TRANS",
+            "eff": 0
+          }
+        ],
+        "so_dist": [
+          {
+            "pos": "P4",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 9,
+            "pts": 2,
+            "pct": 50
+          },
+          {
+            "pos": "P2",
+            "tot": 3,
+            "pts": 0,
+            "pct": 200
+          },
+          {
+            "pos": "P1",
+            "tot": 0,
+            "pts": 0,
+            "pct": 100
+          },
+          {
+            "pos": "P6",
+            "tot": 5,
+            "pts": 7,
+            "pct": 0
+          }
+        ],
+        "tr_dist": [
+          {
+            "pos": "P4",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P2",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P6",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
           }
         ],
         "recepcion": [],
@@ -15121,23 +15841,23 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 3,
-                "pts": 0,
+                "pts": 1,
                 "pct": 43,
-                "pct_p": 0
+                "pct_p": 33
               },
               {
                 "zona": 3,
                 "tot": 3,
-                "pts": 0,
+                "pts": 2,
                 "pct": 43,
-                "pct_p": 0
+                "pct_p": 67
               },
               {
                 "zona": 2,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 14,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 6,
@@ -15155,23 +15875,23 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 4,
-                "pts": 0,
+                "pts": 2,
                 "pct": 44,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 3,
                 "tot": 3,
-                "pts": 0,
+                "pts": 2,
                 "pct": 33,
-                "pct_p": 0
+                "pct_p": 67
               },
               {
                 "zona": 2,
                 "tot": 2,
-                "pts": 0,
+                "pts": 2,
                 "pct": 22,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 6,
@@ -15189,9 +15909,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 3,
-                "pts": 0,
+                "pts": 2,
                 "pct": 50,
-                "pct_p": 0
+                "pct_p": 67
               },
               {
                 "zona": 3,
@@ -15223,23 +15943,23 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 33,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 3,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 33,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 2,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 33,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 6,
@@ -15264,9 +15984,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 3,
                 "tot": 3,
-                "pts": 0,
+                "pts": 2,
                 "pct": 75,
-                "pct_p": 0
+                "pct_p": 67
               },
               {
                 "zona": 2,
@@ -15291,23 +16011,23 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 3,
-                "pts": 0,
+                "pts": 1,
                 "pct": 33,
-                "pct_p": 0
+                "pct_p": 33
               },
               {
                 "zona": 3,
                 "tot": 4,
-                "pts": 0,
+                "pts": 3,
                 "pct": 44,
-                "pct_p": 0
+                "pct_p": 75
               },
               {
                 "zona": 2,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 11,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 6,
@@ -15322,51 +16042,51 @@ const PARTIDOS_INDIVIDUAL = [
         "pills": [
           {
             "label": "P1",
-            "eff": 0,
+            "eff": 57,
             "tot": 7,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 4,
+            "pts_pct": 57,
             "err_pct": 0
           },
           {
             "label": "P6",
-            "eff": 0,
+            "eff": 44,
             "tot": 9,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 6,
+            "pts_pct": 67,
+            "err_pct": 22
           },
           {
             "label": "P5",
             "eff": 0,
             "tot": 6,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 2,
+            "pts_pct": 33,
+            "err_pct": 33
           },
           {
             "label": "P4",
-            "eff": 0,
+            "eff": 17,
             "tot": 6,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 3,
+            "pts_pct": 50,
+            "err_pct": 33
           },
           {
             "label": "P3",
-            "eff": 0,
+            "eff": 50,
             "tot": 4,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 2,
+            "pts_pct": 50,
             "err_pct": 0
           },
           {
             "label": "P2",
-            "eff": 0,
+            "eff": 44,
             "tot": 9,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 5,
+            "pts_pct": 56,
+            "err_pct": 11
           },
           {
             "label": "SO",
@@ -15383,6 +16103,96 @@ const PARTIDOS_INDIVIDUAL = [
             "pts": 20,
             "pts_pct": 47,
             "err_pct": 16
+          }
+        ],
+        "extra_pills": [
+          {
+            "label": "SO",
+            "eff": 42
+          },
+          {
+            "label": "REC #",
+            "eff": 47
+          },
+          {
+            "label": "REC +",
+            "eff": 27
+          },
+          {
+            "label": "REC !",
+            "eff": 53
+          },
+          {
+            "label": "REC -",
+            "eff": 33
+          },
+          {
+            "label": "TRANS",
+            "eff": 30
+          }
+        ],
+        "so_dist": [
+          {
+            "pos": "P4",
+            "tot": 16,
+            "pts": 7,
+            "pct": 44
+          },
+          {
+            "pos": "P3",
+            "tot": 16,
+            "pts": 10,
+            "pct": 62
+          },
+          {
+            "pos": "P2",
+            "tot": 5,
+            "pts": 3,
+            "pct": 60
+          },
+          {
+            "pos": "P1",
+            "tot": 3,
+            "pts": 2,
+            "pct": 67
+          },
+          {
+            "pos": "P6",
+            "tot": 1,
+            "pts": 0,
+            "pct": 0
+          }
+        ],
+        "tr_dist": [
+          {
+            "pos": "P4",
+            "tot": 20,
+            "pts": 11,
+            "pct": 55
+          },
+          {
+            "pos": "P3",
+            "tot": 9,
+            "pts": 3,
+            "pct": 33
+          },
+          {
+            "pos": "P2",
+            "tot": 8,
+            "pts": 4,
+            "pct": 50
+          },
+          {
+            "pos": "P1",
+            "tot": 4,
+            "pts": 2,
+            "pct": 50
+          },
+          {
+            "pos": "P6",
+            "tot": 2,
+            "pts": 0,
+            "pct": 0
           }
         ],
         "recepcion": [],
@@ -15440,9 +16250,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 3,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 50,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 2,
@@ -15467,9 +16277,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 100,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 3,
@@ -15508,9 +16318,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 3,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 50,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 2,
@@ -15600,34 +16410,34 @@ const PARTIDOS_INDIVIDUAL = [
         "pills": [
           {
             "label": "P1",
-            "eff": 0,
+            "eff": -50,
             "tot": 2,
             "pts": 0,
             "pts_pct": 0,
-            "err_pct": 0
+            "err_pct": 50
           },
           {
             "label": "P6",
-            "eff": 0,
+            "eff": 25,
             "tot": 4,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 1,
+            "pts_pct": 25,
             "err_pct": 0
           },
           {
             "label": "P5",
-            "eff": 0,
+            "eff": 100,
             "tot": 1,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 1,
+            "pts_pct": 100,
             "err_pct": 0
           },
           {
             "label": "P4",
-            "eff": 0,
+            "eff": 50,
             "tot": 2,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 1,
+            "pts_pct": 50,
             "err_pct": 0
           },
           {
@@ -15661,6 +16471,96 @@ const PARTIDOS_INDIVIDUAL = [
             "pts": 3,
             "pts_pct": 50,
             "err_pct": 17
+          }
+        ],
+        "extra_pills": [
+          {
+            "label": "SO",
+            "eff": 31
+          },
+          {
+            "label": "REC #",
+            "eff": 0
+          },
+          {
+            "label": "REC +",
+            "eff": 50
+          },
+          {
+            "label": "REC !",
+            "eff": 50
+          },
+          {
+            "label": "REC -",
+            "eff": 100
+          },
+          {
+            "label": "TRANS",
+            "eff": 33
+          }
+        ],
+        "so_dist": [
+          {
+            "pos": "P4",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 7,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P2",
+            "tot": 3,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 0,
+            "pts": 1,
+            "pct": 100
+          },
+          {
+            "pos": "P6",
+            "tot": 4,
+            "pts": 3,
+            "pct": 50
+          }
+        ],
+        "tr_dist": [
+          {
+            "pos": "P4",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P2",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P6",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
           }
         ],
         "recepcion": [],
@@ -17705,9 +18605,9 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 4,
-                "pts": 0,
+                "pts": 1,
                 "pct": 44,
-                "pct_p": 0
+                "pct_p": 25
               },
               {
                 "zona": 3,
@@ -17719,16 +18619,16 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 2,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 22,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 6,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 11,
-                "pct_p": 0
+                "pct_p": 100
               }
             ]
           },
@@ -17739,23 +18639,23 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 5,
-                "pts": 0,
+                "pts": 1,
                 "pct": 42,
-                "pct_p": 0
+                "pct_p": 20
               },
               {
                 "zona": 3,
                 "tot": 3,
-                "pts": 0,
+                "pts": 1,
                 "pct": 25,
-                "pct_p": 0
+                "pct_p": 33
               },
               {
                 "zona": 2,
                 "tot": 4,
-                "pts": 0,
+                "pts": 1,
                 "pct": 33,
-                "pct_p": 0
+                "pct_p": 25
               },
               {
                 "zona": 6,
@@ -17773,23 +18673,23 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 2,
-                "pts": 0,
+                "pts": 1,
                 "pct": 33,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 3,
                 "tot": 3,
-                "pts": 0,
+                "pts": 2,
                 "pct": 50,
-                "pct_p": 0
+                "pct_p": 67
               },
               {
                 "zona": 2,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 17,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 6,
@@ -17807,23 +18707,23 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 2,
-                "pts": 0,
+                "pts": 2,
                 "pct": 33,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 3,
                 "tot": 3,
-                "pts": 0,
+                "pts": 2,
                 "pct": 50,
-                "pct_p": 0
+                "pct_p": 67
               },
               {
                 "zona": 2,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 17,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 6,
@@ -17841,16 +18741,16 @@ const PARTIDOS_INDIVIDUAL = [
               {
                 "zona": 4,
                 "tot": 4,
-                "pts": 0,
+                "pts": 2,
                 "pct": 57,
-                "pct_p": 0
+                "pct_p": 50
               },
               {
                 "zona": 3,
                 "tot": 1,
-                "pts": 0,
+                "pts": 1,
                 "pct": 14,
-                "pct_p": 0
+                "pct_p": 100
               },
               {
                 "zona": 2,
@@ -17908,41 +18808,41 @@ const PARTIDOS_INDIVIDUAL = [
             "label": "P1",
             "eff": 0,
             "tot": 9,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 3,
+            "pts_pct": 33,
+            "err_pct": 33
           },
           {
             "label": "P6",
             "eff": 0,
             "tot": 12,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 3,
+            "pts_pct": 25,
+            "err_pct": 25
           },
           {
             "label": "P5",
-            "eff": 0,
+            "eff": 67,
             "tot": 6,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 4,
+            "pts_pct": 67,
             "err_pct": 0
           },
           {
             "label": "P4",
-            "eff": 0,
+            "eff": 83,
             "tot": 6,
-            "pts": 0,
-            "pts_pct": 0,
+            "pts": 5,
+            "pts_pct": 83,
             "err_pct": 0
           },
           {
             "label": "P3",
-            "eff": 0,
+            "eff": 29,
             "tot": 7,
-            "pts": 0,
-            "pts_pct": 0,
-            "err_pct": 0
+            "pts": 3,
+            "pts_pct": 43,
+            "err_pct": 14
           },
           {
             "label": "P2",
@@ -17967,6 +18867,96 @@ const PARTIDOS_INDIVIDUAL = [
             "pts": 8,
             "pts_pct": 25,
             "err_pct": 31
+          }
+        ],
+        "extra_pills": [
+          {
+            "label": "SO",
+            "eff": 33
+          },
+          {
+            "label": "REC #",
+            "eff": 25
+          },
+          {
+            "label": "REC +",
+            "eff": 30
+          },
+          {
+            "label": "REC !",
+            "eff": 71
+          },
+          {
+            "label": "REC -",
+            "eff": 33
+          },
+          {
+            "label": "TRANS",
+            "eff": -6
+          }
+        ],
+        "so_dist": [
+          {
+            "pos": "P4",
+            "tot": 17,
+            "pts": 7,
+            "pct": 41
+          },
+          {
+            "pos": "P3",
+            "tot": 12,
+            "pts": 6,
+            "pct": 50
+          },
+          {
+            "pos": "P2",
+            "tot": 7,
+            "pts": 3,
+            "pct": 43
+          },
+          {
+            "pos": "P1",
+            "tot": 2,
+            "pts": 1,
+            "pct": 50
+          },
+          {
+            "pos": "P6",
+            "tot": 1,
+            "pts": 1,
+            "pct": 100
+          }
+        ],
+        "tr_dist": [
+          {
+            "pos": "P4",
+            "tot": 13,
+            "pts": 3,
+            "pct": 23
+          },
+          {
+            "pos": "P3",
+            "tot": 5,
+            "pts": 3,
+            "pct": 60
+          },
+          {
+            "pos": "P2",
+            "tot": 10,
+            "pts": 2,
+            "pct": 20
+          },
+          {
+            "pos": "P1",
+            "tot": 3,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P6",
+            "tot": 1,
+            "pts": 0,
+            "pct": 0
           }
         ],
         "recepcion": [],
@@ -18216,11 +19206,11 @@ const PARTIDOS_INDIVIDUAL = [
           },
           {
             "label": "P3",
-            "eff": 0,
+            "eff": -100,
             "tot": 1,
             "pts": 0,
             "pts_pct": 0,
-            "err_pct": 0
+            "err_pct": 100
           },
           {
             "label": "P2",
@@ -18245,6 +19235,96 @@ const PARTIDOS_INDIVIDUAL = [
             "pts": 1,
             "pts_pct": 33,
             "err_pct": 33
+          }
+        ],
+        "extra_pills": [
+          {
+            "label": "SO",
+            "eff": 0
+          },
+          {
+            "label": "REC #",
+            "eff": -100
+          },
+          {
+            "label": "REC +",
+            "eff": 0
+          },
+          {
+            "label": "REC !",
+            "eff": 0
+          },
+          {
+            "label": "REC -",
+            "eff": 50
+          },
+          {
+            "label": "TRANS",
+            "eff": 0
+          }
+        ],
+        "so_dist": [
+          {
+            "pos": "P4",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 10,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P2",
+            "tot": 5,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 1,
+            "pts": 0,
+            "pct": 100
+          },
+          {
+            "pos": "P6",
+            "tot": 5,
+            "pts": 3,
+            "pct": 17
+          }
+        ],
+        "tr_dist": [
+          {
+            "pos": "P4",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P3",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P2",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P1",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
+          },
+          {
+            "pos": "P6",
+            "tot": 0,
+            "pts": 0,
+            "pct": 0
           }
         ],
         "recepcion": [],
