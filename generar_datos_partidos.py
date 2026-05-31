@@ -606,13 +606,19 @@ def acumular(partidos_data):
         # Objetivos: weighted average across partidos
         for nm, obj in pd.get('objetivos',{}).items():
             if nm == '__equipo__': continue
-            if nm not in all_players: continue
+            # Create player if not exists (some players only appear in objetivos)
+            if nm not in all_players:
+                pos_pl, num_pl = get_pos_num(nm)
+                all_players[nm] = {'num':num_pl,'pos':pos_pl,'combos':{},
+                                   'serve_sm':{},'serve_sq':{}}
             if 'objetivos' not in all_players[nm]:
                 all_players[nm]['objetivos'] = {k:{'sum':0,'n':0} for k in obj}
             for k, v in obj.items():
                 if v is not None:
-                    all_players[nm]['objetivos'][k]['sum'] = all_players[nm]['objetivos'][k].get('sum',0) + v
-                    all_players[nm]['objetivos'][k]['n']   = all_players[nm]['objetivos'][k].get('n',0) + 1
+                    if k not in all_players[nm]['objetivos']:
+                        all_players[nm]['objetivos'][k] = {'sum':0,'n':0}
+                    all_players[nm]['objetivos'][k]['sum'] += v
+                    all_players[nm]['objetivos'][k]['n']   += 1
 
         # Equipo objetivos
         eq_obj = pd.get('objetivos',{}).get('__equipo__',{})
