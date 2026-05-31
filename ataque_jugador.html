@@ -462,7 +462,7 @@ function buildCanchita(item,jIdx,i,prefix,W,H,drawFn,color,j){
 
   var stats=document.createElement('div');
   stats.className='canchita-stats';
-  [{l:'EFF',v:hasDatos&&item.eff!=null?item.eff+'%':'—',c:effC},{l:'TOT',v:item.tot,c:color},{l:'#%',v:hasDatos&&item.pts!=null?item.pts+'%':'—',c:'#22c55e'}].forEach(function(s){
+  [{l:'EFF',v:hasDatos&&item.eff!=null?item.eff+'%':'—',c:effC},{l:'TOT',v:item.tot,c:color},{l:'#%',v:hasDatos&&item.pts_pct!=null&&item.pts_pct>0?item.pts_pct+'%':'—',c:'#22c55e'}].forEach(function(s){
     var ci=document.createElement('div');ci.className='cs-item';
     var cv2=document.createElement('div');cv2.className='cs-val';cv2.style.color=s.c;cv2.textContent=s.v;
     var cl=document.createElement('div');cl.className='cs-lbl';cl.textContent=s.l;
