@@ -773,8 +773,9 @@ function renderArmador(){
         pill.addEventListener('dblclick',(function(pLabel,armData,clr){
           return function(){
             var sotrPill = armData.pills ? armData.pills.find(function(x){ return x.label===pLabel; }) : null;
-            var sotrData = pLabel==='SO' ? armData.so : armData.tr;
-            if(!sotrData || !sotrData.total) {
+            var sotrDist = pLabel==='SO' ? (armData.so_dist||armData.so) : (armData.tr_dist||armData.tr);
+            var sotrData = sotrDist;
+            if(!sotrData || !sotrData.length) {
               sotrData = sotrPill ? {
                 total: sotrPill.tot||0, eff: sotrPill.eff||0,
                 pts: sotrPill.pts||0, pts_pct: sotrPill.pts_pct||0,
@@ -790,7 +791,27 @@ function renderArmador(){
     hdr.appendChild(pillsWrap);
     panel.appendChild(hdr);
 
-    // EFF por recepción
+    // EFF por recepción (extra_pills: SO, REC#, REC+, REC!, REC-, TRANS)
+    if(arm.extra_pills && arm.extra_pills.length){
+      var recRow2=document.createElement('div');
+      recRow2.style.cssText='padding:8px 18px 12px;display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.05)';
+      var recLbl=document.createElement('div');
+      recLbl.style.cssText='width:100%;font-size:8px;color:#475569;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px';
+      recLbl.textContent='EFF RECEPCIÓN';
+      recRow2.appendChild(recLbl);
+      arm.extra_pills.forEach(function(ep){
+        var eff=ep.eff||0;
+        var effC3=eff>=50?'#22c55e':eff>=25?'#fbbf24':eff>=0?'#f97316':'#ef4444';
+        var pill2=document.createElement('div');
+        pill2.style.cssText='padding:4px 10px;border-radius:6px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;align-items:center;gap:1px;min-width:52px';
+        pill2.innerHTML='<div style="font-family:Bebas Neue,sans-serif;font-size:16px;color:'+effC3+'">'+eff+'%</div>'
+          +'<div style="font-size:7px;color:#475569;letter-spacing:.5px;text-transform:uppercase">'+ep.label+'</div>';
+        recRow2.appendChild(pill2);
+      });
+      panel.appendChild(recRow2);
+    }
+
+    // EFF por recepción (legacy)
     if(arm.recepcion && arm.recepcion.length){
       var recRow=document.createElement('div');
       recRow.style.cssText='padding:10px 18px;display:flex;gap:6px;align-items:center;border-bottom:1px solid var(--border);flex-wrap:wrap';
@@ -1026,8 +1047,13 @@ function abrirModalSOTR(data, tipo, color, allPills){
   var sotrColor = tipo==='SO' ? '#22c55e' : '#818cf8';
   var tipoLabel = tipo==='SO' ? 'SIDE OUT' : 'TRANSICIÓN';
 
+  // data can be an array (so_dist/tr_dist) or object
+  var distArr = Array.isArray(data) ? data : (data.dist||[]);
+  var sotrPillData = Array.isArray(data) ? null : data;
+
   var title = document.getElementById('modal-arm-title');
-  title.textContent = tipoLabel + ' — ' + (data.total||0) + ' acciones';
+  var totalAcc = sotrPillData ? (sotrPillData.total||0) : distArr.reduce(function(s,d){return s+(d.tot||0);},0);
+  title.textContent = tipoLabel + ' — ' + totalAcc + ' acciones';
   title.style.color = sotrColor;
 
   var pillsEl = document.getElementById('modal-arm-pills');
@@ -1036,12 +1062,15 @@ function abrirModalSOTR(data, tipo, color, allPills){
   // ── Stats generales ─────────────────────────────────────
   var statsRow = document.createElement('div');
   statsRow.style.cssText = 'display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap';
-  var effC = data.eff>=50?'#22c55e':data.eff>=25?'#fbbf24':data.eff>=0?'#f97316':'#ef4444';
-  [{l:'EFF TOTAL',v:(data.eff||0)+'%',c:effC},
-   {l:'ACCIONES', v:data.total||0,    c:sotrColor},
-   {l:'PUNTOS',   v:data.pts||0,      c:'#22c55e'},
-   {l:'PTS %',    v:(data.pts_pct||0)+'%', c:'#22c55e'},
-   {l:'ERR %',    v:(data.err_pct||0)+'%', c:'#ef4444'}
+  // Calculate totals from array if needed
+  var totalPts = sotrPillData ? (sotrPillData.pts||0) : distArr.reduce(function(s,d){return s+(d.pts||0);},0);
+  var totalEff = sotrPillData ? (sotrPillData.eff||0) : (totalAcc>0?Math.round(totalPts/totalAcc*100):0);
+  var totalPct = sotrPillData ? (sotrPillData.pts_pct||0) : (totalAcc>0?Math.round(totalPts/totalAcc*100):0);
+  var effC = totalEff>=50?'#22c55e':totalEff>=25?'#fbbf24':totalEff>=0?'#f97316':'#ef4444';
+  [{l:'EFF TOTAL',v:totalEff+'%',c:effC},
+   {l:'ACCIONES', v:totalAcc,    c:sotrColor},
+   {l:'PUNTOS',   v:totalPts,    c:'#22c55e'},
+   {l:'PTS %',    v:totalPct+'%',c:'#22c55e'},
   ].forEach(function(s){
     var el = document.createElement('div');
     el.style.cssText = 'flex:1;min-width:60px;padding:8px 6px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;display:flex;flex-direction:column;align-items:center;gap:2px';
@@ -1051,10 +1080,31 @@ function abrirModalSOTR(data, tipo, color, allPills){
   });
   pillsEl.appendChild(statsRow);
 
-  // ── Canvas (hide if no dist data) ───────────────────────
-  // Canvas oculto — datos de distribución por zona no disponibles aún
+  // ── Per-position breakdown ──────────────────────────────
   var cv = document.getElementById('modal-arm-canvas');
   if(cv) cv.style.display = 'none';
+
+  if(distArr && distArr.length > 0){
+    var posLbl2 = document.createElement('div');
+    posLbl2.style.cssText = 'font-size:8px;color:#475569;letter-spacing:3px;text-transform:uppercase;margin:12px 0 8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06)';
+    posLbl2.textContent = 'ATAQUES POR ROTACIÓN';
+    pillsEl.appendChild(posLbl2);
+
+    var distGrid = document.createElement('div');
+    distGrid.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px';
+    var distOrder = ['P4','P3','P2','P5','P6','P1'];
+    distOrder.forEach(function(pos){
+      var d = distArr.find(function(x){return x.pos===pos;}) || {pos:pos,tot:0,pts:0,pct:0};
+      var pctC = d.pct>=50?'#22c55e':d.pct>=30?'#fbbf24':d.pct>=0?'#f97316':'#ef4444';
+      var card = document.createElement('div');
+      card.style.cssText = 'background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:8px;text-align:center';
+      card.innerHTML = '<div style="font-family:Bebas Neue,sans-serif;font-size:16px;color:'+sotrColor+'">'+pos+'</div>'
+        +'<div style="font-family:Bebas Neue,sans-serif;font-size:22px;color:'+pctC+'">'+d.pct+'%</div>'
+        +'<div style="font-size:9px;color:#64748b">'+d.pts+'/'+d.tot+'</div>';
+      distGrid.appendChild(card);
+    });
+    pillsEl.appendChild(distGrid);
+  }
 
   // ── Grid P4-P3-P2 / P5-P6-P1 ───────────────────────────
   if(allPills && allPills.length){
