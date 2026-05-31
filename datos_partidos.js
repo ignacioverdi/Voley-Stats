@@ -1,5 +1,5 @@
-// datos_partidos.js — 30/05/2026 23:36
-const PARTIDOS_GENERADO = "30/05/2026 23:36";
+// datos_partidos.js — 30/05/2026 23:53
+const PARTIDOS_GENERADO = "30/05/2026 23:53";
 const PARTIDOS_TOTAL = 6;
 const PARTIDOS_META = [
   {
@@ -71,28 +71,28 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 6,
-            "pct": 31
+            "pct": 33
           },
           {
             "z": 8,
-            "pct": 23
-          },
-          {
-            "z": 5,
-            "pct": 15
+            "pct": 20
           },
           {
             "z": 7,
-            "pct": 15
+            "pct": 20
+          },
+          {
+            "z": 5,
+            "pct": 13
           }
         ],
         "eff": 0,
-        "tot": 13,
-        "pts": 0,
+        "tot": 15,
+        "pts": 11,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 73
       },
       {
         "cod": "X7",
@@ -100,24 +100,28 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 1,
-            "pct": 40
-          },
-          {
-            "z": 7,
-            "pct": 40
+            "pct": 25
           },
           {
             "z": 8,
-            "pct": 20
+            "pct": 25
+          },
+          {
+            "z": 7,
+            "pct": 25
+          },
+          {
+            "z": 6,
+            "pct": 12
           }
         ],
         "eff": 0,
-        "tot": 5,
-        "pts": 0,
+        "tot": 8,
+        "pts": 2,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 25
       },
       {
         "cod": "XM",
@@ -125,19 +129,19 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 1,
-            "pct": 40
+            "pct": 45
           },
           {
             "z": 6,
-            "pct": 30
+            "pct": 27
           },
           {
             "z": 8,
-            "pct": 30
+            "pct": 27
           }
         ],
         "eff": 0,
-        "tot": 10,
+        "tot": 11,
         "pts": 0,
         "slash": 0,
         "err": 0,
@@ -154,7 +158,7 @@ const PARTIDOS_JUGADORES = [
           }
         ],
         "eff": 0,
-        "tot": 1,
+        "tot": 2,
         "pts": 0,
         "slash": 0,
         "err": 0,
@@ -298,15 +302,15 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 1,
-            "pct": 19
+            "pct": 18
           },
           {
             "z": 9,
-            "pct": 19
+            "pct": 18
           },
           {
             "z": 7,
-            "pct": 19
+            "pct": 18
           },
           {
             "z": 6,
@@ -314,7 +318,7 @@ const PARTIDOS_JUGADORES = [
           }
         ],
         "eff": 0,
-        "tot": 16,
+        "tot": 17,
         "pts": 0,
         "slash": 0,
         "err": 0,
@@ -348,28 +352,28 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 5,
-            "pct": 47
+            "pct": 50
           },
           {
             "z": 6,
-            "pct": 20
+            "pct": 19
           },
           {
             "z": 1,
-            "pct": 13
+            "pct": 12
           },
           {
             "z": 9,
-            "pct": 7
+            "pct": 6
           }
         ],
         "eff": 0,
-        "tot": 15,
-        "pts": 0,
+        "tot": 16,
+        "pts": 8,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 50
       },
       {
         "cod": "V8",
@@ -479,7 +483,25 @@ const PARTIDOS_JUGADORES = [
     "pos": "PUNTA",
     "color": "#22c55e",
     "info": {},
-    "ataques": [],
+    "ataques": [
+      {
+        "cod": "X5",
+        "orig": 4,
+        "destinos": [
+          {
+            "z": 2,
+            "pct": 100
+          }
+        ],
+        "eff": 0,
+        "tot": 1,
+        "pts": 0,
+        "slash": 0,
+        "err": 0,
+        "video": null,
+        "pts_pct": 0
+      }
+    ],
     "saques": [
       {
         "cod": "SM",
@@ -632,23 +654,23 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 7,
-            "pct": 26
+            "pct": 21
           },
           {
             "z": 8,
-            "pct": 18
+            "pct": 19
           },
           {
             "z": 1,
-            "pct": 15
+            "pct": 14
           },
           {
             "z": 6,
-            "pct": 6
+            "pct": 9
           }
         ],
         "eff": 0,
-        "tot": 34,
+        "tot": 43,
         "pts": 0,
         "slash": 0,
         "err": 0,
@@ -661,23 +683,23 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 1,
-            "pct": 25
+            "pct": 29
           },
           {
             "z": 2,
-            "pct": 17
+            "pct": 14
           },
           {
             "z": 6,
-            "pct": 17
+            "pct": 14
           },
           {
             "z": 9,
-            "pct": 8
+            "pct": 7
           }
         ],
         "eff": 0,
-        "tot": 12,
+        "tot": 14,
         "pts": 0,
         "slash": 0,
         "err": 0,
@@ -707,11 +729,11 @@ const PARTIDOS_JUGADORES = [
         ],
         "eff": 0,
         "tot": 8,
-        "pts": 0,
+        "pts": 27,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 338
       }
     ],
     "saques": [
@@ -851,52 +873,52 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 1,
-            "pct": 26
+            "pct": 23
           },
           {
             "z": 2,
-            "pct": 16
+            "pct": 18
           },
           {
             "z": 7,
-            "pct": 16
+            "pct": 14
           },
           {
             "z": 9,
-            "pct": 10
+            "pct": 9
           }
         ],
         "eff": 0,
-        "tot": 31,
-        "pts": 0,
+        "tot": 44,
+        "pts": 23,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 52
       },
       {
         "cod": "V5",
         "orig": 4,
         "destinos": [
           {
-            "z": 1,
-            "pct": 16
+            "z": 4,
+            "pct": 22
           },
           {
-            "z": 4,
-            "pct": 16
+            "z": 1,
+            "pct": 13
+          },
+          {
+            "z": 2,
+            "pct": 9
           },
           {
             "z": 6,
-            "pct": 11
-          },
-          {
-            "z": 5,
-            "pct": 11
+            "pct": 9
           }
         ],
         "eff": 0,
-        "tot": 19,
+        "tot": 23,
         "pts": 0,
         "slash": 0,
         "err": 0,
@@ -1017,11 +1039,11 @@ const PARTIDOS_JUGADORES = [
         ],
         "eff": 0,
         "tot": 5,
-        "pts": 0,
+        "pts": 5,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 100
       },
       {
         "cod": "XM",
@@ -1116,19 +1138,23 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 9,
-            "pct": 50
+            "pct": 29
           },
           {
             "z": 7,
-            "pct": 33
+            "pct": 29
           },
           {
             "z": 6,
-            "pct": 17
+            "pct": 21
+          },
+          {
+            "z": 8,
+            "pct": 14
           }
         ],
         "eff": 0,
-        "tot": 6,
+        "tot": 14,
         "pts": 0,
         "slash": 0,
         "err": 0,
@@ -1140,21 +1166,29 @@ const PARTIDOS_JUGADORES = [
         "orig": 3,
         "destinos": [
           {
+            "z": 9,
+            "pct": 33
+          },
+          {
             "z": 5,
-            "pct": 67
+            "pct": 33
+          },
+          {
+            "z": 8,
+            "pct": 17
           },
           {
             "z": 7,
-            "pct": 33
+            "pct": 17
           }
         ],
         "eff": 0,
-        "tot": 3,
-        "pts": 0,
+        "tot": 6,
+        "pts": 14,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 233
       },
       {
         "cod": "X7",
@@ -1166,11 +1200,15 @@ const PARTIDOS_JUGADORES = [
           },
           {
             "z": 2,
-            "pct": 50
+            "pct": 25
+          },
+          {
+            "z": 8,
+            "pct": 25
           }
         ],
         "eff": 0,
-        "tot": 2,
+        "tot": 4,
         "pts": 0,
         "slash": 0,
         "err": 0,
@@ -1249,19 +1287,23 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 9,
-            "pct": 33
+            "pct": 23
           },
           {
             "z": 1,
-            "pct": 17
+            "pct": 8
           },
           {
-            "z": 7,
-            "pct": 17
+            "z": 6,
+            "pct": 8
+          },
+          {
+            "z": 5,
+            "pct": 8
           }
         ],
         "eff": 0,
-        "tot": 6,
+        "tot": 13,
         "pts": 0,
         "slash": 0,
         "err": 0,
@@ -1274,11 +1316,15 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 1,
-            "pct": 100
+            "pct": 75
+          },
+          {
+            "z": 7,
+            "pct": 25
           }
         ],
         "eff": 0,
-        "tot": 3,
+        "tot": 4,
         "pts": 0,
         "slash": 0,
         "err": 0,
@@ -1291,20 +1337,28 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 5,
-            "pct": 43
+            "pct": 31
           },
           {
             "z": 1,
-            "pct": 29
+            "pct": 23
+          },
+          {
+            "z": 4,
+            "pct": 15
+          },
+          {
+            "z": 6,
+            "pct": 8
           }
         ],
         "eff": 0,
-        "tot": 7,
-        "pts": 0,
+        "tot": 13,
+        "pts": 2,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 15
       },
       {
         "cod": "V8",
@@ -1399,11 +1453,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 1,
-            "pts": 0,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 200
           },
           {
             "cod": "X7",
@@ -1416,11 +1470,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 1,
-            "pts": 0,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 100
           },
           {
             "cod": "XM",
@@ -1620,11 +1674,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 4,
-            "pts": 0,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 50
           },
           {
             "cod": "V8",
@@ -1899,11 +1953,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 1,
-            "pts": 0,
+            "pts": 6,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 600
           }
         ],
         "saques": [
@@ -2023,11 +2077,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 8,
-            "pts": 0,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 25
           },
           {
             "cod": "V5",
@@ -2120,11 +2174,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 3,
-            "pts": 0,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 100
           },
           {
             "cod": "XM",
@@ -2477,11 +2531,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 3,
-            "pts": 0,
+            "pts": 4,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 133
           },
           {
             "cod": "V8",
@@ -2748,11 +2802,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 2,
-            "pts": 0,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 150
           }
         ],
         "saques": [
@@ -2877,11 +2931,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 3,
-            "pts": 0,
+            "pts": 4,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 133
           },
           {
             "cod": "V5",
@@ -3148,11 +3202,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 3,
-            "pts": 0,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 33
           },
           {
             "cod": "XM",
@@ -3314,11 +3368,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 3,
-            "pts": 0,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 67
           },
           {
             "cod": "V8",
@@ -3577,11 +3631,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 1,
-            "pts": 0,
+            "pts": 7,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 700
           }
         ],
         "saques": [
@@ -3702,11 +3756,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 4,
-            "pts": 0,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 75
           },
           {
             "cod": "V5",
@@ -3851,11 +3905,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 2,
-            "pts": 0,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 50
           },
           {
             "cod": "XM",
@@ -4010,11 +4064,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 6,
-            "pts": 0,
+            "pts": 4,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 67
           },
           {
             "cod": "XM",
@@ -4473,11 +4527,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 3,
-            "pts": 0,
+            "pts": 5,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 167
           }
         ],
         "saques": [
@@ -4600,11 +4654,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 10,
-            "pts": 0,
+            "pts": 7,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 70
           },
           {
             "cod": "V5",
@@ -4733,11 +4787,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 2,
-            "pts": 0,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 100
           },
           {
             "cod": "XM",
@@ -4902,11 +4956,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 4,
-            "pts": 0,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 25
           },
           {
             "cod": "V8",
@@ -4980,7 +5034,88 @@ const PARTIDOS_INDIVIDUAL = [
         "pos": "CENTRAL",
         "color": "#f97316",
         "info": {},
-        "ataques": [],
+        "ataques": [
+          {
+            "cod": "X1",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 50
+              },
+              {
+                "z": 7,
+                "pct": 50
+              }
+            ],
+            "eff": 0,
+            "tot": 2,
+            "pts": 1,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 50
+          },
+          {
+            "cod": "X7",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 33
+              },
+              {
+                "z": 8,
+                "pct": 33
+              },
+              {
+                "z": 4,
+                "pct": 33
+              }
+            ],
+            "eff": 0,
+            "tot": 3,
+            "pts": 1,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 33
+          },
+          {
+            "cod": "XM",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 1,
+                "pct": 100
+              }
+            ],
+            "eff": 0,
+            "tot": 1,
+            "pts": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "X2",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 9,
+                "pct": 100
+              }
+            ],
+            "eff": 0,
+            "tot": 1,
+            "pts": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
         "saques": [
           {
             "cod": "SM",
@@ -5094,7 +5229,37 @@ const PARTIDOS_INDIVIDUAL = [
         "pos": "OPUESTO",
         "color": "#818cf8",
         "info": {},
-        "ataques": [],
+        "ataques": [
+          {
+            "cod": "X6",
+            "orig": 2,
+            "destinos": [],
+            "eff": 0,
+            "tot": 1,
+            "pts": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "X8",
+            "orig": 9,
+            "destinos": [
+              {
+                "z": 5,
+                "pct": 100
+              }
+            ],
+            "eff": 0,
+            "tot": 1,
+            "pts": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
         "saques": [
           {
             "cod": "SM",
@@ -5139,7 +5304,25 @@ const PARTIDOS_INDIVIDUAL = [
         "pos": "PUNTA",
         "color": "#22c55e",
         "info": {},
-        "ataques": [],
+        "ataques": [
+          {
+            "cod": "X5",
+            "orig": 4,
+            "destinos": [
+              {
+                "z": 2,
+                "pct": 100
+              }
+            ],
+            "eff": 0,
+            "tot": 1,
+            "pts": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
         "saques": [
           {
             "cod": "SM",
@@ -5269,7 +5452,54 @@ const PARTIDOS_INDIVIDUAL = [
         "pos": "PUNTA",
         "color": "#22c55e",
         "info": {},
-        "ataques": [],
+        "ataques": [
+          {
+            "cod": "X5",
+            "orig": 4,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 22
+              },
+              {
+                "z": 8,
+                "pct": 22
+              },
+              {
+                "z": 1,
+                "pct": 11
+              },
+              {
+                "z": 2,
+                "pct": 11
+              }
+            ],
+            "eff": 0,
+            "tot": 9,
+            "pts": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "V5",
+            "orig": 4,
+            "destinos": [
+              {
+                "z": 1,
+                "pct": 50
+              }
+            ],
+            "eff": 0,
+            "tot": 2,
+            "pts": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
         "saques": [
           {
             "cod": "SM",
@@ -5367,7 +5597,58 @@ const PARTIDOS_INDIVIDUAL = [
         "pos": "PUNTA",
         "color": "#22c55e",
         "info": {},
-        "ataques": [],
+        "ataques": [
+          {
+            "cod": "X5",
+            "orig": 4,
+            "destinos": [
+              {
+                "z": 2,
+                "pct": 23
+              },
+              {
+                "z": 1,
+                "pct": 15
+              },
+              {
+                "z": 9,
+                "pct": 8
+              },
+              {
+                "z": 6,
+                "pct": 8
+              }
+            ],
+            "eff": 0,
+            "tot": 13,
+            "pts": 4,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 31
+          },
+          {
+            "cod": "V5",
+            "orig": 4,
+            "destinos": [
+              {
+                "z": 4,
+                "pct": 50
+              },
+              {
+                "z": 2,
+                "pct": 25
+              }
+            ],
+            "eff": 0,
+            "tot": 4,
+            "pts": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
         "saques": [
           {
             "cod": "SM",
@@ -5469,7 +5750,79 @@ const PARTIDOS_INDIVIDUAL = [
         "pos": "CENTRAL",
         "color": "#f97316",
         "info": {},
-        "ataques": [],
+        "ataques": [
+          {
+            "cod": "X1",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 9,
+                "pct": 67
+              },
+              {
+                "z": 8,
+                "pct": 33
+              }
+            ],
+            "eff": 0,
+            "tot": 3,
+            "pts": 8,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 267
+          },
+          {
+            "cod": "X7",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 9,
+                "pct": 50
+              },
+              {
+                "z": 8,
+                "pct": 50
+              }
+            ],
+            "eff": 0,
+            "tot": 2,
+            "pts": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "XM",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 25
+              },
+              {
+                "z": 8,
+                "pct": 25
+              },
+              {
+                "z": 7,
+                "pct": 25
+              },
+              {
+                "z": 1,
+                "pct": 12
+              }
+            ],
+            "eff": 0,
+            "tot": 8,
+            "pts": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
         "saques": [
           {
             "cod": "SM",
@@ -5534,7 +5887,83 @@ const PARTIDOS_INDIVIDUAL = [
         "pos": "OPUESTO",
         "color": "#818cf8",
         "info": {},
-        "ataques": [],
+        "ataques": [
+          {
+            "cod": "X6",
+            "orig": 2,
+            "destinos": [
+              {
+                "z": 9,
+                "pct": 14
+              },
+              {
+                "z": 6,
+                "pct": 14
+              },
+              {
+                "z": 5,
+                "pct": 14
+              },
+              {
+                "z": 4,
+                "pct": 14
+              }
+            ],
+            "eff": 0,
+            "tot": 7,
+            "pts": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "V6",
+            "orig": 2,
+            "destinos": [
+              {
+                "z": 7,
+                "pct": 100
+              }
+            ],
+            "eff": 0,
+            "tot": 1,
+            "pts": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "X8",
+            "orig": 9,
+            "destinos": [
+              {
+                "z": 4,
+                "pct": 33
+              },
+              {
+                "z": 1,
+                "pct": 17
+              },
+              {
+                "z": 6,
+                "pct": 17
+              },
+              {
+                "z": 5,
+                "pct": 17
+              }
+            ],
+            "eff": 0,
+            "tot": 6,
+            "pts": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
         "saques": [
           {
             "cod": "SM",
@@ -5610,11 +6039,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 3,
-            "pts": 0,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 67
           },
           {
             "cod": "X7",
@@ -6025,11 +6454,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 1,
-            "pts": 0,
+            "pts": 4,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 400
           }
         ],
         "saques": [
@@ -6161,11 +6590,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 6,
-            "pts": 0,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 50
           },
           {
             "cod": "V5",
@@ -6318,11 +6747,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 1,
-            "pts": 0,
+            "pts": 4,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 400
           },
           {
             "cod": "X7",
@@ -6481,11 +6910,11 @@ const PARTIDOS_INDIVIDUAL = [
             ],
             "eff": 0,
             "tot": 3,
-            "pts": 0,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 33
           },
           {
             "cod": "V8",

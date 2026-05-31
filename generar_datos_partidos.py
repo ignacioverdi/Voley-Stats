@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # CASLA VOLEY — generar_datos_partidos.py
 # Lee CASL_Partidos.xlsx y genera datos_partidos.js
-# Uso: python generar_datos_partidos.py
-
 import os, json, re
 from datetime import datetime
 try:
@@ -13,9 +11,7 @@ except ImportError:
 BASE  = os.path.dirname(os.path.abspath(__file__))
 EXCEL = os.path.join(BASE, "CASL_Partidos.xlsx")
 OUT   = os.path.join(BASE, "datos_partidos.js")
-
-# Solapas a ignorar
-SKIP  = {'INDICE', 'GUIA', 'INSTRUCCIONES'}
+SKIP  = {'INDICE', 'GUIA', 'INSTRUCCIONES', 'PRÓXIMO', 'PLANTEL'}
 
 # ── Helpers ──────────────────────────────────────────────────────────
 def si(v):
@@ -43,362 +39,366 @@ def gn(v):
 
 def pct(a, b): return round(a*100/b) if b > 0 else 0
 
-def se_pct(v):
-    if v is None or str(v).strip() in ('','----'): return 0
-    try: return int(round(float(v)*100))
-    except: return 0
+POS_COLOR = {'CENTRAL':'#f97316','OPUESTO':'#818cf8','PUNTA':'#22c55e',
+             'ARMADOR':'#f59e0b','LIBERO':'#06b6d4'}
 
 ORIG = {'X5':4,'V5':4,'X6':2,'V6':2,'X8':9,'V8':9,
         'X1':3,'X7':3,'XM':3,'X2':3,'XP':8,'VP':8,'X4':4}
 
-POS_COLOR = {'CENTRAL':'#f97316','OPUESTO':'#818cf8','PUNTA':'#22c55e',
-             'ARMADOR':'#f59e0b','LIBERO':'#06b6d4'}
-
-# Plantel CASLA
-CASLA_PLANTEL = {}  # se llena desde CASLA_PLANTEL sheet si existe
-
-# ── Leer índice de partidos ───────────────────────────────────────────
+# ── Leer índice ───────────────────────────────────────────────────────
 def leer_indice(wb):
-    partidos_meta = {}
-    if 'INDICE' not in wb.sheetnames:
-        return partidos_meta
+    meta = {}
+    if 'INDICE' not in wb.sheetnames: return meta
     ws = wb['INDICE']
-    for row in ws.iter_rows(min_row=4, max_row=50, values_only=True):
-        if not row[7]: continue  # col H = nombre solapa
+    for row in ws.iter_rows(min_row=3, max_row=50, values_only=True):
+        if not row[7]: continue
         solapa = str(row[7]).strip()
-        partidos_meta[solapa] = {
-            'fecha':     str(row[1]).strip() if row[1] else '',
-            'rival':     str(row[2]).strip() if row[2] else solapa,
-            'torneo':    str(row[3]).strip() if row[3] else '',
-            'resultado': str(row[6]).strip() if row[6] else '',
-            'sets_casla':str(row[4]).strip() if row[4] else '',
+        # Format fecha - handle both string and datetime
+        fecha_raw = row[1]
+        if fecha_raw is None:
+            fecha_fmt = ''
+        elif hasattr(fecha_raw, 'strftime'):
+            fecha_fmt = fecha_raw.strftime('%d/%m/%Y')
+        else:
+            fecha_fmt = str(fecha_raw).strip()
+        meta[solapa] = {
+            'fecha':      fecha_fmt,
+            'rival':      str(row[2]).strip() if row[2] else solapa,
+            'torneo':     str(row[3]).strip() if row[3] else '',
+            'resultado':  str(row[6]).strip() if row[6] else '',
+            'sets_casla': str(row[4]).strip() if row[4] else '',
             'sets_rival': str(row[5]).strip() if row[5] else '',
         }
-    return partidos_meta
+    return meta
 
-# ── Leer plantel desde hoja CASLA_PLANTEL ────────────────────────────
-def leer_plantel(wb):
+# ── Leer posiciones desde col BM (col 65) ────────────────────────────
+# Plantel cargado desde CASLA_PLANTEL
+_PLANTEL_CACHE = None
+
+def cargar_plantel():
+    global _PLANTEL_CACHE
+    if _PLANTEL_CACHE is not None: return _PLANTEL_CACHE
     plantel = {}
-    sheets_to_try = ['CASLA_PLANTEL', 'PLANTEL']
-    for sheet_name in sheets_to_try:
-        if sheet_name in wb.sheetnames:
-            ws = wb[sheet_name]
-            for row in ws.iter_rows(min_row=1, max_row=30, values_only=True):
-                if row[1] and row[2]:
-                    nm = str(row[1]).strip().upper()
+    gameplan = os.path.join(BASE, "CASL_GamePlan_4.xlsm")
+    if not os.path.exists(gameplan):
+        print("  AVISO: No se encontró CASL_GamePlan_4.xlsm — posiciones no disponibles")
+        _PLANTEL_CACHE = {}
+        return {}
+    try:
+        wb_gp = load_workbook(gameplan, read_only=True, data_only=True, keep_vba=False)
+        if 'CASLA_PLANTEL' in wb_gp.sheetnames:
+            ws_pl = wb_gp['CASLA_PLANTEL']
+            for row in ws_pl.iter_rows(min_row=2, max_row=25, values_only=True):
+                if row[0] and row[1] and row[2]:
+                    num = int(row[0]) if str(row[0]).isdigit() else 0
+                    nm  = str(row[1]).strip().upper()
                     pos = str(row[2]).strip().upper()
-                    if nm and pos:
-                        plantel[nm] = pos
-            print(f"  Plantel: {len(plantel)} jugadores desde {sheet_name}")
-            return plantel
+                    plantel[nm] = {'pos': pos, 'num': num}
+        print(f"  Plantel: {len(plantel)} jugadores desde CASLA_PLANTEL")
+    except Exception as e:
+        print(f"  AVISO: Error leyendo plantel: {e}")
+    _PLANTEL_CACHE = plantel
     return plantel
 
-def get_pos(nm, plantel):
+def get_pos_num(nm):
+    """Get position and number for a player name"""
+    plantel = cargar_plantel()
     nm_up = nm.upper()
     # Exact match
-    if nm_up in plantel: return plantel[nm_up]
-    # Partial match
+    if nm_up in plantel: return plantel[nm_up]['pos'], plantel[nm_up]['num']
+    # Partial: last name match
+    apellido = nm_up.split()[0] if nm_up else ''
     for k, v in plantel.items():
-        if k in nm_up or nm_up.split()[0] in k:
-            return v
-    return ''
+        if apellido and (apellido in k or k.split()[0] == apellido):
+            return v['pos'], v['num']
+    return '', 0
 
-# ── Parser de ataques (mismo que actualizar_gameplan.py) ─────────────
-def parse_ataques(ws, rows):
+def leer_posiciones(ws):
+    """Returns empty dict - positions now come from CASLA_PLANTEL via get_pos_num"""
+    return {}
+
+# ── Parser ataques ────────────────────────────────────────────────────
+def parse_ataques(ws, pos_by_row):
+    """
+    Structure: player name in col A (rows 4,12), combos in col B
+    Blocks of 12 cols per player (A-L, M-X, Y-AJ, AK-AV, AW-BH)
+    Zone order: Z1,Z9,Z2,Z6,Z8,Z5,Z7,Z4 (cols C-J), BLOCK OUT col K, TOTAL col L
+    """
+    all_rows = list(ws.iter_rows(min_row=4, max_row=18, values_only=True))
     attack = {}
 
-    def parse_block(rows_slice, col_start):
-        cur = None
-        for ri, row in enumerate(rows_slice):
-            if len(row) <= col_start: continue
-            nc = row[col_start]
-            bc = row[col_start+1] if col_start+1 < len(row) else None
-            tc = row[col_start+11] if col_start+11 < len(row) else None
-            if nc and gn(nc) > 0:
-                cur = cn(nc); num = gn(nc)
-                if cur not in attack:
-                    attack[cur] = {'num':num, 'combos':{}}
-                continue
-            if cur and bc and str(bc).strip() not in ('','ZONA','TOTALES','COMBO',''):
-                cod = str(bc).strip()
-                tot = si(tc)
-                zones = {}
-                for di, zn in enumerate([1,9,2,6,8,5,7,4]):
-                    ci = col_start+2+di
-                    zones[zn] = si(row[ci] if ci < len(row) else None)
-                if cod and (tot > 0 or any(v > 0 for v in zones.values())):
-                    attack[cur]['combos'][cod] = {
-                        'total': tot or sum(zones.values()),
-                        'zones': zones
-                    }
+    def get_player_from_rows(rows_slice, col_start):
+        """Find player name - handles both standard and offset DVW paste formats"""
+        # Try col_start and col_start+1 (DVW sometimes pastes offset by 1)
+        for offset in [0, 1]:
+            cs = col_start + offset
+            # Check header row (name in cs, combo header in cs+1)
+            nm_cell = rows_slice[0][cs] if cs < len(rows_slice[0]) else None
+            bc0 = rows_slice[0][cs+1] if cs+1 < len(rows_slice[0]) else None
+            if nm_cell and gn(nm_cell) and (not bc0 or str(bc0).strip() in ('ZONA','ZONA1','')):
+                return cn(nm_cell), gn(nm_cell), cs, 1
+            # Check inline (name in cs, combo code in cs+1)
+            for ri in range(len(rows_slice)):
+                row = rows_slice[ri]
+                nc = row[cs] if cs < len(row) else None
+                bc = row[cs+1] if cs+1 < len(row) else None
+                if nc and gn(nc) and bc and str(bc).strip() not in ('','ZONA','ZONA1','TOTALES','BLOCK OUT'):
+                    return cn(nc), gn(nc), cs, ri
+        return None, 0, col_start, 1
 
-    # Opuestos: rows 0-6, cols 0 y 12
-    parse_block(rows[0:7],  0)
-    parse_block(rows[0:7],  12)
-    # Centrales: rows 0-6, cols 24, 36, 48
-    parse_block(rows[0:7],  24)
-    parse_block(rows[0:7],  36)
-    parse_block(rows[0:7],  48)
-    # Puntas: rows 8-14, cols 0, 12, 24, 36, 48
-    parse_block(rows[8:15], 0)
-    parse_block(rows[8:15], 12)
-    parse_block(rows[8:15], 24)
-    parse_block(rows[8:15], 36)
-    parse_block(rows[8:15], 48)
+    def parse_block(rows_slice, col_start):
+        nm, num, actual_cs, combo_start = get_player_from_rows(rows_slice, col_start)
+        if not nm: return
+        if nm not in attack:
+            attack[nm] = {'num':num, 'combos':{}}
+
+        for ri in range(combo_start, len(rows_slice)):
+            row = rows_slice[ri]
+            nc = row[actual_cs] if actual_cs < len(row) else None
+            if nc and isinstance(nc, str) and 'OUTSIDE' in nc.upper(): break
+            if nc and gn(nc) > 0 and ri > combo_start:
+                bc_check = row[actual_cs+1] if actual_cs+1 < len(row) else None
+                if not bc_check or str(bc_check).strip() in ('','ZONA','ZONA1'): break
+
+            bc = row[actual_cs+1] if actual_cs+1 < len(row) else None
+            if not bc or str(bc).strip() in ('','ZONA','ZONA1','TOTALES','COMBO'): continue
+            cod = str(bc).strip()
+            # Total is always 11 cols after actual_cs
+            tc = row[actual_cs+11] if actual_cs+11 < len(row) else None
+            tot = si(tc)
+            zones = {}
+            for di, zn in enumerate([1,9,2,6,8,5,7,4]):
+                ci = actual_cs+2+di
+                zones[zn] = si(row[ci] if ci < len(row) else None)
+            if tot == 0: tot = sum(zones.values())
+            if cod and (tot > 0 or any(v > 0 for v in zones.values())):
+                attack[nm]['combos'][cod] = {'total':tot, 'zones':zones}
+
+    for col_start in [0, 12, 24, 36, 48]:
+        parse_block(all_rows[0:8],  col_start)
+        parse_block(all_rows[8:15], col_start)
 
     return attack
 
-# ── Parser de saques ─────────────────────────────────────────────────
-def parse_saques(ws, saq_rows):
+# ── Parser saques ─────────────────────────────────────────────────────
+def parse_saques(ws):
+    """
+    Structure rows 22-34:
+    Col A=nombre, Col B=zona (Z1/Z6/Z5), Cols C-H=destinos, Col I=total
+    Blocks of 9 cols. Groups: rows 22-27 (SM Z1,Z6,Z5 + SQ Z1,Z6,Z5), rows 29-34 (same)
+    """
+    saq_rows = list(ws.iter_rows(min_row=21, max_row=34, values_only=True))
     serve = {}
 
-    def parse_group(rows_slice, row_offset):
-        for block in range(15):
-            col = block * 10
-            if col >= len(rows_slice[0]): break
-            nm_cell = rows_slice[row_offset][col] if col < len(rows_slice[row_offset]) else None
+    def parse_group(rows_slice):
+        # Find players: when col A has a name with number
+        for block in range(10):
+            col = block * 9
+            if col >= len(rows_slice[0] or []): break
+            # Row 0 of group = first player Z1 SM
+            nm_cell = rows_slice[0][col] if col < len(rows_slice[0]) else None
             if not nm_cell or not gn(nm_cell): continue
             nm = cn(nm_cell)
-            if nm not in serve: serve[nm] = {'num':gn(nm_cell),'sm':{},'sq':{}}
-            for ti, tipo in enumerate(['sm','sq']):
-                dest = {}
-                row = rows_slice[row_offset + ti]
-                orig = si(row[col+2] if col+2 < len(row) else None) or 6
-                for di, dz in enumerate([1,9,6,8,5,7]):
-                    ci = col+3+di
-                    val = si(row[ci] if ci < len(row) else None)
-                    if val > 0: dest[dz] = val
-                serve[nm][tipo] = {'orig': orig, 'dest': dest}
+            num = gn(nm_cell)
+            if nm not in serve: serve[nm] = {'num':num, 'sm':{}, 'sq':{}}
 
-    parse_group(saq_rows, 0)
-    parse_group(saq_rows, 2)
+            # SM: rows 0-2 (Z1,Z6,Z5)
+            # SQ: rows 3-5 (Z1,Z6,Z5)
+            dest_sm = {}; dest_sq = {}
+            for ri in range(3):
+                row = rows_slice[ri] if ri < len(rows_slice) else []
+                for di, dz in enumerate([1,9,6,8,5,7]):
+                    ci = col+2+di
+                    val = si(row[ci] if ci < len(row) else None)
+                    if val > 0: dest_sm[dz] = dest_sm.get(dz,0) + val
+            for ri in range(3,6):
+                row = rows_slice[ri] if ri < len(rows_slice) else []
+                for di, dz in enumerate([1,9,6,8,5,7]):
+                    ci = col+2+di
+                    val = si(row[ci] if ci < len(row) else None)
+                    if val > 0: dest_sq[dz] = dest_sq.get(dz,0) + val
+
+            serve[nm]['sm'] = dest_sm
+            serve[nm]['sq'] = dest_sq
+
+    # Group 1: rows 22-27 (index 1-6, skipping header row 21)
+    parse_group(saq_rows[1:7])
+    # Group 2: rows 29-34 (index 8-13)
+    parse_group(saq_rows[8:14])
+    # Also parse col J block (second player in each group, 9 cols after col A)
+    def parse_group_j(rows_slice):
+        # Col J = col index 9, blocks start at col 9, 18, 27...
+        for block in range(10):
+            col = block * 9 + 9  # offset by 9 for col J start
+            if col >= len(rows_slice[0] or []): break
+            nm_cell = rows_slice[0][col] if col < len(rows_slice[0]) else None
+            if not nm_cell or not gn(nm_cell): continue
+            nm = cn(nm_cell); num = gn(nm_cell)
+            if nm not in serve: serve[nm] = {'num':num, 'sm':{}, 'sq':{}}
+            dest_sm = {}; dest_sq = {}
+            for ri in range(3):
+                row = rows_slice[ri] if ri < len(rows_slice) else []
+                for di, dz in enumerate([1,9,6,8,5,7]):
+                    ci = col+2+di
+                    val = si(row[ci] if ci < len(row) else None)
+                    if val > 0: dest_sm[dz] = dest_sm.get(dz,0) + val
+            for ri in range(3,6):
+                row = rows_slice[ri] if ri < len(rows_slice) else []
+                for di, dz in enumerate([1,9,6,8,5,7]):
+                    ci = col+2+di
+                    val = si(row[ci] if ci < len(row) else None)
+                    if val > 0: dest_sq[dz] = dest_sq.get(dz,0) + val
+            serve[nm]['sm'] = dest_sm; serve[nm]['sq'] = dest_sq
+    parse_group_j(saq_rows[1:7])
+    parse_group_j(saq_rows[8:14])
 
     return serve
 
-# ── Parser de recepción ───────────────────────────────────────────────
-def parse_recepcion(ws, rec_rows):
-    recepcion = {}
-    if len(rec_rows) < 2: return recepcion
-
-    # Header row (row 1 = index 1)
-    rec_header = rec_rows[1] if len(rec_rows) > 1 else rec_rows[0]
-    rec_cols = []
-    for ci, v in enumerate(rec_header):
-        if v and isinstance(v, str) and any(c.isdigit() for c in str(v)[:3]):
-            rec_cols.append((ci, cn(v), gn(v)))
-
-    def get_rec_row(row_idx, col_start):
-        if row_idx >= len(rec_rows): return {'tot':0,'eff':0,'pos':0,'neg':0}
-        row = rec_rows[row_idx]
-        tot      = si(row[col_start+1] if col_start+1 < len(row) else None)
-        eff      = se_pct(row[col_start+2] if col_start+2 < len(row) else None)
-        cnt_perf = si(row[col_start+3] if col_start+3 < len(row) else None)
-        cnt_pos  = si(row[col_start+4] if col_start+4 < len(row) else None)
-        cnt_neg  = si(row[col_start+5] if col_start+5 < len(row) else None)
-        cnt_err  = si(row[col_start+6] if col_start+6 < len(row) else None)
-        return {'tot':tot,'eff':eff,
-                'pos':pct(cnt_perf+cnt_pos, tot),
-                'neg':pct(cnt_neg+cnt_err,  tot)}
-
-    for col_start, name, num in rec_cols:
-        # SM TOTAL = row 0, SQ TOTAL = row 1
-        # FLOTADO: rows 3-14 (POS1: row3, subs:4,5,6; POS6: row7...; POS5: row11...)
-        # POTENCIA: rows 16-27 (POS1: row16...)
-        flotado = {
-            'desde_z1': {'total':get_rec_row(3, col_start),'p1':get_rec_row(4,col_start),
-                         'p6':get_rec_row(5,col_start),'p5':get_rec_row(6,col_start)},
-            'desde_z6': {'total':get_rec_row(7, col_start),'p1':get_rec_row(8,col_start),
-                         'p6':get_rec_row(9,col_start),'p5':get_rec_row(10,col_start)},
-            'desde_z5': {'total':get_rec_row(11,col_start),'p1':get_rec_row(12,col_start),
-                         'p6':get_rec_row(13,col_start),'p5':get_rec_row(14,col_start)},
-        }
-        potencia = {
-            'desde_z1': {'total':get_rec_row(16,col_start),'p1':get_rec_row(17,col_start),
-                         'p6':get_rec_row(18,col_start),'p5':get_rec_row(19,col_start)},
-            'desde_z6': {'total':get_rec_row(20,col_start),'p1':get_rec_row(21,col_start),
-                         'p6':get_rec_row(22,col_start),'p5':get_rec_row(23,col_start)},
-            'desde_z5': {'total':get_rec_row(24,col_start),'p1':get_rec_row(25,col_start),
-                         'p6':get_rec_row(26,col_start),'p5':get_rec_row(27,col_start)},
-        }
-        recepcion[name] = {'num':num, 'flotado':flotado, 'potencia':potencia}
-
-    return recepcion
-
-# ── Parser de armadores ───────────────────────────────────────────────
-def parse_armadores(ws, arm_rows):
-    armadores = {}
-    if len(arm_rows) < 2: return armadores
-
-    arm_header = arm_rows[0]
-    # Find armador columns by looking for cell with nombre
-    arm_cols = []
-    for ci, v in enumerate(arm_header):
-        if v and isinstance(v, str) and 'ARMADOR' in str(v).upper():
-            arm_cols.append(ci)
-
-    pos_labels = ['P1','P6','P5','P4','P3','P2']
-
-    for cs in arm_cols:
-        nm_cell = arm_header[cs]
-        if not nm_cell: continue
-        nm_raw = str(nm_cell).replace('— ARMADOR','').strip()
-        nm = cn(nm_raw)
-        if not nm: continue
-
-        rots = []
-        for ri, pos_lbl in enumerate(pos_labels):
-            row = arm_rows[2+ri] if 2+ri < len(arm_rows) else []
-            tot = si(row[cs+9] if cs+9 < len(row) else None)
-            dZ4 = si(row[cs+1] if cs+1 < len(row) else None)
-            dZ3 = si(row[cs+3] if cs+3 < len(row) else None)
-            dZ2 = si(row[cs+5] if cs+5 < len(row) else None)
-            dZ6 = si(row[cs+7] if cs+7 < len(row) else None)
-            # pts y eff
-            eff = se_pct(row[cs+10] if cs+10 < len(row) else None)
-            pts = si(row[cs+11] if cs+11 < len(row) else None)
-            pts_pct = se_pct(row[cs+12] if cs+12 < len(row) else None)
-            err_pct = se_pct(row[cs+13] if cs+13 < len(row) else None)
-            rots.append({
-                'pos': pos_lbl, 'total': tot,
-                'dist': [
-                    {'zona':4,'tot':dZ4,'pts':0,'pct':pct(dZ4,tot),'pct_p':0},
-                    {'zona':3,'tot':dZ3,'pts':0,'pct':pct(dZ3,tot),'pct_p':0},
-                    {'zona':2,'tot':dZ2,'pts':0,'pct':pct(dZ2,tot),'pct_p':0},
-                    {'zona':6,'tot':dZ6,'pts':0,'pct':pct(dZ6,tot),'pct_p':0},
-                ],
-                'eff': eff, 'pts': pts, 'pts_pct': pts_pct, 'err_pct': err_pct
-            })
-
-        # SO y TR rows 8-9
-        so_row = arm_rows[8] if 8 < len(arm_rows) else []
-        tr_row = arm_rows[9] if 9 < len(arm_rows) else []
-        def pill_sotr(row, label):
-            return {'label':label,
-                    'eff': se_pct(row[cs+10] if cs+10 < len(row) else None),
-                    'tot': si(row[cs+9] if cs+9 < len(row) else None),
-                    'pts': si(row[cs+11] if cs+11 < len(row) else None),
-                    'pts_pct': se_pct(row[cs+12] if cs+12 < len(row) else None),
-                    'err_pct': se_pct(row[cs+13] if cs+13 < len(row) else None)}
-
-        pills = [{'label':r['pos'],'eff':r['eff'],'tot':r['total'],
-                  'pts':r['pts'],'pts_pct':r['pts_pct'],'err_pct':r['err_pct']}
-                 for r in rots]
-        pills.append(pill_sotr(so_row,'SO'))
-        pills.append(pill_sotr(tr_row,'TR'))
-
-        armadores[nm] = {'nombre':nm, 'rotaciones':rots, 'pills':pills,
-                         'recepcion':[], 'so':{}, 'tr':{}}
-
-    return armadores
-
-# ── Leer una hoja de partido completa ────────────────────────────────
+# ── Leer partido completo ─────────────────────────────────────────────
 def leer_partido(ws, meta):
-    all_rows = list(ws.iter_rows(min_row=1, max_row=200, values_only=True))
+    pos_by_row = leer_posiciones(ws)
+    attack = parse_ataques(ws, pos_by_row)
+    serve  = parse_saques(ws)
 
-    # Find section start rows by scanning for title cells
-    atk_row = saq_row = rec_row = arm_row = None
-    for i, row in enumerate(all_rows):
-        if not row[0]: continue
-        val = str(row[0]).upper()
-        if 'ATAQUES' in val and atk_row is None: atk_row = i + 1
-        elif 'SAQUES' in val and saq_row is None: saq_row = i + 1
-        elif 'RECEPCIÓN' in val and rec_row is None: rec_row = i + 1
-        elif 'RECEPCION' in val and rec_row is None: rec_row = i + 1
-        elif 'ARMADOR' in val and arm_row is None: arm_row = i + 1
+    player_pos = leer_posiciones(ws)
 
-    atk_rows = all_rows[atk_row:atk_row+20] if atk_row else []
-    saq_rows = all_rows[saq_row:saq_row+6]  if saq_row else []
-    rec_rows = all_rows[rec_row:rec_row+35]  if rec_row else []
-    arm_rows = all_rows[arm_row:arm_row+15]  if arm_row else []
-
-    attack    = parse_ataques(ws, atk_rows) if atk_rows else {}
-    serve     = parse_saques(ws, saq_rows)  if saq_rows else {}
-    recepcion = parse_recepcion(ws, rec_rows) if rec_rows else {}
-    armadores = parse_armadores(ws, arm_rows) if arm_rows else {}
+    # Parse stats (rows 36-64) for EFF and PTS per player
+    stats = {}
+    stat_rows = list(ws.iter_rows(min_row=36, max_row=65, values_only=True))
+    for row in stat_rows:
+        nm_a = row[0] if row[0] else None
+        if not nm_a or not gn(nm_a): continue
+        nm = cn(nm_a)
+        eff = se(row[1]) if row[1] else 0
+        tot = si(row[2]) if row[2] else 0
+        pts = si(row[3]) if row[3] else 0
+        if nm not in stats:
+            stats[nm] = {'sm_eff':eff,'sm_tot':tot,'sm_pts':pts,'sq_eff':0,'sq_tot':0,'sq_pts':0}
+        else:
+            stats[nm]['sq_eff'] = eff
+            stats[nm]['sq_tot'] = tot
+            stats[nm]['sq_pts'] = pts
+        # Attack stats from cols H onwards (X8, X5, X6, etc.)
+        atk_stats = {}
+        for col_off, cod in enumerate(['X8','X5','X6','X1','X7','XP']):
+            base = 7 + col_off*7
+            if base+2 < len(row):
+                a_eff = se(row[base+1])
+                a_tot = si(row[base+2])
+                a_pts = si(row[base+3])
+                if a_tot > 0:
+                    atk_stats[cod] = {'eff':a_eff,'tot':a_tot,'pts':a_pts}
+        stats[nm]['atk'] = atk_stats
 
     return {
-        'rival':     meta.get('rival',''),
-        'fecha':     meta.get('fecha',''),
-        'torneo':    meta.get('torneo',''),
-        'resultado': meta.get('resultado',''),
-        'sets_casla':meta.get('sets_casla',''),
-        'sets_rival':meta.get('sets_rival',''),
-        'attack': attack, 'serve': serve,
-        'recepcion': recepcion, 'armadores': armadores
+        'rival':      meta.get('rival',''),
+        'fecha':      meta.get('fecha',''),
+        'torneo':     meta.get('torneo',''),
+        'resultado':  meta.get('resultado',''),
+        'sets_casla': meta.get('sets_casla',''),
+        'sets_rival': meta.get('sets_rival',''),
+        'attack':     attack,
+        'serve':      serve,
+        'player_pos': player_pos,
+        'stats':      stats,
     }
 
-# ── Acumular datos de todos los partidos ──────────────────────────────
-def acumular(partidos_data, plantel):
-    all_names = {}
+# ── Acumular todos los partidos ───────────────────────────────────────
+def acumular(partidos_data):
+    all_players = {}
 
     for pd in partidos_data:
+        pp = pd['player_pos']
+
         for nm, data in pd['attack'].items():
-            pos = get_pos(nm, plantel)
-            if nm not in all_names:
-                all_names[nm] = {'num':data['num'],'pos':pos,'combos':{}}
+            pos_pl, num_pl = get_pos_num(nm)
+            pos = pos_pl or pp.get(nm, '')
+            num = num_pl or data['num']
+            if nm not in all_players:
+                all_players[nm] = {'num':num,'pos':pos,'combos':{},'serve_sm':{},'serve_sq':{}}
+            if pos and not all_players[nm]['pos']:
+                all_players[nm]['pos'] = pos
+            if num and not all_players[nm]['num']:
+                all_players[nm]['num'] = num
             for cod, a in data['combos'].items():
-                if cod not in all_names[nm]['combos']:
-                    all_names[nm]['combos'][cod] = {'total':0,'zones':{}}
-                all_names[nm]['combos'][cod]['total'] += a['total']
-                for z, v in a['zones'].items():
-                    all_names[nm]['combos'][cod]['zones'][z] = \
-                        all_names[nm]['combos'][cod]['zones'].get(z, 0) + v
+                if cod not in all_players[nm]['combos']:
+                    all_players[nm]['combos'][cod] = {'total':0,'zones':{}}
+                all_players[nm]['combos'][cod]['total'] += a['total']
+                for z,v in a['zones'].items():
+                    all_players[nm]['combos'][cod]['zones'][z] =                         all_players[nm]['combos'][cod]['zones'].get(z,0) + v
+
+            # Accumulate stats
+            pd_stats = pd.get('stats', {}).get(nm, {})
+            if pd_stats:
+                if 'stats' not in all_players[nm]:
+                    all_players[nm]['stats'] = {'sm_eff':0,'sm_tot':0,'sm_pts':0,
+                                                 'sq_eff':0,'sq_tot':0,'sq_pts':0,'atk':{}}
+                s = all_players[nm]['stats']
+                for k in ['sm_tot','sm_pts','sq_tot','sq_pts']:
+                    s[k] = s.get(k,0) + pd_stats.get(k,0)
+                for cod2, av in pd_stats.get('atk',{}).items():
+                    if cod2 not in s['atk']:
+                        s['atk'][cod2] = {'eff':0,'tot':0,'pts':0}
+                    s['atk'][cod2]['tot'] += av.get('tot',0)
+                    s['atk'][cod2]['pts'] += av.get('pts',0)
 
         for nm, data in pd['serve'].items():
-            pos = get_pos(nm, plantel)
-            if nm not in all_names:
-                all_names[nm] = {'num':data.get('num',0),'pos':pos,'combos':{}}
-            if '_serve' not in all_names[nm]:
-                all_names[nm]['_serve'] = {'sm':{'orig':6,'dest':{}},
-                                           'sq':{'orig':6,'dest':{}}}
-            for tipo in ['sm','sq']:
-                if tipo in data:
-                    for dz, v in data[tipo].get('dest',{}).items():
-                        cur = all_names[nm]['_serve'][tipo]['dest']
-                        cur[dz] = cur.get(dz, 0) + v
+            pos_pl, num_pl = get_pos_num(nm)
+            pos = pos_pl or pp.get(nm, '')
+            num_srv = num_pl or data.get('num', 0)
+            if nm not in all_players:
+                all_players[nm] = {'num':num_srv,'pos':pos,'combos':{},'serve_sm':{},'serve_sq':{}}
+            else:
+                if pos and not all_players[nm]['pos']: all_players[nm]['pos'] = pos
+                if num_srv and not all_players[nm]['num']: all_players[nm]['num'] = num_srv
+            if pos and not all_players[nm]['pos']:
+                all_players[nm]['pos'] = pos
+            for dz,v in data.get('sm',{}).items():
+                all_players[nm]['serve_sm'][dz] = all_players[nm]['serve_sm'].get(dz,0)+v
+            for dz,v in data.get('sq',{}).items():
+                all_players[nm]['serve_sq'][dz] = all_players[nm]['serve_sq'].get(dz,0)+v
 
-    return all_names
+    return all_players
 
 # ── Build jugadores array ─────────────────────────────────────────────
-def build_jugadores(all_names, all_rec, plantel):
+def build_jugadores(all_players):
     jugadores = []
-    for nm in sorted(all_names, key=lambda n: all_names[n]['num']):
-        info = all_names[nm]
-        pos  = info['pos'] or get_pos(nm, plantel)
-        color = POS_COLOR.get(pos, '#64748b')
-        num  = info['num']
+    for nm in sorted(all_players, key=lambda n: all_players[n]['num']):
+        info  = all_players[nm]
+        pos   = info['pos']
+        color = POS_COLOR.get(pos,'#64748b')
+        num   = info['num']
 
         # Ataques
         ataques = []
+        st = info.get('stats', {})
         for cod, a in info['combos'].items():
-            tot  = a['total'] or sum(a['zones'].values())
+            tot   = a['total'] or sum(a['zones'].values())
             zones = a['zones']
-            orig = ORIG.get(cod, 3)
-            dest_sorted = sorted([(z,v) for z,v in zones.items() if v>0],
-                                 key=lambda x:-x[1])
+            orig  = ORIG.get(cod,3)
+            dest_sorted = sorted([(z,v) for z,v in zones.items() if v>0], key=lambda x:-x[1])
             destinos = [{'z':z,'pct':pct(v,tot)} for z,v in dest_sorted[:4]]
-            eff = pct(sum(v for z,v in zones.items() if z in [2,5,7]), tot)
+            # Get EFF and PTS from stats
+            atk_st = st.get('atk', {}).get(cod, {})
+            eff = atk_st.get('eff', 0)
+            pts = atk_st.get('pts', 0)
             ataques.append({'cod':cod,'orig':orig,'destinos':destinos,
-                            'eff':eff,'tot':tot,'pts':0,'slash':0,'err':0,
-                            'video':None,'pts_pct':0})
+                            'eff':eff,'tot':tot,'pts':pts,'slash':0,'err':0,
+                            'video':None,'pts_pct':pct(pts,tot)})
 
         # Saques
         saques = []
-        srv = info.get('_serve', {})
-        for cod, tipo_label in [('SM','FLOTADO'),('SQ','POTENCIA')]:
-            key = cod.lower()
-            sd  = srv.get(key, {})
-            dest_tot = sum(sd.get('dest',{}).values()) or 1
-            destinos = [{'z':z,'pct':pct(v,dest_tot)}
-                        for z,v in sorted(sd.get('dest',{}).items(),
-                                          key=lambda x:-x[1])[:4]]
-            saques.append({'cod':cod,'tipo':tipo_label,'orig':sd.get('orig',6),
-                           'destinos':destinos,'eff':0,'tot':0,'pts':0,
+        for cod, tipo_label, dest_data in [('SM','FLOTADO',info['serve_sm']),
+                                            ('SQ','POTENCIA',info['serve_sq'])]:
+            tot_dest = sum(dest_data.values()) or 1
+            destinos = [{'z':z,'pct':pct(v,tot_dest)}
+                        for z,v in sorted(dest_data.items(),key=lambda x:-x[1])[:6]]
+            saques.append({'cod':cod,'tipo':tipo_label,'orig':6,'destinos':destinos,
+                           'eff':0,'tot':sum(dest_data.values()),'pts':0,
                            'plus':0,'slash':0,'err':0,'video':None,'pts_pct':0})
 
         j = {'num':num,'nombre':f"{num} {nm}",'pos':pos,'color':color,
-             'info':{},'ataques':ataques,'saques':saques,'video':0,
-             'recepcion':all_rec.get(nm,{})}
+             'info':{},'ataques':ataques,'saques':saques,'video':0,'recepcion':{}}
         jugadores.append(j)
 
     return jugadores
@@ -415,68 +415,43 @@ def main():
     wb = load_workbook(EXCEL, read_only=True, data_only=True, keep_vba=False)
     print(f"Hojas: {wb.sheetnames}\n")
 
-    # Leer plantel
-    plantel = leer_plantel(wb)
+    meta_idx = leer_indice(wb)
 
-    # Leer índice
-    meta_partidos = leer_indice(wb)
+    # Match sheet names to indice (fuzzy match)
+    def get_meta(sheet_name):
+        if sheet_name in meta_idx: return meta_idx[sheet_name]
+        # Try fuzzy: sheet CIUDAD matches CIUDAD VOLEY
+        for k, v in meta_idx.items():
+            if sheet_name in k or k in sheet_name:
+                return v
+        return {'rival':sheet_name,'fecha':'','torneo':'','resultado':'',
+                'sets_casla':'','sets_rival':''}
 
-    # Procesar cada hoja de partido
     partidos_procesados = []
     for sheet_name in wb.sheetnames:
         if sheet_name in SKIP: continue
         ws = wb[sheet_name]
-        meta = meta_partidos.get(sheet_name, {
-            'rival': sheet_name, 'fecha': '', 'torneo': '',
-            'resultado': '', 'sets_casla': '', 'sets_rival': ''
-        })
-        print(f"Procesando: {sheet_name} ({meta.get('fecha','')} vs {meta.get('rival','')})")
+        meta = get_meta(sheet_name)
+        print(f"Procesando: {sheet_name} ({meta['fecha']} vs {meta['rival']})")
         pd_data = leer_partido(ws, meta)
-        partidos_procesados.append({'nombre': sheet_name, **pd_data})
+        partidos_procesados.append({'nombre':sheet_name, **pd_data})
 
-    # Acumular
-    all_names = acumular(partidos_procesados, plantel)
+    # Acumulate
+    all_players = acumular(partidos_procesados)
+    jugadores   = build_jugadores(all_players)
 
-    # Acumular recepción
-    all_rec = {}
-    for pd in partidos_procesados:
-        for nm, rec in pd['recepcion'].items():
-            if nm not in all_rec:
-                all_rec[nm] = {'num':rec['num'],'flotado':{},'potencia':{}}
-            # Simple: take first non-empty
-            for tipo in ['flotado','potencia']:
-                if not all_rec[nm][tipo] and rec.get(tipo):
-                    all_rec[nm][tipo] = rec[tipo]
-
-    # Build jugadores
-    jugadores = build_jugadores(all_names, all_rec, plantel)
-
-    print(f"\n✓ {len(jugadores)} jugadores procesados:")
+    print(f"\n✓ {len(jugadores)} jugadores:")
     for j in jugadores:
         nm = re.sub(r'^\d+\s*','',j['nombre'])
-        print(f"  #{j['num']} {nm} ({j['pos']}) — {len(j['ataques'])} combos ataque, "
-              f"{sum(s['tot'] for s in j['saques'])} saques")
+        na = len([a for a in j['ataques'] if a['tot']>0])
+        ns = sum(s['tot'] for s in j['saques'])
+        print(f"  #{j['num']} {nm} ({j['pos']}) — {na} combos, {ns} saques")
 
-    # Build armadores acumulados
-    arm_acum = {}
-    for pd in partidos_procesados:
-        for nm, arm in pd['armadores'].items():
-            if nm not in arm_acum:
-                arm_acum[nm] = arm
-
-    # Armador data (titular = primero, suplente = segundo)
-    arm_names = list(arm_acum.keys())
-    arm_titular  = arm_acum[arm_names[0]] if len(arm_names) > 0 else {}
-    arm_suplente = arm_acum[arm_names[1]] if len(arm_names) > 1 else {}
-
-    # Partidos individuales (para subfiltro)
+    # Per partido
     partidos_list = []
     for pd in partidos_procesados:
-        jugadores_partido = build_jugadores(
-            acumular([pd], plantel),
-            {nm: rec for nm, rec in pd['recepcion'].items()},
-            plantel
-        )
+        pp = acumular([pd])
+        jj = build_jugadores(pp)
         partidos_list.append({
             'nombre':     pd['nombre'],
             'rival':      pd['rival'],
@@ -485,39 +460,24 @@ def main():
             'resultado':  pd['resultado'],
             'sets_casla': pd['sets_casla'],
             'sets_rival': pd['sets_rival'],
-            'jugadores':  jugadores_partido,
+            'jugadores':  jj,
         })
 
-    # Generar JS
     generado = datetime.now().strftime('%d/%m/%Y %H:%M')
-    js = f"""// datos_partidos.js — generado automáticamente por generar_datos_partidos.py
-// {generado} — CASLA VOLEY
-// NO EDITAR MANUALMENTE
-
+    meta_list = [
+        {'nombre':p['nombre'],'rival':p['rival'],'fecha':p['fecha'],
+         'torneo':p['torneo'],'resultado':p['resultado'],
+         'sets_casla':p['sets_casla'],'sets_rival':p['sets_rival']}
+        for p in partidos_procesados
+    ]
+    js = f"""// datos_partidos.js — {generado}
 const PARTIDOS_GENERADO = "{generado}";
 const PARTIDOS_TOTAL = {len(partidos_procesados)};
-
-// Metadatos de cada partido
-const PARTIDOS_META = {json.dumps([
-    {'nombre': p['nombre'], 'rival': p['rival'], 'fecha': p['fecha'],
-     'torneo': p['torneo'], 'resultado': p['resultado'],
-     'sets_casla': p['sets_casla'], 'sets_rival': p['sets_rival']}
-    for p in partidos_procesados
-], ensure_ascii=False, indent=2)};
-
-// Datos ACUMULADOS de todos los partidos
+const PARTIDOS_META = {json.dumps(meta_list, ensure_ascii=False, indent=2)};
 const PARTIDOS_JUGADORES = {json.dumps(jugadores, ensure_ascii=False, indent=2)};
-
-// Datos ARMADOR acumulado
-const PARTIDOS_ARMADOR = {json.dumps({'titular': arm_titular, 'suplente': arm_suplente}, ensure_ascii=False, indent=2)};
-
-// Datos POR PARTIDO INDIVIDUAL (para subfiltro)
 const PARTIDOS_INDIVIDUAL = {json.dumps(partidos_list, ensure_ascii=False, indent=2)};
 """
-
-    with open(OUT, 'w', encoding='utf-8') as f:
-        f.write(js)
-
+    with open(OUT,'w',encoding='utf-8') as f: f.write(js)
     print(f"\n✓ datos_partidos.js generado ({len(js)//1024}KB) — subir a GitHub")
 
 if __name__ == '__main__':
