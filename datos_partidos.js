@@ -1,5 +1,5 @@
-// datos_partidos.js — 31/05/2026 11:04
-const PARTIDOS_GENERADO = "31/05/2026 11:04";
+// datos_partidos.js — 31/05/2026 11:31
+const PARTIDOS_GENERADO = "31/05/2026 11:31";
 const PARTIDOS_TOTAL = 6;
 const PARTIDOS_META = [
   {
@@ -222,7 +222,20 @@ const PARTIDOS_JUGADORES = [
       }
     ],
     "video": 0,
-    "recepcion": {}
+    "recepcion": {},
+    "objetivos": {
+      "sq": -12,
+      "rec": 25,
+      "bqpos": 63,
+      "bqpt": 36,
+      "atqq": 58,
+      "atqhb": null,
+      "atqx": -100,
+      "atqrp": 56,
+      "atqri": 33,
+      "atqrm": 75,
+      "atqtr": 54
+    }
   },
   {
     "num": 3,
@@ -424,6 +437,19 @@ const PARTIDOS_JUGADORES = [
           }
         }
       }
+    },
+    "objetivos": {
+      "sq": -17,
+      "rec": 14,
+      "bqpos": null,
+      "bqpt": null,
+      "atqq": null,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": null,
+      "atqri": null,
+      "atqrm": null,
+      "atqtr": null
     }
   },
   {
@@ -489,7 +515,20 @@ const PARTIDOS_JUGADORES = [
       }
     ],
     "video": 0,
-    "recepcion": {}
+    "recepcion": {},
+    "objetivos": {
+      "sq": 5,
+      "rec": -50,
+      "bqpos": 48,
+      "bqpt": 9,
+      "atqq": null,
+      "atqhb": 0,
+      "atqx": null,
+      "atqrp": 0,
+      "atqri": 0,
+      "atqrm": null,
+      "atqtr": 19
+    }
   },
   {
     "num": 5,
@@ -677,7 +716,20 @@ const PARTIDOS_JUGADORES = [
       }
     ],
     "video": 0,
-    "recepcion": {}
+    "recepcion": {},
+    "objetivos": {
+      "sq": -42,
+      "rec": 25,
+      "bqpos": 33,
+      "bqpt": 18,
+      "atqq": null,
+      "atqhb": 16,
+      "atqx": 28,
+      "atqrp": 32,
+      "atqri": 8,
+      "atqrm": 7,
+      "atqtr": 33
+    }
   },
   {
     "num": 6,
@@ -902,6 +954,19 @@ const PARTIDOS_JUGADORES = [
           }
         }
       }
+    },
+    "objetivos": {
+      "sq": -58,
+      "rec": 58,
+      "bqpos": 100,
+      "bqpt": 0,
+      "atqq": null,
+      "atqhb": null,
+      "atqx": -35,
+      "atqrp": 0,
+      "atqri": 0,
+      "atqrm": null,
+      "atqtr": -66
     }
   },
   {
@@ -963,7 +1028,20 @@ const PARTIDOS_JUGADORES = [
       }
     ],
     "video": 0,
-    "recepcion": {}
+    "recepcion": {},
+    "objetivos": {
+      "sq": 5,
+      "rec": 0,
+      "bqpos": 40,
+      "bqpt": 6,
+      "atqq": null,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": 100,
+      "atqri": -100,
+      "atqrm": null,
+      "atqtr": -25
+    }
   },
   {
     "num": 10,
@@ -1003,7 +1081,20 @@ const PARTIDOS_JUGADORES = [
       }
     ],
     "video": 0,
-    "recepcion": {}
+    "recepcion": {},
+    "objetivos": {
+      "sq": null,
+      "rec": null,
+      "bqpos": null,
+      "bqpt": null,
+      "atqq": null,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": null,
+      "atqri": null,
+      "atqrm": null,
+      "atqtr": null
+    }
   },
   {
     "num": 11,
@@ -1335,6 +1426,19 @@ const PARTIDOS_JUGADORES = [
           }
         }
       }
+    },
+    "objetivos": {
+      "sq": -26,
+      "rec": 41,
+      "bqpos": 28,
+      "bqpt": 10,
+      "atqq": null,
+      "atqhb": 22,
+      "atqx": 34,
+      "atqrp": 35,
+      "atqri": 68,
+      "atqrm": 11,
+      "atqtr": 20
     }
   },
   {
@@ -1537,6 +1641,19 @@ const PARTIDOS_JUGADORES = [
           }
         }
       }
+    },
+    "objetivos": {
+      "sq": null,
+      "rec": 35,
+      "bqpos": null,
+      "bqpt": null,
+      "atqq": null,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": null,
+      "atqri": null,
+      "atqrm": null,
+      "atqtr": null
     }
   },
   {
@@ -1748,6 +1865,19 @@ const PARTIDOS_JUGADORES = [
           }
         }
       }
+    },
+    "objetivos": {
+      "sq": -17,
+      "rec": 38,
+      "bqpos": null,
+      "bqpt": null,
+      "atqq": null,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": null,
+      "atqri": null,
+      "atqrm": null,
+      "atqtr": null
     }
   },
   {
@@ -2063,6 +2193,19 @@ const PARTIDOS_JUGADORES = [
           }
         }
       }
+    },
+    "objetivos": {
+      "sq": -2,
+      "rec": 46,
+      "bqpos": 37,
+      "bqpt": 15,
+      "atqq": null,
+      "atqhb": 19,
+      "atqx": 30,
+      "atqrp": 17,
+      "atqri": 51,
+      "atqrm": 29,
+      "atqtr": 28
     }
   },
   {
@@ -2175,7 +2318,20 @@ const PARTIDOS_JUGADORES = [
       }
     ],
     "video": 0,
-    "recepcion": {}
+    "recepcion": {},
+    "objetivos": {
+      "sq": 1,
+      "rec": 8,
+      "bqpos": 50,
+      "bqpt": 10,
+      "atqq": 50,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": 50,
+      "atqri": 100,
+      "atqrm": null,
+      "atqtr": 46
+    }
   },
   {
     "num": 17,
@@ -2324,7 +2480,20 @@ const PARTIDOS_JUGADORES = [
       }
     ],
     "video": 0,
-    "recepcion": {}
+    "recepcion": {},
+    "objetivos": {
+      "sq": -4,
+      "rec": null,
+      "bqpos": 31,
+      "bqpt": 20,
+      "atqq": 34,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": 18,
+      "atqri": 58,
+      "atqrm": null,
+      "atqtr": 50
+    }
   },
   {
     "num": 18,
@@ -2474,7 +2643,20 @@ const PARTIDOS_JUGADORES = [
       }
     ],
     "video": 0,
-    "recepcion": {}
+    "recepcion": {},
+    "objetivos": {
+      "sq": -11,
+      "rec": null,
+      "bqpos": 33,
+      "bqpt": 8,
+      "atqq": null,
+      "atqhb": 9,
+      "atqx": 22,
+      "atqrp": 15,
+      "atqri": 63,
+      "atqrm": 50,
+      "atqtr": 12
+    }
   },
   {
     "num": 19,
@@ -2514,7 +2696,20 @@ const PARTIDOS_JUGADORES = [
       }
     ],
     "video": 0,
-    "recepcion": {}
+    "recepcion": {},
+    "objetivos": {
+      "sq": 6,
+      "rec": null,
+      "bqpos": null,
+      "bqpt": null,
+      "atqq": null,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": null,
+      "atqri": null,
+      "atqrm": null,
+      "atqtr": null
+    }
   }
 ];
 
@@ -3214,7 +3409,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -7,
+          "rec": null,
+          "bqpos": 50,
+          "bqpt": 25,
+          "atqq": 62,
+          "atqhb": null,
+          "atqx": -100,
+          "atqrp": 40,
+          "atqri": 0,
+          "atqrm": null,
+          "atqtr": 75
+        }
       },
       {
         "num": 3,
@@ -3416,6 +3624,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": 18,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -3461,7 +3682,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 0,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 5,
@@ -3599,7 +3833,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -17,
+          "rec": 0,
+          "bqpos": 18,
+          "bqpt": 6,
+          "atqq": null,
+          "atqhb": 20,
+          "atqx": 43,
+          "atqrp": 100,
+          "atqri": 25,
+          "atqrm": -50,
+          "atqtr": 35
+        }
       },
       {
         "num": 6,
@@ -3801,6 +4048,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -3858,7 +4118,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -8,
+          "rec": 0,
+          "bqpos": 58,
+          "bqpt": 8,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 100,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 10,
@@ -3898,7 +4171,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 11,
@@ -4186,6 +4472,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": -25,
+          "rec": 69,
+          "bqpos": 56,
+          "bqpt": 11,
+          "atqq": null,
+          "atqhb": 18,
+          "atqx": 60,
+          "atqrp": 45,
+          "atqri": 50,
+          "atqrm": 33,
+          "atqtr": 29
         }
       },
       {
@@ -4388,6 +4687,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -4590,6 +4902,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": 0,
+          "rec": 50,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -4853,6 +5178,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": -7,
+          "rec": 53,
+          "bqpos": 33,
+          "bqpt": 33,
+          "atqq": null,
+          "atqhb": 11,
+          "atqx": 41,
+          "atqrp": 43,
+          "atqri": 50,
+          "atqrm": 50,
+          "atqtr": 25
         }
       },
       {
@@ -4949,7 +5287,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 10,
+          "rec": null,
+          "bqpos": 60,
+          "bqpt": 20,
+          "atqq": 56,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 50,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": 67
+        }
       },
       {
         "num": 17,
@@ -4989,7 +5340,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 18,
@@ -5029,7 +5393,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 19,
@@ -5069,7 +5446,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       }
     ],
     "armadores": {
@@ -6121,7 +6511,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 0,
+          "rec": null,
+          "bqpos": 20,
+          "bqpt": 0,
+          "atqq": 67,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 67,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 3,
@@ -6323,6 +6726,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": 10,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -6363,7 +6779,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 5,
@@ -6513,7 +6942,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -20,
+          "rec": null,
+          "bqpos": 30,
+          "bqpt": 20,
+          "atqq": null,
+          "atqhb": 36,
+          "atqx": 22,
+          "atqrp": 29,
+          "atqri": 17,
+          "atqrm": 33,
+          "atqtr": 30
+        }
       },
       {
         "num": 6,
@@ -6715,6 +7157,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -6768,7 +7223,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 10,
+          "rec": 0,
+          "bqpos": 67,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 10,
@@ -6808,7 +7276,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 11,
@@ -7096,6 +7577,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": -50,
+          "rec": 27,
+          "bqpos": 0,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": 100,
+          "atqx": 38,
+          "atqrp": 33,
+          "atqri": 50,
+          "atqrm": null,
+          "atqtr": 100
         }
       },
       {
@@ -7298,6 +7792,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -7505,6 +8012,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": 0,
+          "rec": 25,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -7768,6 +8288,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": -40,
+          "rec": 45,
+          "bqpos": 33,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": 31,
+          "atqx": 0,
+          "atqrp": -33,
+          "atqri": -20,
+          "atqrm": 40,
+          "atqtr": 31
         }
       },
       {
@@ -7808,7 +8341,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 17,
@@ -7879,7 +8425,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -11,
+          "rec": null,
+          "bqpos": 0,
+          "bqpt": 0,
+          "atqq": 50,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 50,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 18,
@@ -7919,7 +8478,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 19,
@@ -7959,7 +8531,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       }
     ],
     "armadores": {
@@ -9023,7 +9608,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -33,
+          "rec": 100,
+          "bqpos": 100,
+          "bqpt": 100,
+          "atqq": 80,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 80,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 3,
@@ -9225,6 +9823,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -9282,7 +9893,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 0,
+          "rec": null,
+          "bqpos": 50,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": 100
+        }
       },
       {
         "num": 5,
@@ -9391,7 +10015,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -38,
+          "rec": null,
+          "bqpos": 12,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": -30,
+          "atqx": 6,
+          "atqrp": 0,
+          "atqri": -50,
+          "atqrm": -50,
+          "atqtr": 8
+        }
       },
       {
         "num": 6,
@@ -9593,6 +10230,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -9646,7 +10296,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 13,
+          "rec": 0,
+          "bqpos": 17,
+          "bqpt": 17,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": -100,
+          "atqrm": null,
+          "atqtr": -100
+        }
       },
       {
         "num": 10,
@@ -9686,7 +10349,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 11,
@@ -9970,6 +10646,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": -32,
+          "rec": 52,
+          "bqpos": 43,
+          "bqpt": 43,
+          "atqq": null,
+          "atqhb": 22,
+          "atqx": 21,
+          "atqrp": 20,
+          "atqri": 100,
+          "atqrm": 0,
+          "atqtr": 16
         }
       },
       {
@@ -10172,6 +10861,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": 36,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -10379,6 +11081,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": -50,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -10650,6 +11365,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": 12,
+          "rec": 42,
+          "bqpos": 33,
+          "bqpt": 17,
+          "atqq": null,
+          "atqhb": 11,
+          "atqx": 15,
+          "atqrp": 11,
+          "atqri": 50,
+          "atqrm": -67,
+          "atqtr": 38
         }
       },
       {
@@ -10690,7 +11418,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 17,
@@ -10790,7 +11531,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 0,
+          "rec": null,
+          "bqpos": 25,
+          "bqpt": 25,
+          "atqq": 10,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 10,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 18,
@@ -10830,7 +11584,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": 0,
+          "atqrp": 0,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 19,
@@ -10870,7 +11637,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       }
     ],
     "armadores": {
@@ -11958,7 +12738,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -10,
+          "rec": -25,
+          "bqpos": 62,
+          "bqpt": 23,
+          "atqq": 37,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 39,
+          "atqri": 0,
+          "atqrm": null,
+          "atqtr": 100
+        }
       },
       {
         "num": 3,
@@ -12160,6 +12953,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": -17,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -12217,7 +13023,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -8,
+          "rec": 0,
+          "bqpos": 50,
+          "bqpt": 6,
+          "atqq": null,
+          "atqhb": 0,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": 0,
+          "atqrm": null,
+          "atqtr": 0
+        }
       },
       {
         "num": 5,
@@ -12344,7 +13163,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -80,
+          "rec": 50,
+          "bqpos": 71,
+          "bqpt": 29,
+          "atqq": null,
+          "atqhb": 20,
+          "atqx": 46,
+          "atqrp": 60,
+          "atqri": 0,
+          "atqrm": 0,
+          "atqtr": 25
+        }
       },
       {
         "num": 6,
@@ -12546,6 +13378,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -12595,7 +13440,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 0,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 10,
@@ -12635,7 +13493,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 11,
@@ -12918,6 +13789,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": -6,
+          "rec": 41,
+          "bqpos": 0,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": 11,
+          "atqx": 24,
+          "atqrp": 50,
+          "atqri": 100,
+          "atqrm": 0,
+          "atqtr": 9
         }
       },
       {
@@ -13120,6 +14004,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": 35,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -13322,6 +14219,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -13629,6 +14539,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": 17,
+          "rec": 59,
+          "bqpos": 47,
+          "bqpt": 13,
+          "atqq": null,
+          "atqhb": 18,
+          "atqx": 45,
+          "atqrp": 44,
+          "atqri": 75,
+          "atqrm": 50,
+          "atqtr": 16
         }
       },
       {
@@ -13725,7 +14648,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -8,
+          "rec": 8,
+          "bqpos": 40,
+          "bqpt": 0,
+          "atqq": 44,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 50,
+          "atqri": 100,
+          "atqrm": null,
+          "atqtr": 25
+        }
       },
       {
         "num": 17,
@@ -13765,7 +14701,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 18,
@@ -13877,7 +14826,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 11,
+          "rec": null,
+          "bqpos": 0,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": 50,
+          "atqx": 17,
+          "atqrp": 0,
+          "atqri": 50,
+          "atqrm": null,
+          "atqtr": 20
+        }
       },
       {
         "num": 19,
@@ -13917,7 +14879,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       }
     ],
     "armadores": {
@@ -15023,7 +15998,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -9,
+          "rec": null,
+          "bqpos": 70,
+          "bqpt": 40,
+          "atqq": 43,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 38,
+          "atqri": null,
+          "atqrm": 100,
+          "atqtr": 17
+        }
       },
       {
         "num": 3,
@@ -15225,6 +16213,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -15286,7 +16287,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 19,
+          "rec": null,
+          "bqpos": 33,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": -100
+        }
       },
       {
         "num": 5,
@@ -15361,7 +16375,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 0,
+          "rec": null,
+          "bqpos": 33,
+          "bqpt": 33,
+          "atqq": null,
+          "atqhb": 0,
+          "atqx": 50,
+          "atqrp": 0,
+          "atqri": 50,
+          "atqrm": null,
+          "atqtr": 100
+        }
       },
       {
         "num": 6,
@@ -15586,6 +16613,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": -15,
+          "rec": 67,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": -20,
+          "atqrp": 0,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": -33
         }
       },
       {
@@ -15631,7 +16671,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 12,
+          "rec": null,
+          "bqpos": 20,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": 50
+        }
       },
       {
         "num": 10,
@@ -15671,7 +16724,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 11,
@@ -15938,6 +17004,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": -50,
+          "rec": 31,
+          "bqpos": 20,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": -12,
+          "atqx": 20,
+          "atqrp": 11,
+          "atqri": 60,
+          "atqrm": 20,
+          "atqtr": -25
         }
       },
       {
@@ -16140,6 +17219,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": 31,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -16342,6 +17434,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -16617,6 +17722,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": 7,
+          "rec": 50,
+          "bqpos": 33,
+          "bqpt": 17,
+          "atqq": null,
+          "atqhb": 33,
+          "atqx": 50,
+          "atqrp": 27,
+          "atqri": 50,
+          "atqrm": 100,
+          "atqtr": 50
         }
       },
       {
@@ -16657,7 +17775,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 17,
@@ -16794,7 +17925,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 6,
+          "rec": null,
+          "bqpos": 40,
+          "bqpt": 20,
+          "atqq": 55,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 64,
+          "atqri": 60,
+          "atqrm": null,
+          "atqtr": 33
+        }
       },
       {
         "num": 18,
@@ -16919,7 +18063,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -31,
+          "rec": null,
+          "bqpos": 50,
+          "bqpt": 25,
+          "atqq": null,
+          "atqhb": -12,
+          "atqx": 43,
+          "atqrp": 38,
+          "atqri": 40,
+          "atqrm": 0,
+          "atqtr": 27
+        }
       },
       {
         "num": 19,
@@ -16959,7 +18116,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 12,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       }
     ],
     "armadores": {
@@ -18052,7 +19222,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -12,
+          "rec": 0,
+          "bqpos": 75,
+          "bqpt": 31,
+          "atqq": 62,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 71,
+          "atqri": 100,
+          "atqrm": 50,
+          "atqtr": 25
+        }
       },
       {
         "num": 3,
@@ -18254,6 +19437,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -18319,7 +19515,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 15,
+          "rec": -100,
+          "bqpos": 57,
+          "bqpt": 29,
+          "atqq": null,
+          "atqhb": 0,
+          "atqx": null,
+          "atqrp": 0,
+          "atqri": 0,
+          "atqrm": null,
+          "atqtr": 75
+        }
       },
       {
         "num": 5,
@@ -18382,7 +19591,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -100,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": 50,
+          "atqx": 0,
+          "atqrp": 0,
+          "atqri": null,
+          "atqrm": 100,
+          "atqtr": 0
+        }
       },
       {
         "num": 6,
@@ -18584,6 +19806,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": -100,
+          "rec": 50,
+          "bqpos": 100,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": -50,
+          "atqrp": null,
+          "atqri": 0,
+          "atqrm": null,
+          "atqtr": -100
         }
       },
       {
@@ -18624,7 +19859,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 10,
@@ -18664,7 +19912,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 11,
@@ -18960,6 +20221,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": 9,
+          "rec": 24,
+          "bqpos": 46,
+          "bqpt": 8,
+          "atqq": null,
+          "atqhb": -7,
+          "atqx": 40,
+          "atqrp": 50,
+          "atqri": 50,
+          "atqrm": 0,
+          "atqtr": -11
         }
       },
       {
@@ -19162,6 +20436,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": 39,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -19364,6 +20651,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
         }
       },
       {
@@ -19655,6 +20955,19 @@ const PARTIDOS_INDIVIDUAL = [
               }
             }
           }
+        },
+        "objetivos": {
+          "sq": 0,
+          "rec": 26,
+          "bqpos": 44,
+          "bqpt": 11,
+          "atqq": null,
+          "atqhb": 8,
+          "atqx": 31,
+          "atqrp": 12,
+          "atqri": 100,
+          "atqrm": 0,
+          "atqtr": 11
         }
       },
       {
@@ -19695,7 +21008,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 17,
@@ -19812,7 +21138,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -11,
+          "rec": null,
+          "bqpos": 60,
+          "bqpt": 35,
+          "atqq": 20,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": -50,
+          "atqri": 57,
+          "atqrm": null,
+          "atqtr": 67
+        }
       },
       {
         "num": 18,
@@ -19946,7 +21285,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": -13,
+          "rec": null,
+          "bqpos": 50,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": -11,
+          "atqx": 28,
+          "atqrp": 22,
+          "atqri": 100,
+          "atqrm": 100,
+          "atqtr": -12
+        }
       },
       {
         "num": 19,
@@ -19986,7 +21338,20 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "video": 0,
-        "recepcion": {}
+        "recepcion": {},
+        "objetivos": {
+          "sq": 0,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       }
     ],
     "armadores": {
