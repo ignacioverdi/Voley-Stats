@@ -1,5 +1,5 @@
-// datos_partidos.js — 30/05/2026 23:53
-const PARTIDOS_GENERADO = "30/05/2026 23:53";
+// datos_partidos.js — 31/05/2026 00:29
+const PARTIDOS_GENERADO = "31/05/2026 00:29";
 const PARTIDOS_TOTAL = 6;
 const PARTIDOS_META = [
   {
@@ -86,13 +86,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 13
           }
         ],
-        "eff": 0,
-        "tot": 15,
-        "pts": 11,
+        "eff": 48,
+        "tot": 27,
+        "pts": 15,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 73
+        "pts_pct": 56
       },
       {
         "cod": "X7",
@@ -115,13 +115,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 12
           }
         ],
-        "eff": 0,
-        "tot": 8,
-        "pts": 2,
+        "eff": 62,
+        "tot": 13,
+        "pts": 8,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 25
+        "pts_pct": 62
       },
       {
         "cod": "XM",
@@ -140,13 +140,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 27
           }
         ],
-        "eff": 0,
-        "tot": 11,
-        "pts": 0,
+        "eff": 48,
+        "tot": 19,
+        "pts": 11,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 58
       },
       {
         "cod": "X2",
@@ -157,13 +157,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 100
           }
         ],
-        "eff": 0,
-        "tot": 2,
-        "pts": 0,
+        "eff": 67,
+        "tot": 3,
+        "pts": 2,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 67
       }
     ],
     "saques": [
@@ -197,10 +197,10 @@ const PARTIDOS_JUGADORES = [
             "pct": 8
           }
         ],
-        "eff": 0,
-        "tot": 37,
+        "eff": -10,
+        "tot": 38,
         "pts": 0,
-        "plus": 0,
+        "plus": 3,
         "slash": 0,
         "err": 0,
         "video": null,
@@ -262,14 +262,14 @@ const PARTIDOS_JUGADORES = [
             "pct": 8
           }
         ],
-        "eff": 0,
-        "tot": 72,
-        "pts": 0,
-        "plus": 0,
+        "eff": 9,
+        "tot": 74,
+        "pts": 6,
+        "plus": 5,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 8
       },
       {
         "cod": "SQ",
@@ -317,13 +317,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 12
           }
         ],
-        "eff": 0,
-        "tot": 17,
-        "pts": 0,
+        "eff": 32,
+        "tot": 40,
+        "pts": 17,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 42
       },
       {
         "cod": "V6",
@@ -338,7 +338,7 @@ const PARTIDOS_JUGADORES = [
             "pct": 20
           }
         ],
-        "eff": 0,
+        "eff": null,
         "tot": 10,
         "pts": 0,
         "slash": 0,
@@ -367,9 +367,9 @@ const PARTIDOS_JUGADORES = [
             "pct": 6
           }
         ],
-        "eff": 0,
-        "tot": 16,
-        "pts": 8,
+        "eff": 25,
+        "tot": 32,
+        "pts": 16,
         "slash": 0,
         "err": 0,
         "video": null,
@@ -392,13 +392,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 12
           }
         ],
-        "eff": 0,
-        "tot": 8,
-        "pts": 0,
+        "eff": 38,
+        "tot": 16,
+        "pts": 8,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 50
       },
       {
         "cod": "X5",
@@ -409,13 +409,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 100
           }
         ],
-        "eff": 0,
+        "eff": 100,
         "tot": 1,
-        "pts": 0,
+        "pts": 1,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 100
       }
     ],
     "saques": [
@@ -429,7 +429,7 @@ const PARTIDOS_JUGADORES = [
             "pct": 100
           }
         ],
-        "eff": 0,
+        "eff": -50,
         "tot": 2,
         "pts": 0,
         "plus": 0,
@@ -464,14 +464,14 @@ const PARTIDOS_JUGADORES = [
             "pct": 3
           }
         ],
-        "eff": 0,
-        "tot": 38,
-        "pts": 0,
-        "plus": 0,
+        "eff": -29,
+        "tot": 45,
+        "pts": 4,
+        "plus": 5,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 9
       }
     ],
     "video": 0,
@@ -493,13 +493,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 100
           }
         ],
-        "eff": 0,
-        "tot": 1,
-        "pts": 0,
+        "eff": -29,
+        "tot": 7,
+        "pts": 1,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 14
       }
     ],
     "saques": [
@@ -527,10 +527,10 @@ const PARTIDOS_JUGADORES = [
             "pct": 100
           }
         ],
-        "eff": 0,
-        "tot": 4,
+        "eff": -29,
+        "tot": 6,
         "pts": 0,
-        "plus": 0,
+        "plus": 1,
         "slash": 0,
         "err": 0,
         "video": null,
@@ -574,14 +574,14 @@ const PARTIDOS_JUGADORES = [
             "pct": 13
           }
         ],
-        "eff": 0,
-        "tot": 45,
-        "pts": 0,
-        "plus": 0,
+        "eff": 4,
+        "tot": 50,
+        "pts": 2,
+        "plus": 6,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 4
       },
       {
         "cod": "SQ",
@@ -669,13 +669,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 9
           }
         ],
-        "eff": 0,
-        "tot": 43,
-        "pts": 0,
+        "eff": 30,
+        "tot": 98,
+        "pts": 43,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 44
       },
       {
         "cod": "V5",
@@ -698,7 +698,7 @@ const PARTIDOS_JUGADORES = [
             "pct": 7
           }
         ],
-        "eff": 0,
+        "eff": null,
         "tot": 14,
         "pts": 0,
         "slash": 0,
@@ -727,13 +727,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 12
           }
         ],
-        "eff": 0,
-        "tot": 8,
-        "pts": 27,
+        "eff": 16,
+        "tot": 19,
+        "pts": 8,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 338
+        "pts_pct": 42
       }
     ],
     "saques": [
@@ -767,8 +767,8 @@ const PARTIDOS_JUGADORES = [
             "pct": 9
           }
         ],
-        "eff": 0,
-        "tot": 43,
+        "eff": -8,
+        "tot": 44,
         "pts": 0,
         "plus": 0,
         "slash": 0,
@@ -798,14 +798,14 @@ const PARTIDOS_JUGADORES = [
             "pct": 8
           }
         ],
-        "eff": 0,
-        "tot": 26,
-        "pts": 0,
-        "plus": 0,
+        "eff": -35,
+        "tot": 33,
+        "pts": 3,
+        "plus": 4,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 9
       }
     ],
     "video": 0,
@@ -833,8 +833,8 @@ const PARTIDOS_JUGADORES = [
             "pct": 50
           }
         ],
-        "eff": 0,
-        "tot": 2,
+        "eff": -25,
+        "tot": 4,
         "pts": 0,
         "plus": 0,
         "slash": 0,
@@ -888,13 +888,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 9
           }
         ],
-        "eff": 0,
-        "tot": 44,
-        "pts": 23,
+        "eff": 34,
+        "tot": 99,
+        "pts": 44,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 52
+        "pts_pct": 44
       },
       {
         "cod": "V5",
@@ -917,25 +917,25 @@ const PARTIDOS_JUGADORES = [
             "pct": 9
           }
         ],
-        "eff": 0,
-        "tot": 23,
-        "pts": 0,
+        "eff": 21,
+        "tot": 66,
+        "pts": 23,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 35
       },
       {
         "cod": "X6",
         "orig": 2,
         "destinos": [],
-        "eff": 0,
-        "tot": 1,
-        "pts": 0,
+        "eff": 33,
+        "tot": 3,
+        "pts": 1,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 33
       }
     ],
     "saques": [
@@ -969,10 +969,10 @@ const PARTIDOS_JUGADORES = [
             "pct": 7
           }
         ],
-        "eff": 0,
+        "eff": 1,
         "tot": 29,
         "pts": 0,
-        "plus": 0,
+        "plus": 3,
         "slash": 0,
         "err": 0,
         "video": null,
@@ -1000,14 +1000,14 @@ const PARTIDOS_JUGADORES = [
             "pct": 3
           }
         ],
-        "eff": 0,
-        "tot": 72,
-        "pts": 0,
-        "plus": 0,
+        "eff": 3,
+        "tot": 77,
+        "pts": 4,
+        "plus": 11,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 5
       }
     ],
     "video": 0,
@@ -1037,13 +1037,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 20
           }
         ],
-        "eff": 0,
-        "tot": 5,
+        "eff": 44,
+        "tot": 9,
         "pts": 5,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 100
+        "pts_pct": 56
       },
       {
         "cod": "XM",
@@ -1066,13 +1066,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 20
           }
         ],
-        "eff": 0,
-        "tot": 5,
-        "pts": 0,
+        "eff": 55,
+        "tot": 9,
+        "pts": 5,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 56
       }
     ],
     "saques": [
@@ -1098,14 +1098,14 @@ const PARTIDOS_JUGADORES = [
             "pct": 4
           }
         ],
-        "eff": 0,
-        "tot": 23,
-        "pts": 0,
-        "plus": 0,
+        "eff": 1,
+        "tot": 26,
+        "pts": 1,
+        "plus": 1,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 4
       },
       {
         "cod": "SQ",
@@ -1153,13 +1153,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 14
           }
         ],
-        "eff": 0,
-        "tot": 14,
-        "pts": 0,
+        "eff": 24,
+        "tot": 29,
+        "pts": 14,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 48
       },
       {
         "cod": "X1",
@@ -1182,13 +1182,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 17
           }
         ],
-        "eff": 0,
-        "tot": 6,
-        "pts": 14,
+        "eff": 50,
+        "tot": 12,
+        "pts": 6,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 233
+        "pts_pct": 50
       },
       {
         "cod": "X7",
@@ -1207,13 +1207,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 25
           }
         ],
-        "eff": 0,
-        "tot": 4,
-        "pts": 0,
+        "eff": 50,
+        "tot": 8,
+        "pts": 4,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 50
       }
     ],
     "saques": [
@@ -1247,10 +1247,10 @@ const PARTIDOS_JUGADORES = [
             "pct": 4
           }
         ],
-        "eff": 0,
-        "tot": 52,
+        "eff": -3,
+        "tot": 54,
         "pts": 0,
-        "plus": 0,
+        "plus": 5,
         "slash": 0,
         "err": 0,
         "video": null,
@@ -1302,13 +1302,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 8
           }
         ],
-        "eff": 0,
-        "tot": 13,
-        "pts": 0,
+        "eff": 30,
+        "tot": 27,
+        "pts": 13,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 48
       },
       {
         "cod": "V6",
@@ -1323,7 +1323,7 @@ const PARTIDOS_JUGADORES = [
             "pct": 25
           }
         ],
-        "eff": 0,
+        "eff": null,
         "tot": 4,
         "pts": 0,
         "slash": 0,
@@ -1352,13 +1352,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 8
           }
         ],
-        "eff": 0,
-        "tot": 13,
-        "pts": 2,
+        "eff": 29,
+        "tot": 24,
+        "pts": 13,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 15
+        "pts_pct": 54
       },
       {
         "cod": "V8",
@@ -1369,13 +1369,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 50
           }
         ],
-        "eff": 0,
-        "tot": 2,
-        "pts": 0,
+        "eff": 20,
+        "tot": 5,
+        "pts": 2,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 40
       }
     ],
     "saques": [
@@ -1411,14 +1411,14 @@ const PARTIDOS_JUGADORES = [
             "pct": 4
           }
         ],
-        "eff": 0,
-        "tot": 26,
-        "pts": 0,
-        "plus": 0,
+        "eff": -13,
+        "tot": 36,
+        "pts": 4,
+        "plus": 3,
         "slash": 0,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 11
       }
     ],
     "video": 0,
@@ -1451,13 +1451,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 1,
-            "pts": 2,
+            "eff": 50,
+            "tot": 2,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 200
+            "pts_pct": 50
           },
           {
             "cod": "X7",
@@ -1468,13 +1468,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 1,
+            "eff": 50,
+            "tot": 2,
             "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 100
+            "pts_pct": 50
           },
           {
             "cod": "XM",
@@ -1489,13 +1489,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
-            "tot": 2,
-            "pts": 0,
+            "eff": 67,
+            "tot": 3,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 67
           },
           {
             "cod": "X2",
@@ -1506,13 +1506,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
+            "eff": 100,
             "tot": 1,
-            "pts": 0,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 100
           }
         ],
         "saques": [
@@ -1538,10 +1538,10 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 14
               }
             ],
-            "eff": 0,
+            "eff": -7,
             "tot": 7,
             "pts": 0,
-            "plus": 0,
+            "plus": 2,
             "slash": 0,
             "err": 0,
             "video": null,
@@ -1634,13 +1634,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 12
               }
             ],
-            "eff": 0,
-            "tot": 8,
-            "pts": 0,
+            "eff": 54,
+            "tot": 13,
+            "pts": 8,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 62
           },
           {
             "cod": "V6",
@@ -1651,7 +1651,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
+            "eff": null,
             "tot": 2,
             "pts": 0,
             "slash": 0,
@@ -1672,9 +1672,9 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
-            "tot": 4,
-            "pts": 2,
+            "eff": 25,
+            "tot": 8,
+            "pts": 4,
             "slash": 0,
             "err": 0,
             "video": null,
@@ -1689,13 +1689,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
-            "tot": 2,
-            "pts": 0,
+            "eff": 50,
+            "tot": 4,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 50
           }
         ],
         "saques": [
@@ -1735,14 +1735,14 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 6
               }
             ],
-            "eff": 0,
-            "tot": 17,
-            "pts": 0,
-            "plus": 0,
+            "eff": -17,
+            "tot": 19,
+            "pts": 3,
+            "plus": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 16
           }
         ],
         "video": 0,
@@ -1818,8 +1818,8 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 7
               }
             ],
-            "eff": 0,
-            "tot": 15,
+            "eff": -8,
+            "tot": 18,
             "pts": 0,
             "plus": 0,
             "slash": 0,
@@ -1913,13 +1913,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 11
               }
             ],
-            "eff": 0,
-            "tot": 9,
-            "pts": 0,
+            "eff": 60,
+            "tot": 15,
+            "pts": 9,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 60
           },
           {
             "cod": "V5",
@@ -1934,7 +1934,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 25
               }
             ],
-            "eff": 0,
+            "eff": null,
             "tot": 4,
             "pts": 0,
             "slash": 0,
@@ -1952,12 +1952,12 @@ const PARTIDOS_INDIVIDUAL = [
               }
             ],
             "eff": 0,
-            "tot": 1,
-            "pts": 6,
+            "tot": 4,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 600
+            "pts_pct": 25
           }
         ],
         "saques": [
@@ -1998,14 +1998,14 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 15
               }
             ],
-            "eff": 0,
-            "tot": 13,
-            "pts": 0,
-            "plus": 0,
+            "eff": -27,
+            "tot": 16,
+            "pts": 2,
+            "plus": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 12
           }
         ],
         "video": 0,
@@ -2025,7 +2025,7 @@ const PARTIDOS_INDIVIDUAL = [
             "orig": 6,
             "destinos": [],
             "eff": 0,
-            "tot": 0,
+            "tot": 1,
             "pts": 0,
             "plus": 0,
             "slash": 0,
@@ -2075,13 +2075,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 12
               }
             ],
-            "eff": 0,
-            "tot": 8,
-            "pts": 2,
+            "eff": 41,
+            "tot": 17,
+            "pts": 8,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 25
+            "pts_pct": 47
           },
           {
             "cod": "V5",
@@ -2092,13 +2092,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 2,
-            "pts": 0,
+            "eff": 11,
+            "tot": 9,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 22
           }
         ],
         "saques": [
@@ -2139,8 +2139,8 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 17
               }
             ],
-            "eff": 0,
-            "tot": 12,
+            "eff": -8,
+            "tot": 13,
             "pts": 0,
             "plus": 0,
             "slash": 0,
@@ -2172,13 +2172,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
-            "tot": 3,
+            "eff": 33,
+            "tot": 6,
             "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 100
+            "pts_pct": 50
           },
           {
             "cod": "XM",
@@ -2197,13 +2197,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
+            "eff": 100,
             "tot": 3,
-            "pts": 0,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 100
           }
         ],
         "saques": [
@@ -2221,14 +2221,14 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 18
               }
             ],
-            "eff": 0,
-            "tot": 11,
-            "pts": 0,
-            "plus": 0,
+            "eff": 10,
+            "tot": 13,
+            "pts": 1,
+            "plus": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 8
           },
           {
             "cod": "SQ",
@@ -2355,13 +2355,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
+            "eff": 100,
             "tot": 1,
-            "pts": 0,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 100
           },
           {
             "cod": "XM",
@@ -2372,13 +2372,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 1,
-            "pts": 0,
+            "eff": 50,
+            "tot": 2,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 50
           }
         ],
         "saques": [
@@ -2487,13 +2487,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 25
               }
             ],
-            "eff": 0,
-            "tot": 4,
-            "pts": 0,
+            "eff": 40,
+            "tot": 10,
+            "pts": 4,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 40
           },
           {
             "cod": "V6",
@@ -2508,7 +2508,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 25
               }
             ],
-            "eff": 0,
+            "eff": null,
             "tot": 4,
             "pts": 0,
             "slash": 0,
@@ -2530,12 +2530,12 @@ const PARTIDOS_INDIVIDUAL = [
               }
             ],
             "eff": 0,
-            "tot": 3,
-            "pts": 4,
+            "tot": 8,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 133
+            "pts_pct": 38
           },
           {
             "cod": "V8",
@@ -2554,13 +2554,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 25
               }
             ],
-            "eff": 0,
-            "tot": 4,
-            "pts": 0,
+            "eff": 60,
+            "tot": 5,
+            "pts": 4,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 80
           }
         ],
         "saques": [
@@ -2596,10 +2596,10 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 11
               }
             ],
-            "eff": 0,
-            "tot": 9,
+            "eff": -20,
+            "tot": 11,
             "pts": 0,
-            "plus": 0,
+            "plus": 3,
             "slash": 0,
             "err": 0,
             "video": null,
@@ -2675,14 +2675,14 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 7
               }
             ],
-            "eff": 0,
-            "tot": 14,
-            "pts": 0,
-            "plus": 0,
+            "eff": 10,
+            "tot": 15,
+            "pts": 1,
+            "plus": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 7
           },
           {
             "cod": "SQ",
@@ -2766,13 +2766,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 20
               }
             ],
-            "eff": 0,
-            "tot": 5,
-            "pts": 0,
+            "eff": 38,
+            "tot": 8,
+            "pts": 5,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 62
           },
           {
             "cod": "V5",
@@ -2783,7 +2783,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
+            "eff": null,
             "tot": 1,
             "pts": 0,
             "slash": 0,
@@ -2800,13 +2800,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 2,
-            "pts": 3,
+            "eff": 50,
+            "tot": 4,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 150
+            "pts_pct": 50
           }
         ],
         "saques": [
@@ -2832,7 +2832,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 20
               }
             ],
-            "eff": 0,
+            "eff": -20,
             "tot": 5,
             "pts": 0,
             "plus": 0,
@@ -2855,8 +2855,8 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
-            "tot": 2,
+            "eff": -80,
+            "tot": 5,
             "pts": 0,
             "plus": 0,
             "slash": 0,
@@ -2930,12 +2930,12 @@ const PARTIDOS_INDIVIDUAL = [
               }
             ],
             "eff": 0,
-            "tot": 3,
-            "pts": 4,
+            "tot": 13,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 133
+            "pts_pct": 23
           },
           {
             "cod": "V5",
@@ -2950,13 +2950,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 25
               }
             ],
-            "eff": 0,
-            "tot": 4,
-            "pts": 0,
+            "eff": 31,
+            "tot": 13,
+            "pts": 4,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 31
           }
         ],
         "saques": [
@@ -2978,7 +2978,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 20
               }
             ],
-            "eff": 0,
+            "eff": -20,
             "tot": 5,
             "pts": 0,
             "plus": 0,
@@ -3001,8 +3001,8 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
-            "tot": 3,
+            "eff": -60,
+            "tot": 5,
             "pts": 0,
             "plus": 0,
             "slash": 0,
@@ -3070,13 +3070,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 1,
-            "pts": 0,
+            "eff": 50,
+            "tot": 2,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 50
           }
         ],
         "saques": [
@@ -3098,10 +3098,10 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 17
               }
             ],
-            "eff": 0,
-            "tot": 6,
+            "eff": -11,
+            "tot": 7,
             "pts": 0,
-            "plus": 0,
+            "plus": 1,
             "slash": 0,
             "err": 0,
             "video": null,
@@ -3200,13 +3200,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
-            "tot": 3,
-            "pts": 1,
+            "eff": 75,
+            "tot": 4,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 33
+            "pts_pct": 75
           },
           {
             "cod": "XM",
@@ -3217,13 +3217,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
+            "eff": 100,
             "tot": 1,
-            "pts": 0,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 100
           }
         ],
         "saques": [
@@ -3241,7 +3241,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
+            "eff": -33,
             "tot": 3,
             "pts": 0,
             "plus": 0,
@@ -3346,12 +3346,12 @@ const PARTIDOS_INDIVIDUAL = [
               }
             ],
             "eff": 0,
-            "tot": 2,
-            "pts": 0,
+            "tot": 9,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 22
           },
           {
             "cod": "X8",
@@ -3366,13 +3366,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
-            "tot": 3,
-            "pts": 2,
+            "eff": 14,
+            "tot": 7,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 67
+            "pts_pct": 43
           },
           {
             "cod": "V8",
@@ -3383,13 +3383,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
-            "tot": 2,
-            "pts": 0,
+            "eff": 25,
+            "tot": 4,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 50
           }
         ],
         "saques": [
@@ -3421,14 +3421,14 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
-            "tot": 9,
-            "pts": 0,
-            "plus": 0,
+            "eff": -38,
+            "tot": 10,
+            "pts": 1,
+            "plus": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 10
           }
         ],
         "video": 0,
@@ -3500,14 +3500,14 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 8
               }
             ],
-            "eff": 0,
+            "eff": 13,
             "tot": 13,
-            "pts": 0,
-            "plus": 0,
+            "pts": 1,
+            "plus": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 8
           },
           {
             "cod": "SQ",
@@ -3587,13 +3587,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 14
               }
             ],
-            "eff": 0,
-            "tot": 7,
-            "pts": 0,
+            "eff": 17,
+            "tot": 23,
+            "pts": 7,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 30
           },
           {
             "cod": "V5",
@@ -3612,7 +3612,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
+            "eff": null,
             "tot": 3,
             "pts": 0,
             "slash": 0,
@@ -3630,12 +3630,12 @@ const PARTIDOS_INDIVIDUAL = [
               }
             ],
             "eff": 0,
-            "tot": 1,
-            "pts": 7,
+            "tot": 2,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 700
+            "pts_pct": 50
           }
         ],
         "saques": [
@@ -3653,8 +3653,8 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
-            "tot": 2,
+            "eff": -33,
+            "tot": 3,
             "pts": 0,
             "plus": 0,
             "slash": 0,
@@ -3676,10 +3676,10 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
-            "tot": 6,
+            "eff": -32,
+            "tot": 7,
             "pts": 0,
-            "plus": 0,
+            "plus": 3,
             "slash": 0,
             "err": 0,
             "video": null,
@@ -3707,8 +3707,8 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 1,
+            "eff": -50,
+            "tot": 2,
             "pts": 0,
             "plus": 0,
             "slash": 0,
@@ -3754,13 +3754,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 25
               }
             ],
-            "eff": 0,
-            "tot": 4,
-            "pts": 3,
+            "eff": 15,
+            "tot": 13,
+            "pts": 4,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 75
+            "pts_pct": 31
           },
           {
             "cod": "V5",
@@ -3779,13 +3779,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
-            "tot": 3,
-            "pts": 0,
+            "eff": 12,
+            "tot": 8,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 38
           }
         ],
         "saques": [
@@ -3803,10 +3803,10 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 17
               }
             ],
-            "eff": 0,
+            "eff": 12,
             "tot": 6,
             "pts": 0,
-            "plus": 0,
+            "plus": 1,
             "slash": 0,
             "err": 0,
             "video": null,
@@ -3830,14 +3830,14 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 5
               }
             ],
-            "eff": 0,
+            "eff": 12,
             "tot": 19,
-            "pts": 0,
-            "plus": 0,
+            "pts": 1,
+            "plus": 5,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 5
           }
         ],
         "video": 0,
@@ -3903,13 +3903,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
-            "tot": 2,
-            "pts": 1,
+            "eff": 33,
+            "tot": 6,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 50
+            "pts_pct": 33
           },
           {
             "cod": "XM",
@@ -3920,13 +3920,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 1,
-            "pts": 0,
+            "eff": -25,
+            "tot": 4,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 25
           }
         ],
         "saques": [
@@ -4062,13 +4062,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 17
               }
             ],
-            "eff": 0,
-            "tot": 6,
-            "pts": 4,
+            "eff": 33,
+            "tot": 12,
+            "pts": 6,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 67
+            "pts_pct": 50
           },
           {
             "cod": "XM",
@@ -4083,13 +4083,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 25
               }
             ],
-            "eff": 0,
-            "tot": 4,
-            "pts": 0,
+            "eff": 50,
+            "tot": 6,
+            "pts": 4,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 67
           }
         ],
         "saques": [
@@ -4123,8 +4123,8 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 11
               }
             ],
-            "eff": 0,
-            "tot": 9,
+            "eff": -10,
+            "tot": 10,
             "pts": 0,
             "plus": 0,
             "slash": 0,
@@ -4180,10 +4180,10 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 10
               }
             ],
-            "eff": 0,
-            "tot": 21,
+            "eff": -8,
+            "tot": 22,
             "pts": 0,
-            "plus": 0,
+            "plus": 1,
             "slash": 0,
             "err": 0,
             "video": null,
@@ -4223,13 +4223,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
+            "eff": 100,
             "tot": 1,
-            "pts": 0,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 100
           },
           {
             "cod": "X6",
@@ -4240,13 +4240,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
-            "tot": 2,
-            "pts": 0,
+            "eff": 25,
+            "tot": 4,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 50
           },
           {
             "cod": "V6",
@@ -4261,7 +4261,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
+            "eff": null,
             "tot": 3,
             "pts": 0,
             "slash": 0,
@@ -4282,13 +4282,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 20
               }
             ],
-            "eff": 0,
-            "tot": 5,
-            "pts": 0,
+            "eff": 50,
+            "tot": 8,
+            "pts": 5,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 62
           }
         ],
         "saques": [
@@ -4302,7 +4302,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
+            "eff": -50,
             "tot": 2,
             "pts": 0,
             "plus": 0,
@@ -4321,8 +4321,8 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 1,
+            "eff": -100,
+            "tot": 3,
             "pts": 0,
             "plus": 0,
             "slash": 0,
@@ -4483,13 +4483,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 17
               }
             ],
-            "eff": 0,
-            "tot": 6,
-            "pts": 0,
+            "eff": 24,
+            "tot": 17,
+            "pts": 6,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 35
           },
           {
             "cod": "V5",
@@ -4500,7 +4500,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
+            "eff": null,
             "tot": 2,
             "pts": 0,
             "slash": 0,
@@ -4525,13 +4525,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
-            "tot": 3,
-            "pts": 5,
+            "eff": 50,
+            "tot": 4,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 167
+            "pts_pct": 75
           }
         ],
         "saques": [
@@ -4557,7 +4557,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 6
               }
             ],
-            "eff": 0,
+            "eff": -6,
             "tot": 17,
             "pts": 0,
             "plus": 0,
@@ -4652,13 +4652,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 10
               }
             ],
-            "eff": 0,
-            "tot": 10,
-            "pts": 7,
+            "eff": 47,
+            "tot": 19,
+            "pts": 10,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 70
+            "pts_pct": 53
           },
           {
             "cod": "V5",
@@ -4681,25 +4681,25 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 14
               }
             ],
-            "eff": 0,
-            "tot": 7,
-            "pts": 0,
+            "eff": 27,
+            "tot": 15,
+            "pts": 7,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 47
           },
           {
             "cod": "X6",
             "orig": 2,
             "destinos": [],
-            "eff": 0,
-            "tot": 1,
-            "pts": 0,
+            "eff": 33,
+            "tot": 3,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 33
           }
         ],
         "saques": [
@@ -4756,14 +4756,14 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 10
               }
             ],
-            "eff": 0,
+            "eff": 28,
             "tot": 10,
-            "pts": 0,
-            "plus": 0,
+            "pts": 2,
+            "plus": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 20
           }
         ],
         "video": 0,
@@ -4785,13 +4785,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 2,
+            "eff": 67,
+            "tot": 3,
             "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 100
+            "pts_pct": 67
           },
           {
             "cod": "XM",
@@ -4806,13 +4806,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
-            "tot": 2,
-            "pts": 0,
+            "eff": 33,
+            "tot": 6,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 33
           }
         ],
         "saques": [
@@ -4838,8 +4838,8 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 8
               }
             ],
-            "eff": 0,
-            "tot": 12,
+            "eff": -8,
+            "tot": 13,
             "pts": 0,
             "plus": 0,
             "slash": 0,
@@ -4916,13 +4916,13 @@ const PARTIDOS_INDIVIDUAL = [
             "cod": "X6",
             "orig": 2,
             "destinos": [],
-            "eff": 0,
-            "tot": 2,
-            "pts": 0,
+            "eff": 33,
+            "tot": 3,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 67
           },
           {
             "cod": "V6",
@@ -4933,7 +4933,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
+            "eff": null,
             "tot": 1,
             "pts": 0,
             "slash": 0,
@@ -4954,25 +4954,25 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 25
               }
             ],
-            "eff": 0,
-            "tot": 4,
-            "pts": 1,
+            "eff": 11,
+            "tot": 9,
+            "pts": 4,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 25
+            "pts_pct": 44
           },
           {
             "cod": "V8",
             "orig": 9,
             "destinos": [],
-            "eff": 0,
+            "eff": 100,
             "tot": 1,
-            "pts": 0,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 100
           }
         ],
         "saques": [
@@ -5004,14 +5004,14 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 29
               }
             ],
-            "eff": 0,
-            "tot": 7,
-            "pts": 0,
-            "plus": 0,
+            "eff": 11,
+            "tot": 9,
+            "pts": 2,
+            "plus": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 22
           }
         ],
         "video": 0,
@@ -5048,9 +5048,9 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
-            "tot": 2,
-            "pts": 1,
+            "eff": 50,
+            "tot": 4,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
@@ -5073,13 +5073,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
-            "tot": 3,
-            "pts": 1,
+            "eff": 60,
+            "tot": 5,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 33
+            "pts_pct": 60
           },
           {
             "cod": "XM",
@@ -5091,12 +5091,12 @@ const PARTIDOS_INDIVIDUAL = [
               }
             ],
             "eff": 0,
-            "tot": 1,
-            "pts": 0,
+            "tot": 4,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 25
           },
           {
             "cod": "X2",
@@ -5107,13 +5107,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
+            "eff": 100,
             "tot": 1,
-            "pts": 0,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 100
           }
         ],
         "saques": [
@@ -5135,10 +5135,10 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 12
               }
             ],
-            "eff": 0,
+            "eff": -9,
             "tot": 8,
             "pts": 0,
-            "plus": 0,
+            "plus": 1,
             "slash": 0,
             "err": 0,
             "video": null,
@@ -5196,14 +5196,14 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 10
               }
             ],
-            "eff": 0,
-            "tot": 29,
-            "pts": 0,
-            "plus": 0,
+            "eff": 19,
+            "tot": 30,
+            "pts": 5,
+            "plus": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 17
           },
           {
             "cod": "SQ",
@@ -5234,13 +5234,13 @@ const PARTIDOS_INDIVIDUAL = [
             "cod": "X6",
             "orig": 2,
             "destinos": [],
-            "eff": 0,
-            "tot": 1,
-            "pts": 0,
+            "eff": 33,
+            "tot": 3,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 33
           },
           {
             "cod": "X8",
@@ -5251,13 +5251,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
+            "eff": 100,
             "tot": 1,
-            "pts": 0,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 100
           }
         ],
         "saques": [
@@ -5314,13 +5314,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 1,
-            "pts": 0,
+            "eff": -20,
+            "tot": 5,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 20
           }
         ],
         "saques": [
@@ -5348,10 +5348,10 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 4,
+            "eff": -15,
+            "tot": 5,
             "pts": 0,
-            "plus": 0,
+            "plus": 1,
             "slash": 0,
             "err": 0,
             "video": null,
@@ -5379,10 +5379,10 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 1,
+            "eff": 12,
+            "tot": 2,
             "pts": 0,
-            "plus": 0,
+            "plus": 1,
             "slash": 0,
             "err": 0,
             "video": null,
@@ -5474,13 +5474,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 11
               }
             ],
-            "eff": 0,
-            "tot": 9,
-            "pts": 0,
+            "eff": 20,
+            "tot": 20,
+            "pts": 9,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 45
           },
           {
             "cod": "V5",
@@ -5491,7 +5491,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
+            "eff": null,
             "tot": 2,
             "pts": 0,
             "slash": 0,
@@ -5515,7 +5515,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
+            "eff": -33,
             "tot": 3,
             "pts": 0,
             "plus": 0,
@@ -5538,7 +5538,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
+            "eff": -67,
             "tot": 3,
             "pts": 0,
             "plus": 0,
@@ -5619,13 +5619,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 8
               }
             ],
-            "eff": 0,
-            "tot": 13,
-            "pts": 4,
+            "eff": 50,
+            "tot": 24,
+            "pts": 13,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 31
+            "pts_pct": 54
           },
           {
             "cod": "V5",
@@ -5640,13 +5640,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 25
               }
             ],
-            "eff": 0,
-            "tot": 4,
-            "pts": 0,
+            "eff": 33,
+            "tot": 9,
+            "pts": 4,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 44
           }
         ],
         "saques": [
@@ -5691,14 +5691,14 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 6
               }
             ],
-            "eff": 0,
+            "eff": 8,
             "tot": 16,
-            "pts": 0,
-            "plus": 0,
+            "pts": 1,
+            "plus": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 6
           }
         ],
         "video": 0,
@@ -5764,13 +5764,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
-            "tot": 3,
-            "pts": 8,
+            "eff": 75,
+            "tot": 4,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 267
+            "pts_pct": 75
           },
           {
             "cod": "X7",
@@ -5785,13 +5785,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
-            "tot": 2,
-            "pts": 0,
+            "eff": 40,
+            "tot": 5,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 40
           },
           {
             "cod": "XM",
@@ -5814,13 +5814,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 12
               }
             ],
-            "eff": 0,
-            "tot": 8,
-            "pts": 0,
+            "eff": 54,
+            "tot": 13,
+            "pts": 8,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 62
           }
         ],
         "saques": [
@@ -5854,10 +5854,10 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 5
               }
             ],
-            "eff": 0,
-            "tot": 21,
+            "eff": 6,
+            "tot": 22,
             "pts": 0,
-            "plus": 0,
+            "plus": 3,
             "slash": 0,
             "err": 0,
             "video": null,
@@ -5909,13 +5909,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 14
               }
             ],
-            "eff": 0,
-            "tot": 7,
-            "pts": 0,
+            "eff": 42,
+            "tot": 12,
+            "pts": 7,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 58
           },
           {
             "cod": "V6",
@@ -5926,7 +5926,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
+            "eff": null,
             "tot": 1,
             "pts": 0,
             "slash": 0,
@@ -5955,13 +5955,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 17
               }
             ],
-            "eff": 0,
-            "tot": 6,
-            "pts": 0,
+            "eff": 44,
+            "tot": 9,
+            "pts": 6,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 67
           }
         ],
         "saques": [
@@ -5993,14 +5993,14 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 29
               }
             ],
-            "eff": 0,
-            "tot": 7,
-            "pts": 0,
-            "plus": 0,
+            "eff": -31,
+            "tot": 12,
+            "pts": 1,
+            "plus": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 8
           }
         ],
         "video": 0,
@@ -6037,13 +6037,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
-            "tot": 3,
-            "pts": 2,
+            "eff": 60,
+            "tot": 5,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 67
+            "pts_pct": 60
           },
           {
             "cod": "X7",
@@ -6062,13 +6062,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
-            "tot": 3,
-            "pts": 0,
+            "eff": 60,
+            "tot": 5,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 60
           },
           {
             "cod": "XM",
@@ -6079,13 +6079,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 2,
-            "pts": 0,
+            "eff": 67,
+            "tot": 3,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 67
           }
         ],
         "saques": [
@@ -6111,7 +6111,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 12
               }
             ],
-            "eff": 0,
+            "eff": -12,
             "tot": 8,
             "pts": 0,
             "plus": 0,
@@ -6176,14 +6176,14 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 7
               }
             ],
-            "eff": 0,
+            "eff": 15,
             "tot": 15,
-            "pts": 0,
-            "plus": 0,
+            "pts": 1,
+            "plus": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 7
           },
           {
             "cod": "SQ",
@@ -6219,7 +6219,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
+            "eff": null,
             "tot": 1,
             "pts": 0,
             "slash": 0,
@@ -6253,7 +6253,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
+            "eff": -100,
             "tot": 1,
             "pts": 0,
             "plus": 0,
@@ -6293,8 +6293,8 @@ const PARTIDOS_INDIVIDUAL = [
             "tipo": "POTENCIA",
             "orig": 6,
             "destinos": [],
-            "eff": 0,
-            "tot": 0,
+            "eff": -100,
+            "tot": 1,
             "pts": 0,
             "plus": 0,
             "slash": 0,
@@ -6414,13 +6414,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 14
               }
             ],
-            "eff": 0,
-            "tot": 7,
-            "pts": 0,
+            "eff": 40,
+            "tot": 15,
+            "pts": 7,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 47
           },
           {
             "cod": "V5",
@@ -6435,7 +6435,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
+            "eff": null,
             "tot": 2,
             "pts": 0,
             "slash": 0,
@@ -6453,12 +6453,12 @@ const PARTIDOS_INDIVIDUAL = [
               }
             ],
             "eff": 0,
-            "tot": 1,
-            "pts": 4,
+            "tot": 2,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 400
+            "pts_pct": 50
           }
         ],
         "saques": [
@@ -6488,7 +6488,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 7
               }
             ],
-            "eff": 0,
+            "eff": 3,
             "tot": 15,
             "pts": 0,
             "plus": 0,
@@ -6507,14 +6507,14 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
+            "eff": 50,
             "tot": 2,
-            "pts": 0,
+            "pts": 1,
             "plus": 0,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 50
           }
         ],
         "video": 0,
@@ -6588,13 +6588,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 17
               }
             ],
-            "eff": 0,
-            "tot": 6,
-            "pts": 3,
+            "eff": 31,
+            "tot": 13,
+            "pts": 6,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 50
+            "pts_pct": 46
           },
           {
             "cod": "V5",
@@ -6613,13 +6613,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
-            "tot": 3,
-            "pts": 0,
+            "eff": 8,
+            "tot": 12,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 25
           }
         ],
         "saques": [
@@ -6649,10 +6649,10 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 12
               }
             ],
-            "eff": 0,
+            "eff": 6,
             "tot": 8,
             "pts": 0,
-            "plus": 0,
+            "plus": 2,
             "slash": 0,
             "err": 0,
             "video": null,
@@ -6676,10 +6676,10 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 8
               }
             ],
-            "eff": 0,
-            "tot": 12,
+            "eff": -4,
+            "tot": 14,
             "pts": 0,
-            "plus": 0,
+            "plus": 2,
             "slash": 0,
             "err": 0,
             "video": null,
@@ -6745,13 +6745,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 1,
-            "pts": 4,
+            "eff": 50,
+            "tot": 2,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 400
+            "pts_pct": 50
           },
           {
             "cod": "X7",
@@ -6766,13 +6766,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 50
               }
             ],
-            "eff": 0,
-            "tot": 2,
-            "pts": 0,
+            "eff": 67,
+            "tot": 3,
+            "pts": 2,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 67
           },
           {
             "cod": "XM",
@@ -6788,12 +6788,12 @@ const PARTIDOS_INDIVIDUAL = [
               }
             ],
             "eff": 0,
-            "tot": 4,
-            "pts": 0,
+            "tot": 10,
+            "pts": 4,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 40
           }
         ],
         "saques": [
@@ -6819,10 +6819,10 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 12
               }
             ],
-            "eff": 0,
+            "eff": -11,
             "tot": 16,
             "pts": 0,
-            "plus": 0,
+            "plus": 1,
             "slash": 0,
             "err": 0,
             "video": null,
@@ -6870,13 +6870,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 25
               }
             ],
-            "eff": 0,
-            "tot": 4,
-            "pts": 0,
+            "eff": 18,
+            "tot": 11,
+            "pts": 4,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 36
           },
           {
             "cod": "V6",
@@ -6887,7 +6887,7 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
+            "eff": null,
             "tot": 2,
             "pts": 0,
             "slash": 0,
@@ -6908,13 +6908,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 33
               }
             ],
-            "eff": 0,
-            "tot": 3,
-            "pts": 1,
+            "eff": 33,
+            "tot": 6,
+            "pts": 3,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 33
+            "pts_pct": 50
           },
           {
             "cod": "V8",
@@ -6925,13 +6925,13 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 100
               }
             ],
-            "eff": 0,
-            "tot": 1,
-            "pts": 0,
+            "eff": 50,
+            "tot": 2,
+            "pts": 1,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 50
           }
         ],
         "saques": [
@@ -6967,14 +6967,14 @@ const PARTIDOS_INDIVIDUAL = [
                 "pct": 8
               }
             ],
-            "eff": 0,
-            "tot": 12,
-            "pts": 0,
+            "eff": -13,
+            "tot": 15,
+            "pts": 1,
             "plus": 0,
             "slash": 0,
             "err": 0,
             "video": null,
-            "pts_pct": 0
+            "pts_pct": 7
           }
         ],
         "video": 0,

@@ -262,33 +262,65 @@ def leer_partido(ws, meta):
 
     player_pos = leer_posiciones(ws)
 
-    # Parse stats (rows 36-64) for EFF and PTS per player
+    # Parse stats (rows 36-64)
+    # SM section: row 36=header, rows 37-49=players
+    # SQ section: row 51=header, rows 52-64=players
+    # Attack combos by column (0-indexed):
+    # SM row cols: A=nombre(0),B=eff(1),C=tot(2),D=pts(3),E=plus(4)
+    #   X8:  H(7)=nom, I(8)=eff, J(9)=tot, K(10)=pts, L(11)=%pts
+    #   X5:  O(14)=nom,P(15)=eff,Q(16)=tot,R(17)=pts,S(18)=%pts
+    #   X6:  V(21)=nom,W(22)=eff,X(23)=tot,Y(24)=pts,Z(25)=%pts
+    #   X1:  AC(28)=nom,AD(29)=eff,AE(30)=tot,AF(31)=pts,AG(32)=%pts
+    #   X7:  AJ(35)=nom,AK(36)=eff,AL(37)=tot,AM(38)=pts,AN(39)=%pts
+    # SQ row cols same structure but:
+    #   V8:H, V5:O, V6:V, XM:AC, X2:AJ
+    # Attack combo columns (0-indexed): nom, eff, tot, pts, pct_pts
+    # SM row: X8(7), X5(14), X6(21), X1(28), X7(35), XP(42)
+    # SQ row: V8(7), V5(14), V6(21), XM(28), X2(35), VP(42)
+    ATK_COLS = {
+        'sm': [('X8',7),('X5',14),('X6',21),('X1',28),('X7',35),('XP',42)],
+        'sq': [('V8',7),('V5',14),('V6',21),('XM',28),('X2',35),('VP',42)],
+    }
+    # XP is a variant of X5/V5 - not separately tracked in stats
+
     stats = {}
     stat_rows = list(ws.iter_rows(min_row=36, max_row=65, values_only=True))
-    for row in stat_rows:
-        nm_a = row[0] if row[0] else None
-        if not nm_a or not gn(nm_a): continue
-        nm = cn(nm_a)
-        eff = se(row[1]) if row[1] else 0
-        tot = si(row[2]) if row[2] else 0
-        pts = si(row[3]) if row[3] else 0
-        if nm not in stats:
-            stats[nm] = {'sm_eff':eff,'sm_tot':tot,'sm_pts':pts,'sq_eff':0,'sq_tot':0,'sq_pts':0}
-        else:
-            stats[nm]['sq_eff'] = eff
-            stats[nm]['sq_tot'] = tot
-            stats[nm]['sq_pts'] = pts
-        # Attack stats from cols H onwards (X8, X5, X6, etc.)
-        atk_stats = {}
-        for col_off, cod in enumerate(['X8','X5','X6','X1','X7','XP']):
-            base = 7 + col_off*7
-            if base+2 < len(row):
-                a_eff = se(row[base+1])
-                a_tot = si(row[base+2])
-                a_pts = si(row[base+3])
-                if a_tot > 0:
-                    atk_stats[cod] = {'eff':a_eff,'tot':a_tot,'pts':a_pts}
-        stats[nm]['atk'] = atk_stats
+
+    def read_stat_section(rows, tipo):
+        for row in rows:
+            nm_a = row[0] if row[0] else None
+            if not nm_a or not gn(nm_a): continue
+            nm = cn(nm_a)
+            if nm not in stats:
+                stats[nm] = {'sm_eff':0,'sm_tot':0,'sm_pts':0,'sm_plus':0,
+                             'sq_eff':0,'sq_tot':0,'sq_pts':0,'sq_plus':0,'atk':{}}
+            # SM/SQ overall
+            eff  = se(row[1]) if len(row)>1 else 0
+            tot  = si(row[2]) if len(row)>2 else 0
+            pts  = si(row[3]) if len(row)>3 else 0
+            plus = si(row[4]) if len(row)>4 else 0
+            stats[nm][tipo+'_eff']  = eff
+            stats[nm][tipo+'_tot']  = tot
+            stats[nm][tipo+'_pts']  = pts
+            stats[nm][tipo+'_plus'] = plus
+            # Attack combos
+            for cod, base in ATK_COLS[tipo.lower()]:
+                nm_b = row[base] if base < len(row) else None
+                if not nm_b or not gn(nm_b): continue
+                a_eff = se(row[base+1]) if base+1 < len(row) else 0
+                a_tot = si(row[base+2]) if base+2 < len(row) else 0
+                a_pts = si(row[base+3]) if base+3 < len(row) else 0
+                a_pct = se(row[base+4]) if base+4 < len(row) else 0
+                if a_tot > 0 or a_eff != 0:
+                    stats[nm]['atk'][cod] = {
+                        'eff': a_eff, 'tot': a_tot,
+                        'pts': a_pts, 'pts_pct': a_pct
+                    }
+
+    # SM section: rows 37-49 (indices 1-13)
+    read_stat_section(stat_rows[1:14], 'sm')
+    # SQ section: rows 52-64 (indices 16-28)
+    read_stat_section(stat_rows[16:29], 'sq')
 
     return {
         'rival':      meta.get('rival',''),
@@ -327,20 +359,7 @@ def acumular(partidos_data):
                 for z,v in a['zones'].items():
                     all_players[nm]['combos'][cod]['zones'][z] =                         all_players[nm]['combos'][cod]['zones'].get(z,0) + v
 
-            # Accumulate stats
-            pd_stats = pd.get('stats', {}).get(nm, {})
-            if pd_stats:
-                if 'stats' not in all_players[nm]:
-                    all_players[nm]['stats'] = {'sm_eff':0,'sm_tot':0,'sm_pts':0,
-                                                 'sq_eff':0,'sq_tot':0,'sq_pts':0,'atk':{}}
-                s = all_players[nm]['stats']
-                for k in ['sm_tot','sm_pts','sq_tot','sq_pts']:
-                    s[k] = s.get(k,0) + pd_stats.get(k,0)
-                for cod2, av in pd_stats.get('atk',{}).items():
-                    if cod2 not in s['atk']:
-                        s['atk'][cod2] = {'eff':0,'tot':0,'pts':0}
-                    s['atk'][cod2]['tot'] += av.get('tot',0)
-                    s['atk'][cod2]['pts'] += av.get('pts',0)
+            # stats accumulated separately below
 
         for nm, data in pd['serve'].items():
             pos_pl, num_pl = get_pos_num(nm)
@@ -357,11 +376,48 @@ def acumular(partidos_data):
                 all_players[nm]['serve_sm'][dz] = all_players[nm]['serve_sm'].get(dz,0)+v
             for dz,v in data.get('sq',{}).items():
                 all_players[nm]['serve_sq'][dz] = all_players[nm]['serve_sq'].get(dz,0)+v
+            # stats accumulated below
+
+    # ── Accumulate stats once per player per partido ─────────────────
+    already_done = set()
+    for pd in partidos_data:
+        for nm in list(pd.get('stats', {}).keys()):
+            key = (nm, pd.get('rival',''))
+            if key in already_done: continue
+            already_done.add(key)
+            if nm not in all_players: continue
+            pd_stats = pd['stats'][nm]
+            if 'stats' not in all_players[nm]:
+                all_players[nm]['stats'] = {'sm_eff':0,'sm_tot':0,'sm_pts':0,'sm_plus':0,
+                                             'sq_eff':0,'sq_tot':0,'sq_pts':0,'sq_plus':0,'atk':{}}
+            s = all_players[nm]['stats']
+            for tipo in ['sm','sq']:
+                new_tot = pd_stats.get(tipo+'_tot',0)
+                new_eff = pd_stats.get(tipo+'_eff',0)
+                old_tot = s.get(tipo+'_tot',0)
+                old_eff = s.get(tipo+'_eff',0)
+                combined = old_tot + new_tot
+                s[tipo+'_eff']  = round((old_eff*old_tot + new_eff*new_tot)/combined) if combined else 0
+                s[tipo+'_tot']  = combined
+                s[tipo+'_pts']  = s.get(tipo+'_pts',0)  + pd_stats.get(tipo+'_pts',0)
+                s[tipo+'_plus'] = s.get(tipo+'_plus',0) + pd_stats.get(tipo+'_plus',0)
+            for cod2, av in pd_stats.get('atk',{}).items():
+                if cod2 not in s['atk']:
+                    s['atk'][cod2] = {'eff':0,'tot':0,'pts':0}
+                new_tot = av.get('tot',0)
+                new_eff = av.get('eff',0) or 0
+                old_tot = s['atk'][cod2]['tot']
+                old_eff = s['atk'][cod2]['eff']
+                combined = old_tot + new_tot
+                # Weighted average EFF
+                s['atk'][cod2]['eff'] = round((old_eff*old_tot + new_eff*new_tot)/combined) if combined else 0
+                s['atk'][cod2]['tot'] = combined
+                s['atk'][cod2]['pts'] += av.get('pts',0)
 
     return all_players
 
 # ── Build jugadores array ─────────────────────────────────────────────
-def build_jugadores(all_players):
+def build_jugadores(all_players, stats_override=None):
     jugadores = []
     for nm in sorted(all_players, key=lambda n: all_players[n]['num']):
         info  = all_players[nm]
@@ -371,31 +427,46 @@ def build_jugadores(all_players):
 
         # Ataques
         ataques = []
-        st = info.get('stats', {})
+        # Use per-partido stats if provided, else accumulated
+        st = stats_override.get(nm, info.get('stats', {})) if stats_override else info.get('stats', {})
         for cod, a in info['combos'].items():
             tot   = a['total'] or sum(a['zones'].values())
             zones = a['zones']
             orig  = ORIG.get(cod,3)
             dest_sorted = sorted([(z,v) for z,v in zones.items() if v>0], key=lambda x:-x[1])
             destinos = [{'z':z,'pct':pct(v,tot)} for z,v in dest_sorted[:4]]
-            # Get EFF and PTS from stats
+            # EFF from stats (X8/V8 only), otherwise null
             atk_st = st.get('atk', {}).get(cod, {})
-            eff = atk_st.get('eff', 0)
-            pts = atk_st.get('pts', 0)
+            # EFF: weighted average from stats (decimal -> int%)
+            eff_raw = atk_st.get('eff', None) if atk_st else None
+            # eff is already int% from se() (e.g. 48 means 48%)
+            eff = eff_raw if eff_raw is not None else None
+            # PTS: real count from stats
+            pts = atk_st.get('pts', 0) if atk_st else 0
+            # TOT: use stats tot if available (more accurate than zone sum)
+            st_tot = atk_st.get('tot', 0) if atk_st else 0
+            use_tot = st_tot if st_tot else tot
             ataques.append({'cod':cod,'orig':orig,'destinos':destinos,
-                            'eff':eff,'tot':tot,'pts':pts,'slash':0,'err':0,
-                            'video':None,'pts_pct':pct(pts,tot)})
+                            'eff':eff,'tot':use_tot,'pts':pts,'slash':0,'err':0,
+                            'video':None,'pts_pct':pct(pts,use_tot) if use_tot else 0})
 
         # Saques
         saques = []
-        for cod, tipo_label, dest_data in [('SM','FLOTADO',info['serve_sm']),
-                                            ('SQ','POTENCIA',info['serve_sq'])]:
-            tot_dest = sum(dest_data.values()) or 1
+        for cod, tipo_label, dest_data, st_key in [
+            ('SM','FLOTADO', info['serve_sm'], 'sm'),
+            ('SQ','POTENCIA',info['serve_sq'], 'sq')]:
+            tot_dest = sum(dest_data.values()) or 0
             destinos = [{'z':z,'pct':pct(v,tot_dest)}
-                        for z,v in sorted(dest_data.items(),key=lambda x:-x[1])[:6]]
+                        for z,v in sorted(dest_data.items(),key=lambda x:-x[1])[:6]] if tot_dest else []
+            # EFF and PTS from stats
+            s_eff  = st.get(st_key+'_eff', 0)
+            s_tot  = st.get(st_key+'_tot', 0) or tot_dest
+            s_pts  = st.get(st_key+'_pts', 0)
+            s_plus = st.get(st_key+'_plus', 0)
             saques.append({'cod':cod,'tipo':tipo_label,'orig':6,'destinos':destinos,
-                           'eff':0,'tot':sum(dest_data.values()),'pts':0,
-                           'plus':0,'slash':0,'err':0,'video':None,'pts_pct':0})
+                           'eff':s_eff,'tot':s_tot,'pts':s_pts,
+                           'plus':s_plus,'slash':0,'err':0,'video':None,
+                           'pts_pct':pct(s_pts,s_tot) if s_tot else 0})
 
         j = {'num':num,'nombre':f"{num} {nm}",'pos':pos,'color':color,
              'info':{},'ataques':ataques,'saques':saques,'video':0,'recepcion':{}}
@@ -450,8 +521,11 @@ def main():
     # Per partido
     partidos_list = []
     for pd in partidos_procesados:
-        pp = acumular([pd])
-        jj = build_jugadores(pp)
+        import copy
+        pd_copy = dict(pd)
+        pd_copy['stats'] = copy.deepcopy(pd.get('stats', {}))
+        pp = acumular([pd_copy])
+        jj = build_jugadores(pp, stats_override=pd.get('stats', {}))
         partidos_list.append({
             'nombre':     pd['nombre'],
             'rival':      pd['rival'],
