@@ -337,8 +337,11 @@ function objCalcVals(nombreJugador){
     if(pd){
       if(nombreJugador){
         // Find jugador in this partido by name
+        var nmC2 = nombreJugador.replace(/^\d+\s*/,'').toLowerCase();
         var pj2 = pd.jugadores ? pd.jugadores.find(function(x){
-          return x.nombre && x.nombre.replace(/^\d+\s*/,'') === nombreJugador;
+          if(!x.nombre) return false;
+          var xC2 = x.nombre.replace(/^\d+\s*/,'').toLowerCase();
+          return xC2 === nmC2 || xC2.split(' ')[0] === nmC2.split(' ')[0];
         }) : null;
         if(pj2 && pj2.objetivos && Object.keys(pj2.objetivos).length > 0) return pj2.objetivos;
       } else {
@@ -350,17 +353,17 @@ function objCalcVals(nombreJugador){
   }
   // Acumulado from datos_partidos.js
   if(typeof PARTIDOS_JUGADORES !== 'undefined' && nombreJugador){
-    var nmClean = nombreJugador.replace(/^\d+\s*/,'');
+    var nmClean = nombreJugador.replace(/^\d+\s*/,'').toLowerCase();
     var pj = PARTIDOS_JUGADORES.find(function(x){
       if(!x.nombre) return false;
-      var xClean = x.nombre.replace(/^\d+\s*/,'');
-      return xClean === nmClean || x.nombre === nombreJugador;
+      var xClean = x.nombre.replace(/^\d+\s*/,'').toLowerCase();
+      // Match by apellido (first word)
+      var nmApellido = nmClean.split(' ')[0];
+      var xApellido  = xClean.split(' ')[0];
+      return xClean === nmClean || nmApellido === xApellido;
     });
     if(pj && pj.objetivos && Object.keys(pj.objetivos).length > 0){
-      console.log('PARTIDOS obj found for', nmClean, pj.objetivos);
       return pj.objetivos;
-    } else {
-      console.log('PARTIDOS obj NOT found for', nmClean, 'pj=', pj ? pj.nombre : 'null');
     }
   }
   // Equipo acumulado from datos_partidos.js
