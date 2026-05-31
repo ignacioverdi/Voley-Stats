@@ -288,12 +288,18 @@ canvas.panel-court{position:absolute;inset:0;width:100%;height:100%;opacity:.28;
   <a href="dashboard.html" class="back-btn">← Dashboard</a>
   <div class="hdr-title">RECEPCIÓN <span>CASLA</span></div>
   
+  <div style="display:flex;gap:6px;margin-left:auto">
+    <button id="rec-tbtn-p" onclick="recSetTipo('partido',this)" style="padding:5px 12px;border-radius:8px;border:1px solid rgba(232,25,44,.4);background:rgba(232,25,44,.12);color:#e8192c;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase">🏆 PARTIDO</button>
+    <button id="rec-tbtn-e" onclick="recSetTipo('entrenamiento',this)" style="padding:5px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#475569;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase">🏋️ ENT</button>
+  </div>
+  <div id="rec-subfiltro" style="display:none;gap:4px;flex-wrap:wrap;padding:6px 0;width:100%"></div>
   <div class="jbtns" id="jbtns"></div>
   
 </div>
 <div class="content" id="content"></div>
 
 <script src="datos_casla.js" onerror="void 0"></script>
+<script src="datos_entrenamientos.js" onerror="void 0"></script>
 
 
 
@@ -635,5 +641,118 @@ document.fonts.ready.then(function(){
   setTimeout(render,100);
 }).catch(function(){ setTimeout(render,400); });
 </script>
+
+<script>
+// ── ENT filter — independent of initReceptores/render ────────────────
+window._recMode = 'partido'; // 'partido' or 'entrenamiento'
+
+function recSetTipo(tipo, btn){
+  window._recMode = tipo;
+  // Update button styles
+  document.getElementById('rec-tbtn-p').style.cssText = tipo==='partido'
+    ? "padding:5px 12px;border-radius:8px;border:1px solid rgba(232,25,44,.4);background:rgba(232,25,44,.12);color:#e8192c;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase"
+    : "padding:5px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#475569;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase";
+  document.getElementById('rec-tbtn-e').style.cssText = tipo==='entrenamiento'
+    ? "padding:5px 12px;border-radius:8px;border:1px solid rgba(34,197,94,.4);background:rgba(34,197,94,.12);color:#22c55e;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase"
+    : "padding:5px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#475569;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase";
+
+  if(tipo === 'partido'){
+    // Restore original CASLA data
+    window.RECEPCION_DATA = {};
+    cargarRecepcionCasla();
+    recBuildJbtns(Object.keys(window.RECEPCION_DATA));
+    document.getElementById('rec-subfiltro').style.display = 'none';
+  } else {
+    // Build subfiltro with entrenamiento dates
+    recBuildSubfiltro();
+    // Load acumulado entrenamiento
+    recLoadEnt('acumulado');
+  }
+}
+
+function recBuildSubfiltro(){
+  var row = document.getElementById('rec-subfiltro');
+  if(!row) return;
+  row.innerHTML = '';
+  row.style.display = 'flex';
+  var meta = typeof ENTRENAMIENTOS_META !== 'undefined' ? ENTRENAMIENTOS_META : [];
+  
+  // Acumulado button
+  var ba = recMakeBtn('Acumulado', function(){
+    row.querySelectorAll('button').forEach(function(b){ recBtnOff(b); });
+    recBtnOn(ba);
+    recLoadEnt('acumulado');
+  });
+  recBtnOn(ba);
+  row.appendChild(ba);
+  
+  // Date buttons
+  meta.forEach(function(m){
+    var b = recMakeBtn(m.fecha||m.nombre, function(){
+      row.querySelectorAll('button').forEach(function(x){ recBtnOff(x); });
+      recBtnOn(b);
+      recLoadEnt(m.nombre);
+    });
+    row.appendChild(b);
+  });
+}
+
+function recLoadEnt(nombre){
+  var src = null;
+  if(nombre !== 'acumulado' && typeof ENTRENAMIENTOS_INDIVIDUAL !== 'undefined'){
+    var pd = ENTRENAMIENTOS_INDIVIDUAL.find(function(p){ return p.nombre === nombre; });
+    if(pd && pd.jugadores) src = pd.jugadores;
+  }
+  if(!src && typeof ENTRENAMIENTOS_JUGADORES !== 'undefined') src = ENTRENAMIENTOS_JUGADORES;
+  if(!src) return;
+  
+  // Swap CASLA_JUGADORES, load, restore
+  var orig = window.CASLA_JUGADORES;
+  window.CASLA_JUGADORES = src;
+  window.RECEPCION_DATA = {};
+  cargarRecepcionCasla();
+  window.CASLA_JUGADORES = orig;
+  
+  recBuildJbtns(Object.keys(window.RECEPCION_DATA));
+}
+
+function recBuildJbtns(receptores){
+  if(!receptores || !receptores.length) receptores = ['NIELSON','DURDOS','ZANOTTI','RAMOS'];
+  CUR = 'EQUIPO';
+  var jbtns = document.getElementById('jbtns');
+  if(!jbtns) return;
+  jbtns.innerHTML = '';
+  
+  var bEq = recMakeBtn('EQUIPO', function(){
+    jbtns.querySelectorAll('button').forEach(function(x){ recBtnOff(x); x.style.cssText=''; });
+    recBtnOn(bEq); bEq.style.cssText = 'border-color:rgba(232,25,44,.5);background:rgba(232,25,44,.12);color:#e8192c';
+    CUR='EQUIPO'; render();
+  });
+  bEq.classList.add('jbtn','on');
+  bEq.style.cssText = 'border-color:rgba(232,25,44,.5);background:rgba(232,25,44,.12);color:#e8192c';
+  jbtns.appendChild(bEq);
+  
+  receptores.forEach(function(p){
+    var b = recMakeBtn(p, function(){
+      jbtns.querySelectorAll('button').forEach(function(x){ recBtnOff(x); x.style.cssText=''; });
+      recBtnOn(b); CUR=p; render();
+    });
+    b.classList.add('jbtn');
+    jbtns.appendChild(b);
+  });
+  render();
+}
+
+function recMakeBtn(label, onclick){
+  var b = document.createElement('button');
+  b.className = 'jbtn';
+  b.textContent = label;
+  b.onclick = onclick;
+  return b;
+}
+function recBtnOn(b){ b.classList.add('on'); }
+function recBtnOff(b){ b.classList.remove('on'); }
+</script>
+
 </body>
 </html>
