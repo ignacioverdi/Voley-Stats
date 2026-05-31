@@ -1,5 +1,5 @@
-// datos_partidos.js — 31/05/2026 10:32
-const PARTIDOS_GENERADO = "31/05/2026 10:32";
+// datos_partidos.js — 31/05/2026 11:00
+const PARTIDOS_GENERADO = "31/05/2026 11:00";
 const PARTIDOS_TOTAL = 6;
 const PARTIDOS_META = [
   {
@@ -2471,6 +2471,46 @@ const PARTIDOS_JUGADORES = [
         "err": 0,
         "video": null,
         "pts_pct": 11
+      }
+    ],
+    "video": 0,
+    "recepcion": {}
+  },
+  {
+    "num": 19,
+    "nombre": "19 Diaz Bolli S.",
+    "pos": "ARMADOR",
+    "color": "#f59e0b",
+    "info": {},
+    "ataques": [],
+    "saques": [
+      {
+        "cod": "SM",
+        "tipo": "FLOTADO",
+        "orig": 6,
+        "destinos": [],
+        "eff": 7,
+        "tot": 7,
+        "pts": 0,
+        "plus": 2,
+        "slash": 0,
+        "err": 0,
+        "video": null,
+        "pts_pct": 0
+      },
+      {
+        "cod": "SQ",
+        "tipo": "POTENCIA",
+        "orig": 6,
+        "destinos": [],
+        "eff": 0,
+        "tot": 0,
+        "pts": 0,
+        "plus": 0,
+        "slash": 0,
+        "err": 0,
+        "video": null,
+        "pts_pct": 0
       }
     ],
     "video": 0,
@@ -4956,6 +4996,46 @@ const PARTIDOS_INDIVIDUAL = [
         "nombre": "18 Acosta W.",
         "pos": "OPUESTO",
         "color": "#818cf8",
+        "info": {},
+        "ataques": [],
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "video": 0,
+        "recepcion": {}
+      },
+      {
+        "num": 19,
+        "nombre": "19 Diaz Bolli S.",
+        "pos": "ARMADOR",
+        "color": "#f59e0b",
         "info": {},
         "ataques": [],
         "saques": [
@@ -7840,6 +7920,46 @@ const PARTIDOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {}
+      },
+      {
+        "num": 19,
+        "nombre": "19 Diaz Bolli S.",
+        "pos": "ARMADOR",
+        "color": "#f59e0b",
+        "info": {},
+        "ataques": [],
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "video": 0,
+        "recepcion": {}
       }
     ],
     "armadores": {
@@ -10677,6 +10797,46 @@ const PARTIDOS_INDIVIDUAL = [
         "nombre": "18 Acosta W.",
         "pos": "OPUESTO",
         "color": "#818cf8",
+        "info": {},
+        "ataques": [],
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "video": 0,
+        "recepcion": {}
+      },
+      {
+        "num": 19,
+        "nombre": "19 Diaz Bolli S.",
+        "pos": "ARMADOR",
+        "color": "#f59e0b",
         "info": {},
         "ataques": [],
         "saques": [
@@ -13718,6 +13878,46 @@ const PARTIDOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {}
+      },
+      {
+        "num": 19,
+        "nombre": "19 Diaz Bolli S.",
+        "pos": "ARMADOR",
+        "color": "#f59e0b",
+        "info": {},
+        "ataques": [],
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "video": 0,
+        "recepcion": {}
       }
     ],
     "armadores": {
@@ -16720,6 +16920,46 @@ const PARTIDOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {}
+      },
+      {
+        "num": 19,
+        "nombre": "19 Diaz Bolli S.",
+        "pos": "ARMADOR",
+        "color": "#f59e0b",
+        "info": {},
+        "ataques": [],
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [],
+            "eff": 12,
+            "tot": 4,
+            "pts": 0,
+            "plus": 2,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "video": 0,
+        "recepcion": {}
       }
     ],
     "armadores": {
@@ -19703,6 +19943,46 @@ const PARTIDOS_INDIVIDUAL = [
             "err": 0,
             "video": null,
             "pts_pct": 7
+          }
+        ],
+        "video": 0,
+        "recepcion": {}
+      },
+      {
+        "num": 19,
+        "nombre": "19 Diaz Bolli S.",
+        "pos": "ARMADOR",
+        "color": "#f59e0b",
+        "info": {},
+        "ataques": [],
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 3,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
           }
         ],
         "video": 0,
