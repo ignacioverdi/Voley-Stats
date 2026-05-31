@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # CASLA VOLEY — generar_datos_partidos.py
 # Lee CASL_Partidos.xlsx y genera datos_partidos.js
-import os, json, re
+import os, json, re, copy
 from datetime import datetime
 try:
     from openpyxl import load_workbook
@@ -297,49 +297,170 @@ def parse_recepcion_partido(ws):
         recepcion[name] = {'num':num,'flotado':flotado,'potencia':potencia}
     return recepcion
 
-# ── Parser de armadores (rows 67-86, mismo formato que CASLA) ─────────
+# ── Parser de armadores (rows 67-86) ────────────────────────────────
 def parse_armadores_partido(ws):
-    arm_rows = list(ws.iter_rows(min_row=67, max_row=87, values_only=True))
-    if len(arm_rows) < 2: return {}
-    arm_tit_name = cn(arm_rows[0][1]) if len(arm_rows[0])>1 else ''
-    arm_sup_name = cn(arm_rows[0][14]) if len(arm_rows[0])>14 else ''
-    pos_labels = ['P1','P6','P5','P4','P3','P2']
-    pos_data   = [1,3,5,7,9,11]
+    # All rows as list (row67=idx0, row68=idx1, row69=idx2, ...)
+    # Titular:  header=idx1(row68), data P1-P6=idx2-7(row69-74), SD/TR=idx8-9(row75-76)
+    # Suplente: header=idx11(row78), data P1-P6=idx12-17(row79-84), SD/TR=idx18-19(row85-86)
+    # SO/TR grid: idx14-17 (rows 81-84) for titular, idx24-27 (rows 91-94) for suplente
+    # Cols (0-indexed): AD=29,AE=30,AF=31,AG=32,AH=33,AI=34 | AB=27,AC=28
 
-    def read_arm(col_off, eff_row_off):
+    rows = list(ws.iter_rows(min_row=67, max_row=95, values_only=True))
+
+    def sp(v):
+        if v is None or str(v).strip() in ('','----','None'): return 0
+        try: return int(round(float(v)*100))
+        except: return 0
+
+    def read_arm(hdr_idx, grid_base_idx):
+        hdr = rows[hdr_idx] if hdr_idx < len(rows) else []
+        nombre = cn(hdr[29]) if len(hdr)>29 and hdr[29] else ''
+
+        pos_labels = ['P1','P6','P5','P4','P3','P2']
+        pills = []
+        for i in range(6):
+            ri = hdr_idx + 1 + i
+            r = rows[ri] if ri < len(rows) else []
+            lbl   = str(r[29]).strip() if len(r)>29 and r[29] else pos_labels[i]
+            eff   = sp(r[30]) if len(r)>30 else 0   # AE = EFF%
+            tot   = si(r[31]) if len(r)>31 else 0   # AF = TOT
+            pts   = si(r[32]) if len(r)>32 else 0   # AG = #
+            pct_v = sp(r[33]) if len(r)>33 else 0   # AH = #%
+            err_v = sp(r[34]) if len(r)>34 else 0   # AI = /=%
+            pills.append({'label':lbl,'eff':eff,'tot':tot,'pts':pts,'pts_pct':pct_v,'err_pct':err_v})
+
+        # SO and TR pills (idx hdr+7, hdr+8)
+        for off, lbl in [(7,'SO'),(8,'TR')]:
+            ri = hdr_idx + off
+            r = rows[ri] if ri < len(rows) else []
+            eff   = sp(r[30]) if len(r)>30 else 0
+            tot   = si(r[31]) if len(r)>31 else 0
+            pts   = si(r[32]) if len(r)>32 else 0
+            pct_v = sp(r[33]) if len(r)>33 else 0
+            err_v = sp(r[34]) if len(r)>34 else 0
+            pills.append({'label':lbl,'eff':eff,'tot':tot,'pts':pts,'pts_pct':pct_v,'err_pct':err_v})
+
+        # Rec pills: AB(27)=EFF% for each rotation row
+        rec_labels = ['SO','REC #','REC +','REC !','REC -','TRANS']
+        extra_pills = []
+        for i in range(6):
+            ri = hdr_idx + 1 + i
+            r = rows[ri] if ri < len(rows) else []
+            eff = sp(r[27]) if len(r)>27 else 0   # AB = EFF%
+            extra_pills.append({'label':rec_labels[i],'eff':eff})
+
+        # SO/TR distribution grid
+        # rows grid_base_idx to grid_base_idx+3
+        # row+0 (odd): A=soP4tot,C=soP3tot,E=soP2tot, G=trP4tot,I=trP3tot,K=trP2tot
+        # row+1 (even): A=soP4pts,B=soP4pct,C=soP3pts,D=soP3pct... G=trP4pts...
+        # row+2 (odd): C=soP6tot,E=soP1tot, I=trP6tot,K=trP1tot
+        # row+3 (even): C=soP6pts,D=soP6pct,E=soP1pts,F=soP1pct, I=trP6pts...
+        g = grid_base_idx
+        r0 = rows[g]   if g   < len(rows) else []
+        r1 = rows[g+1] if g+1 < len(rows) else []
+        r2 = rows[g+2] if g+2 < len(rows) else []
+        r3 = rows[g+3] if g+3 < len(rows) else []
+
+        def gv(row, idx): return si(row[idx]) if idx < len(row) else 0
+        def gp(row, idx): return sp(row[idx]) if idx < len(row) else 0
+
+        so_dist = [
+            {'pos':'P4','tot':gv(r0,0),'pts':gv(r1,0),'pct':gp(r1,1)},
+            {'pos':'P3','tot':gv(r0,2),'pts':gv(r1,2),'pct':gp(r1,3)},
+            {'pos':'P2','tot':gv(r0,4),'pts':gv(r1,4),'pct':gp(r1,5)},
+            {'pos':'P1','tot':gv(r2,4),'pts':gv(r3,4),'pct':gp(r3,5)},
+            {'pos':'P6','tot':gv(r2,2),'pts':gv(r3,2),'pct':gp(r3,3)},
+        ]
+        tr_dist = [
+            {'pos':'P4','tot':gv(r0,6),'pts':gv(r1,6),'pct':gp(r1,7)},
+            {'pos':'P3','tot':gv(r0,8),'pts':gv(r1,8),'pct':gp(r1,9)},
+            {'pos':'P2','tot':gv(r0,10),'pts':gv(r1,10),'pct':gp(r1,11)},
+            {'pos':'P1','tot':gv(r2,10),'pts':gv(r3,10),'pct':gp(r3,11)},
+            {'pos':'P6','tot':gv(r2,8),'pts':gv(r3,8),'pct':gp(r3,9)},
+        ]
+
+        # Build rotaciones from dist data
+        pos_rot = ['P1','P6','P5','P4','P3','P2']
+        col_off = 0 if hdr_idx == 1 else 13
         rots = []
-        for i, pr in enumerate(pos_data):
-            r_tot = arm_rows[pr]  if pr < len(arm_rows) else []
-            r_pts = arm_rows[pr+1] if pr+1 < len(arm_rows) else []
-            tot  = si(r_tot[10+col_off] if 10+col_off < len(r_tot) else None)
-            dZ4  = si(r_tot[2+col_off]  if 2+col_off  < len(r_tot) else None)
-            dZ3  = si(r_tot[4+col_off]  if 4+col_off  < len(r_tot) else None)
-            dZ2  = si(r_tot[6+col_off]  if 6+col_off  < len(r_tot) else None)
-            dZ6  = si(r_tot[8+col_off]  if 8+col_off  < len(r_tot) else None)
-            rots.append({'pos':pos_labels[i],'total':tot,'dist':[
-                {'zona':4,'tot':dZ4,'pts':0,'pct':pct(dZ4,tot),'pct_p':0},
-                {'zona':3,'tot':dZ3,'pts':0,'pct':pct(dZ3,tot),'pct_p':0},
-                {'zona':2,'tot':dZ2,'pts':0,'pct':pct(dZ2,tot),'pct_p':0},
-                {'zona':6,'tot':dZ6,'pts':0,'pct':pct(dZ6,tot),'pct_p':0},
+        for i in range(6):
+            r_tot = rows[1 + i*2] if 1+i*2 < len(rows) else []
+            r_pts = rows[2 + i*2] if 2+i*2 < len(rows) else []
+            c = col_off
+            tot2 = si(r_tot[10+c] if 10+c<len(r_tot) else None)
+            dZ4  = si(r_tot[2+c]  if 2+c <len(r_tot) else None)
+            dZ3  = si(r_tot[4+c]  if 4+c <len(r_tot) else None)
+            dZ2  = si(r_tot[6+c]  if 6+c <len(r_tot) else None)
+            dZ6  = si(r_tot[8+c]  if 8+c <len(r_tot) else None)
+            pZ4  = si(r_pts[2+c]  if 2+c <len(r_pts) else None)
+            pZ3  = si(r_pts[4+c]  if 4+c <len(r_pts) else None)
+            pZ2  = si(r_pts[6+c]  if 6+c <len(r_pts) else None)
+            pZ6  = si(r_pts[8+c]  if 8+c <len(r_pts) else None)
+            rots.append({'pos':pos_rot[i],'total':tot2,'dist':[
+                {'zona':4,'tot':dZ4,'pts':pZ4,'pct':pct(dZ4,tot2),'pct_p':pct(pZ4,dZ4)},
+                {'zona':3,'tot':dZ3,'pts':pZ3,'pct':pct(dZ3,tot2),'pct_p':pct(pZ3,dZ3)},
+                {'zona':2,'tot':dZ2,'pts':pZ2,'pct':pct(dZ2,tot2),'pct_p':pct(pZ2,dZ2)},
+                {'zona':6,'tot':dZ6,'pts':pZ6,'pct':pct(dZ6,tot2),'pct_p':pct(pZ6,dZ6)},
             ]})
-        pills = [{'label':pos_labels[i],'eff':0,'tot':rots[i]['total'],'pts':0,'pts_pct':0,'err_pct':0}
-                 for i in range(6)]
-        so_row = arm_rows[eff_row_off+6] if eff_row_off+6 < len(arm_rows) else []
-        tr_row = arm_rows[eff_row_off+7] if eff_row_off+7 < len(arm_rows) else []
-        def pill_sotr(row, label):
-            def sp(idx): 
-                v = row[idx] if idx < len(row) else None
-                return int(round(float(v)*100)) if v and str(v).strip() not in ('','None') else 0
-            return {'label':label,'eff':sp(30),'tot':si(row[31] if 31<len(row) else None),
-                    'pts':si(row[32] if 32<len(row) else None),'pts_pct':sp(33),'err_pct':sp(34)}
-        pills.append(pill_sotr(so_row,'SO'))
-        pills.append(pill_sotr(tr_row,'TR'))
-        return {'rotaciones':rots,'pills':pills,'recepcion':[],'so':{},'tr':{}}
 
-    return {
-        'titular':  {'nombre':arm_tit_name, **read_arm(0,  2)},
-        'suplente': {'nombre':arm_sup_name, **read_arm(13, 12)},
+        return {'nombre':nombre,'rotaciones':rots,'pills':pills,
+                'extra_pills':extra_pills,
+                'so_dist':so_dist,'tr_dist':tr_dist,
+                'recepcion':[],'so':{},'tr':{}}
+
+    tit = read_arm(1,  14)   # header=row68, grid=rows81-84
+    sup = read_arm(11, 24)   # header=row78, grid=rows91-94
+
+    # Override nombre from row 67
+    hdr0 = rows[0]
+    if len(hdr0)>1  and hdr0[1]:  tit['nombre'] = cn(hdr0[1])
+    if len(hdr0)>14 and hdr0[14]: sup['nombre'] = cn(hdr0[14])
+
+    return {'titular': tit, 'suplente': sup}
+
+
+# ── Parser de objetivos/baterías (rows 128-144) ──────────────────────
+def parse_objetivos(ws):
+    # Row 128 = header, row 129 = equipo, rows 130-144 = jugadores
+    # Cols (0-indexed):
+    #   G(6)=%SQ, M(12)=%REC, P(15)=%BLQ#+, T(19)=%PTBLQ,
+    #   Y(24)=%ATQCENTRAL, AD(29)=%ATQALTA, AI(34)=%ATQRAPIDA,
+    #   AN(39)=%ATQRP, AS(44)=%ATQRI, AX(49)=%ATQRM, BC(54)=%ATQTR
+    COL_MAP = {
+        'sq':6, 'rec':12, 'bqpos':15, 'bqpt':19,
+        'atqq':24, 'atqhb':29, 'atqx':34,
+        'atqrp':39, 'atqri':44, 'atqrm':49, 'atqtr':54
     }
+    obj_rows = list(ws.iter_rows(min_row=128, max_row=144, values_only=True))
+    if len(obj_rows) < 2: return {}
+
+    result = {}
+
+    def read_row(row):
+        vals = {}
+        for key, cidx in COL_MAP.items():
+            v = row[cidx] if cidx < len(row) else None
+            if v is not None and str(v).strip() not in ('','----'):
+                try: vals[key] = int(round(float(v) * 100))
+                except: vals[key] = None
+            else:
+                vals[key] = None
+        return vals
+
+    # Row 1 = equipo (idx 1 = row 129)
+    if len(obj_rows) > 1:
+        result['__equipo__'] = read_row(obj_rows[1])
+
+    # Rows 2-16 = jugadores (idx 2-16 = rows 130-144)
+    for ri in range(2, len(obj_rows)):
+        row = obj_rows[ri]
+        nm_cell = row[0] if row[0] else None
+        if not nm_cell: continue
+        nm = cn(nm_cell)
+        if nm:
+            result[nm] = read_row(row)
+
+    return result
 
 # ── Leer partido completo ─────────────────────────────────────────────
 def leer_partido(ws, meta):
@@ -411,6 +532,7 @@ def leer_partido(ws, meta):
 
     recepcion = parse_recepcion_partido(ws)
     armadores = parse_armadores_partido(ws)
+    objetivos = parse_objetivos(ws)
 
     return {
         'rival':      meta.get('rival',''),
@@ -424,6 +546,7 @@ def leer_partido(ws, meta):
         'player_pos': player_pos,
         'recepcion':  recepcion,
         'armadores':  armadores,
+        'objetivos':  objetivos,
         'stats':      stats,
     }
 
@@ -479,6 +602,29 @@ def acumular(partidos_data):
                                    'serve_sm':{},'serve_sq':{}}
             if not all_players[nm].get('recepcion'):
                 all_players[nm]['recepcion'] = rec
+
+        # Objetivos: weighted average across partidos
+        for nm, obj in pd.get('objetivos',{}).items():
+            if nm == '__equipo__': continue
+            if nm not in all_players: continue
+            if 'objetivos' not in all_players[nm]:
+                all_players[nm]['objetivos'] = {k:{'sum':0,'n':0} for k in obj}
+            for k, v in obj.items():
+                if v is not None:
+                    all_players[nm]['objetivos'][k]['sum'] = all_players[nm]['objetivos'][k].get('sum',0) + v
+                    all_players[nm]['objetivos'][k]['n']   = all_players[nm]['objetivos'][k].get('n',0) + 1
+
+        # Equipo objetivos
+        eq_obj = pd.get('objetivos',{}).get('__equipo__',{})
+        if eq_obj:
+            if '__equipo__' not in all_players:
+                all_players['__equipo__'] = {'num':0,'pos':'','combos':{},'serve_sm':{},'serve_sq':{}}
+            if 'objetivos' not in all_players['__equipo__']:
+                all_players['__equipo__']['objetivos'] = {k:{'sum':0,'n':0} for k in eq_obj}
+            for k, v in eq_obj.items():
+                if v is not None:
+                    all_players['__equipo__']['objetivos'][k]['sum'] = all_players['__equipo__']['objetivos'][k].get('sum',0) + v
+                    all_players['__equipo__']['objetivos'][k]['n']   = all_players['__equipo__']['objetivos'][k].get('n',0) + 1
 
     # Armadores: accumulate as acumulado
     all_armadores = {}
@@ -541,7 +687,7 @@ def acumular(partidos_data):
 # ── Build jugadores array ─────────────────────────────────────────────
 def build_jugadores(all_players, stats_override=None):
     jugadores = []
-    for nm in sorted(all_players, key=lambda n: all_players[n]['num']):
+    for nm in sorted((k for k in all_players if k != '__equipo__'), key=lambda n: all_players[n]['num']):
         info  = all_players[nm]
         pos   = info['pos']
         color = POS_COLOR.get(pos,'#64748b')
@@ -646,7 +792,7 @@ def main():
     for pd in partidos_procesados:
         import copy
         pd_copy = dict(pd)
-        pd_copy['stats'] = copy.deepcopy(pd.get('stats', {}))
+        pd_copy['stats'] = json.loads(json.dumps(pd.get('stats', {})))
         pp, pp_arm = acumular([pd_copy])
         jj = build_jugadores(pp, stats_override=pd.get('stats', {}))
         partidos_list.append({
@@ -658,7 +804,9 @@ def main():
             'sets_casla': pd['sets_casla'],
             'sets_rival': pd['sets_rival'],
             'jugadores':  jj,
-            'armadores':  pd.get('armadores', {}),
+            'armadores':  json.loads(json.dumps(pd.get('armadores', {}),default=str)),
+            'objetivos':  pd.get('objetivos', {}),
+            'equipo_obj': pd.get('objetivos', {}).get('__equipo__', {}),
         })
 
     generado = datetime.now().strftime('%d/%m/%Y %H:%M')
@@ -668,6 +816,9 @@ def main():
          'sets_casla':p['sets_casla'],'sets_rival':p['sets_rival']}
         for p in partidos_procesados
     ]
+    eq_raw = all_players.get('__equipo__', {}).get('objetivos', {})
+    equipo_obj = {k: (round(v['sum']/v['n']) if v.get('n') else None)
+                  for k, v in eq_raw.items()}
     js = f"""// datos_partidos.js — {generado}
 const PARTIDOS_GENERADO = "{generado}";
 const PARTIDOS_TOTAL = {len(partidos_procesados)};
@@ -676,6 +827,9 @@ const PARTIDOS_JUGADORES = {json.dumps(jugadores, ensure_ascii=False, indent=2)}
 
 const PARTIDOS_ARMADOR = {json.dumps(all_armadores, ensure_ascii=False, indent=2)};
 const PARTIDOS_INDIVIDUAL = {json.dumps(partidos_list, ensure_ascii=False, indent=2)};
+
+// Objetivos del equipo acumulado
+const PARTIDOS_EQUIPO_OBJ = {json.dumps(equipo_obj, ensure_ascii=False)};
 """
     with open(OUT,'w',encoding='utf-8') as f: f.write(js)
     print(f"\n✓ datos_partidos.js generado ({len(js)//1024}KB) — subir a GitHub")

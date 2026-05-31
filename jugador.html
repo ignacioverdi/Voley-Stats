@@ -131,6 +131,8 @@ body{background:var(--bg);font-family:'Barlow Condensed',sans-serif;color:var(--
 
 /* STATS */
 .stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:24px;}
+.obj-sfbtn{padding:4px 11px;border-radius:6px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);color:#64748b;font-size:10px;font-weight:700;letter-spacing:1px;cursor:pointer;text-transform:uppercase;transition:all .15s;font-family:'Barlow Condensed',sans-serif}
+.obj-sfbtn.on{background:rgba(232,25,44,.1);border-color:rgba(232,25,44,.35);color:#e8192c}
 .stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;}
 .stat-card-title{font-size:8px;color:var(--mut);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
 .stat-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--border);}
@@ -257,9 +259,9 @@ window.OBJETIVOS_CONFIG={metas:{
   rec:  {label:'% Recep.',  obj:36, min:20, max:44, g2:36, g1:30, y:25},
   bqpos:{label:'Blq #+',    obj:43, min:25, max:52, g2:43, g1:37, y:30},
   bqpt: {label:'% Blq #',   obj:23, min:12, max:28, g2:23, g1:20, y:17},
-  atqq: {label:'Atq Quick', obj:48, min:35, max:56, g2:48, g1:44, y:40},
-  atqhb:{label:'Atq HB',    obj:20, min:8,  max:26, g2:20, g1:16, y:12},
-  atqx: {label:'Atq X',     obj:42, min:28, max:50, g2:42, g1:38, y:34},
+  atqq: {label:'Atq Central', obj:48, min:35, max:56, g2:48, g1:44, y:40},
+  atqhb:{label:'Atq Alta',    obj:20, min:8,  max:26, g2:20, g1:16, y:12},
+  atqx: {label:'Atq Rápida',     obj:42, min:28, max:50, g2:42, g1:38, y:34},
   atqrp:{label:'Atq R#+',   obj:50, min:32, max:58, g2:50, g1:44, y:38},
   atqri:{label:'Atq R!',    obj:36, min:22, max:44, g2:36, g1:32, y:28},
   atqrm:{label:'Atq R-',    obj:26, min:14, max:34, g2:26, g1:22, y:18},
@@ -283,10 +285,86 @@ function objClassifyVsTeam(val,teamVal){
 }
 function objPct(v,mn,mx){return Math.max(0,Math.min(100,(v-mn)/(mx-mn)*100));}
 
+var currentObjPartido = 'acumulado';
+
+function buildObjSubfiltro(nombreJugador){
+  var row = document.getElementById('obj-partido-row');
+  if(!row) return;
+  if(typeof PARTIDOS_META === 'undefined'){ row.style.display='none'; return; }
+  row.innerHTML = '';
+  row.style.display = 'flex';
+
+  // Label
+  var lbl = document.createElement('span');
+  lbl.style.cssText = 'font-size:9px;color:#475569;letter-spacing:2px;text-transform:uppercase;align-self:center;margin-right:4px';
+  lbl.textContent = 'VER:';
+  row.appendChild(lbl);
+
+  // Acumulado button
+  var b = document.createElement('button');
+  b.className = 'obj-sfbtn' + (currentObjPartido==='acumulado'?' on':'');
+  b.textContent = 'Acumulado';
+  b.onclick = function(){
+    currentObjPartido = 'acumulado';
+    document.querySelectorAll('.obj-sfbtn').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    renderObjetivosJugador('objetivos-jugador', nombreJugador);
+  };
+  row.appendChild(b);
+
+  // Per-partido buttons
+  PARTIDOS_META.forEach(function(m){
+    var btn = document.createElement('button');
+    btn.className = 'obj-sfbtn' + (currentObjPartido===m.nombre?' on':'');
+    var label = m.rival||m.nombre;
+    if(m.resultado) label += ' ('+m.resultado+')';
+    btn.textContent = label;
+    btn.onclick = function(){
+      currentObjPartido = m.nombre;
+      document.querySelectorAll('.obj-sfbtn').forEach(function(x){x.classList.remove('on');});
+      btn.classList.add('on');
+      renderObjetivosJugador('objetivos-jugador', nombreJugador);
+    };
+    row.appendChild(btn);
+  });
+}
+
 function objCalcVals(nombreJugador){
+  // Use per-partido data if selected
+  if(typeof PARTIDOS_INDIVIDUAL !== 'undefined' && currentObjPartido !== 'acumulado'){
+    var pd = PARTIDOS_INDIVIDUAL.find(function(p){ return p.nombre === currentObjPartido; });
+    if(pd){
+      if(nombreJugador){
+        // Find jugador in this partido by name
+        var pj2 = pd.jugadores ? pd.jugadores.find(function(x){
+          return x.nombre && x.nombre.replace(/^\d+\s*/,'') === nombreJugador;
+        }) : null;
+        if(pj2 && pj2.objetivos && Object.keys(pj2.objetivos).length > 0) return pj2.objetivos;
+      } else {
+        // Equipo for this partido
+        if(pd.equipo_obj && Object.keys(pd.equipo_obj).length > 0) return pd.equipo_obj;
+        if(pd.objetivos && pd.objetivos['__equipo__']) return pd.objetivos['__equipo__'];
+      }
+    }
+  }
+  // Acumulado from datos_partidos.js
+  if(typeof PARTIDOS_JUGADORES !== 'undefined' && nombreJugador){
+    var pj = PARTIDOS_JUGADORES.find(function(x){
+      return x.nombre && x.nombre.replace(/^\d+\s*/,'') === nombreJugador;
+    });
+    if(pj && pj.objetivos && Object.keys(pj.objetivos).length > 0){
+      return pj.objetivos;
+    }
+  }
+  // Equipo acumulado from datos_partidos.js
+  if(typeof PARTIDOS_JUGADORES !== 'undefined' && !nombreJugador){
+    if(typeof PARTIDOS_EQUIPO_OBJ !== 'undefined' && Object.keys(PARTIDOS_EQUIPO_OBJ).length > 0){
+      return PARTIDOS_EQUIPO_OBJ;
+    }
+  }
+  // Fallback: calculate from HISTORIAL_DATA (DVW)
   var D=window.HISTORIAL_DATA;
   if(!D){
-    // Demo values when no data loaded
     if(nombreJugador) return {sq:-5,rec:29,bqpos:38,bqpt:18,atqq:41,atqhb:14,atqx:34,atqrp:42,atqri:27,atqrm:19,atqtr:28};
     return {sq:-5,rec:29,bqpos:38,bqpt:18,atqq:null,atqhb:14,atqx:null,atqrp:null,atqri:null,atqrm:null,atqtr:null};
   }
@@ -428,6 +506,7 @@ function renderObjetivosJugador(cid,nombre,extra){
   <!-- PRÓXIMO PARTIDO -->
   <div id="next-match-wrap"></div>
 
+  <div id="obj-partido-row" style="display:none;gap:5px;flex-wrap:wrap;margin-bottom:10px;padding:0 4px"></div>
   <div id="objetivos-jugador" style="margin-bottom:20px"></div>
   <div class="section-lbl" style="margin-bottom:12px;">Acceso rápido</div>
   <div class="accesos-grid" id="accesos-grid"></div>
@@ -683,7 +762,9 @@ if(jugador){
   renderHero(jugador);
   setTimeout(function(){
     if(typeof renderObjetivos!=="undefined")
-      renderObjetivosJugador("objetivos-jugador", jugador.nombre);
+      currentObjPartido = 'acumulado';
+    buildObjSubfiltro(jugador.nombre);
+    renderObjetivosJugador("objetivos-jugador", jugador.nombre);
   }, 200);
   renderQuickStats(jugador);
   renderNextMatch();
