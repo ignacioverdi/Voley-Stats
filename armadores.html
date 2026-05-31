@@ -255,6 +255,8 @@ body{padding-top:56px}
 
 <div style="max-width:1400px;margin:0 auto;padding:20px 24px">
   <div id="arm-filter-row" style="display:flex;gap:6px;flex-wrap:wrap;padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.05)">
+  <button class="arm-tipo-btn on" id="arm-tbtn-partido" onclick="setArmTipo('partido')" style="padding:5px 14px;border-radius:8px;border:1px solid rgba(232,25,44,.4);background:rgba(232,25,44,.12);color:#e8192c;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase">🏆 PARTIDO</button>
+  <button class="arm-tipo-btn" id="arm-tbtn-entrenamiento" onclick="setArmTipo('entrenamiento')" style="padding:5px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#475569;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase">🏋️ ENTRENAMIENTO</button>
   <span style="font-size:9px;color:#475569;letter-spacing:2px;text-transform:uppercase;align-self:center">Ver:</span>
   <button class="sfbtn on" id="arm-sf-acum" onclick="setArmPartido('acumulado',this)">Acumulado</button>
   <div id="arm-sf-partidos" style="display:contents"></div>
@@ -262,6 +264,7 @@ body{padding-top:56px}
 <style>
 .sfbtn{padding:4px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);color:#64748b;font-size:10px;font-weight:700;letter-spacing:1px;cursor:pointer;text-transform:uppercase;transition:all .15s;font-family:'Barlow Condensed',sans-serif}
 .sfbtn.on{background:rgba(232,25,44,.1);border-color:rgba(232,25,44,.35);color:#e8192c}
+.arm-tipo-btn.on{transition:all .15s}
 </style>
 <div id="seccion-armador"></div>
 </div>
@@ -290,6 +293,7 @@ body{padding-top:56px}
 
 <script src="datos_casla.js" onerror="void 0"></script>
 <script src="datos_partidos.js" onerror="void 0"></script>
+<script src="datos_entrenamientos.js" onerror="void 0"></script>
 <script>
 // ================================================================
 // CASLA VOLEY — Datos armadores propios
@@ -1159,30 +1163,60 @@ function setArmPartido(nombre, btn){
   renderArmadorConFiltro();
 }
 
+var currentArmTipo = 'partido';
+
 function buildArmSubfiltro(){
-  if(typeof PARTIDOS_META === 'undefined') return;
   var cont = document.getElementById('arm-sf-partidos');
   if(!cont) return;
   cont.innerHTML = '';
-  PARTIDOS_META.forEach(function(m){
+  var meta = currentArmTipo==='entrenamiento'
+    ? (typeof ENTRENAMIENTOS_META!=='undefined' ? ENTRENAMIENTOS_META : [])
+    : (typeof PARTIDOS_META!=='undefined' ? PARTIDOS_META : []);
+  meta.forEach(function(m){
     var btn = document.createElement('button');
     btn.className = 'sfbtn';
-    var label = m.rival||m.nombre;
-    if(m.resultado) label += ' ('+m.resultado+')';
+    var label = currentArmTipo==='entrenamiento'
+      ? (m.fecha||m.nombre)
+      : (m.rival||m.nombre);
+    if(m.resultado && currentArmTipo==='partido') label += ' ('+m.resultado+')';
     btn.textContent = label;
     btn.onclick = function(){ setArmPartido(m.nombre, btn); };
     cont.appendChild(btn);
   });
 }
 
+function setArmTipo(tipo){
+  currentArmTipo = tipo;
+  currentArmPartido = 'acumulado';
+  // Update tipo buttons
+  document.querySelectorAll('.arm-tipo-btn').forEach(function(b){ b.classList.remove('on'); });
+  var btn = document.getElementById('arm-tbtn-'+tipo);
+  if(btn) btn.classList.add('on');
+  // Rebuild subfiltro
+  buildArmSubfiltro();
+  // Reset to acumulado
+  document.querySelectorAll('.sfbtn').forEach(function(b){ b.classList.remove('on'); });
+  var acumBtn = document.getElementById('arm-sf-acum');
+  if(acumBtn) acumBtn.classList.add('on');
+  renderArmadorConFiltro();
+}
+
 function renderArmadorConFiltro(){
   if(currentArmPartido === 'acumulado'){
-    // Restore original CASLA_ARMADOR data
-    cargarDatosCasla();
-    renderArmador();
+    if(currentArmTipo==='entrenamiento'){
+      if(typeof ENTRENAMIENTOS_ARMADOR!=='undefined'){
+        window.ARMADOR_DATA = ENTRENAMIENTOS_ARMADOR;
+        renderArmador();
+      } else { cargarDatosCasla(); renderArmador(); }
+    } else {
+      cargarDatosCasla(); renderArmador();
+    }
   } else {
-    if(typeof PARTIDOS_INDIVIDUAL === 'undefined') return;
-    var pd = PARTIDOS_INDIVIDUAL.find(function(p){return p.nombre===currentArmPartido;});
+    var INDIVIDUAL_SRC = currentArmTipo==='entrenamiento'
+      ? (typeof ENTRENAMIENTOS_INDIVIDUAL!=='undefined' ? ENTRENAMIENTOS_INDIVIDUAL : null)
+      : (typeof PARTIDOS_INDIVIDUAL!=='undefined' ? PARTIDOS_INDIVIDUAL : null);
+    if(!INDIVIDUAL_SRC) return;
+    var pd = INDIVIDUAL_SRC.find(function(p){return p.nombre===currentArmPartido;});
     if(!pd || !pd.armadores) {
       var sec=document.getElementById('seccion-armador');
       if(sec) sec.innerHTML='<div style="padding:40px;text-align:center;color:#475569;font-size:12px;letter-spacing:1px">SIN DATOS DE ARMADOR PARA ESTE PARTIDO</div>';

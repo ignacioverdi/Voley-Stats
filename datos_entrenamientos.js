@@ -1,5 +1,5 @@
-// datos_entrenamientos.js — 31/05/2026 16:56
-const ENTRENAMIENTOS_GENERADO = "31/05/2026 16:56";
+// datos_entrenamientos.js — 31/05/2026 15:14
+const ENTRENAMIENTOS_GENERADO = "31/05/2026 15:14";
 const ENTRENAMIENTOS_TOTAL = 3;
 const ENTRENAMIENTOS_META = [
   {
@@ -32,10 +32,173 @@ const ENTRENAMIENTOS_META = [
 ];
 const ENTRENAMIENTOS_JUGADORES = [
   {
-    "num": 0,
-    "nombre": "0 Romeo Winer A.",
-    "pos": "",
-    "color": "#64748b",
+    "num": 2,
+    "nombre": "2 Ojuez A.",
+    "pos": "CENTRAL",
+    "color": "#f97316",
+    "info": {},
+    "ataques": [
+      {
+        "cod": "X1",
+        "orig": 3,
+        "destinos": [
+          {
+            "z": 8,
+            "pct": 50
+          },
+          {
+            "z": 6,
+            "pct": 25
+          },
+          {
+            "z": 4,
+            "pct": 25
+          }
+        ],
+        "eff": 50,
+        "tot": 2,
+        "pts": 1,
+        "slash": 0,
+        "err": 0,
+        "video": null,
+        "pts_pct": 50
+      },
+      {
+        "cod": "X7",
+        "orig": 3,
+        "destinos": [
+          {
+            "z": 1,
+            "pct": 50
+          },
+          {
+            "z": 7,
+            "pct": 50
+          }
+        ],
+        "eff": 50,
+        "tot": 2,
+        "pts": 1,
+        "slash": 0,
+        "err": 0,
+        "video": null,
+        "pts_pct": 50
+      },
+      {
+        "cod": "XM",
+        "orig": 3,
+        "destinos": [
+          {
+            "z": 6,
+            "pct": 50
+          },
+          {
+            "z": 1,
+            "pct": 25
+          },
+          {
+            "z": 8,
+            "pct": 25
+          }
+        ],
+        "eff": 67,
+        "tot": 3,
+        "pts": 2,
+        "slash": 0,
+        "err": 0,
+        "video": null,
+        "pts_pct": 67
+      },
+      {
+        "cod": "X2",
+        "orig": 3,
+        "destinos": [
+          {
+            "z": 9,
+            "pct": 100
+          }
+        ],
+        "eff": 100,
+        "tot": 1,
+        "pts": 1,
+        "slash": 0,
+        "err": 0,
+        "video": null,
+        "pts_pct": 100
+      }
+    ],
+    "saques": [
+      {
+        "cod": "SM",
+        "tipo": "FLOTADO",
+        "orig": 6,
+        "destinos": [
+          {
+            "z": 6,
+            "pct": 33
+          },
+          {
+            "z": 7,
+            "pct": 25
+          },
+          {
+            "z": 5,
+            "pct": 17
+          },
+          {
+            "z": 1,
+            "pct": 17
+          },
+          {
+            "z": 8,
+            "pct": 8
+          }
+        ],
+        "eff": -7,
+        "tot": 7,
+        "pts": 0,
+        "plus": 2,
+        "slash": 0,
+        "err": 0,
+        "video": null,
+        "pts_pct": 0
+      },
+      {
+        "cod": "SQ",
+        "tipo": "POTENCIA",
+        "orig": 6,
+        "destinos": [],
+        "eff": 0,
+        "tot": 0,
+        "pts": 0,
+        "plus": 0,
+        "slash": 0,
+        "err": 0,
+        "video": null,
+        "pts_pct": 0
+      }
+    ],
+    "video": 0,
+    "recepcion": {},
+    "objetivos": {
+      "sq": -11,
+      "rec": 12,
+      "bqpos": 66,
+      "bqpt": 34,
+      "atqq": 52,
+      "atqhb": null,
+      "atqx": -100,
+      "atqrp": 50,
+      "atqri": 33,
+      "atqrm": 67,
+      "atqtr": 40
+    }
+  },
+  {
+    "num": 3,
+    "nombre": "3 Romeo Winer A.",
+    "pos": "LIBERO",
+    "color": "#06b6d4",
     "info": {},
     "ataques": [],
     "saques": [
@@ -232,158 +395,19 @@ const ENTRENAMIENTOS_JUGADORES = [
         }
       }
     },
-    "objetivos": {}
-  },
-  {
-    "num": 2,
-    "nombre": "2 Ojuez A.",
-    "pos": "CENTRAL",
-    "color": "#f97316",
-    "info": {},
-    "ataques": [
-      {
-        "cod": "X1",
-        "orig": 3,
-        "destinos": [
-          {
-            "z": 8,
-            "pct": 50
-          },
-          {
-            "z": 6,
-            "pct": 25
-          },
-          {
-            "z": 4,
-            "pct": 25
-          }
-        ],
-        "eff": 50,
-        "tot": 2,
-        "pts": 1,
-        "slash": 0,
-        "err": 0,
-        "video": null,
-        "pts_pct": 50
-      },
-      {
-        "cod": "X7",
-        "orig": 3,
-        "destinos": [
-          {
-            "z": 1,
-            "pct": 50
-          },
-          {
-            "z": 7,
-            "pct": 50
-          }
-        ],
-        "eff": 50,
-        "tot": 2,
-        "pts": 1,
-        "slash": 0,
-        "err": 0,
-        "video": null,
-        "pts_pct": 50
-      },
-      {
-        "cod": "XM",
-        "orig": 3,
-        "destinos": [
-          {
-            "z": 6,
-            "pct": 50
-          },
-          {
-            "z": 1,
-            "pct": 25
-          },
-          {
-            "z": 8,
-            "pct": 25
-          }
-        ],
-        "eff": 67,
-        "tot": 3,
-        "pts": 2,
-        "slash": 0,
-        "err": 0,
-        "video": null,
-        "pts_pct": 67
-      },
-      {
-        "cod": "X2",
-        "orig": 3,
-        "destinos": [
-          {
-            "z": 9,
-            "pct": 100
-          }
-        ],
-        "eff": 100,
-        "tot": 1,
-        "pts": 1,
-        "slash": 0,
-        "err": 0,
-        "video": null,
-        "pts_pct": 100
-      }
-    ],
-    "saques": [
-      {
-        "cod": "SM",
-        "tipo": "FLOTADO",
-        "orig": 6,
-        "destinos": [
-          {
-            "z": 6,
-            "pct": 33
-          },
-          {
-            "z": 7,
-            "pct": 25
-          },
-          {
-            "z": 5,
-            "pct": 17
-          },
-          {
-            "z": 1,
-            "pct": 17
-          },
-          {
-            "z": 8,
-            "pct": 8
-          }
-        ],
-        "eff": -7,
-        "tot": 7,
-        "pts": 0,
-        "plus": 2,
-        "slash": 0,
-        "err": 0,
-        "video": null,
-        "pts_pct": 0
-      },
-      {
-        "cod": "SQ",
-        "tipo": "POTENCIA",
-        "orig": 6,
-        "destinos": [],
-        "eff": 0,
-        "tot": 0,
-        "pts": 0,
-        "plus": 0,
-        "slash": 0,
-        "err": 0,
-        "video": null,
-        "pts_pct": 0
-      }
-    ],
-    "video": 0,
-    "recepcion": {},
-    "objetivos": {}
+    "objetivos": {
+      "sq": -17,
+      "rec": 13,
+      "bqpos": null,
+      "bqpt": null,
+      "atqq": null,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": null,
+      "atqri": null,
+      "atqrm": null,
+      "atqtr": null
+    }
   },
   {
     "num": 4,
@@ -441,7 +465,19 @@ const ENTRENAMIENTOS_JUGADORES = [
     ],
     "video": 0,
     "recepcion": {},
-    "objetivos": {}
+    "objetivos": {
+      "sq": 8,
+      "rec": -50,
+      "bqpos": 50,
+      "bqpt": 11,
+      "atqq": null,
+      "atqhb": 0,
+      "atqx": null,
+      "atqrp": 0,
+      "atqri": 0,
+      "atqrm": null,
+      "atqtr": 36
+    }
   },
   {
     "num": 5,
@@ -604,7 +640,19 @@ const ENTRENAMIENTOS_JUGADORES = [
     ],
     "video": 0,
     "recepcion": {},
-    "objetivos": {}
+    "objetivos": {
+      "sq": -30,
+      "rec": 25,
+      "bqpos": 29,
+      "bqpt": 13,
+      "atqq": null,
+      "atqhb": 15,
+      "atqx": 30,
+      "atqrp": 34,
+      "atqri": 14,
+      "atqrm": 12,
+      "atqtr": 27
+    }
   },
   {
     "num": 6,
@@ -807,7 +855,19 @@ const ENTRENAMIENTOS_JUGADORES = [
         }
       }
     },
-    "objetivos": {}
+    "objetivos": {
+      "sq": -29,
+      "rec": 62,
+      "bqpos": 100,
+      "bqpt": 0,
+      "atqq": null,
+      "atqhb": null,
+      "atqx": -29,
+      "atqrp": 0,
+      "atqri": 0,
+      "atqrm": null,
+      "atqtr": -50
+    }
   },
   {
     "num": 9,
@@ -869,7 +929,19 @@ const ENTRENAMIENTOS_JUGADORES = [
     ],
     "video": 0,
     "recepcion": {},
-    "objetivos": {}
+    "objetivos": {
+      "sq": 4,
+      "rec": 0,
+      "bqpos": 42,
+      "bqpt": 8,
+      "atqq": null,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": 100,
+      "atqri": -100,
+      "atqrm": null,
+      "atqtr": 0
+    }
   },
   {
     "num": 10,
@@ -910,7 +982,19 @@ const ENTRENAMIENTOS_JUGADORES = [
     ],
     "video": 0,
     "recepcion": {},
-    "objetivos": {}
+    "objetivos": {
+      "sq": null,
+      "rec": null,
+      "bqpos": null,
+      "bqpt": null,
+      "atqq": null,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": null,
+      "atqri": null,
+      "atqrm": null,
+      "atqtr": null
+    }
   },
   {
     "num": 11,
@@ -1231,7 +1315,19 @@ const ENTRENAMIENTOS_JUGADORES = [
         }
       }
     },
-    "objetivos": {}
+    "objetivos": {
+      "sq": -19,
+      "rec": 39,
+      "bqpos": 38,
+      "bqpt": 13,
+      "atqq": null,
+      "atqhb": 8,
+      "atqx": 31,
+      "atqrp": 33,
+      "atqri": 67,
+      "atqrm": 15,
+      "atqtr": 8
+    }
   },
   {
     "num": 12,
@@ -1434,7 +1530,19 @@ const ENTRENAMIENTOS_JUGADORES = [
         }
       }
     },
-    "objetivos": {}
+    "objetivos": {
+      "sq": null,
+      "rec": 36,
+      "bqpos": null,
+      "bqpt": null,
+      "atqq": null,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": null,
+      "atqri": null,
+      "atqrm": null,
+      "atqtr": null
+    }
   },
   {
     "num": 13,
@@ -1646,7 +1754,19 @@ const ENTRENAMIENTOS_JUGADORES = [
         }
       }
     },
-    "objetivos": {}
+    "objetivos": {
+      "sq": -25,
+      "rec": 38,
+      "bqpos": null,
+      "bqpt": null,
+      "atqq": null,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": null,
+      "atqri": null,
+      "atqrm": null,
+      "atqtr": null
+    }
   },
   {
     "num": 14,
@@ -1942,7 +2062,19 @@ const ENTRENAMIENTOS_JUGADORES = [
         }
       }
     },
-    "objetivos": {}
+    "objetivos": {
+      "sq": 2,
+      "rec": 46,
+      "bqpos": 40,
+      "bqpt": 13,
+      "atqq": null,
+      "atqhb": 19,
+      "atqx": 34,
+      "atqrp": 23,
+      "atqri": 44,
+      "atqrm": 21,
+      "atqtr": 28
+    }
   },
   {
     "num": 15,
@@ -2039,7 +2171,19 @@ const ENTRENAMIENTOS_JUGADORES = [
     ],
     "video": 0,
     "recepcion": {},
-    "objetivos": {}
+    "objetivos": {
+      "sq": 1,
+      "rec": 8,
+      "bqpos": 50,
+      "bqpt": 10,
+      "atqq": 50,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": 50,
+      "atqri": 100,
+      "atqrm": null,
+      "atqtr": 43
+    }
   },
   {
     "num": 17,
@@ -2148,7 +2292,19 @@ const ENTRENAMIENTOS_JUGADORES = [
     ],
     "video": 0,
     "recepcion": {},
-    "objetivos": {}
+    "objetivos": {
+      "sq": -2,
+      "rec": null,
+      "bqpos": 43,
+      "bqpt": 26,
+      "atqq": 35,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": 21,
+      "atqri": 58,
+      "atqrm": null,
+      "atqtr": 44
+    }
   },
   {
     "num": 18,
@@ -2189,7 +2345,72 @@ const ENTRENAMIENTOS_JUGADORES = [
     ],
     "video": 0,
     "recepcion": {},
-    "objetivos": {}
+    "objetivos": {
+      "sq": -13,
+      "rec": null,
+      "bqpos": 38,
+      "bqpt": 8,
+      "atqq": null,
+      "atqhb": -3,
+      "atqx": 31,
+      "atqrp": 25,
+      "atqri": 58,
+      "atqrm": 33,
+      "atqtr": 6
+    }
+  },
+  {
+    "num": 19,
+    "nombre": "19 Diaz Bolli S.",
+    "pos": "ARMADOR",
+    "color": "#f59e0b",
+    "info": {},
+    "ataques": [],
+    "saques": [
+      {
+        "cod": "SM",
+        "tipo": "FLOTADO",
+        "orig": 6,
+        "destinos": [],
+        "eff": 0,
+        "tot": 0,
+        "pts": 0,
+        "plus": 0,
+        "slash": 0,
+        "err": 0,
+        "video": null,
+        "pts_pct": 0
+      },
+      {
+        "cod": "SQ",
+        "tipo": "POTENCIA",
+        "orig": 6,
+        "destinos": [],
+        "eff": 0,
+        "tot": 0,
+        "pts": 0,
+        "plus": 0,
+        "slash": 0,
+        "err": 0,
+        "video": null,
+        "pts_pct": 0
+      }
+    ],
+    "video": 0,
+    "recepcion": {},
+    "objetivos": {
+      "sq": 7,
+      "rec": null,
+      "bqpos": null,
+      "bqpt": null,
+      "atqq": null,
+      "atqhb": null,
+      "atqx": null,
+      "atqrp": null,
+      "atqri": null,
+      "atqrm": null,
+      "atqtr": null
+    }
   }
 ];
 
@@ -2762,10 +2983,153 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
     "sets_rival": "",
     "jugadores": [
       {
-        "num": 0,
-        "nombre": "0 Romeo Winer A.",
-        "pos": "",
-        "color": "#64748b",
+        "num": 2,
+        "nombre": "2 Ojuez A.",
+        "pos": "CENTRAL",
+        "color": "#f97316",
+        "info": {},
+        "ataques": [
+          {
+            "cod": "X1",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 8,
+                "pct": 100
+              }
+            ],
+            "eff": 50,
+            "tot": 2,
+            "pts": 1,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 50
+          },
+          {
+            "cod": "X7",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 7,
+                "pct": 100
+              }
+            ],
+            "eff": 50,
+            "tot": 2,
+            "pts": 1,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 50
+          },
+          {
+            "cod": "XM",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 1,
+                "pct": 50
+              },
+              {
+                "z": 6,
+                "pct": 50
+              }
+            ],
+            "eff": 67,
+            "tot": 3,
+            "pts": 2,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 67
+          },
+          {
+            "cod": "X2",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 9,
+                "pct": 100
+              }
+            ],
+            "eff": 100,
+            "tot": 1,
+            "pts": 1,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 100
+          }
+        ],
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 43
+              },
+              {
+                "z": 5,
+                "pct": 29
+              },
+              {
+                "z": 7,
+                "pct": 14
+              },
+              {
+                "z": 8,
+                "pct": 14
+              }
+            ],
+            "eff": -7,
+            "tot": 7,
+            "pts": 0,
+            "plus": 2,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "video": 0,
+        "recepcion": {},
+        "objetivos": {
+          "sq": -7,
+          "rec": null,
+          "bqpos": 50,
+          "bqpt": 25,
+          "atqq": 62,
+          "atqhb": null,
+          "atqx": -100,
+          "atqrp": 40,
+          "atqri": 0,
+          "atqrm": null,
+          "atqtr": 75
+        }
+      },
+      {
+        "num": 3,
+        "nombre": "3 Romeo Winer A.",
+        "pos": "LIBERO",
+        "color": "#06b6d4",
         "info": {},
         "ataques": [],
         "saques": [
@@ -2962,138 +3326,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
-      },
-      {
-        "num": 2,
-        "nombre": "2 Ojuez A.",
-        "pos": "CENTRAL",
-        "color": "#f97316",
-        "info": {},
-        "ataques": [
-          {
-            "cod": "X1",
-            "orig": 3,
-            "destinos": [
-              {
-                "z": 8,
-                "pct": 100
-              }
-            ],
-            "eff": 50,
-            "tot": 2,
-            "pts": 1,
-            "slash": 0,
-            "err": 0,
-            "video": null,
-            "pts_pct": 50
-          },
-          {
-            "cod": "X7",
-            "orig": 3,
-            "destinos": [
-              {
-                "z": 7,
-                "pct": 100
-              }
-            ],
-            "eff": 50,
-            "tot": 2,
-            "pts": 1,
-            "slash": 0,
-            "err": 0,
-            "video": null,
-            "pts_pct": 50
-          },
-          {
-            "cod": "XM",
-            "orig": 3,
-            "destinos": [
-              {
-                "z": 1,
-                "pct": 50
-              },
-              {
-                "z": 6,
-                "pct": 50
-              }
-            ],
-            "eff": 67,
-            "tot": 3,
-            "pts": 2,
-            "slash": 0,
-            "err": 0,
-            "video": null,
-            "pts_pct": 67
-          },
-          {
-            "cod": "X2",
-            "orig": 3,
-            "destinos": [
-              {
-                "z": 9,
-                "pct": 100
-              }
-            ],
-            "eff": 100,
-            "tot": 1,
-            "pts": 1,
-            "slash": 0,
-            "err": 0,
-            "video": null,
-            "pts_pct": 100
-          }
-        ],
-        "saques": [
-          {
-            "cod": "SM",
-            "tipo": "FLOTADO",
-            "orig": 6,
-            "destinos": [
-              {
-                "z": 6,
-                "pct": 43
-              },
-              {
-                "z": 5,
-                "pct": 29
-              },
-              {
-                "z": 7,
-                "pct": 14
-              },
-              {
-                "z": 8,
-                "pct": 14
-              }
-            ],
-            "eff": -7,
-            "tot": 7,
-            "pts": 0,
-            "plus": 2,
-            "slash": 0,
-            "err": 0,
-            "video": null,
-            "pts_pct": 0
-          },
-          {
-            "cod": "SQ",
-            "tipo": "POTENCIA",
-            "orig": 6,
-            "destinos": [],
-            "eff": 0,
-            "tot": 0,
-            "pts": 0,
-            "plus": 0,
-            "slash": 0,
-            "err": 0,
-            "video": null,
-            "pts_pct": 0
-          }
-        ],
-        "video": 0,
-        "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": 18,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 4,
@@ -3139,7 +3384,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": 0,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 5,
@@ -3278,7 +3535,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": -17,
+          "rec": 0,
+          "bqpos": 18,
+          "bqpt": 6,
+          "atqq": null,
+          "atqhb": 20,
+          "atqx": 43,
+          "atqrp": 100,
+          "atqri": 25,
+          "atqrm": -50,
+          "atqtr": 35
+        }
       },
       {
         "num": 6,
@@ -3481,7 +3750,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 9,
@@ -3539,7 +3820,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": -8,
+          "rec": 0,
+          "bqpos": 58,
+          "bqpt": 8,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 100,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 10,
@@ -3580,7 +3873,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 11,
@@ -3869,7 +4174,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
+        "objetivos": {
+          "sq": -25,
+          "rec": 69,
+          "bqpos": 56,
+          "bqpt": 11,
+          "atqq": null,
+          "atqhb": 18,
+          "atqx": 60,
+          "atqrp": 45,
+          "atqri": 50,
+          "atqrm": 33,
+          "atqtr": 29
+        }
       },
       {
         "num": 12,
@@ -4072,7 +4389,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 13,
@@ -4275,7 +4604,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
+        "objetivos": {
+          "sq": 0,
+          "rec": 50,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 14,
@@ -4539,7 +4880,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
+        "objetivos": {
+          "sq": -7,
+          "rec": 53,
+          "bqpos": 33,
+          "bqpt": 33,
+          "atqq": null,
+          "atqhb": 11,
+          "atqx": 41,
+          "atqrp": 43,
+          "atqri": 50,
+          "atqrm": 50,
+          "atqtr": 25
+        }
       },
       {
         "num": 15,
@@ -4636,7 +4989,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": 10,
+          "rec": null,
+          "bqpos": 60,
+          "bqpt": 20,
+          "atqq": 56,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 50,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": 67
+        }
       },
       {
         "num": 17,
@@ -4677,7 +5042,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 18,
@@ -4718,7 +5095,72 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
+      },
+      {
+        "num": 19,
+        "nombre": "19 Diaz Bolli S.",
+        "pos": "ARMADOR",
+        "color": "#f59e0b",
+        "info": {},
+        "ataques": [],
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "video": 0,
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       }
     ],
     "armadores": {
@@ -5459,19 +5901,215 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         "tr": {}
       }
     },
-    "objetivos": {},
+    "objetivos": {
+      "Ojuez A.": {
+        "sq": -7,
+        "rec": null,
+        "bqpos": 50,
+        "bqpt": 25,
+        "atqq": 62,
+        "atqhb": null,
+        "atqx": -100,
+        "atqrp": 40,
+        "atqri": 0,
+        "atqrm": null,
+        "atqtr": 75
+      },
+      "Romeo Winer A.": {
+        "sq": null,
+        "rec": 18,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Vazquez E.": {
+        "sq": 0,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Ramos I.": {
+        "sq": -17,
+        "rec": 0,
+        "bqpos": 18,
+        "bqpt": 6,
+        "atqq": null,
+        "atqhb": 20,
+        "atqx": 43,
+        "atqrp": 100,
+        "atqri": 25,
+        "atqrm": -50,
+        "atqtr": 35
+      },
+      "Villarruel J.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Godoy M.": {
+        "sq": -8,
+        "rec": 0,
+        "bqpos": 58,
+        "bqpt": 8,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": 100,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Viera M.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Durdos V.": {
+        "sq": -25,
+        "rec": 69,
+        "bqpos": 56,
+        "bqpt": 11,
+        "atqq": null,
+        "atqhb": 18,
+        "atqx": 60,
+        "atqrp": 45,
+        "atqri": 50,
+        "atqrm": 33,
+        "atqtr": 29
+      },
+      "Zanotti J.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Rojas Caruso M.": {
+        "sq": 0,
+        "rec": 50,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Nielson R.": {
+        "sq": -7,
+        "rec": 53,
+        "bqpos": 33,
+        "bqpt": 33,
+        "atqq": null,
+        "atqhb": 11,
+        "atqx": 41,
+        "atqrp": 43,
+        "atqri": 50,
+        "atqrm": 50,
+        "atqtr": 25
+      },
+      "Rotezzi R.": {
+        "sq": 10,
+        "rec": null,
+        "bqpos": 60,
+        "bqpt": 20,
+        "atqq": 56,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": 50,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": 67
+      },
+      "Herbsommer L.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Acosta W.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Diaz Bolli S.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      }
+    },
     "equipo_obj": {
-      "sq": null,
-      "rec": null,
-      "bqpos": null,
-      "bqpt": null,
-      "atqq": null,
-      "atqhb": null,
-      "atqx": null,
-      "atqrp": null,
-      "atqri": null,
-      "atqrm": null,
-      "atqtr": null
+      "sq": -11,
+      "rec": 37,
+      "bqpos": 42,
+      "bqpt": 14,
+      "atqq": 65,
+      "atqhb": 17,
+      "atqx": 44,
+      "atqrp": 57,
+      "atqri": 29,
+      "atqrm": 14,
+      "atqtr": 38
     }
   },
   {
@@ -5484,10 +6122,103 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
     "sets_rival": "",
     "jugadores": [
       {
-        "num": 0,
-        "nombre": "0 Romeo Winer A.",
-        "pos": "",
-        "color": "#64748b",
+        "num": 2,
+        "nombre": "2 Ojuez A.",
+        "pos": "CENTRAL",
+        "color": "#f97316",
+        "info": {},
+        "ataques": [
+          {
+            "cod": "X7",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 1,
+                "pct": 100
+              }
+            ],
+            "eff": 100,
+            "tot": 1,
+            "pts": 1,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 100
+          },
+          {
+            "cod": "XM",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 100
+              }
+            ],
+            "eff": 50,
+            "tot": 2,
+            "pts": 1,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 50
+          }
+        ],
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 7,
+                "pct": 100
+              }
+            ],
+            "eff": 0,
+            "tot": 2,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "video": 0,
+        "recepcion": {},
+        "objetivos": {
+          "sq": 0,
+          "rec": null,
+          "bqpos": 20,
+          "bqpt": 0,
+          "atqq": 67,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 67,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
+      },
+      {
+        "num": 3,
+        "nombre": "3 Romeo Winer A.",
+        "pos": "LIBERO",
+        "color": "#06b6d4",
         "info": {},
         "ataques": [],
         "saques": [
@@ -5684,88 +6415,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
-      },
-      {
-        "num": 2,
-        "nombre": "2 Ojuez A.",
-        "pos": "CENTRAL",
-        "color": "#f97316",
-        "info": {},
-        "ataques": [
-          {
-            "cod": "X7",
-            "orig": 3,
-            "destinos": [
-              {
-                "z": 1,
-                "pct": 100
-              }
-            ],
-            "eff": 100,
-            "tot": 1,
-            "pts": 1,
-            "slash": 0,
-            "err": 0,
-            "video": null,
-            "pts_pct": 100
-          },
-          {
-            "cod": "XM",
-            "orig": 3,
-            "destinos": [
-              {
-                "z": 6,
-                "pct": 100
-              }
-            ],
-            "eff": 50,
-            "tot": 2,
-            "pts": 1,
-            "slash": 0,
-            "err": 0,
-            "video": null,
-            "pts_pct": 50
-          }
-        ],
-        "saques": [
-          {
-            "cod": "SM",
-            "tipo": "FLOTADO",
-            "orig": 6,
-            "destinos": [
-              {
-                "z": 7,
-                "pct": 100
-              }
-            ],
-            "eff": 0,
-            "tot": 2,
-            "pts": 0,
-            "plus": 0,
-            "slash": 0,
-            "err": 0,
-            "video": null,
-            "pts_pct": 0
-          },
-          {
-            "cod": "SQ",
-            "tipo": "POTENCIA",
-            "orig": 6,
-            "destinos": [],
-            "eff": 0,
-            "tot": 0,
-            "pts": 0,
-            "plus": 0,
-            "slash": 0,
-            "err": 0,
-            "video": null,
-            "pts_pct": 0
-          }
-        ],
-        "video": 0,
-        "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": 10,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 4,
@@ -5806,7 +6468,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 5,
@@ -5957,7 +6631,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": -20,
+          "rec": null,
+          "bqpos": 30,
+          "bqpt": 20,
+          "atqq": null,
+          "atqhb": 36,
+          "atqx": 22,
+          "atqrp": 29,
+          "atqri": 17,
+          "atqrm": 33,
+          "atqtr": 30
+        }
       },
       {
         "num": 6,
@@ -6160,7 +6846,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 9,
@@ -6214,7 +6912,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": 10,
+          "rec": 0,
+          "bqpos": 67,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 10,
@@ -6255,7 +6965,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 11,
@@ -6544,7 +7266,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
+        "objetivos": {
+          "sq": -50,
+          "rec": 27,
+          "bqpos": 0,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": 100,
+          "atqx": 38,
+          "atqrp": 33,
+          "atqri": 50,
+          "atqrm": null,
+          "atqtr": 100
+        }
       },
       {
         "num": 12,
@@ -6747,7 +7481,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 13,
@@ -6955,7 +7701,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
+        "objetivos": {
+          "sq": 0,
+          "rec": 25,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 14,
@@ -7219,7 +7977,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
+        "objetivos": {
+          "sq": -40,
+          "rec": 45,
+          "bqpos": 33,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": 31,
+          "atqx": 0,
+          "atqrp": -33,
+          "atqri": -20,
+          "atqrm": 40,
+          "atqtr": 31
+        }
       },
       {
         "num": 15,
@@ -7260,7 +8030,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 17,
@@ -7332,7 +8114,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": -11,
+          "rec": null,
+          "bqpos": 0,
+          "bqpt": 0,
+          "atqq": 50,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 50,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 18,
@@ -7373,7 +8167,72 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
+      },
+      {
+        "num": 19,
+        "nombre": "19 Diaz Bolli S.",
+        "pos": "ARMADOR",
+        "color": "#f59e0b",
+        "info": {},
+        "ataques": [],
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "video": 0,
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       }
     ],
     "armadores": {
@@ -8114,19 +8973,215 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         "tr": {}
       }
     },
-    "objetivos": {},
+    "objetivos": {
+      "Ojuez A.": {
+        "sq": 0,
+        "rec": null,
+        "bqpos": 20,
+        "bqpt": 0,
+        "atqq": 67,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": 67,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Romeo Winer A.": {
+        "sq": null,
+        "rec": 10,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Vazquez E.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Ramos I.": {
+        "sq": -20,
+        "rec": null,
+        "bqpos": 30,
+        "bqpt": 20,
+        "atqq": null,
+        "atqhb": 36,
+        "atqx": 22,
+        "atqrp": 29,
+        "atqri": 17,
+        "atqrm": 33,
+        "atqtr": 30
+      },
+      "Villarruel J.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Godoy M.": {
+        "sq": 10,
+        "rec": 0,
+        "bqpos": 67,
+        "bqpt": 0,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Viera M.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Durdos V.": {
+        "sq": -50,
+        "rec": 27,
+        "bqpos": 0,
+        "bqpt": 0,
+        "atqq": null,
+        "atqhb": 100,
+        "atqx": 38,
+        "atqrp": 33,
+        "atqri": 50,
+        "atqrm": null,
+        "atqtr": 100
+      },
+      "Zanotti J.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Rojas Caruso M.": {
+        "sq": 0,
+        "rec": 25,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Nielson R.": {
+        "sq": -40,
+        "rec": 45,
+        "bqpos": 33,
+        "bqpt": 0,
+        "atqq": null,
+        "atqhb": 31,
+        "atqx": 0,
+        "atqrp": -33,
+        "atqri": -20,
+        "atqrm": 40,
+        "atqtr": 31
+      },
+      "Rotezzi R.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Herbsommer L.": {
+        "sq": -11,
+        "rec": null,
+        "bqpos": 0,
+        "bqpt": 0,
+        "atqq": 50,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": 50,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Acosta W.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Diaz Bolli S.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      }
+    },
     "equipo_obj": {
-      "sq": null,
-      "rec": null,
-      "bqpos": null,
-      "bqpt": null,
-      "atqq": null,
-      "atqhb": null,
-      "atqx": null,
-      "atqrp": null,
-      "atqri": null,
-      "atqrm": null,
-      "atqtr": null
+      "sq": -18,
+      "rec": 20,
+      "bqpos": 36,
+      "bqpt": 10,
+      "atqq": 36,
+      "atqhb": 36,
+      "atqx": 18,
+      "atqrp": 33,
+      "atqri": 7,
+      "atqrm": 36,
+      "atqtr": 32
     }
   },
   {
@@ -8139,10 +9194,115 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
     "sets_rival": "",
     "jugadores": [
       {
-        "num": 0,
-        "nombre": "0 Romeo Winer A.",
-        "pos": "",
-        "color": "#64748b",
+        "num": 2,
+        "nombre": "2 Ojuez A.",
+        "pos": "CENTRAL",
+        "color": "#f97316",
+        "info": {},
+        "ataques": [
+          {
+            "cod": "X1",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 33
+              },
+              {
+                "z": 8,
+                "pct": 33
+              },
+              {
+                "z": 4,
+                "pct": 33
+              }
+            ],
+            "eff": 75,
+            "tot": 4,
+            "pts": 3,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 75
+          },
+          {
+            "cod": "XM",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 8,
+                "pct": 100
+              }
+            ],
+            "eff": 100,
+            "tot": 1,
+            "pts": 1,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 100
+          }
+        ],
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 1,
+                "pct": 67
+              },
+              {
+                "z": 6,
+                "pct": 33
+              }
+            ],
+            "eff": -33,
+            "tot": 3,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "video": 0,
+        "recepcion": {},
+        "objetivos": {
+          "sq": -33,
+          "rec": 100,
+          "bqpos": 100,
+          "bqpt": 100,
+          "atqq": 80,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 80,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
+      },
+      {
+        "num": 3,
+        "nombre": "3 Romeo Winer A.",
+        "pos": "LIBERO",
+        "color": "#06b6d4",
         "info": {},
         "ataques": [],
         "saques": [
@@ -8339,100 +9499,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
-      },
-      {
-        "num": 2,
-        "nombre": "2 Ojuez A.",
-        "pos": "CENTRAL",
-        "color": "#f97316",
-        "info": {},
-        "ataques": [
-          {
-            "cod": "X1",
-            "orig": 3,
-            "destinos": [
-              {
-                "z": 6,
-                "pct": 33
-              },
-              {
-                "z": 8,
-                "pct": 33
-              },
-              {
-                "z": 4,
-                "pct": 33
-              }
-            ],
-            "eff": 75,
-            "tot": 4,
-            "pts": 3,
-            "slash": 0,
-            "err": 0,
-            "video": null,
-            "pts_pct": 75
-          },
-          {
-            "cod": "XM",
-            "orig": 3,
-            "destinos": [
-              {
-                "z": 8,
-                "pct": 100
-              }
-            ],
-            "eff": 100,
-            "tot": 1,
-            "pts": 1,
-            "slash": 0,
-            "err": 0,
-            "video": null,
-            "pts_pct": 100
-          }
-        ],
-        "saques": [
-          {
-            "cod": "SM",
-            "tipo": "FLOTADO",
-            "orig": 6,
-            "destinos": [
-              {
-                "z": 1,
-                "pct": 67
-              },
-              {
-                "z": 6,
-                "pct": 33
-              }
-            ],
-            "eff": -33,
-            "tot": 3,
-            "pts": 0,
-            "plus": 0,
-            "slash": 0,
-            "err": 0,
-            "video": null,
-            "pts_pct": 0
-          },
-          {
-            "cod": "SQ",
-            "tipo": "POTENCIA",
-            "orig": 6,
-            "destinos": [],
-            "eff": 0,
-            "tot": 0,
-            "pts": 0,
-            "plus": 0,
-            "slash": 0,
-            "err": 0,
-            "video": null,
-            "pts_pct": 0
-          }
-        ],
-        "video": 0,
-        "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 4,
@@ -8490,7 +9569,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": 0,
+          "rec": null,
+          "bqpos": 50,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": 100
+        }
       },
       {
         "num": 5,
@@ -8600,7 +9691,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": -38,
+          "rec": null,
+          "bqpos": 12,
+          "bqpt": 0,
+          "atqq": null,
+          "atqhb": -30,
+          "atqx": 6,
+          "atqrp": 0,
+          "atqri": -50,
+          "atqrm": -50,
+          "atqtr": 8
+        }
       },
       {
         "num": 6,
@@ -8803,7 +9906,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 9,
@@ -8857,7 +9972,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": 13,
+          "rec": 0,
+          "bqpos": 17,
+          "bqpt": 17,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": -100,
+          "atqrm": null,
+          "atqtr": -100
+        }
       },
       {
         "num": 10,
@@ -8898,7 +10025,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 11,
@@ -9183,7 +10322,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
+        "objetivos": {
+          "sq": -32,
+          "rec": 52,
+          "bqpos": 43,
+          "bqpt": 43,
+          "atqq": null,
+          "atqhb": 22,
+          "atqx": 21,
+          "atqrp": 20,
+          "atqri": 100,
+          "atqrm": 0,
+          "atqtr": 16
+        }
       },
       {
         "num": 12,
@@ -9386,7 +10537,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": 36,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 13,
@@ -9594,7 +10757,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
+        "objetivos": {
+          "sq": -50,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 14,
@@ -9866,7 +11041,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
             }
           }
         },
-        "objetivos": {}
+        "objetivos": {
+          "sq": 12,
+          "rec": 42,
+          "bqpos": 33,
+          "bqpt": 17,
+          "atqq": null,
+          "atqhb": 11,
+          "atqx": 15,
+          "atqrp": 11,
+          "atqri": 50,
+          "atqrm": -67,
+          "atqtr": 38
+        }
       },
       {
         "num": 15,
@@ -9907,7 +11094,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 17,
@@ -10008,7 +11207,19 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": 0,
+          "rec": null,
+          "bqpos": 25,
+          "bqpt": 25,
+          "atqq": 10,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 10,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       },
       {
         "num": 18,
@@ -10049,7 +11260,72 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         ],
         "video": 0,
         "recepcion": {},
-        "objetivos": {}
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": 0,
+          "atqrp": 0,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
+      },
+      {
+        "num": 19,
+        "nombre": "19 Diaz Bolli S.",
+        "pos": "ARMADOR",
+        "color": "#f59e0b",
+        "info": {},
+        "ataques": [],
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [],
+            "eff": 0,
+            "tot": 0,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "video": 0,
+        "recepcion": {},
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        }
       }
     ],
     "armadores": {
@@ -10790,22 +12066,218 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
         "tr": {}
       }
     },
-    "objetivos": {},
+    "objetivos": {
+      "Ojuez A.": {
+        "sq": -33,
+        "rec": 100,
+        "bqpos": 100,
+        "bqpt": 100,
+        "atqq": 80,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": 80,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Romeo Winer A.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Vazquez E.": {
+        "sq": 0,
+        "rec": null,
+        "bqpos": 50,
+        "bqpt": 0,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": 100
+      },
+      "Ramos I.": {
+        "sq": -38,
+        "rec": null,
+        "bqpos": 12,
+        "bqpt": 0,
+        "atqq": null,
+        "atqhb": -30,
+        "atqx": 6,
+        "atqrp": 0,
+        "atqri": -50,
+        "atqrm": -50,
+        "atqtr": 8
+      },
+      "Villarruel J.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Godoy M.": {
+        "sq": 13,
+        "rec": 0,
+        "bqpos": 17,
+        "bqpt": 17,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": -100,
+        "atqrm": null,
+        "atqtr": -100
+      },
+      "Viera M.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Durdos V.": {
+        "sq": -32,
+        "rec": 52,
+        "bqpos": 43,
+        "bqpt": 43,
+        "atqq": null,
+        "atqhb": 22,
+        "atqx": 21,
+        "atqrp": 20,
+        "atqri": 100,
+        "atqrm": 0,
+        "atqtr": 16
+      },
+      "Zanotti J.": {
+        "sq": null,
+        "rec": 36,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Rojas Caruso M.": {
+        "sq": -50,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Nielson R.": {
+        "sq": 12,
+        "rec": 42,
+        "bqpos": 33,
+        "bqpt": 17,
+        "atqq": null,
+        "atqhb": 11,
+        "atqx": 15,
+        "atqrp": 11,
+        "atqri": 50,
+        "atqrm": -67,
+        "atqtr": 38
+      },
+      "Rotezzi R.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Herbsommer L.": {
+        "sq": 0,
+        "rec": null,
+        "bqpos": 25,
+        "bqpt": 25,
+        "atqq": 10,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": 10,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Acosta W.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": 0,
+        "atqrp": 0,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      },
+      "Diaz Bolli S.": {
+        "sq": null,
+        "rec": null,
+        "bqpos": null,
+        "bqpt": null,
+        "atqq": null,
+        "atqhb": null,
+        "atqx": null,
+        "atqrp": null,
+        "atqri": null,
+        "atqrm": null,
+        "atqtr": null
+      }
+    },
     "equipo_obj": {
-      "sq": null,
-      "rec": null,
-      "bqpos": null,
-      "bqpt": null,
-      "atqq": null,
-      "atqhb": null,
-      "atqx": null,
-      "atqrp": null,
-      "atqri": null,
-      "atqrm": null,
-      "atqtr": null
+      "sq": -5,
+      "rec": 43,
+      "bqpos": 38,
+      "bqpt": 30,
+      "atqq": 36,
+      "atqhb": 0,
+      "atqx": 15,
+      "atqrp": 21,
+      "atqri": 0,
+      "atqrm": -50,
+      "atqtr": 20
     }
   }
 ];
 
 // Objetivos del equipo acumulado
-const ENTRENAMIENTOS_EQUIPO_OBJ = {"sq": null, "rec": null, "bqpos": null, "bqpt": null, "atqq": null, "atqhb": null, "atqx": null, "atqrp": null, "atqri": null, "atqrm": null, "atqtr": null};
+const ENTRENAMIENTOS_EQUIPO_OBJ = {"sq": -6, "rec": 35, "bqpos": 45, "bqpt": 19, "atqq": 45, "atqhb": 11, "atqx": 30, "atqrp": 35, "atqri": 40, "atqrm": 20, "atqtr": 20};
