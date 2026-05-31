@@ -931,12 +931,7 @@ function abrirModalArmador(rot, color, pills){
   // Título
   var title = document.getElementById('modal-arm-title');
   title.textContent = rot.pos + ' — ' + rot.total + ' acciones';
-  // Zaguero atacante en el modal
-  var FORM_MODAL = {
-    'P1': [{n:'MANSILLA',z:6}], 'P6': [{n:'WAGNER',z:6}], 'P5': [{n:'WAGNER',z:6}],
-    'P4': [{n:'WAGNER',z:6}],   'P3': [{n:'WAGNER',z:6}], 'P2': [{n:'MANSILLA',z:6}]
-  };
-  var modalBackPlayers = FORM_MODAL[rot.pos] || [];
+  var modalBackPlayers = [];
   var existingBack = document.getElementById('modal-back-row');
   if(existingBack) existingBack.remove();
   if(modalBackPlayers.length){
