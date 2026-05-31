@@ -456,12 +456,8 @@ function initReceptores(){
     }
     if(!src) src = typeof ENTRENAMIENTOS_JUGADORES !== 'undefined' ? ENTRENAMIENTOS_JUGADORES : null;
   } else {
-    if(window._recPartido !== 'acumulado' && typeof PARTIDOS_INDIVIDUAL !== 'undefined'){
-      var pd = PARTIDOS_INDIVIDUAL.find(function(p){ return p.nombre === window._recPartido; });
-      src = pd ? pd.jugadores : null;
-    }
-    if(!src) src = typeof PARTIDOS_JUGADORES !== 'undefined' ? PARTIDOS_JUGADORES :
-                   typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : null;
+    // PARTIDO: always use CASLA_JUGADORES (correct format for cargarRecepcionCasla)
+    src = typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : null;
   }
   if(src){
     var orig = window.CASLA_JUGADORES;
