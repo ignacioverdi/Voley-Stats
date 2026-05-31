@@ -1,5 +1,5 @@
-// datos_partidos.js — 31/05/2026 13:02
-const PARTIDOS_GENERADO = "31/05/2026 13:02";
+// datos_partidos.js — 31/05/2026 13:25
+const PARTIDOS_GENERADO = "31/05/2026 13:25";
 const PARTIDOS_TOTAL = 6;
 const PARTIDOS_META = [
   {
@@ -224,17 +224,17 @@ const PARTIDOS_JUGADORES = [
     "video": 0,
     "recepcion": {},
     "objetivos": {
-      "sq": -12,
-      "rec": 25,
-      "bqpos": 63,
-      "bqpt": 36,
-      "atqq": 58,
+      "sq": -11,
+      "rec": 12,
+      "bqpos": 66,
+      "bqpt": 34,
+      "atqq": 52,
       "atqhb": null,
       "atqx": -100,
-      "atqrp": 56,
+      "atqrp": 50,
       "atqri": 33,
-      "atqrm": 75,
-      "atqtr": 54
+      "atqrm": 67,
+      "atqtr": 40
     }
   },
   {
@@ -440,7 +440,7 @@ const PARTIDOS_JUGADORES = [
     },
     "objetivos": {
       "sq": -17,
-      "rec": 14,
+      "rec": 13,
       "bqpos": null,
       "bqpt": null,
       "atqq": null,
@@ -517,17 +517,17 @@ const PARTIDOS_JUGADORES = [
     "video": 0,
     "recepcion": {},
     "objetivos": {
-      "sq": 5,
+      "sq": 8,
       "rec": -50,
-      "bqpos": 48,
-      "bqpt": 9,
+      "bqpos": 50,
+      "bqpt": 11,
       "atqq": null,
       "atqhb": 0,
       "atqx": null,
       "atqrp": 0,
       "atqri": 0,
       "atqrm": null,
-      "atqtr": 19
+      "atqtr": 36
     }
   },
   {
@@ -718,17 +718,17 @@ const PARTIDOS_JUGADORES = [
     "video": 0,
     "recepcion": {},
     "objetivos": {
-      "sq": -42,
+      "sq": -30,
       "rec": 25,
-      "bqpos": 33,
-      "bqpt": 18,
+      "bqpos": 29,
+      "bqpt": 13,
       "atqq": null,
-      "atqhb": 16,
-      "atqx": 28,
-      "atqrp": 32,
-      "atqri": 8,
-      "atqrm": 7,
-      "atqtr": 33
+      "atqhb": 15,
+      "atqx": 30,
+      "atqrp": 34,
+      "atqri": 14,
+      "atqrm": 12,
+      "atqtr": 27
     }
   },
   {
@@ -956,17 +956,17 @@ const PARTIDOS_JUGADORES = [
       }
     },
     "objetivos": {
-      "sq": -58,
-      "rec": 58,
+      "sq": -29,
+      "rec": 62,
       "bqpos": 100,
       "bqpt": 0,
       "atqq": null,
       "atqhb": null,
-      "atqx": -35,
+      "atqx": -29,
       "atqrp": 0,
       "atqri": 0,
       "atqrm": null,
-      "atqtr": -66
+      "atqtr": -50
     }
   },
   {
@@ -1030,17 +1030,17 @@ const PARTIDOS_JUGADORES = [
     "video": 0,
     "recepcion": {},
     "objetivos": {
-      "sq": 5,
+      "sq": 4,
       "rec": 0,
-      "bqpos": 40,
-      "bqpt": 6,
+      "bqpos": 42,
+      "bqpt": 8,
       "atqq": null,
       "atqhb": null,
       "atqx": null,
       "atqrp": 100,
       "atqri": -100,
       "atqrm": null,
-      "atqtr": -25
+      "atqtr": 0
     }
   },
   {
@@ -1428,17 +1428,17 @@ const PARTIDOS_JUGADORES = [
       }
     },
     "objetivos": {
-      "sq": -26,
-      "rec": 41,
-      "bqpos": 28,
-      "bqpt": 10,
+      "sq": -19,
+      "rec": 39,
+      "bqpos": 38,
+      "bqpt": 13,
       "atqq": null,
-      "atqhb": 22,
-      "atqx": 34,
-      "atqrp": 35,
-      "atqri": 68,
-      "atqrm": 11,
-      "atqtr": 20
+      "atqhb": 8,
+      "atqx": 31,
+      "atqrp": 33,
+      "atqri": 67,
+      "atqrm": 15,
+      "atqtr": 8
     }
   },
   {
@@ -1644,7 +1644,7 @@ const PARTIDOS_JUGADORES = [
     },
     "objetivos": {
       "sq": null,
-      "rec": 35,
+      "rec": 36,
       "bqpos": null,
       "bqpt": null,
       "atqq": null,
@@ -1867,7 +1867,7 @@ const PARTIDOS_JUGADORES = [
       }
     },
     "objetivos": {
-      "sq": -17,
+      "sq": -25,
       "rec": 38,
       "bqpos": null,
       "bqpt": null,
@@ -2195,16 +2195,16 @@ const PARTIDOS_JUGADORES = [
       }
     },
     "objetivos": {
-      "sq": -2,
+      "sq": 2,
       "rec": 46,
-      "bqpos": 37,
-      "bqpt": 15,
+      "bqpos": 40,
+      "bqpt": 13,
       "atqq": null,
       "atqhb": 19,
-      "atqx": 30,
-      "atqrp": 17,
-      "atqri": 51,
-      "atqrm": 29,
+      "atqx": 34,
+      "atqrp": 23,
+      "atqri": 44,
+      "atqrm": 21,
       "atqtr": 28
     }
   },
@@ -2330,7 +2330,7 @@ const PARTIDOS_JUGADORES = [
       "atqrp": 50,
       "atqri": 100,
       "atqrm": null,
-      "atqtr": 46
+      "atqtr": 43
     }
   },
   {
@@ -2482,17 +2482,17 @@ const PARTIDOS_JUGADORES = [
     "video": 0,
     "recepcion": {},
     "objetivos": {
-      "sq": -4,
+      "sq": -2,
       "rec": null,
-      "bqpos": 31,
-      "bqpt": 20,
-      "atqq": 34,
+      "bqpos": 43,
+      "bqpt": 26,
+      "atqq": 35,
       "atqhb": null,
       "atqx": null,
-      "atqrp": 18,
+      "atqrp": 21,
       "atqri": 58,
       "atqrm": null,
-      "atqtr": 50
+      "atqtr": 44
     }
   },
   {
@@ -2645,17 +2645,17 @@ const PARTIDOS_JUGADORES = [
     "video": 0,
     "recepcion": {},
     "objetivos": {
-      "sq": -11,
+      "sq": -13,
       "rec": null,
-      "bqpos": 33,
+      "bqpos": 38,
       "bqpt": 8,
       "atqq": null,
-      "atqhb": 9,
-      "atqx": 22,
-      "atqrp": 15,
-      "atqri": 63,
-      "atqrm": 50,
-      "atqtr": 12
+      "atqhb": -3,
+      "atqx": 31,
+      "atqrp": 25,
+      "atqri": 58,
+      "atqrm": 33,
+      "atqtr": 6
     }
   },
   {
@@ -2698,7 +2698,7 @@ const PARTIDOS_JUGADORES = [
     "video": 0,
     "recepcion": {},
     "objetivos": {
-      "sq": 6,
+      "sq": 7,
       "rec": null,
       "bqpos": null,
       "bqpt": null,
@@ -22241,4 +22241,4 @@ const PARTIDOS_INDIVIDUAL = [
 ];
 
 // Objetivos del equipo acumulado
-const PARTIDOS_EQUIPO_OBJ = {"sq": -7, "rec": 35, "bqpos": 44, "bqpt": 18, "atqq": 44, "atqhb": 12, "atqx": 29, "atqrp": 36, "atqri": 35, "atqrm": 14, "atqtr": 21};
+const PARTIDOS_EQUIPO_OBJ = {"sq": -6, "rec": 35, "bqpos": 45, "bqpt": 19, "atqq": 45, "atqhb": 11, "atqx": 30, "atqrp": 35, "atqri": 40, "atqrm": 20, "atqtr": 20};

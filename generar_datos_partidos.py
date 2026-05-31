@@ -3,6 +3,7 @@
 # Lee CASL_Partidos.xlsx y genera datos_partidos.js
 import os, json, re, copy
 from datetime import datetime
+_EQUIPO_OBJ_ACUM = {}
 try:
     from openpyxl import load_workbook
 except ImportError:
@@ -603,10 +604,9 @@ def acumular(partidos_data):
             if not all_players[nm].get('recepcion'):
                 all_players[nm]['recepcion'] = rec
 
-        # Objetivos: weighted average across partidos
+                # Objetivos: weighted average across partidos
         for nm, obj in pd.get('objetivos',{}).items():
             if nm == '__equipo__': continue
-            # Create player if not exists (some players only appear in objetivos)
             if nm not in all_players:
                 pos_pl, num_pl = get_pos_num(nm)
                 all_players[nm] = {'num':num_pl,'pos':pos_pl,'combos':{},
@@ -619,7 +619,6 @@ def acumular(partidos_data):
                         all_players[nm]['objetivos'][k] = {'sum':0,'n':0}
                     all_players[nm]['objetivos'][k]['sum'] += v
                     all_players[nm]['objetivos'][k]['n']   += 1
-
         # Equipo objetivos
         eq_obj = pd.get('objetivos',{}).get('__equipo__',{})
         if eq_obj:
@@ -629,8 +628,10 @@ def acumular(partidos_data):
                 all_players['__equipo__']['objetivos'] = {k:{'sum':0,'n':0} for k in eq_obj}
             for k, v in eq_obj.items():
                 if v is not None:
-                    all_players['__equipo__']['objetivos'][k]['sum'] = all_players['__equipo__']['objetivos'][k].get('sum',0) + v
-                    all_players['__equipo__']['objetivos'][k]['n']   = all_players['__equipo__']['objetivos'][k].get('n',0) + 1
+                    if k not in all_players['__equipo__']['objetivos']:
+                        all_players['__equipo__']['objetivos'][k] = {'sum':0,'n':0}
+                    all_players['__equipo__']['objetivos'][k]['sum'] += v
+                    all_players['__equipo__']['objetivos'][k]['n']   += 1
 
     # Armadores: accumulate as acumulado
     all_armadores = {}
@@ -743,11 +744,112 @@ def build_jugadores(all_players, stats_override=None):
                            'plus':s_plus,'slash':0,'err':0,'video':None,
                            'pts_pct':s_pts_pct})
 
+        # Finalize objetivos: convert {sum,n} accumulator to average
+        obj_raw = info.get('objetivos', {})
+        obj_final = {}
+        for k, v in obj_raw.items():
+            if isinstance(v, dict) and 'n' in v:
+                obj_final[k] = round(v['sum']/v['n']) if v['n'] else None
+            else:
+                obj_final[k] = v
+
         j = {'num':num,'nombre':f"{num} {nm}",'pos':pos,'color':color,
-             'info':{},'ataques':ataques,'saques':saques,'video':0,'recepcion':info.get('recepcion',{})}
+             'info':{},'ataques':ataques,'saques':saques,'video':0,
+             'recepcion':info.get('recepcion',{}),
+             'objetivos':obj_final}
         jugadores.append(j)
 
     return jugadores
+
+
+# ── Leer acumulado oficial desde CASL_GamePlan_4.xlsm ────────────────
+def leer_acumulado_gameplan():
+    gameplan = os.path.join(BASE, "CASL_GamePlan_4.xlsm")
+    if not os.path.exists(gameplan):
+        print("  AVISO: No se encontró CASL_GamePlan_4.xlsm para acumulado")
+        return {}, {}
+    try:
+        wb_gp = load_workbook(gameplan, read_only=True, data_only=True, keep_vba=False)
+        if 'CASLA' not in wb_gp.sheetnames:
+            return {}, {}
+        ws = wb_gp['CASLA']
+        COL_MAP = {'sq':6,'rec':12,'bqpos':15,'bqpt':19,'atqq':24,'atqhb':29,
+                   'atqx':34,'atqrp':39,'atqri':44,'atqrm':49,'atqtr':54}
+        jugadores_acum = {}
+        equipo_acum = {}
+        for i, row in enumerate(ws.iter_rows(min_row=128, max_row=144, values_only=True), 128):
+            nm_cell = row[0]
+            if not nm_cell: continue
+            nm_raw = str(nm_cell).strip()
+            parts = nm_raw.split()
+            j = 0
+            while j < len(parts) and parts[j].isdigit(): j += 1
+            nm = ' '.join(parts[j:]).strip()
+            if not nm: continue
+            vals = {}
+            for k, cidx in COL_MAP.items():
+                v = row[cidx] if cidx < len(row) else None
+                if v is not None and not isinstance(v, str):
+                    try: vals[k] = int(round(float(v)*100))
+                    except: vals[k] = None
+                else:
+                    vals[k] = None
+            if i == 129 or 'San L' in nm or 'Club' in nm_raw:
+                equipo_acum = vals
+            else:
+                jugadores_acum[nm] = vals
+        print(f"  Acumulado GamePlan: {len(jugadores_acum)} jugadores")
+        return jugadores_acum, equipo_acum
+    except Exception as e:
+        print(f"  AVISO: Error leyendo acumulado: {e}")
+        return {}, {}
+
+
+# ── Leer objetivos acumulados desde CASL_GamePlan_4.xlsm ─────────────
+def leer_objetivos_acumulados():
+    gameplan = os.path.join(BASE, "CASL_GamePlan_4.xlsm")
+    if not os.path.exists(gameplan):
+        print("  AVISO: No se encontró CASL_GamePlan_4.xlsm para objetivos acumulados")
+        return {}, {}
+    try:
+        wb_gp = load_workbook(gameplan, read_only=True, data_only=True, keep_vba=False)
+        ws = wb_gp['CASLA']
+    except Exception as e:
+        print(f"  AVISO: Error leyendo CASL_GamePlan_4.xlsm: {e}")
+        return {}, {}
+
+    COL_MAP = {'sq':6,'rec':12,'bqpos':15,'bqpt':19,'atqq':24,'atqhb':29,
+               'atqx':34,'atqrp':39,'atqri':44,'atqrm':49,'atqtr':54}
+
+    jugadores_obj = {}
+    equipo_obj = {}
+
+    rows = list(ws.iter_rows(min_row=128, max_row=145, values_only=True))
+    if len(rows) < 2: return {}, {}
+
+    def parse_row(row):
+        vals = {}
+        for k, cidx in COL_MAP.items():
+            v = row[cidx] if cidx < len(row) else None
+            if v is not None and str(v).strip() not in ('','----'):
+                try: vals[k] = int(round(float(v)*100))
+                except: vals[k] = None
+            else:
+                vals[k] = None
+        return vals
+
+    # Row 129 = equipo (idx 1)
+    equipo_obj = parse_row(rows[1])
+
+    # Rows 130-144 = jugadores (idx 2-16)
+    for ri in range(2, len(rows)):
+        row = rows[ri]
+        nm = cn(row[0]) if row[0] else ''
+        if not nm: continue
+        jugadores_obj[nm] = parse_row(row)
+
+    print(f"  Objetivos acumulados: {len(jugadores_obj)} jugadores desde CASLA")
+    return jugadores_obj, equipo_obj
 
 # ── Main ──────────────────────────────────────────────────────────────
 def main():
@@ -784,7 +886,35 @@ def main():
 
     # Acumulate
     all_players, all_armadores = acumular(partidos_procesados)
+
+    # Override with acumulado from CASL_GamePlan_4.xlsm (authoritative totals)
+    gp_jugadores_obj, gp_equipo_obj = leer_objetivos_acumulados()
+    # Inject GamePlan objetivos into all_players
+    for nm, obj in gp_jugadores_obj.items():
+        # Find matching player (case-insensitive apellido match)
+        nm_low = nm.lower()
+        for key in list(all_players.keys()):
+            key_low = key.lower()
+            if key_low == nm_low or key_low.split()[0] == nm_low.split()[0]:
+                all_players[key]['objetivos'] = {k: {'sum': v, 'n': 1} if v is not None else {'sum':0,'n':0}
+                                                  for k, v in obj.items()}
+                break
+
     jugadores   = build_jugadores(all_players)
+
+    # Override acumulado with official values from CASL_GamePlan_4.xlsm
+    gp_jugs, gp_equipo = leer_acumulado_gameplan()
+    if gp_jugs:
+        for j in jugadores:
+            nm_clean = re.sub(r'^\d+\s*', '', j['nombre'])
+            nm_lower = nm_clean.lower()
+            match = next((v for k,v in gp_jugs.items() if k.lower().split()[0] == nm_lower.split()[0]), None)
+            if match:
+                j['objetivos'] = match
+        if gp_equipo:
+            global _EQUIPO_OBJ_ACUM
+            _EQUIPO_OBJ_ACUM = gp_equipo
+
 
     print(f"\n✓ {len(jugadores)} jugadores:")
     for j in jugadores:
@@ -811,7 +941,7 @@ def main():
             'sets_rival': pd['sets_rival'],
             'jugadores':  jj,
             'armadores':  json.loads(json.dumps(pd.get('armadores', {}),default=str)),
-            'objetivos':  pd.get('objetivos', {}),
+            'objetivos':  {nm: pd['objetivos'][nm] for nm in pd.get('objetivos',{}) if nm != '__equipo__'},
             'equipo_obj': pd.get('objetivos', {}).get('__equipo__', {}),
         })
 
@@ -822,9 +952,18 @@ def main():
          'sets_casla':p['sets_casla'],'sets_rival':p['sets_rival']}
         for p in partidos_procesados
     ]
-    eq_raw = all_players.get('__equipo__', {}).get('objetivos', {})
-    equipo_obj = {k: (round(v['sum']/v['n']) if v.get('n') else None)
-                  for k, v in eq_raw.items()}
+    # Use GamePlan equipo objetivos if available
+    if gp_equipo_obj:
+        equipo_obj = gp_equipo_obj
+    else:
+        eq_raw = all_players.get('__equipo__', {}).get('objetivos', {})
+        equipo_obj = {k: (round(v['sum']/v['n']) if v.get('n') else None)
+                      for k, v in eq_raw.items()}
+    # Override with official gameplan equipo acum
+    try:
+        if _EQUIPO_OBJ_ACUM:
+            equipo_obj = _EQUIPO_OBJ_ACUM
+    except: pass
     js = f"""// datos_partidos.js — {generado}
 const PARTIDOS_GENERADO = "{generado}";
 const PARTIDOS_TOTAL = {len(partidos_procesados)};
