@@ -6,6 +6,7 @@
 <title>Ataques — CASLA Voley</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <script src="datos_casla.js" onerror="void 0"></script>
+<script src="datos_partidos.js" onerror="void 0"></script>
 <script src="datos_historial.js" onerror="void 0"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -265,26 +266,30 @@ select, select option {
 </style>
 <style>
 body{background:#07080f;color:#e2e8f0;font-family:'Barlow Condensed',sans-serif;min-height:100vh;padding:0;margin:0}
-.hdr{padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:14px;background:rgba(7,8,15,.9);position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);flex-wrap:wrap}
-.back-btn{padding:6px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#475569;font-size:11px;font-weight:700;letter-spacing:1px;text-decoration:none;text-transform:uppercase}
-.filter-row{display:flex;gap:6px;margin-left:auto}
-.fbtn{padding:6px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#475569;font-size:11px;font-weight:800;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase;transition:all .15s}
+.hdr{padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px;background:rgba(7,8,15,.9);position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);flex-wrap:wrap}
+.back-btn{padding:6px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#475569;font-size:11px;font-weight:700;letter-spacing:1px;text-decoration:none;text-transform:uppercase;flex-shrink:0}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.fbtn{padding:6px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#475569;font-size:11px;font-weight:800;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase;transition:all .15s}
 .fbtn.active-partido{background:rgba(232,25,44,.12);border-color:rgba(232,25,44,.4);color:#e8192c}
 .fbtn.active-entrenamiento{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.4);color:#22c55e}
-.main{max-width:960px;margin:0 auto;padding:20px 16px}
+.subfiltro-row{width:100%;display:none;gap:5px;flex-wrap:wrap;padding:6px 0 0}
+.sfbtn{padding:4px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);color:#64748b;font-size:10px;font-weight:700;letter-spacing:1px;cursor:pointer;text-transform:uppercase;transition:all .15s;font-family:'Barlow Condensed',sans-serif}
+.sfbtn.on{background:rgba(232,25,44,.1);border-color:rgba(232,25,44,.35);color:#e8192c}
+.main{max-width:1100px;margin:0 auto;padding:20px 16px}
 .empty{text-align:center;padding:60px;color:#475569;font-size:13px;letter-spacing:1px}
 </style>
 </head>
 <body>
 <div class="hdr">
   <a href="javascript:history.back()" class="back-btn">← Volver</a>
-  <div>
+  <div style="flex-shrink:0">
     <div id="jug-title" style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#e2e8f0">ATAQUES</div>
     <div style="font-size:9px;color:#475569;letter-spacing:2px;text-transform:uppercase">CASLA VOLEY</div>
   </div>
   <div class="filter-row">
     <button class="fbtn active-partido" id="btn-partido" onclick="setFiltro('partido')">🏆 PARTIDO</button>
     <button class="fbtn" id="btn-entrenamiento" onclick="setFiltro('entrenamiento')">🏋️ ENTRENAMIENTO</button>
+    <div class="subfiltro-row" id="subfiltro-row"></div>
   </div>
 </div>
 <div class="main">
@@ -487,14 +492,14 @@ function renderPanelAtaque(j,jIdx,grid){
     :j.ataques;
   j.ataques.forEach(function(a){if(ordenCombos.length>0&&ordenCombos.indexOf(a.cod)<0&&a.tot>0)ataquesMostrar.push(a);});
   ataquesMostrar.forEach(function(a,i){
-    var card=buildCanchita(a,jIdx,i,'ma',180,140,drawAtaqueCourt,j.color||'#818cf8',j);
+    var card=buildCanchita(a,jIdx,i,'ma',200,155,drawAtaqueCourt,j.color||'#818cf8',j);
     grid.appendChild(card);
     setTimeout(function(){
       var cv=document.getElementById('ma-'+jIdx+'-'+i);
       if(!cv)return;
       var ctx=cv.getContext('2d');var start=null;
       function step(ts){if(!start)start=ts;var pr=Math.min((ts-start)/500,1),e=1-Math.pow(1-pr,3);
-        ctx.clearRect(0,0,180,140);drawAtaqueCourt(ctx,180,140,a,j.color||'#818cf8',e);
+        ctx.clearRect(0,0,200,155);drawAtaqueCourt(ctx,200,155,a,j.color||'#818cf8',e);
         if(pr<1)requestAnimationFrame(step);}
       requestAnimationFrame(step);
     },i*70);
@@ -510,10 +515,15 @@ var DVW_MAP = {
 };
 var COMBOS_POS={'PUNTA':['X5','V5','X6','V6','XP'],'CENTRAL':['X1','X7','XM','X2'],
   'OPUESTO':['X5','V5','X6','V6','X8','V8'],'ARMADOR':[],'LIBERO':[]};
-function getPosFromCasla(num){
-  if(typeof CASLA_JUGADORES !== 'undefined'){
-    var j = CASLA_JUGADORES.find(function(x){ return x.num === num; });
-    if(j && j.pos) return j.pos.toUpperCase();
+
+function getPosFromData(num){
+  if(typeof PARTIDOS_JUGADORES!=='undefined'){
+    var j=PARTIDOS_JUGADORES.find(function(x){return x.num===num;});
+    if(j&&j.pos) return j.pos.toUpperCase();
+  }
+  if(typeof CASLA_JUGADORES!=='undefined'){
+    var j=CASLA_JUGADORES.find(function(x){return x.num===num;});
+    if(j&&j.pos) return j.pos.toUpperCase();
   }
   return '';
 }
@@ -548,7 +558,7 @@ function buildFromHistorial(num){
       });
     });
   });
-  var pos=getPosFromCasla(num);
+  var pos=getPosFromData(num);
   var ordenCombos=COMBOS_POS[pos]||[];
   var ataquesArr=ordenCombos.map(function(cod){
     var a=ataques[cod]||{cod:cod,orig:8,tot:0,pts:0,destCounts:{}};
@@ -561,36 +571,93 @@ function buildFromHistorial(num){
       tot:a.tot,pts:a.pts,slash:0,err:0,video:null,
       pts_pct:a.tot>0?Math.round(a.pts/a.tot*100):0};
   });
-  // No agregar combos fuera de la posicion del jugador
   if(!ataquesArr.some(function(a){return a.tot>0;})) return null;
-  return {num:num,nombre:num+' '+jNombre,pos:pos,color:POS_COLOR[pos]||'#818cf8',
+  var color=POS_COLOR[pos]||'#818cf8';
+  return {num:num,nombre:num+' '+jNombre,pos:pos,color:color,
     ataques:ataquesArr,saques:[],recepcion:{},info:{}};
 }
 
 
-var currentNum=0, currentFiltro='partido';
+var currentNum=0, currentFiltro='partido', currentPartido='acumulado';
+
+function buildSubfiltro(){
+  var row=document.getElementById('subfiltro-row');
+  row.innerHTML='';
+  if(currentFiltro!=='partido'){ row.style.display='none'; return; }
+  row.style.display='flex';
+
+  // Acumulado button
+  var b=document.createElement('button');
+  b.className='sfbtn'+(currentPartido==='acumulado'?' on':'');
+  b.textContent='Acumulado';
+  b.onclick=function(){ currentPartido='acumulado'; updateSfBtns(this); renderPage(); };
+  row.appendChild(b);
+
+  // Per match buttons
+  if(typeof PARTIDOS_META!=='undefined'){
+    PARTIDOS_META.forEach(function(m){
+      var btn=document.createElement('button');
+      btn.className='sfbtn'+(currentPartido===m.nombre?' on':'');
+      var label=m.rival||m.nombre;
+      if(m.resultado) label+=' ('+m.resultado+')';
+      btn.textContent=label;
+      btn.dataset.nombre=m.nombre;
+      btn.onclick=function(){ currentPartido=m.nombre; updateSfBtns(this); renderPage(); };
+      row.appendChild(btn);
+    });
+  }
+}
+
+function updateSfBtns(active){
+  document.querySelectorAll('.sfbtn').forEach(function(b){ b.classList.remove('on'); });
+  active.classList.add('on');
+}
 
 function setFiltro(filtro){
   currentFiltro=filtro;
+  if(filtro==='partido') currentPartido='acumulado';
   document.getElementById('btn-partido').className='fbtn'+(filtro==='partido'?' active-partido':'');
   document.getElementById('btn-entrenamiento').className='fbtn'+(filtro==='entrenamiento'?' active-entrenamiento':'');
+  buildSubfiltro();
   renderPage();
+}
+
+function getJugadorPartido(){
+  if(currentPartido==='acumulado'){
+    // Use PARTIDOS_JUGADORES (acumulado)
+    if(typeof PARTIDOS_JUGADORES==='undefined') return null;
+    return PARTIDOS_JUGADORES.find(function(x){return x.num===currentNum;});
+  } else {
+    // Find specific match
+    if(typeof PARTIDOS_INDIVIDUAL==='undefined') return null;
+    var partido=PARTIDOS_INDIVIDUAL.find(function(p){return p.nombre===currentPartido;});
+    if(!partido) return null;
+    return partido.jugadores.find(function(x){return x.num===currentNum;});
+  }
 }
 
 function renderPage(){
   var cont=document.getElementById('content');
   var j=null;
+
   if(currentFiltro==='partido'){
-    if(typeof CASLA_JUGADORES==='undefined'){cont.innerHTML='<div class="empty">Sin datos de partidos</div>';return;}
-    j=CASLA_JUGADORES.find(function(x){return x.num===currentNum;});
-    if(!j){cont.innerHTML='<div class="empty">Jugador #'+currentNum+' no encontrado</div>';return;}
-    if(!j.ataques||!j.ataques.length){cont.innerHTML='<div class="empty">Sin datos de ataque en partidos</div>';return;}
+    j=getJugadorPartido();
+    if(!j){
+      // Fallback to datos_casla
+      if(typeof CASLA_JUGADORES!=='undefined')
+        j=CASLA_JUGADORES.find(function(x){return x.num===currentNum;});
+    }
+    if(!j){cont.innerHTML='<div class="empty">Sin datos de partido</div>';return;}
+    if(!j.ataques||!j.ataques.length){cont.innerHTML='<div class="empty">Sin ataques registrados</div>';return;}
   } else {
     j=buildFromHistorial(currentNum);
     if(!j){cont.innerHTML='<div class="empty">Sin ataques en entrenamientos</div>';return;}
   }
+
   var nm=j.nombre.replace(/^\d+\s*/,'');
-  document.getElementById('jug-title').textContent='💥 ATAQUES — '+nm+(currentFiltro==='entrenamiento'?' (ENT)':'');
+  var suffix=currentFiltro==='entrenamiento'?' (ENT)':currentPartido!=='acumulado'?' ('+currentPartido+')':'';
+  document.getElementById('jug-title').textContent='💥 ATAQUES — '+nm+suffix;
+
   cont.innerHTML='';
   var grid=document.createElement('div');
   grid.className='canchitas-grid';
@@ -599,9 +666,13 @@ function renderPage(){
 }
 
 function waitAndInit(tries){
-  if(typeof CASLA_JUGADORES!=='undefined'||typeof window.HISTORIAL_DATA!=='undefined'){
+  var ok=typeof CASLA_JUGADORES!=='undefined'||
+         typeof PARTIDOS_JUGADORES!=='undefined'||
+         typeof window.HISTORIAL_DATA!=='undefined';
+  if(ok){
     var params=new URLSearchParams(window.location.search);
     currentNum=parseInt(params.get('num'))||0;
+    buildSubfiltro();
     document.fonts.ready.then(renderPage).catch(renderPage);
   } else if(tries>0){
     setTimeout(function(){waitAndInit(tries-1);},200);
