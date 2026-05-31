@@ -224,15 +224,18 @@ var POS_COLOR = {
 };
 
 // ── INIT ──────────────────────────────────────────────────────────────
-document.fonts.ready.then(function(){
-  buildJugSelector();
-  // Check URL param
-  var params = new URLSearchParams(window.location.search);
-  var num = parseInt(params.get('num')) || 0;
-  if(num) selectJugador(num);
-}).catch(function(){
-  buildJugSelector();
-});
+function tryInit(tries){
+  var ready = typeof CASLA_JUGADORES !== 'undefined';
+  if(ready){
+    buildJugSelector();
+    var params = new URLSearchParams(window.location.search);
+    var num = parseInt(params.get('num')) || 0;
+    if(num) selectJugador(num);
+  } else if(tries > 0){
+    setTimeout(function(){ tryInit(tries-1); }, 200);
+  }
+}
+document.fonts.ready.then(function(){ tryInit(20); }).catch(function(){ tryInit(20); });
 
 function buildJugSelector(){
   var sel = document.getElementById('jug-selector');
@@ -275,7 +278,11 @@ function selectJugador(num){
   renderHero();
   renderBaterias();
   renderTipoRow();
-  renderTabs();
+  // Show tabs
+  document.getElementById('tabs').style.display='flex';
+  // Activate first tab
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('on');});
+  document.querySelectorAll('.tab-btn')[0].classList.add('on');
   renderContent();
 }
 
@@ -315,11 +322,17 @@ function renderHero(){
 function renderBaterias(){
   if(!G.jugador){ document.getElementById('baterias-panel').style.display='none'; return; }
   document.getElementById('baterias-panel').style.display='block';
-  window._objTipo = G.tipo;
+  window._objTipo    = G.tipo;
   window._objPartido = G.sesion;
-  window._objNombre = G.jugador.nombre;
-  buildObjSubfiltro && buildObjSubfiltro();
-  objRenderBaterias && objRenderBaterias();
+  window._objNombre  = G.jugador.nombre;
+  // Build subfiltro
+  if(typeof buildObjSubfiltro==='function') buildObjSubfiltro();
+  // Render baterias
+  if(typeof renderObjetivosJugador==='function'){
+    var jugVals = typeof objGetVals==='function' ? objGetVals(G.jugador.nombre) : null;
+    var eqVals  = typeof objGetVals==='function' ? objGetVals(null) : null;
+    renderObjetivosJugador('objetivos-jugador', G.jugador.nombre, jugVals, eqVals);
+  }
 }
 
 function objSetTipo(tipo, btn){
@@ -331,8 +344,8 @@ function objSetTipo(tipo, btn){
     b.className='tipo-btn';
   });
   btn.className = 'tipo-btn '+(tipo==='partido'?'on-p':'on-e');
-  buildObjSubfiltro && buildObjSubfiltro();
-  objRenderBaterias && objRenderBaterias();
+  if(typeof buildObjSubfiltro==='function') buildObjSubfiltro();
+  renderBaterias();
 }
 
 // ── TIPO FILTER ──────────────────────────────────────────────────────
