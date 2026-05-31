@@ -16,8 +16,8 @@ window.OBJETIVOS_CONFIG={metas:{
   atqtr:{label:'Atq TR',    obj:34, min:22, max:42, g2:34, g1:30, y:26}
 }};
 
-var currentObjPartido = 'acumulado';
-var currentObjTipo = 'partido'; // 'partido' or 'entrenamiento'
+window.currentObjPartido = window.currentObjPartido || 'acumulado';
+window.currentObjTipo = window.currentObjTipo || 'partido'; // 'partido' or 'entrenamiento'
 
 function objClassify(id,val){
   var m=window.OBJETIVOS_CONFIG.metas[id];
@@ -57,18 +57,18 @@ function objCalcVals(nombreJugador){
     }
   }
   // Acumulado - use entrenamientos or partidos based on tipo
-  var JUGADORES_SRC = currentObjTipo==='entrenamiento'
+  var JUGADORES_SRC = window.currentObjTipo==='entrenamiento'
     ? (typeof ENTRENAMIENTOS_JUGADORES!=='undefined' ? ENTRENAMIENTOS_JUGADORES : null)
     : (typeof PARTIDOS_JUGADORES!=='undefined' ? PARTIDOS_JUGADORES : null);
-  var INDIVIDUAL_SRC = currentObjTipo==='entrenamiento'
+  var INDIVIDUAL_SRC = window.currentObjTipo==='entrenamiento'
     ? (typeof ENTRENAMIENTOS_INDIVIDUAL!=='undefined' ? ENTRENAMIENTOS_INDIVIDUAL : null)
     : (typeof PARTIDOS_INDIVIDUAL!=='undefined' ? PARTIDOS_INDIVIDUAL : null);
-  var EQUIPO_SRC = currentObjTipo==='entrenamiento'
+  var EQUIPO_SRC = window.currentObjTipo==='entrenamiento'
     ? (typeof ENTRENAMIENTOS_EQUIPO_OBJ!=='undefined' ? ENTRENAMIENTOS_EQUIPO_OBJ : null)
     : (typeof PARTIDOS_EQUIPO_OBJ!=='undefined' ? PARTIDOS_EQUIPO_OBJ : null);
 
   // Per-sesion if selected
-  if(INDIVIDUAL_SRC && currentObjPartido !== 'acumulado'){
+  if(INDIVIDUAL_SRC && window.currentObjPartido !== 'acumulado'){
     var pd2 = INDIVIDUAL_SRC.find(function(p){ return p.nombre === currentObjPartido; });
     if(pd2){
       if(nombreJugador){
@@ -99,7 +99,7 @@ function objCalcVals(nombreJugador){
       return pj.objetivos;
     }
     // Found source but no data for this jugador — return nulls instead of falling to DVW
-    if(currentObjTipo === 'entrenamiento'){
+    if(window.currentObjTipo === 'entrenamiento'){
       return {sq:null,rec:null,bqpos:null,bqpt:null,atqq:null,atqhb:null,
               atqx:null,atqrp:null,atqri:null,atqrm:null,atqtr:null};
     }
@@ -109,7 +109,7 @@ function objCalcVals(nombreJugador){
     return EQUIPO_SRC;
   }
   // If entrenamiento mode and no data found, return nulls (don't show fake data)
-  if(currentObjTipo === 'entrenamiento'){
+  if(window.currentObjTipo === 'entrenamiento'){
     return {sq:null,rec:null,bqpos:null,bqpt:null,atqq:null,atqhb:null,
             atqx:null,atqrp:null,atqri:null,atqrm:null,atqtr:null};
   }
@@ -217,7 +217,7 @@ function buildObjSubfiltro(nombreJugador){
   b.className = 'obj-sfbtn' + (currentObjPartido==='acumulado'?' on':'');
   b.textContent = 'Acumulado';
   b.onclick = function(){
-    currentObjPartido = 'acumulado';
+    window.window.currentObjPartido = 'acumulado';
     document.querySelectorAll('.obj-sfbtn').forEach(function(x){x.classList.remove('on');});
     b.classList.add('on');
     renderObjetivosJugador('objetivos-jugador', nombreJugador);
@@ -227,12 +227,12 @@ function buildObjSubfiltro(nombreJugador){
   // Per-partido buttons
   PARTIDOS_META.forEach(function(m){
     var btn = document.createElement('button');
-    btn.className = 'obj-sfbtn' + (currentObjPartido===m.nombre?' on':'');
+    btn.className = 'obj-sfbtn' + (window.currentObjPartido===m.nombre?' on':'');
     var label = m.rival||m.nombre;
     if(m.resultado) label += ' ('+m.resultado+')';
     btn.textContent = label;
     btn.onclick = function(){
-      currentObjPartido = m.nombre;
+      window.currentObjPartido = m.nombre;
       document.querySelectorAll('.obj-sfbtn').forEach(function(x){x.classList.remove('on');});
       btn.classList.add('on');
       renderObjetivosJugador('objetivos-jugador', nombreJugador);
@@ -241,8 +241,8 @@ function buildObjSubfiltro(nombreJugador){
   });
 }
 function setObjTipo(tipo, btn){
-  currentObjTipo = tipo;
-  currentObjPartido = 'acumulado';
+  window.currentObjTipo = tipo;
+  window.window.currentObjPartido = 'acumulado';
   document.querySelectorAll('.obj-tfbtn').forEach(function(b){
     b.classList.remove('on','partido','ent');
   });
