@@ -1292,11 +1292,15 @@ function renderEquipo(){
     <div class=section-title>DETALLE DV4 EQUIPO — ACUMULADO</div>
     ${renderTeamDV4Historial()}`;
   document.getElementById('eq-content').innerHTML += '<div id="objetivos-panel" style="margin:20px 0"></div>';
-  if(typeof renderObjetivos!=="undefined"){
-    // Use appropriate data source based on filtroActivo.tipo
+  // Render baterías equipo
+  setTimeout(function(){
     var tipoFiltro = filtroActivo && filtroActivo.tipo !== 'all' ? filtroActivo.tipo : 'all';
-    renderObjetivosConTipo("objetivos-panel", tipoFiltro);
-  }
+    if(typeof renderObjetivosConTipo !== 'undefined'){
+      renderObjetivosConTipo('objetivos-panel', tipoFiltro);
+    } else if(typeof renderObjetivos !== 'undefined'){
+      renderObjetivos('objetivos-panel');
+    }
+  }, 100);
 }
 
 // ═══════════════════════════════════════════

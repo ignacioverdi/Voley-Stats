@@ -106,13 +106,17 @@ function objCalcVals(nombreJugador){
     var pj = JUGADORES_SRC.find(function(x){
       if(!x.nombre) return false;
       var xClean = x.nombre.replace(/^\d+\s*/,'').toLowerCase();
-      // Match by apellido (first word)
       var nmApellido = nmClean.split(' ')[0];
       var xApellido  = xClean.split(' ')[0];
       return xClean === nmClean || nmApellido === xApellido;
     });
     if(pj && pj.objetivos && Object.keys(pj.objetivos).length > 0){
       return pj.objetivos;
+    }
+    // Found source but no data for this jugador — return nulls instead of falling to DVW
+    if(currentObjTipo === 'entrenamiento'){
+      return {sq:null,rec:null,bqpos:null,bqpt:null,atqq:null,atqhb:null,
+              atqx:null,atqrp:null,atqri:null,atqrm:null,atqtr:null};
     }
   }
   // Equipo acumulado
