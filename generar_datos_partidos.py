@@ -472,7 +472,11 @@ def acumular(partidos_data):
 
         # Recepcion: store per jugador (take latest non-empty)
         for nm, rec in pd.get('recepcion',{}).items():
-            if nm not in all_players: continue
+            if nm not in all_players:
+                # Add player even if not in attack/serve
+                pos_pl, num_pl = get_pos_num(nm)
+                all_players[nm] = {'num':num_pl,'pos':pos_pl,'combos':{},
+                                   'serve_sm':{},'serve_sq':{}}
             if not all_players[nm].get('recepcion'):
                 all_players[nm]['recepcion'] = rec
 
@@ -588,7 +592,7 @@ def build_jugadores(all_players, stats_override=None):
                            'pts_pct':s_pts_pct})
 
         j = {'num':num,'nombre':f"{num} {nm}",'pos':pos,'color':color,
-             'info':{},'ataques':ataques,'saques':saques,'video':0,'recepcion':{}}
+             'info':{},'ataques':ataques,'saques':saques,'video':0,'recepcion':info.get('recepcion',{})}
         jugadores.append(j)
 
     return jugadores

@@ -699,6 +699,7 @@ var BLQ_OPCIONES=[
 function renderArmador(){
   var sec=document.getElementById('seccion-armador');
   if(!sec||!ARMADOR_DATA) return;
+  sec.innerHTML = ''; // always clear before rendering
 
   // Tabs titular/suplente
   var tipos=['titular','suplente'];
@@ -1130,18 +1131,23 @@ function buildArmSubfiltro(){
 }
 
 function renderArmadorConFiltro(){
-  var arm_data = null;
   if(currentArmPartido === 'acumulado'){
-    arm_data = typeof CASLA_ARMADOR !== 'undefined' ? CASLA_ARMADOR :
-               typeof PARTIDOS_ARMADOR !== 'undefined' ? PARTIDOS_ARMADOR : null;
+    // Restore original CASLA_ARMADOR data
+    cargarDatosCasla();
+    renderArmador();
   } else {
-    if(typeof PARTIDOS_INDIVIDUAL !== 'undefined'){
-      var pd = PARTIDOS_INDIVIDUAL.find(function(p){return p.nombre===currentArmPartido;});
-      if(pd && pd.armadores) arm_data = pd.armadores;
+    if(typeof PARTIDOS_INDIVIDUAL === 'undefined') return;
+    var pd = PARTIDOS_INDIVIDUAL.find(function(p){return p.nombre===currentArmPartido;});
+    if(!pd || !pd.armadores) {
+      var sec=document.getElementById('seccion-armador');
+      if(sec) sec.innerHTML='<div style="padding:40px;text-align:center;color:#475569;font-size:12px;letter-spacing:1px">SIN DATOS DE ARMADOR PARA ESTE PARTIDO</div>';
+      return;
     }
-  }
-  if(arm_data){
-    window.ARMADOR_DATA = arm_data;
+    // Set ARMADOR_DATA with mismo formato que CASLA_ARMADOR
+    window.ARMADOR_DATA = {
+      titular:  pd.armadores.titular  || null,
+      suplente: pd.armadores.suplente || null
+    };
     renderArmador();
   }
 }
