@@ -1,5 +1,5 @@
-// datos_partidos.js — 31/05/2026 11:31
-const PARTIDOS_GENERADO = "31/05/2026 11:31";
+// datos_partidos.js — 31/05/2026 13:02
+const PARTIDOS_GENERADO = "31/05/2026 13:02";
 const PARTIDOS_TOTAL = 6;
 const PARTIDOS_META = [
   {
@@ -6201,19 +6201,6 @@ const PARTIDOS_INDIVIDUAL = [
       }
     },
     "objetivos": {
-      "__equipo__": {
-        "sq": -11,
-        "rec": 37,
-        "bqpos": 42,
-        "bqpt": 14,
-        "atqq": 65,
-        "atqhb": 17,
-        "atqx": 44,
-        "atqrp": 57,
-        "atqri": 29,
-        "atqrm": 14,
-        "atqtr": 38
-      },
       "Ojuez A.": {
         "sq": -7,
         "rec": null,
@@ -9286,19 +9273,6 @@ const PARTIDOS_INDIVIDUAL = [
       }
     },
     "objetivos": {
-      "__equipo__": {
-        "sq": -18,
-        "rec": 20,
-        "bqpos": 36,
-        "bqpt": 10,
-        "atqq": 36,
-        "atqhb": 36,
-        "atqx": 18,
-        "atqrp": 33,
-        "atqri": 7,
-        "atqrm": 36,
-        "atqtr": 32
-      },
       "Ojuez A.": {
         "sq": 0,
         "rec": null,
@@ -12392,19 +12366,6 @@ const PARTIDOS_INDIVIDUAL = [
       }
     },
     "objetivos": {
-      "__equipo__": {
-        "sq": -5,
-        "rec": 43,
-        "bqpos": 38,
-        "bqpt": 30,
-        "atqq": 36,
-        "atqhb": 0,
-        "atqx": 15,
-        "atqrp": 21,
-        "atqri": 0,
-        "atqrm": -50,
-        "atqtr": 20
-      },
       "Ojuez A.": {
         "sq": -33,
         "rec": 100,
@@ -15634,19 +15595,6 @@ const PARTIDOS_INDIVIDUAL = [
       }
     },
     "objetivos": {
-      "__equipo__": {
-        "sq": -6,
-        "rec": 40,
-        "bqpos": 48,
-        "bqpt": 13,
-        "atqq": 39,
-        "atqhb": 20,
-        "atqx": 34,
-        "atqrp": 45,
-        "atqri": 53,
-        "atqrm": 17,
-        "atqtr": 16
-      },
       "Ojuez A.": {
         "sq": -10,
         "rec": -25,
@@ -18871,19 +18819,6 @@ const PARTIDOS_INDIVIDUAL = [
       }
     },
     "objetivos": {
-      "__equipo__": {
-        "sq": 1,
-        "rec": 40,
-        "bqpos": 41,
-        "bqpt": 20,
-        "atqq": 50,
-        "atqhb": 4,
-        "atqx": 35,
-        "atqrp": 33,
-        "atqri": 53,
-        "atqrm": 40,
-        "atqtr": 20
-      },
       "Ojuez A.": {
         "sq": -9,
         "rec": null,
@@ -22093,19 +22028,6 @@ const PARTIDOS_INDIVIDUAL = [
       }
     },
     "objetivos": {
-      "__equipo__": {
-        "sq": -3,
-        "rec": 28,
-        "bqpos": 58,
-        "bqpt": 22,
-        "atqq": 39,
-        "atqhb": -2,
-        "atqx": 29,
-        "atqrp": 24,
-        "atqri": 67,
-        "atqrm": 25,
-        "atqtr": 2
-      },
       "Ojuez A.": {
         "sq": -12,
         "rec": 0,
