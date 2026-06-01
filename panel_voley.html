@@ -483,6 +483,7 @@ function renderObjetivosJugador(cid,nombre,extra){
 </script>
 </head>
 <body>
+<div style="padding:6px 20px;background:rgba(7,8,15,.97);border-bottom:1px solid rgba(255,255,255,.06);position:sticky;top:0;z-index:300"><a href="dashboard.html" style="padding:5px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#475569;font-size:10px;font-weight:700;letter-spacing:1px;text-decoration:none;text-transform:uppercase">← Dashboard</a></div>
 
 <header class="hdr">
   <a href="index.html" style="font-size:9px;color:#5a5a72;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;transition:all .15s;white-space:nowrap" onmouseover="this.style.borderColor='rgba(255,255,255,.15)';this.style.color='#eeeef5'" onmouseout="this.style.borderColor='rgba(255,255,255,.06)';this.style.color='#5a5a72'">← HUB</a>
@@ -877,7 +878,7 @@ function card(p,rank,worstRank,teamD,teamFDs,sz){
   const totalPts=cF==='all'?(p.aT[0]+p.bT[0]):d[0];
   const totalErr=cF==='all'?(p.rT[5]+p.sT[5]+p.aT[5]+p.bT[5]):d[5];
 
-  return `<div class="card${rankClass}${tot===0?' dim':''}">
+  return `<div class="card${rankClass}${tot===0?' dim':''}" onclick="showJugDetail('${p.n||''}',${p.c||0})" style="cursor:pointer">
     ${rankBadge}
     <div class=ch>
       <div class="nb ${sz}">${p.c}</div>
@@ -1503,5 +1504,134 @@ document.getElementById('cancha-modal').addEventListener('click',function(e){if(
 
 
 <button onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:24px;right:24px;z-index:200;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(7,8,15,.95);backdrop-filter:blur(10px);color:#64748b;font-size:18px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.5)" onmouseover="this.style.color='#e2e8f0'" onmouseout="this.style.color='#64748b'" title="Volver al inicio">↑</button>
+
+<!-- INDIVIDUAL PLAYER DETAIL OVERLAY -->
+<div id="jug-det" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(7,8,15,.97);backdrop-filter:blur(20px);overflow-y:auto">
+  <div style="max-width:700px;margin:0 auto;padding:20px 16px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+      <button onclick="closeJugDetail()" style="padding:6px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#64748b;font-family:Barlow Condensed,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;cursor:pointer;text-transform:uppercase">← Volver</button>
+      <div id="jdet-name" style="font-family:Bebas Neue,sans-serif;font-size:24px;letter-spacing:2px"></div>
+      <div id="jdet-pos" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-left:auto"></div>
+    </div>
+    <div id="jdet-content"></div>
+  </div>
+</div>
+<script>
+// ── INDIVIDUAL PLAYER DETAIL ───────────────────────────────────────────
+function showJugDetail(nombre, num){
+  var D = window.VOLEY_DATA;
+  if(!D) return;
+  var jug = D.j.find(function(p){ return p.n === nombre || p.c === num; });
+  if(!jug) return;
+
+  // Find player info from CASLA_JUGADORES
+  var jugInfo = null;
+  if(typeof CASLA_JUGADORES !== 'undefined'){
+    jugInfo = CASLA_JUGADORES.find(function(j){ return j.num === num; });
+  }
+
+  var POS_COLOR = {ARMADOR:'#F59E0B',OPUESTO:'#F97316',PUNTA:'#22C55E',CENTRAL:'#F97316',LIBERO:'#06B6D4'};
+  var pos = jugInfo ? jugInfo.pos : '';
+  var posColor = POS_COLOR[pos] || '#64748b';
+
+  document.getElementById('jdet-name').textContent = '#' + (num||'') + ' ' + nombre;
+  var posEl = document.getElementById('jdet-pos');
+  posEl.textContent = pos; posEl.style.color = posColor;
+
+  // Build content
+  var html = '';
+
+  // Quick stats row
+  var stats = [
+    {v: jug.aT||0,  l:'Ataques',    c:'#818CF8'},
+    {v: jug.sT||0,  l:'Saques',     c:'#F59E0B'},
+    {v: jug.rT||0,  l:'Recepciones',c:'#22C55E'},
+    {v: jug.bT||0,  l:'Bloqueos',   c:'#06B6D4'},
+  ].filter(function(s){ return s.v > 0; });
+
+  if(stats.length){
+    html += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">';
+    stats.forEach(function(s){
+      html += '<div style="flex:1;min-width:80px;background:rgba(13,14,26,.8);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:10px;text-align:center">'
+        + '<div style="font-family:Bebas Neue,sans-serif;font-size:28px;line-height:1;color:'+s.c+'">'+s.v+'</div>'
+        + '<div style="font-size:9px;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin-top:2px">'+s.l+'</div>'
+        + '</div>';
+    });
+    html += '</div>';
+  }
+
+  // Eficiencias
+  var efics = [];
+  if(jug.aT) efics.push({lbl:'EFF Ataque',  val:effAtaque(jug),  c:'#F97316'});
+  if(jug.sT) efics.push({lbl:'EFF Saque',   val:effSaque(jug),   c:'#F59E0B'});
+  if(jug.rT) efics.push({lbl:'EFF Recep.',  val:effRecepcion(jug),c:'#22C55E'});
+  if(jug.bT) efics.push({lbl:'EFF Bloq.',   val:effBloqueo(jug), c:'#06B6D4'});
+
+  if(efics.length){
+    html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:16px">';
+    efics.forEach(function(e){
+      var v = e.val !== null ? e.val + '%' : '—';
+      html += '<div style="background:rgba(13,14,26,.8);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:10px 12px">'
+        + '<div style="font-size:9px;color:#64748b;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">'+e.lbl+'</div>'
+        + '<div style="font-family:Bebas Neue,sans-serif;font-size:32px;line-height:1;color:'+e.c+'">'+v+'</div>'
+        + '</div>';
+    });
+    html += '</div>';
+  }
+
+  // Baterías en tiempo real
+  html += '<div style="font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#64748b;margin-bottom:10px">BATERÍAS EN TIEMPO REAL</div>';
+  html += '<div id="jdet-bat"></div>';
+
+  // DV4 combos
+  if(jug.dv4 && Object.keys(jug.dv4).length){
+    html += '<div style="font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#64748b;margin:16px 0 10px">ATAQUES POR COMBINACIÓN</div>';
+    html += '<div style="display:flex;flex-wrap:wrap;gap:8px">';
+    Object.keys(jug.dv4).forEach(function(cod){
+      var d = jug.dv4[cod];
+      if(!d.tot) return;
+      var eff = Math.round(d.pt / d.tot * 100);
+      var effCol = eff >= 50 ? '#22c55e' : eff >= 35 ? '#fbbf24' : '#ef4444';
+      html += '<div style="background:rgba(13,14,26,.8);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:8px 12px;min-width:80px;text-align:center">'
+        + '<div style="font-size:10px;font-weight:700;color:#94a3b8;margin-bottom:4px">'+cod+'</div>'
+        + '<div style="font-family:Bebas Neue,sans-serif;font-size:22px;color:'+effCol+'">'+eff+'%</div>'
+        + '<div style="font-size:9px;color:#475569">'+d.tot+' acc</div>'
+        + '</div>';
+    });
+    html += '</div>';
+  }
+
+  // Saques detalle
+  if(jug.sOrig || jug.sDest){
+    html += '<div style="font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#64748b;margin:16px 0 8px">SAQUE</div>';
+    html += '<div style="background:rgba(13,14,26,.8);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px">'
+      + '<div style="display:flex;gap:20px;flex-wrap:wrap">'
+      + (jug.sT ? '<div><div style="font-size:9px;color:#64748b">Total</div><div style="font-family:Bebas Neue,sans-serif;font-size:22px;color:#f59e0b">'+jug.sT+'</div></div>' : '')
+      + (jug.sPunto ? '<div><div style="font-size:9px;color:#64748b">Puntos</div><div style="font-family:Bebas Neue,sans-serif;font-size:22px;color:#22c55e">'+jug.sPunto+'</div></div>' : '')
+      + (jug.sErr ? '<div><div style="font-size:9px;color:#64748b">Errores</div><div style="font-family:Bebas Neue,sans-serif;font-size:22px;color:#ef4444">'+jug.sErr+'</div></div>' : '')
+      + (jug.sPos ? '<div><div style="font-size:9px;color:#64748b">Positivos</div><div style="font-family:Bebas Neue,sans-serif;font-size:22px;color:#86efac">'+jug.sPos+'</div></div>' : '')
+      + '</div></div>';
+  }
+
+  document.getElementById('jdet-content').innerHTML = html;
+
+  // Render baterías
+  setTimeout(function(){
+    if(typeof renderObjetivosJugador === 'function'){
+      var jugNombre = jugInfo ? jugInfo.nombre : nombre;
+      var jv = typeof objCalcVals === 'function' ? objCalcVals(jugNombre) : null;
+      var ev = typeof objCalcVals === 'function' ? objCalcVals(null) : null;
+      renderObjetivosJugador('jdet-bat', jugNombre, jv, ev);
+    }
+  }, 100);
+
+  document.getElementById('jug-det').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeJugDetail(){
+  document.getElementById('jug-det').style.display = 'none';
+  document.body.style.overflow = '';
+}</script>
 </body>
 </html>

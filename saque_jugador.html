@@ -611,6 +611,7 @@ function renderPage(){
   grid.className='canchitas-grid';
   renderPanelSaque(j,0,grid);
   cont.appendChild(grid);
+  renderComparativaSaque(j, cont);
 }
 
 function waitAndInit(tries){
@@ -629,6 +630,72 @@ function waitAndInit(tries){
   }
 }
 waitAndInit(25);
+
+
+
+// ── COMPARATIVA SAQUE VS EQUIPO ────────────────────────────────────────
+function calcTeamSqAvg(){
+  var jugs = typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : [];
+  var tipos = {};
+  jugs.forEach(function(j){
+    (j.saques||[]).forEach(function(s){
+      var tipo = s.tipo || s.cod || 'SM';
+      if(!s.tot) return;
+      if(!tipos[tipo]) tipos[tipo] = {tot:0, pts:0, err:0};
+      tipos[tipo].tot += s.tot  || 0;
+      tipos[tipo].pts += s.pts  || 0;
+      tipos[tipo].err += s.err  || 0;
+    });
+  });
+  var avg = {};
+  Object.keys(tipos).forEach(function(tipo){
+    var d = tipos[tipo];
+    if(d.tot > 0) avg[tipo] = Math.round((d.pts - d.err) / d.tot * 100);
+  });
+  return avg;
+}
+
+function renderComparativaSaque(j, cont){
+  if(!j || !j.saques || !j.saques.length) return;
+  var teamAvg = calcTeamSqAvg();
+  var saques = j.saques.filter(function(s){ return s.tot > 0; });
+  if(!saques.length) return;
+
+  var section = document.createElement('div');
+  section.style.cssText = 'margin-top:20px;padding:16px;background:rgba(13,14,26,.8);border:1px solid rgba(255,255,255,.06);border-radius:12px';
+  section.innerHTML = '<div style="font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#64748b;margin-bottom:14px">COMPARATIVA VS EQUIPO</div>';
+
+  var table = '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-family:Barlow Condensed,sans-serif">'
+    + '<thead><tr>'
+    + ['Tipo','Vos','Equipo','Dif.','Total','Puntos','Errores'].map(function(h,i){
+        var c = i===1?'#F59E0B':'#64748b';
+        return '<th style="padding:6px 8px;font-size:9px;color:'+c+';letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);text-align:'+(i===0?'left':'center')+'">'+h+'</th>';
+      }).join('')
+    + '</tr></thead><tbody>';
+
+  saques.forEach(function(s){
+    var tipo = s.tipo || s.cod || 'SM';
+    var myEff = s.eff !== null && s.eff !== undefined ? s.eff : 0;
+    var teamEff = teamAvg[tipo];
+    var diff = teamEff !== undefined ? myEff - teamEff : null;
+    var diffColor = diff === null ? '#475569' : diff >= 3 ? '#22c55e' : diff >= 0 ? '#86efac' : diff >= -5 ? '#fbbf24' : '#ef4444';
+    var diffStr = diff === null ? '—' : (diff >= 0 ? '+' : '') + diff + '%';
+    var myColor = effColor(myEff);
+
+    table += '<tr style="border-bottom:1px solid rgba(255,255,255,.04)">'
+      + '<td style="padding:8px;font-size:12px;font-weight:700;color:#e2e8f0">'+tipo+'</td>'
+      + '<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:20px;color:'+myColor+'">'+myEff+'%</span></td>'
+      + '<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:20px;color:#475569">'+(teamEff !== undefined ? teamEff+'%' : '—')+'</span></td>'
+      + '<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:20px;color:'+diffColor+'">'+diffStr+'</span></td>'
+      + '<td style="padding:8px;text-align:center;font-size:12px;color:#64748b">'+s.tot+'</td>'
+      + '<td style="padding:8px;text-align:center;font-size:12px;color:#22c55e">'+s.pts+'</td>'
+      + '<td style="padding:8px;text-align:center;font-size:12px;color:#ef4444">'+(s.err||0)+'</td>'
+      + '</tr>';
+  });
+  table += '</tbody></table></div>';
+  section.innerHTML += table;
+  cont.appendChild(section);
+}
 </script>
 </body>
 </html>

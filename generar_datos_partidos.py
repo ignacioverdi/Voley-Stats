@@ -852,6 +852,58 @@ def leer_objetivos_acumulados():
     return jugadores_obj, equipo_obj
 
 # ── Main ──────────────────────────────────────────────────────────────
+def leer_videos(wb):
+    """Lee la solapa VIDEOS del Excel"""
+    if 'VIDEOS' not in wb.sheetnames:
+        return []
+    ws = wb['VIDEOS']
+    videos = []
+    for row in ws.iter_rows(min_row=3, values_only=True):
+        if not row[0]: continue  # skip empty rows
+        num, partido, jugador, tipo, desc, link, fecha, activo = (list(row)+[None]*8)[:8]
+        if not link or 'XXXXX' in str(link): continue  # skip sample rows
+        if str(activo or 'SI').upper() != 'SI': continue  # skip inactive
+        # Extract YouTube ID
+        yt_id = ''
+        if link:
+            import re
+            m = re.search(r'(?:v=|youtu\.be/|shorts/)([\w-]{11})', str(link))
+            if m: yt_id = m.group(1)
+        videos.append({
+            'partido':  str(partido or '').strip(),
+            'jugador':  str(jugador or '').strip(),
+            'tipo':     str(tipo or '').strip().upper(),
+            'desc':     str(desc or '').strip(),
+            'link':     str(link or '').strip(),
+            'yt_id':    yt_id,
+            'fecha':    str(fecha or '').strip(),
+        })
+    print(f"  Videos: {len(videos)} cargados")
+    return videos
+
+
+def leer_feedback(wb):
+    """Lee la solapa FEEDBACK del Excel"""
+    if 'FEEDBACK' not in wb.sheetnames:
+        return []
+    ws = wb['FEEDBACK']
+    feedbacks = []
+    for row in ws.iter_rows(min_row=3, values_only=True):
+        if not row[0]: continue
+        num, partido, jugador, categoria, texto, fecha, activo = (list(row)+[None]*7)[:7]
+        if not texto or len(str(texto).strip()) < 5: continue
+        if str(activo or 'SI').upper() != 'SI': continue
+        feedbacks.append({
+            'partido':   str(partido or '').strip(),
+            'jugador':   str(jugador or '').strip().upper(),
+            'categoria': str(categoria or 'GENERAL').strip().upper(),
+            'texto':     str(texto or '').strip(),
+            'fecha':     str(fecha or '').strip(),
+        })
+    print(f"  Feedbacks: {len(feedbacks)} cargados")
+    return feedbacks
+
+
 def main():
     print("="*50)
     print("CASLA VOLEY — Generar datos_partidos.js")
@@ -976,6 +1028,11 @@ const PARTIDOS_INDIVIDUAL = {json.dumps(partidos_list, ensure_ascii=False, inden
 // Objetivos del equipo acumulado
 const PARTIDOS_EQUIPO_OBJ = {json.dumps(equipo_obj, ensure_ascii=False)};
 """
+    # Add videos and feedback
+    videos = leer_videos(wb)
+    js += f'const PARTIDOS_VIDEOS = {json.dumps(videos, ensure_ascii=False)};\n'
+    feedbacks = leer_feedback(wb)
+    js += f'const PARTIDOS_FEEDBACK = {json.dumps(feedbacks, ensure_ascii=False)};\n'
     with open(OUT,'w',encoding='utf-8') as f: f.write(js)
     print(f"\n✓ datos_partidos.js generado ({len(js)//1024}KB) — subir a GitHub")
 

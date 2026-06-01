@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 <script src="game_plans.js" onerror="void 0"></script>
 <script src="datos_casla.js" onerror="void 0"></script>
+<script src="objetivos_config.js" onerror="void 0"></script>
 <script src="datos_partidos.js" onerror="void 0"></script>
 <script src="datos_entrenamientos.js" onerror="void 0"></script>
 <script>
@@ -14,8 +15,6 @@
 <script src="firebase.js" onerror="void 0"></script>
 <script src="lang.js" onerror="void 0"></script>
 <script src="datos_equipo.js" onerror="window.EQUIPO_DATA=null"></script>
-<script src="datos_recepcion.js" onerror="void 0"></script>
-<script src="datos_armadores.js" onerror="void 0"></script>
 <script src="datos_historial.js" onerror="window.HISTORIAL_DATA=null"><
 /script>
 <script src="datos_gameplan.js" onerror="window.GAMEPLAN_DATA=null"></script>
@@ -317,7 +316,7 @@ function objSingleBat(id,val,meta,cls,objLine){
 
 <div class="page-header">
   <div style="display:flex;align-items:center;gap:8px;">
-    <a href="equipo.html" class="back-btn">← Equipo</a>
+    <a href="dashboard.html" class="back-btn">← Dashboard</a>
     <a href="index.html" class="back-btn">🏠 Hub</a>
   </div>
   <button onclick="cambiarJugador()" style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--mut);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;text-transform:uppercase;">👤 Cambiar</button>
@@ -498,6 +497,16 @@ function renderAccesos(j){
   var ATK_POS = ['PUNTA','OPUESTO','CENTRAL'];
   if(ATK_POS.indexOf((j.pos||'').toUpperCase()) >= 0){
     items.splice(items.length-1, 0, {icon:'💥', title:'Ataque', desc:'Mis ataques por zona', url:'ataque_jugador.html?num='+j.num, color:'#818cf8'});
+  }
+
+  // Add VIDEO card if there are videos for this player
+  if(typeof PARTIDOS_VIDEOS !== 'undefined'){
+    var myVideos = PARTIDOS_VIDEOS.filter(function(v){
+      return v.jugador && v.jugador.toUpperCase() === (j.nombre||'').replace(/^\d+\s*/,'').split(' ')[0].toUpperCase();
+    });
+    if(myVideos.length > 0){
+      items.splice(1, 0, {icon:'🎬', title:'Mis Videos', desc:myVideos.length+' acciones grabadas', url:'videos.html?num='+j.num, color:'#EF4444'});
+    }
   }
 
   grid.innerHTML = items.map(function(a){
@@ -770,6 +779,7 @@ function objRenderBaterias(){
   var jugVals = objGetVals(nombre);
   var eqVals  = objGetVals(null);
   renderObjetivosJugador('objetivos-jugador', nombre, jugVals, eqVals);
+  renderFeedback(jugador);
 }
 
 function renderObjetivosJugador(cid,nombre,extra){
@@ -808,6 +818,52 @@ function renderObjetivosJugador(cid,nombre,extra){
   });
   html+='</div>';
   el.innerHTML=html;
+}
+
+
+
+// ── FEEDBACK ──────────────────────────────────────────────────────────
+function renderFeedback(jugador){
+  var section = document.getElementById('feedback-section');
+  var container = document.getElementById('feedback-cards');
+  if(!section || !container) return;
+  
+  if(typeof PARTIDOS_FEEDBACK === 'undefined') return;
+  
+  var apellido = jugador.nombre.replace(/^\d+\s*/,'').split(' ')[0].toUpperCase();
+  var feedbacks = PARTIDOS_FEEDBACK.filter(function(f){
+    return f.jugador === apellido;
+  });
+  
+  if(!feedbacks.length){ section.style.display='none'; return; }
+  
+  section.style.display='block';
+  
+  var CAT_COLORS = {
+    'ATAQUE':    {c:'#F97316', bg:'rgba(249,115,22,.08)',  border:'rgba(249,115,22,.2)',  icon:'💥'},
+    'SAQUE':     {c:'#F59E0B', bg:'rgba(245,158,11,.08)',  border:'rgba(245,158,11,.2)',  icon:'⚡'},
+    'RECEPCION': {c:'#22C55E', bg:'rgba(34,197,94,.08)',   border:'rgba(34,197,94,.2)',   icon:'🛡'},
+    'BLOQUEO':   {c:'#06B6D4', bg:'rgba(6,182,212,.08)',   border:'rgba(6,182,212,.2)',   icon:'🧱'},
+    'GENERAL':   {c:'#818CF8', bg:'rgba(129,140,248,.08)', border:'rgba(129,140,248,.2)', icon:'⭐'},
+    'MENTAL':    {c:'#EC4899', bg:'rgba(236,72,153,.08)',  border:'rgba(236,72,153,.2)',  icon:'🧠'},
+    'FISICO':    {c:'#8B5CF6', bg:'rgba(139,92,246,.08)',  border:'rgba(139,92,246,.2)',  icon:'💪'},
+  };
+
+  // Sort: most recent first
+  feedbacks.sort(function(a,b){ return (b.fecha||'') > (a.fecha||'') ? 1 : -1; });
+  
+  container.innerHTML = feedbacks.map(function(f){
+    var cat = f.categoria || 'GENERAL';
+    var col = CAT_COLORS[cat] || CAT_COLORS['GENERAL'];
+    return '<div style="background:'+col.bg+';border:1px solid '+col.border+';border-radius:10px;padding:12px 14px">'
+      + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">'
+      + '<span style="font-size:14px">'+col.icon+'</span>'
+      + '<span style="font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:'+col.c+'">'+cat+'</span>'
+      + '<span style="font-size:9px;color:#64748b;margin-left:auto">'+f.partido+' · '+f.fecha+'</span>'
+      + '</div>'
+      + '<div style="font-size:13px;color:#e2e8f0;line-height:1.5;font-family:Barlow Condensed,sans-serif">'+f.texto+'</div>'
+      + '</div>';
+  }).join('');
 }
 
 </script>

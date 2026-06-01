@@ -663,6 +663,7 @@ function renderPage(){
   grid.className='canchitas-grid';
   renderPanelAtaque(j,0,grid);
   cont.appendChild(grid);
+  renderComparativa(j, cont);
 }
 
 function waitAndInit(tries){
@@ -681,6 +682,71 @@ function waitAndInit(tries){
   }
 }
 waitAndInit(25);
+
+
+
+// ── COMPARATIVA JUGADOR VS EQUIPO ─────────────────────────────────────
+function calcTeamAtqAvg(){
+  var jugs = typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : [];
+  var combos = {};
+  jugs.forEach(function(j){
+    (j.ataques||[]).forEach(function(a){
+      if(!a.cod || !a.tot) return;
+      if(!combos[a.cod]) combos[a.cod] = {tot:0, pts:0, err:0, vend:0};
+      combos[a.cod].tot  += a.tot  || 0;
+      combos[a.cod].pts  += a.pts  || 0;
+      combos[a.cod].err  += a.err  || 0;
+      combos[a.cod].vend += a.slash|| 0;
+    });
+  });
+  var avg = {};
+  Object.keys(combos).forEach(function(cod){
+    var d = combos[cod];
+    if(d.tot > 0) avg[cod] = Math.round((d.pts - d.err - d.vend) / d.tot * 100);
+  });
+  return avg;
+}
+
+function renderComparativa(j, cont){
+  if(!j || !j.ataques || !j.ataques.length) return;
+  var teamAvg = calcTeamAtqAvg();
+  var combos = j.ataques.filter(function(a){ return a.tot > 0; });
+  if(!combos.length) return;
+
+  var section = document.createElement('div');
+  section.style.cssText = 'margin-top:20px;padding:16px;background:rgba(13,14,26,.8);border:1px solid rgba(255,255,255,.06);border-radius:12px';
+  section.innerHTML = '<div style="font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#64748b;margin-bottom:14px">COMPARATIVA VS EQUIPO</div>';
+
+  var table = '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-family:Barlow Condensed,sans-serif">'
+    + '<thead><tr>'
+    + '<th style="text-align:left;padding:6px 8px;font-size:9px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06)">Combo</th>'
+    + '<th style="padding:6px 8px;font-size:9px;color:#818cf8;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06)">Vos</th>'
+    + '<th style="padding:6px 8px;font-size:9px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06)">Equipo</th>'
+    + '<th style="padding:6px 8px;font-size:9px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06)">Dif.</th>'
+    + '<th style="padding:6px 8px;font-size:9px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06)">Total</th>'
+    + '</tr></thead><tbody>';
+
+  combos.forEach(function(a){
+    var myEff = a.eff !== null && a.eff !== undefined ? a.eff : Math.round((a.pts - (a.err||0) - (a.slash||0)) / a.tot * 100);
+    var teamEff = teamAvg[a.cod];
+    var diff = teamEff !== undefined ? myEff - teamEff : null;
+    var diffColor = diff === null ? '#475569' : diff >= 5 ? '#22c55e' : diff >= 0 ? '#86efac' : diff >= -8 ? '#fbbf24' : '#ef4444';
+    var diffStr = diff === null ? '—' : (diff >= 0 ? '+' : '') + diff + '%';
+    var myColor = effColor(myEff);
+
+    table += '<tr style="border-bottom:1px solid rgba(255,255,255,.04)">'
+      + '<td style="padding:8px 8px;font-size:12px;font-weight:700;color:#e2e8f0">'+a.cod+'</td>'
+      + '<td style="padding:8px 8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:20px;color:'+myColor+'">'+myEff+'%</span></td>'
+      + '<td style="padding:8px 8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:20px;color:#475569">'+(teamEff !== undefined ? teamEff+'%' : '—')+'</span></td>'
+      + '<td style="padding:8px 8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:20px;color:'+diffColor+'">'+diffStr+'</span></td>'
+      + '<td style="padding:8px 8px;text-align:center;font-size:12px;color:#64748b">'+a.tot+'</td>'
+      + '</tr>';
+  });
+
+  table += '</tbody></table></div>';
+  section.innerHTML += table;
+  cont.appendChild(section);
+}
 </script>
 </body>
 </html>
