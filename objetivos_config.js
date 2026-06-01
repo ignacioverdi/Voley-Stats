@@ -3,17 +3,17 @@
 // Importar en: jugador.html, dashboard.html, historial_voley.html
 
 window.OBJETIVOS_CONFIG={metas:{
-  sq:   {label:'% Saque',   obj:3,  min:-12,max:8,  g2:3,  g1:-3, y:-8},
-  rec:  {label:'% Recep.',  obj:36, min:20, max:44, g2:36, g1:30, y:25},
-  bqpos:{label:'Blq #+',    obj:43, min:25, max:52, g2:43, g1:37, y:30},
-  bqpt: {label:'% Blq #',   obj:23, min:12, max:28, g2:23, g1:20, y:17},
-  atqq: {label:'Atq Central', obj:48, min:35, max:56, g2:48, g1:44, y:40},
-  atqhb:{label:'Atq Alta',    obj:20, min:8,  max:26, g2:20, g1:16, y:12},
-  atqx: {label:'Atq Rápida',     obj:42, min:28, max:50, g2:42, g1:38, y:34},
-  atqrp:{label:'Atq R#+',   obj:50, min:32, max:58, g2:50, g1:44, y:38},
-  atqri:{label:'Atq R!',    obj:36, min:22, max:44, g2:36, g1:32, y:28},
-  atqrm:{label:'Atq R-',    obj:26, min:14, max:34, g2:26, g1:22, y:18},
-  atqtr:{label:'Atq TR',    obj:34, min:22, max:42, g2:34, g1:30, y:26}
+  sq:   {label:'% Saque (3%)',   obj:3,  min:-12,max:8,  g2:3,  g1:-3, y:-8},
+  rec:  {label:'% Recepción (36%)',  obj:36, min:20, max:44, g2:36, g1:30, y:25},
+  bqpos:{label:'% Blq #+ (43%)',    obj:43, min:25, max:52, g2:43, g1:37, y:30},
+  bqpt: {label:'% Blq # (23%)',   obj:23, min:12, max:28, g2:23, g1:20, y:17},
+  atqq: {label:'% Atq Central (48%)', obj:48, min:35, max:56, g2:48, g1:44, y:40},
+  atqhb:{label:'% Atq Alta (20%)',    obj:20, min:8,  max:26, g2:20, g1:16, y:12},
+  atqx: {label:'% Atq Rápida (42%)',     obj:42, min:28, max:50, g2:42, g1:38, y:34},
+  atqrp:{label:'% Atq R #+ (50%)',   obj:50, min:32, max:58, g2:50, g1:44, y:38},
+  atqri:{label:'% Atq R ! (36%)',    obj:36, min:22, max:44, g2:36, g1:32, y:28},
+  atqrm:{label:'% Atq R - (26%)',    obj:26, min:14, max:34, g2:26, g1:22, y:18},
+  atqtr:{label:'% Transición (34%)',    obj:34, min:22, max:42, g2:34, g1:30, y:26}
 }};
 
 window.currentObjPartido = window.currentObjPartido || 'acumulado';
@@ -153,7 +153,12 @@ function renderObjetivos(cid,extra){
       return'<div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#64748b"><div style="width:7px;height:7px;border-radius:50%;background:'+x[0]+'"></div>'+x[1]+'</div>';
     }).join('')+'</div></div>'
     +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px">'
-    +Object.keys(metas).map(function(id){return'<div style="flex:1;min-width:60px;max-width:110px;text-align:center;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b">'+metas[id].label+'</div>';}).join('')
+    +Object.keys(metas).map(function(id){
+      return '<div style="flex:1;min-width:60px;max-width:110px;text-align:center">'
+        +'<div style="font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#e2e8f0;line-height:1.2">'+metas[id].label+'</div>'
+        +'<div style="font-size:9px;color:#64748b;margin-top:2px">obj: '+metas[id].obj+'%</div>'
+        +'</div>';
+    }).join('')
     +'</div><div style="display:flex;gap:8px;width:100%">'
     +Object.keys(metas).map(function(id){
       var m=metas[id],val=vals[id]!==undefined?vals[id]:null;
@@ -201,7 +206,7 @@ function renderObjetivos(cid,extra){
       return'<div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#64748b"><div style="width:7px;height:7px;border-radius:50%;background:'+x[0]+'"></div>'+x[1]+'</div>';
     }).join('')+'</div></div>'
     +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px">'
-    +Object.keys(metas).map(function(id){return'<div style="flex:1;min-width:60px;max-width:110px;text-align:center;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b">'+metas[id].label+'</div>';}).join('')
+    +Object.keys(metas).map(function(id){return'<div style="flex:1;min-width:60px;max-width:110px;text-align:center;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#94a3b8">'+metas[id].label+'</div>';}).join('')
     +'</div><div style="display:flex;gap:8px;width:100%">'
     +Object.keys(metas).map(function(id){
       var m=metas[id],val=vals[id]!==undefined?vals[id]:null;
@@ -226,7 +231,7 @@ function renderObjetivosJugador(cid,nombre,extra){
     }).join('')+'</div></div>'
     +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px">'
     +'<div style="width:64px;flex-shrink:0"></div>'
-    +Object.keys(metas).map(function(id){return'<div style="flex:1;min-width:60px;max-width:110px;text-align:center;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b">'+metas[id].label+'</div>';}).join('')
+    +Object.keys(metas).map(function(id){return'<div style="flex:1;min-width:60px;max-width:110px;text-align:center;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#94a3b8">'+metas[id].label+'</div>';}).join('')
     +'</div>';
   rows.forEach(function(row){
     html+='<div style="display:flex;align-items:center;gap:8px;width:100%;margin-bottom:8px">'
