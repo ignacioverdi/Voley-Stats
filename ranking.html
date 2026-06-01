@@ -11,147 +11,176 @@
 <script src="objetivos_config.js" onerror="void 0"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#07080F;--card:#0D0E1A;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.12);
-  --red:#E8192C;--text:#E2E8F0;--muted:#64748B;--subtle:#475569;}
-html,body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-serif;min-height:100vh}
-.hdr{background:rgba(7,8,15,.97);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+:root{--bg:#07080F;--card:#0D0E1A;--b:rgba(255,255,255,.06);--b2:rgba(255,255,255,.12);
+  --red:#E8192C;--txt:#E2E8F0;--mut:#64748B;}
+html,body{background:var(--bg);color:var(--txt);font-family:'Barlow Condensed',sans-serif;min-height:100vh}
+.hdr{background:rgba(7,8,15,.97);border-bottom:1px solid var(--b);position:sticky;top:0;z-index:100}
 .hdr-top{display:flex;align-items:center;gap:12px;padding:10px 20px}
-.back-btn{padding:5px 14px;border-radius:8px;border:1px solid var(--border2);background:rgba(255,255,255,.04);color:var(--subtle);font-size:10px;font-weight:700;letter-spacing:1px;text-decoration:none;text-transform:uppercase}
+.back-btn{padding:5px 14px;border-radius:8px;border:1px solid var(--b2);background:rgba(255,255,255,.04);color:var(--mut);font-size:10px;font-weight:700;letter-spacing:1px;text-decoration:none;text-transform:uppercase}
 .main{max-width:900px;margin:0 auto;padding:20px 16px}
-.pos-filters{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
-.pos-btn{padding:3px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:#64748b;font-size:9px;font-weight:700;letter-spacing:1px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase}
-.pos-btn.on{background:rgba(255,255,255,.08)}
-.rank-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.rank-card{background:rgba(13,14,26,.8);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px 16px}
-.rank-title{font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px}
-.rank-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;padding:3px 4px;border-radius:6px}
-.rank-row.me{background:rgba(232,25,44,.06)}
-.rank-medal{width:20px;text-align:center;font-size:12px;flex-shrink:0}
-.rank-info{flex:1;min-width:0}
-.rank-name{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px}
-.rank-nm{font-size:11px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rank-val{font-family:'Bebas Neue',sans-serif;font-size:18px;flex-shrink:0;margin-left:4px}
-.rank-bar-bg{height:3px;background:rgba(255,255,255,.04);border-radius:2px;overflow:hidden}
-.rank-bar{height:100%;border-radius:2px}
-.rank-sub{font-size:9px;color:#475569;margin-top:1px}
+.filters{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px}
+.fbtn{padding:3px 12px;border-radius:20px;border:1px solid var(--b);background:transparent;color:var(--mut);font-size:9px;font-weight:700;letter-spacing:1px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;transition:all .15s}
+.fbtn.on{background:rgba(232,25,44,.1);border-color:rgba(232,25,44,.35);color:#e8192c}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:var(--card);border:1px solid var(--b);border-radius:12px;padding:14px 16px}
+.ctitle{font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px}
+.row{display:flex;align-items:center;gap:8px;margin-bottom:7px;padding:3px 5px;border-radius:6px}
+.row.me{background:rgba(232,25,44,.06)}
+.medal{width:20px;text-align:center;font-size:12px;flex-shrink:0}
+.info{flex:1;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+.nm{font-size:11px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.val{font-family:'Bebas Neue',sans-serif;font-size:20px;flex-shrink:0;margin-left:6px}
+.bar-bg{height:3px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden}
+.bar{height:100%;border-radius:2px}
+.sub{font-size:9px;color:var(--mut);margin-top:2px}
 </style>
 </head>
 <body>
 <div class="hdr">
   <div class="hdr-top">
     <a id="back-link" href="dashboard.html" class="back-btn">← Volver</a>
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px">🏆 RANKING DEL EQUIPO</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px">🏆 RANKING</div>
   </div>
 </div>
-<div class="main" id="main">
-  <div style="text-align:center;padding:60px;color:#64748b;font-size:11px;letter-spacing:2px">Cargando...</div>
+<div class="main">
+  <div class="filters" id="filters"></div>
+  <div class="grid" id="grid">
+    <div style="grid-column:span 2;text-align:center;padding:60px;color:var(--mut);font-size:11px;letter-spacing:2px">Cargando...</div>
+  </div>
 </div>
 
 <script>
 var CUR_NUM = 0;
 var CUR_POS = null;
-
-var SKILLS = [
-  {key:'sq',    lbl:'Saque',       icon:'⚡', color:'#F59E0B', obj:3},
-  {key:'rec',   lbl:'Recepción',   icon:'🛡', color:'#22C55E', obj:36},
-  {key:'atqq',  lbl:'Atq Central', icon:'💥', color:'#F97316', obj:48},
-  {key:'bqpos', lbl:'Blq #+',      icon:'🧱', color:'#06B6D4', obj:43},
+var PC = {ARMADOR:'#F59E0B',OPUESTO:'#F97316',PUNTA:'#22C55E',CENTRAL:'#F97316',LIBERO:'#06B6D4'};
+var SK = [
+  {k:'sq',    l:'Saque',      i:'⚡', c:'#F59E0B', o:3},
+  {k:'rec',   l:'Recepción',  i:'🛡', c:'#22C55E', o:36},
+  {k:'bqpos', l:'Blq #+',     i:'🧱', c:'#06B6D4', o:43},
+  {k:'atqq',  l:'Atq Central',i:'💥', c:'#F97316', o:48},
 ];
 
-var POS_COLOR = {ARMADOR:'#F59E0B',OPUESTO:'#F97316',PUNTA:'#22C55E',CENTRAL:'#F97316',LIBERO:'#06B6D4'};
-
 function tryInit(n){
-  if(typeof CASLA_JUGADORES!=='undefined' && typeof objCalcVals!=='undefined'){
+  if(typeof CASLA_JUGADORES !== 'undefined' && typeof objCalcVals !== 'undefined'){
     init();
-  } else if(n>0){
+  } else if(n > 0){
     setTimeout(function(){ tryInit(n-1); }, 300);
   } else {
-    document.getElementById('main').innerHTML = '<div style="text-align:center;padding:60px;color:#ef4444;font-size:11px;letter-spacing:2px">Error cargando datos. Verificar que datos_partidos.js y objetivos_config.js estén en GitHub.</div>';
+    document.getElementById('grid').innerHTML = '<div style="grid-column:span 2;text-align:center;padding:40px;color:#ef4444;font-size:11px;letter-spacing:2px">Error: verificar que objetivos_config.js y datos_partidos.js estén subidos a GitHub.</div>';
   }
 }
 document.fonts.ready.then(function(){ tryInit(30); }).catch(function(){ tryInit(30); });
 
 function init(){
-  var params = new URLSearchParams(window.location.search);
-  CUR_NUM = parseInt(params.get('num')) || 0;
+  var p = new URLSearchParams(window.location.search);
+  CUR_NUM = parseInt(p.get('num')) || 0;
   if(CUR_NUM) document.getElementById('back-link').href = 'jugador.html?num=' + CUR_NUM;
-  renderRanking(null);
+  buildFilters();
+  render();
 }
 
-function buildData(){
-  var casla = typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : [];
-  return casla.filter(function(j){ return j.num; }).map(function(j){
-    var vals = objCalcVals(j.nombre) || {};
+function getData(){
+  var jugs = typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : [];
+  return jugs.filter(function(j){ return j.num; }).map(function(j){
+    var v = objCalcVals(j.nombre) || {};
     return {
       num: j.num,
-      nm:  (j.nombre||'').replace(/^\d+\s*/,''),
-      pos: j.pos||'',
-      col: POS_COLOR[j.pos]||'#64748b',
-      sq:    vals.sq    != null ? vals.sq    : null,
-      rec:   vals.rec   != null ? vals.rec   : null,
-      atqq:  vals.atqq  != null ? vals.atqq  : null,
-      bqpos: vals.bqpos != null ? vals.bqpos : null,
+      nm:  (j.nombre || '').replace(/^\d+\s*/, ''),
+      pos: j.pos || '',
+      col: PC[j.pos] || '#64748b',
+      sq:    v.sq    != null ? v.sq    : null,
+      rec:   v.rec   != null ? v.rec   : null,
+      bqpos: v.bqpos != null ? v.bqpos : null,
+      atqq:  v.atqq  != null ? v.atqq  : null,
     };
   });
 }
 
-function renderRanking(filterPos){
-  CUR_POS = filterPos;
-  var all  = buildData();
-  var data = filterPos ? all.filter(function(j){ return j.pos===filterPos; }) : all;
-
-  // Position filter buttons
+function buildFilters(){
+  var all = getData();
   var positions = [];
-  all.forEach(function(j){ if(j.pos && positions.indexOf(j.pos)<0) positions.push(j.pos); });
+  all.forEach(function(j){ if(j.pos && positions.indexOf(j.pos) < 0) positions.push(j.pos); });
   positions.sort();
 
-  var html = '<div class="pos-filters">';
-  html += '<button class="pos-btn'+(filterPos?'':' on')+'" onclick="renderRanking(null)">Todos</button>';
+  var fEl = document.getElementById('filters');
+  fEl.innerHTML = '';
+
+  function mkBtn(label, pos){
+    var b = document.createElement('button');
+    b.className = 'fbtn' + (CUR_POS === pos ? ' on' : '');
+    b.textContent = label;
+    b.onclick = function(){
+      CUR_POS = pos;
+      document.querySelectorAll('.fbtn').forEach(function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      if(pos !== null && PC[pos]) b.style.cssText = 'color:'+PC[pos]+';border-color:'+PC[pos]+'66;background:'+PC[pos]+'18';
+      render();
+    };
+    return b;
+  }
+
+  fEl.appendChild(mkBtn('Todos', null));
   positions.forEach(function(pos){
-    var isOn = filterPos===pos;
-    var c = POS_COLOR[pos]||'#64748b';
-    var btn = document.createElement('button');
-    // Build via string - safe because pos has no special chars
-    html += '<button class="pos-btn'+(isOn?' on':'')+'" onclick="renderRanking(''+pos+'')" style="'+(isOn?'color:'+c+';':'')+'">'+pos+'</button>';
+    var btn = mkBtn(pos, pos);
+    if(CUR_POS === pos) btn.style.cssText = 'color:'+PC[pos]+';border-color:'+PC[pos]+'66;background:'+PC[pos]+'18';
+    fEl.appendChild(btn);
   });
-  html += '</div>';
+}
 
-  html += '<div class="rank-grid">';
+function render(){
+  var all  = getData();
+  var data = CUR_POS ? all.filter(function(j){ return j.pos === CUR_POS; }) : all;
+  var grid = document.getElementById('grid');
+  grid.innerHTML = '';
 
-  SKILLS.forEach(function(sk){
+  SK.forEach(function(sk){
     var sorted = data
-      .filter(function(j){ return j[sk.key]!==null; })
-      .sort(function(a,b){ return b[sk.key]-a[sk.key]; });
+      .filter(function(j){ return j[sk.k] !== null; })
+      .sort(function(a, b){ return b[sk.k] - a[sk.k]; });
     if(!sorted.length) return;
-    var maxV = Math.max(Math.abs(sorted[0][sk.key]), 1);
 
-    html += '<div class="rank-card">';
-    html += '<div class="rank-title" style="color:'+sk.color+'">'+sk.icon+' '+sk.lbl.toUpperCase()+'</div>';
+    var maxV = Math.max(Math.abs(sorted[0][sk.k]), 1);
+    var card = document.createElement('div');
+    card.className = 'card';
+
+    var title = document.createElement('div');
+    title.className = 'ctitle';
+    title.style.color = sk.c;
+    title.textContent = sk.i + ' ' + sk.l.toUpperCase();
+    card.appendChild(title);
 
     sorted.forEach(function(j, i){
-      var v = j[sk.key];
+      var v     = j[sk.k];
       var medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
-      var barW  = Math.max(3, Math.abs(v)/maxV*100);
-      var isCur = CUR_NUM && j.num===CUR_NUM;
-      var valC  = v>=sk.obj?'#22c55e':v>=(sk.obj-8)?'#fbbf24':'#ef4444';
+      var barW  = Math.max(3, Math.abs(v) / maxV * 100);
+      var isCur = CUR_NUM && j.num === CUR_NUM;
+      var valC  = v >= sk.o ? '#22c55e' : v >= (sk.o - 8) ? '#fbbf24' : '#ef4444';
 
-      html += '<div class="rank-row'+(isCur?' me':'')+'">';
-      html += '<div class="rank-medal">'+(medal||'<span style="font-size:9px;color:#475569">'+(i+1)+'</span>')+'</div>';
-      html += '<div class="rank-info">';
-      html += '<div class="rank-name">';
-      html += '<span class="rank-nm" style="color:'+(isCur?'#e8192c':j.col)+'">'+j.nm+(isCur?' ←':'')+'</span>';
-      html += '<span class="rank-val" style="color:'+valC+'">'+v+'%</span>';
-      html += '</div>';
-      html += '<div class="rank-bar-bg"><div class="rank-bar" style="width:'+barW+'%;background:'+sk.color+'"></div></div>';
-      html += '<div class="rank-sub">obj '+sk.obj+'%</div>';
-      html += '</div></div>';
+      var row = document.createElement('div');
+      row.className = 'row' + (isCur ? ' me' : '');
+
+      var medal_el = document.createElement('div');
+      medal_el.className = 'medal';
+      medal_el.innerHTML = medal || '<span style="font-size:9px;color:#475569">'+(i+1)+'</span>';
+
+      var info = document.createElement('div');
+      info.className = 'info';
+      info.innerHTML =
+        '<div class="top">' +
+          '<span class="nm" style="color:'+(isCur?'#e8192c':j.col)+'">'+j.nm+(isCur?' ←':'')+'</span>' +
+          '<span class="val" style="color:'+valC+'">'+v+'%</span>' +
+        '</div>' +
+        '<div class="bar-bg"><div class="bar" style="width:'+barW+'%;background:'+sk.c+'"></div></div>' +
+        '<div class="sub">objetivo: '+sk.o+'%</div>';
+
+      row.appendChild(medal_el);
+      row.appendChild(info);
+      card.appendChild(row);
     });
 
-    html += '</div>';
+    grid.appendChild(card);
   });
-
-  html += '</div>';
-  document.getElementById('main').innerHTML = html;
 }
 </script>
 </body>
