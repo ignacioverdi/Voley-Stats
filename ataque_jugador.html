@@ -664,6 +664,7 @@ function renderPage(){
   renderPanelAtaque(j,0,grid);
   cont.appendChild(grid);
   renderComparativa(j, cont);
+  renderComparativaPosicion(cont, currentNum, 'ataque');
 }
 
 function waitAndInit(tries){
@@ -747,6 +748,108 @@ function renderComparativa(j, cont){
   section.innerHTML += table;
   cont.appendChild(section);
 }
+
+
+// ── COMPARATIVA VS POSICION ────────────────────────────────────────────
+function getJugadoresPosicion(currentNum){
+  var casla = typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : [];
+  var curInfo = casla.find(function(c){ return c.num === currentNum; });
+  if(!curInfo) return {pos:'', same:[]};
+  var pos = curInfo.pos || '';
+  var same = casla.filter(function(c){ return c.pos === pos && c.num !== currentNum; });
+  return {pos:pos, curInfo:curInfo, same:same};
+}
+
+function effColorCmp(v, type){
+  if(v===null||v===undefined) return '#475569';
+  if(type==='atq') return v>=44?'#22c55e':v>=35?'#86efac':v>=20?'#fbbf24':'#ef4444';
+  if(type==='sq')  return v>=3?'#22c55e':v>=0?'#86efac':v>=-5?'#fbbf24':'#ef4444';
+  return '#e2e8f0';
+}
+
+function renderComparativaPosicion(cont, currentNum, type){
+  // type: 'ataque' or 'saque'
+  var pjugs = typeof PARTIDOS_JUGADORES !== 'undefined' ? PARTIDOS_JUGADORES : 
+              typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : [];
+  if(!pjugs.length) return;
+
+  var pd = getJugadoresPosicion(currentNum);
+  if(!pd.pos || !pd.same.length) return;
+
+  var POS_COLOR = {ARMADOR:'#F59E0B',OPUESTO:'#F97316',PUNTA:'#22C55E',CENTRAL:'#F97316',LIBERO:'#06B6D4'};
+  var posCol = POS_COLOR[pd.pos] || '#64748b';
+
+  // Build rows: current player + same position
+  var allNums = [currentNum].concat(pd.same.map(function(j){return j.num;}));
+  var rows = allNums.map(function(num){
+    var info = [pd.curInfo].concat(pd.same).find(function(j){return j.num===num;});
+    var jugData = pjugs.find(function(j){return j.num===num;});
+    var nm = info ? info.nombre.replace(/^\d+\s*/,'') : '#'+num;
+    var isCur = num === currentNum;
+
+    if(type === 'ataque'){
+      var ataques = jugData ? (jugData.ataques||[]) : [];
+      var conDatos = ataques.filter(function(a){return a.tot>0;});
+      return {num:num, nm:nm, isCur:isCur, data:conDatos};
+    } else {
+      var saques = jugData ? (jugData.saques||[]) : [];
+      var conDatos = saques.filter(function(s){return s.tot>0;});
+      return {num:num, nm:nm, isCur:isCur, data:conDatos};
+    }
+  }).filter(function(r){return r.data.length > 0;});
+
+  if(rows.length < 2) return; // nothing to compare
+
+  // Get all unique combos/tipos
+  var allCodes = [];
+  rows.forEach(function(r){
+    r.data.forEach(function(d){
+      var cod = d.cod || d.tipo || '';
+      if(allCodes.indexOf(cod) < 0) allCodes.push(cod);
+    });
+  });
+
+  var section = document.createElement('div');
+  section.style.cssText = 'margin-top:12px;padding:14px 16px;background:rgba(13,14,26,.8);border:1px solid rgba(255,255,255,.06);border-radius:12px';
+  section.innerHTML = '<div style="font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:'+posCol+';margin-bottom:12px">VS '+pd.pos+'S</div>';
+
+  var table = '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-family:Barlow Condensed,sans-serif">';
+  // Header
+  table += '<thead><tr><th style="padding:6px 8px;font-size:9px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);text-align:left">Jugador</th>';
+  allCodes.forEach(function(cod){
+    table += '<th style="padding:6px 8px;font-size:9px;color:'+(type==='ataque'?'#F97316':'#F59E0B')+';letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);text-align:center">'+cod+'</th>';
+  });
+  if(type==='saque') table += '<th style="padding:6px 8px;font-size:9px;color:#22c55e;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);text-align:center">Pts</th><th style="padding:6px 8px;font-size:9px;color:#ef4444;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);text-align:center">Err</th>';
+  table += '</tr></thead><tbody>';
+
+  // Rows
+  rows.forEach(function(r){
+    var bg = r.isCur ? 'background:rgba(232,25,44,.06);' : '';
+    var nameCol = r.isCur ? '#e8192c' : '#94a3b8';
+    table += '<tr style="border-bottom:1px solid rgba(255,255,255,.04);'+bg+'">';
+    table += '<td style="padding:8px;font-size:12px;font-weight:700;color:'+nameCol+'">'+r.nm+(r.isCur?' ←':'')+'</td>';
+    allCodes.forEach(function(cod){
+      var d = r.data.find(function(x){return (x.cod||x.tipo||'')=== cod;});
+      var v = d ? d.eff : null;
+      var col = effColorCmp(v, type==='ataque'?'atq':'sq');
+      table += '<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:20px;color:'+col+'">'+(v!==null?v+'%':'—')+'</span>';
+      if(d) table += '<div style="font-size:9px;color:#475569">'+d.tot+' acc</div>';
+      table += '</td>';
+    });
+    if(type==='saque'){
+      var totPts = r.data.reduce(function(s,d){return s+(d.pts||0);},0);
+      var totErr = r.data.reduce(function(s,d){return s+(d.err||0);},0);
+      table += '<td style="padding:8px;text-align:center;font-family:Bebas Neue,sans-serif;font-size:18px;color:#22c55e">'+totPts+'</td>';
+      table += '<td style="padding:8px;text-align:center;font-family:Bebas Neue,sans-serif;font-size:18px;color:#ef4444">'+totErr+'</td>';
+    }
+    table += '</tr>';
+  });
+
+  table += '</tbody></table></div>';
+  section.innerHTML += table;
+  cont.appendChild(section);
+}
+
 </script>
 </body>
 </html>

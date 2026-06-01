@@ -242,6 +242,7 @@ window.OBJETIVOS_CONFIG={metas:{
     <button class="stab"    onclick="showEqTab('ataque',this)"   >💥 Ataque</button>
     <button class="stab"    onclick="showEqTab('bloqueo',this)"  >🤚 Bloqueo</button>
     <button class="stab"    onclick="showEqTab('resumen',this)"  >📊 Resumen</button>
+    <button class="stab" onclick="showEqTab('ranking',this)">🏆 Ranking</button>
     <button class="stab"    onclick="showEqTab('dv4',this)"      >🔀 DV4</button>
   </div>
   <!-- Filter bar -->
@@ -503,6 +504,22 @@ function renderEqTab(){
   renderEqStats();
   renderEqContent();
   renderEqObjetivos();
+  if(EQ_TAB==='ranking'){
+    var rData = typeof buildRankingData === 'function' ? buildRankingData() : null;
+    var rCont = document.getElementById('ranking-eq-cont');
+    if(!rCont){
+      var div = document.createElement('div');
+      div.id = 'ranking-eq-cont';
+      div.style.cssText = 'padding:16px 20px';
+      var eqContent = document.getElementById('eq-tab-content');
+      if(eqContent) eqContent.parentNode.insertBefore(div, eqContent.nextSibling);
+      rCont = div;
+    }
+    if(rData && rCont) rCont.innerHTML = renderRankingHTML(rData, 0);
+    else if(rCont) rCont.innerHTML = '';
+    return;
+  }
+  if(document.getElementById('ranking-eq-cont')) document.getElementById('ranking-eq-cont').innerHTML='';
 }
 
 function renderEqStats(){
@@ -915,6 +932,96 @@ function renderGamePlans(){
       +'</div></div>';
     cont.appendChild(card);
   });
+}
+
+
+
+// ── RANKING POR SKILL ─────────────────────────────────────────────────
+function buildRankingData(){
+  var D = window.HISTORIAL_DATA;
+  if(!D) return null;
+  var casla = typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : [];
+  var POS_COLOR = {ARMADOR:'#F59E0B',OPUESTO:'#F97316',PUNTA:'#22C55E',CENTRAL:'#F97316',LIBERO:'#06B6D4'};
+
+  // Aggregate from historial partidos only
+  var acc = {};
+  D.entrenamientos.filter(function(e){return e.tipo==='P';}).forEach(function(s){
+    (s.jugadores||[]).forEach(function(j){
+      if(j.n==='TOTALES EQUIPO') return;
+      if(!acc[j.c]) acc[j.c]={c:j.c,sT:0,sPunto:0,sVend:0,sPos:0,sErr:0,
+        rT:0,rPunto:0,rPos:0,rVend:0,rErr:0,aT:0,aPunto:0,aVend:0,aErr:0,bT:0,bPt:0,bPtPos:0};
+      var a=acc[j.c];
+      ['sT','sPunto','sVend','sPos','sErr','rT','rPunto','rPos','rVend','rErr',
+       'aT','aPunto','aVend','aErr','bT','bPt','bPtPos'].forEach(function(k){a[k]+=(j[k]||0);});
+    });
+  });
+
+  return Object.values(acc).map(function(a){
+    var info = casla.find(function(c){return c.num===a.c;});
+    var nm = info ? info.nombre.replace(/^\d+\s*/,'') : '#'+a.c;
+    var pos = info ? info.pos : '';
+    return {
+      num:a.c, nm:nm, pos:pos, col:POS_COLOR[pos]||'#64748b',
+      aEff: a.aT>=5 ? Math.round((a.aPunto-a.aVend-a.aErr)/a.aT*100) : null,
+      sEff: a.sT>=5 ? Math.round((a.sPunto+.5*a.sVend+.25*a.sPos-a.sErr)/a.sT*100) : null,
+      rEff: a.rT>=5 ? Math.round((a.rPunto+.5*a.rPos-.5*a.rVend-a.rErr)/a.rT*100) : null,
+      bEff: a.bT>=3 ? Math.round((a.bPt+a.bPtPos)/a.bT*100) : null,
+      aT:a.aT, sT:a.sT, rT:a.rT, bT:a.bT, sP:a.sPunto, bP:a.bPt
+    };
+  });
+}
+
+function renderRankingHTML(data, highlightNum){
+  if(!data||!data.length) return '<div style="text-align:center;padding:40px;color:#64748b;font-size:11px;letter-spacing:2px">Sin datos de historial</div>';
+
+  var skills = [
+    {key:'aEff',lbl:'Ataque',   icon:'💥',color:'#F97316',totKey:'aT', subKey:'aT',  subLbl:'ataques',  obj:44},
+    {key:'sEff',lbl:'Saque',    icon:'⚡',color:'#F59E0B',totKey:'sT', subKey:'sP',  subLbl:'pts directos',obj:3},
+    {key:'rEff',lbl:'Recepción',icon:'🛡',color:'#22C55E',totKey:'rT', subKey:'rT',  subLbl:'recepciones',obj:36},
+    {key:'bEff',lbl:'Bloqueo',  icon:'🧱',color:'#06B6D4',totKey:'bT', subKey:'bP',  subLbl:'blq punto', obj:23},
+  ];
+
+  var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">';
+
+  skills.forEach(function(sk){
+    var sorted = data.filter(function(j){return j[sk.key]!==null&&j[sk.totKey]>0;})
+      .sort(function(a,b){return b[sk.key]-a[sk.key];});
+    if(!sorted.length) return;
+
+    var maxV = Math.abs(sorted[0][sk.key])||1;
+
+    html += '<div style="background:rgba(13,14,26,.8);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px 16px">';
+    html += '<div style="font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:'+sk.color+';margin-bottom:12px">'+sk.icon+' RANKING '+sk.lbl.toUpperCase()+'</div>';
+
+    sorted.forEach(function(j, i){
+      var v = j[sk.key];
+      var sub = j[sk.subKey];
+      var medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+      var barW = Math.max(3, Math.abs(v)/maxV*100);
+      var isCur = highlightNum && j.num===highlightNum;
+      var bg = isCur?'background:rgba(232,25,44,.06);border-radius:6px;':'';
+      var nameCol = isCur?'#e8192c':j.col;
+      var valCol = v>=sk.obj?'#22c55e':v>=(sk.obj-8)?'#fbbf24':'#ef4444';
+
+      html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;padding:4px 6px;'+bg+'">';
+      html += '<div style="width:22px;text-align:center;font-size:13px;flex-shrink:0">'+(medal||'<span style="font-size:10px;color:#475569">'+(i+1)+'</span>')+'</div>';
+      html += '<div style="flex:1;min-width:0">';
+      html += '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px">';
+      html += '<span style="font-size:11px;font-weight:700;color:'+nameCol+';overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+j.nm+(isCur?' ←':'')+'</span>';
+      html += '<span style="font-family:Bebas Neue,sans-serif;font-size:20px;color:'+valCol+';flex-shrink:0;margin-left:6px">'+v+'%</span>';
+      html += '</div>';
+      html += '<div style="height:3px;background:rgba(255,255,255,.04);border-radius:2px;overflow:hidden">';
+      html += '<div style="height:100%;width:'+barW+'%;background:'+sk.color+';border-radius:2px"></div>';
+      html += '</div>';
+      html += '<div style="font-size:9px;color:#475569;margin-top:2px">'+sub+' '+sk.subLbl+' · obj '+sk.obj+'%</div>';
+      html += '</div></div>';
+    });
+
+    html += '</div>';
+  });
+
+  html += '</div>';
+  return html;
 }
 
 </script>

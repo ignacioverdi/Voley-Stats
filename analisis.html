@@ -195,7 +195,8 @@ window.OBJETIVOS_CONFIG={metas:{
 <body>
 
 <div class="header">
-  <div style="display:flex;align-items:center;gap:14px;">
+  <a href="dashboard.html" class="back-btn" style="text-decoration:none;padding:5px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#475569;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-right:8px">← Dashboard</a>
+<div style="display:flex;align-items:center;gap:14px;">
     <a href="index.html" class="back-btn">← Inicio</a>
     <div>
       <div class="title">📊 Análisis de Partidos</div>
@@ -226,6 +227,8 @@ window.OBJETIVOS_CONFIG={metas:{
     <button class="tab-btn" onclick="setTab('ataque',this)">💥 ATAQUE</button>
     <button class="tab-btn" onclick="setTab('bloqueo',this)">🧱 BLOQUEO</button>
     <button class="tab-btn" onclick="setTab('resumen',this)">📋 RESUMEN</button>
+    <button class="tab-btn" onclick="setTab('comparativa',this)">📊 COMPARATIVA</button>
+    <button class="tab-btn" onclick="setTab('ranking',this)">🏆 RANKING</button>
   </div>
   <div id="contenido">
     <div class="empty"><div class="empty-icon">👆</div><div class="empty-txt">Elegí un partido arriba</div></div>
@@ -398,6 +401,8 @@ function renderTab(tab){
   else if(tab==='ataque') cont.innerHTML=tablaAtaque(jugs);
   else if(tab==='bloqueo') cont.innerHTML=tablaBloqueo(jugs);
   else if(tab==='resumen') cont.innerHTML=tablaResumen(jugs);
+  else if(tab==='comparativa') cont.innerHTML=tablaComparativa(jugs);
+  else if(tab==='ranking') cont.innerHTML=tablaRanking(jugs);
 }
 
 function getJugadores(idx){
@@ -1206,6 +1211,205 @@ function canchaDrawSaque(ctx,origZone,destinos,pct){
 }
 
 
+
+
+
+// ── COMPARATIVA POR POSICION ──────────────────────────────────────────
+function getPosJugadores(){
+  // Returns {PUNTA:[...], CENTRAL:[...], OPUESTO:[...], ARMADOR:[...], LIBERO:[...]}
+  var jugs = getJugadores(PARTIDO_IDX);
+  var byPos = {};
+  var casla = typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : [];
+  jugs.forEach(function(j){
+    var info = casla.find(function(c){ return c.num === j.c; });
+    var pos = info ? info.pos : 'OTRO';
+    if(!byPos[pos]) byPos[pos] = [];
+    byPos[pos].push(Object.assign({}, j, {pos: pos}));
+  });
+  return byPos;
+}
+
+function mkThead(cols){
+  return '<thead><tr>' + cols.map(function(c){
+    return '<th style="padding:8px;font-size:9px;color:'+(c.c||'#64748b')+';letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);text-align:'+(c.left?'left':'center')+'">'+c.l+'</th>';
+  }).join('') + '</tr></thead>';
+}
+
+function mkRow(jug, cols, highlight){
+  var casla = typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : [];
+  var info = casla.find(function(c){ return c.num === jug.c; });
+  var nm = info ? info.nombre.replace(/^\d+\s*/,'') : jug.n;
+  var POS_COLOR = {ARMADOR:'#F59E0B',OPUESTO:'#F97316',PUNTA:'#22C55E',CENTRAL:'#F97316',LIBERO:'#06B6D4'};
+  var posCol = POS_COLOR[jug.pos] || '#64748b';
+  var bg = highlight ? 'background:rgba(232,25,44,.06);' : '';
+  return '<tr style="border-bottom:1px solid rgba(255,255,255,.04);'+bg+'">'
+    + '<td style="padding:8px;font-size:12px;font-weight:700;color:#e2e8f0"><span style="color:'+posCol+';margin-right:6px">#'+jug.c+'</span>'+nm+'</td>'
+    + cols.slice(1).map(function(c){
+        var v = c.fn ? c.fn(jug) : (jug[c.k] !== undefined ? jug[c.k] : '—');
+        var color = c.color ? c.color(v, jug) : '#e2e8f0';
+        if(v === null || v === undefined) v = '—';
+        return '<td style="padding:8px;text-align:center;font-family:Bebas Neue,sans-serif;font-size:18px;color:'+color+'">'+v+'</td>';
+      }).join('')
+    + '</tr>';
+}
+
+function posSection(title, color, jugs, cols){
+  if(!jugs || !jugs.length) return '';
+  var sorted = jugs.slice().sort(function(a,b){
+    var vA = cols[1].fn ? cols[1].fn(a) : (a[cols[1].k]||0);
+    var vB = cols[1].fn ? cols[1].fn(b) : (b[cols[1].k]||0);
+    return (vB||0) - (vA||0);
+  });
+  var h = '<div style="margin-bottom:20px">';
+  h += '<div style="font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:'+color+';margin-bottom:8px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06)">'+title+'</div>';
+  h += '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-family:Barlow Condensed,sans-serif">';
+  h += mkThead(cols);
+  h += '<tbody>';
+  sorted.forEach(function(j, i){ h += mkRow(j, cols, false); });
+  h += '</tbody></table></div></div>';
+  return h;
+}
+
+function tablaComparativa(jugs){
+  var byPos = getPosJugadores();
+  var effC = function(v){ return v===null||v==='—'?'#475569':v>=40?'#22c55e':v>=20?'#86efac':v>=-5?'#fbbf24':'#ef4444'; };
+  var effCS = function(v){ return v===null||v==='—'?'#475569':v>=3?'#22c55e':v>=0?'#86efac':v>=-5?'#fbbf24':'#ef4444'; };
+  var effCR = function(v){ return v===null||v==='—'?'#475569':v>=36?'#22c55e':v>=28?'#86efac':v>=20?'#fbbf24':'#ef4444'; };
+
+  var POS_COLORS = {PUNTA:'#22C55E',CENTRAL:'#F97316',OPUESTO:'#F97316',ARMADOR:'#F59E0B',LIBERO:'#06B6D4'};
+  var POS_ORDER = ['PUNTA','OPUESTO','CENTRAL','ARMADOR','LIBERO'];
+
+  var aCol = [
+    {l:'Jugador',left:true},{k:'aEff',l:'EFF Ataque',c:'#F97316',color:effC},
+    {k:'aT',l:'Total',color:function(v){return '#94a3b8';}},
+    {k:'aPunto',l:'Puntos',color:function(v){return '#22c55e';}},
+    {k:'aVend',l:'Bloq.',color:function(v){return '#ef4444';}},
+    {k:'aErr',l:'Errores',color:function(v){return '#ef4444';}},
+  ];
+  var sCol = [
+    {l:'Jugador',left:true},{k:'sEff',l:'EFF Saque',c:'#F59E0B',color:effCS},
+    {k:'sT',l:'Total',color:function(v){return '#94a3b8';}},
+    {k:'sPunto',l:'Puntos',color:function(v){return '#22c55e';}},
+    {k:'sErr',l:'Errores',color:function(v){return '#ef4444';}},
+  ];
+  var rCol = [
+    {l:'Jugador',left:true},{k:'rEff',l:'EFF Recep.',c:'#22C55E',color:effCR},
+    {k:'rT',l:'Total',color:function(v){return '#94a3b8';}},
+    {k:'rPunto',l:'Perfecto',color:function(v){return '#22c55e';}},
+    {k:'rErr',l:'Errores',color:function(v){return '#ef4444';}},
+  ];
+
+  var h = '<div style="padding:4px 0">';
+
+  // ATAQUE section
+  h += '<div style="font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#F97316;margin-bottom:12px;margin-top:4px">💥 ATAQUE POR POSICIÓN</div>';
+  POS_ORDER.forEach(function(pos){
+    var pg = byPos[pos];
+    if(!pg||!pg.length) return;
+    var pgAtq = pg.filter(function(j){return j.aT>0;});
+    if(!pgAtq.length) return;
+    h += posSection(pos, POS_COLORS[pos]||'#64748b', pgAtq, aCol);
+  });
+
+  // SAQUE section
+  h += '<div style="font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#F59E0B;margin-bottom:12px;margin-top:20px">⚡ SAQUE POR POSICIÓN</div>';
+  POS_ORDER.forEach(function(pos){
+    var pg = byPos[pos];
+    if(!pg||!pg.length) return;
+    var pgSq = pg.filter(function(j){return j.sT>0;});
+    if(!pgSq.length) return;
+    h += posSection(pos, POS_COLORS[pos]||'#64748b', pgSq, sCol);
+  });
+
+  // RECEPCION section (liberos + puntas)
+  h += '<div style="font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#22C55E;margin-bottom:12px;margin-top:20px">🛡 RECEPCIÓN POR POSICIÓN</div>';
+  ['LIBERO','PUNTA','OPUESTO'].forEach(function(pos){
+    var pg = byPos[pos];
+    if(!pg||!pg.length) return;
+    var pgRec = pg.filter(function(j){return j.rT>0;});
+    if(!pgRec.length) return;
+    h += posSection(pos, POS_COLORS[pos]||'#64748b', pgRec, rCol);
+  });
+
+  h += '</div>';
+  return h;
+}
+
+// ── RANKINGS ──────────────────────────────────────────────────────────
+function tablaRanking(jugs){
+  var casla = typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : [];
+  var POS_COLOR = {ARMADOR:'#F59E0B',OPUESTO:'#F97316',PUNTA:'#22C55E',CENTRAL:'#F97316',LIBERO:'#06B6D4'};
+
+  function rankSection(title, icon, color, jugsFilt, valFn, label, subFn, subLabel){
+    var sorted = jugsFilt.filter(function(j){ var v=valFn(j); return v!==null&&v!==undefined&&!isNaN(v); })
+      .sort(function(a,b){ return valFn(b)-valFn(a); });
+    if(!sorted.length) return '';
+    var h = '<div style="background:rgba(13,14,26,.8);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px 16px;margin-bottom:12px">';
+    h += '<div style="font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:'+color+';margin-bottom:12px">'+icon+' '+title+'</div>';
+    sorted.forEach(function(j, i){
+      var info = casla.find(function(c){ return c.num===j.c; });
+      var nm = info ? info.nombre.replace(/^\d+\s*/,'') : j.n;
+      var pos = info ? info.pos : '';
+      var posCol = POS_COLOR[pos]||'#64748b';
+      var val = valFn(j);
+      var sub = subFn ? subFn(j) : null;
+      var medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+      var barW = Math.max(5, Math.min(100, Math.abs(val)/Math.abs(valFn(sorted[0]))*100));
+      h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">';
+      h += '<div style="width:24px;text-align:center;font-size:14px">'+(medal||'<span style="font-size:11px;color:#475569">'+(i+1)+'</span>')+'</div>';
+      h += '<div style="flex:1">';
+      h += '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px">';
+      h += '<span style="font-size:12px;font-weight:700;color:#e2e8f0"><span style="color:'+posCol+';margin-right:4px">#'+j.c+'</span>'+nm+'</span>';
+      h += '<span style="font-family:Bebas Neue,sans-serif;font-size:20px;color:'+color+'">'+val+'<span style="font-size:12px">'+label+'</span></span>';
+      h += '</div>';
+      h += '<div style="height:4px;background:rgba(255,255,255,.04);border-radius:2px;overflow:hidden">';
+      h += '<div style="height:100%;width:'+barW+'%;background:'+color+';border-radius:2px;transition:width .3s"></div>';
+      h += '</div>';
+      if(sub!==null) h += '<div style="font-size:9px;color:#475569;margin-top:2px">'+subLabel+': '+sub+'</div>';
+      h += '</div></div>';
+    });
+    h += '</div>';
+    return h;
+  }
+
+  var h = '<div style="padding:4px 0">';
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">';
+
+  // Ataque
+  var atqJugs = jugs.filter(function(j){return j.aT>=5;});
+  h += '<div>';
+  h += rankSection('Ranking Ataque','💥','#F97316',atqJugs,
+    function(j){return j.aEff||0;},'%',
+    function(j){return j.aT;},'Total ataques');
+  h += '</div>';
+
+  // Saque
+  var sqJugs = jugs.filter(function(j){return j.sT>=5;});
+  h += '<div>';
+  h += rankSection('Ranking Saque','⚡','#F59E0B',sqJugs,
+    function(j){return j.sEff||0;},'%',
+    function(j){return j.sPunto;},'Puntos directos');
+  h += '</div>';
+
+  // Recepcion
+  var recJugs = jugs.filter(function(j){return j.rT>=5;});
+  h += '<div>';
+  h += rankSection('Ranking Recepción','🛡','#22C55E',recJugs,
+    function(j){return j.rEff||0;},'%',
+    function(j){return j.rT;},'Recepciones');
+  h += '</div>';
+
+  // Bloqueo
+  var blqJugs = jugs.filter(function(j){return j.bT>=3;});
+  h += '<div>';
+  h += rankSection('Ranking Bloqueo','🧱','#06B6D4',blqJugs,
+    function(j){return j.bT>0?Math.round((j.bPt+j.bPtPos)/j.bT*100):0;},'%',
+    function(j){return j.bPt;},'Bloqueos punto');
+  h += '</div>';
+
+  h += '</div></div>';
+  return h;
+}
 
 </script>
 </body>
