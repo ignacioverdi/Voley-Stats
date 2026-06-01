@@ -514,10 +514,10 @@ function renderEqStats(){
   var rEff=rT>0?Math.round((rPunto+0.5*rPos-0.5*rVend-rErr)/rT*100):null;
   var aEff=aT>0?Math.round((aPunto-aVend-aErr)/aT*100):null;
   // Build 4 rectangles
-  var sEff_str  = sEff!==null ? fmt(sEff)+'%' : '—';
-  var aEff_str  = aEff!==null ? fmt(aEff)+'%' : '—';
-  var rEff_str  = rEff!==null ? fmt(rEff)+'%' : '—';
-  var bEff_str  = bT>0 ? fmt(Math.round((bPt+bPtPos)/bT*100))+'%' : '—';
+  var sEff_str  = sEff!==null ? fmt(sEff) : '—';
+  var aEff_str  = aEff!==null ? fmt(aEff) : '—';
+  var rEff_str  = rEff!==null ? fmt(rEff) : '—';
+  var bEff_str  = bT>0 ? fmt(Math.round((bPt+bPtPos)/bT*100)) : '—';
   var rPos_str  = rT>0 ? fmt(Math.round((rPunto+rPos)/rT*100))+'%' : '—';
   var rNeg_str  = rT>0 ? fmt(Math.round((rVend+rErr)/rT*100))+'%' : '—';
 
