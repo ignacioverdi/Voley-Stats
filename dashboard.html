@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Dashboard Entrenador — CASLA Voley</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-<script src="datos_equipo.js"     onerror="void 0"></script>
-<script src="datos_recepcion.js" onerror="void 0"></script>
-<script src="datos_armadores.js" onerror="void 0"></script>
 <script src="datos_historial.js"  onerror="void 0"></script>
 <script src="objetivos_config.js" onerror="void 0"></script>
 <script src="datos_partidos.js" onerror="void 0"></script>
@@ -1024,6 +1021,48 @@ function renderRankingHTML(data, highlightNum){
 
   html += '</div>';
   return html;
+}
+
+
+
+// ── NOVEDADES / ÚLTIMA ACTUALIZACIÓN ─────────────────────────────────
+function renderNovedades(){
+  var cont = document.getElementById('novedades-cont');
+  if(!cont) return;
+  
+  var items = [];
+  
+  // Last datos_partidos update
+  if(typeof PARTIDOS_GENERADO !== 'undefined'){
+    items.push({
+      icon: '🏆',
+      txt:  'Partidos actualizados: ' + PARTIDOS_GENERADO,
+      color: '#E8192C'
+    });
+  }
+  if(typeof PARTIDOS_TOTAL !== 'undefined'){
+    items.push({
+      icon: '📊',
+      txt:  PARTIDOS_TOTAL + ' partidos cargados',
+      color: '#818CF8'
+    });
+  }
+  if(typeof ENTRENAMIENTOS_GENERADO !== 'undefined'){
+    items.push({
+      icon: '🏋️',
+      txt:  'Entrenamientos actualizados: ' + ENTRENAMIENTOS_GENERADO,
+      color: '#22C55E'
+    });
+  }
+  
+  if(!items.length){ cont.style.display='none'; return; }
+  
+  cont.innerHTML = items.map(function(it){
+    return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04)">'
+      + '<span style="font-size:14px">'+it.icon+'</span>'
+      + '<span style="font-size:11px;color:#94a3b8">'+it.txt+'</span>'
+      + '</div>';
+  }).join('');
 }
 
 </script>
