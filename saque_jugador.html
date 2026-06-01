@@ -717,9 +717,17 @@ function effColorCmp(v, type){
 }
 
 function renderComparativaPosicion(cont, currentNum, type){
-  // type: 'ataque' or 'saque'
-  var pjugs = typeof PARTIDOS_JUGADORES !== 'undefined' ? PARTIDOS_JUGADORES : 
-              typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : [];
+  // Use per-partido data if a partido is selected
+  var pjugs = [];
+  if(typeof currentPartido !== 'undefined' && currentPartido !== 'acumulado' &&
+     typeof PARTIDOS_INDIVIDUAL !== 'undefined'){
+    var pd = PARTIDOS_INDIVIDUAL.find(function(p){ return p.nombre === currentPartido; });
+    if(pd && pd.jugadores) pjugs = pd.jugadores;
+  }
+  if(!pjugs.length){
+    pjugs = typeof PARTIDOS_JUGADORES !== 'undefined' ? PARTIDOS_JUGADORES :
+            typeof CASLA_JUGADORES    !== 'undefined' ? CASLA_JUGADORES : [];
+  }
   if(!pjugs.length) return;
 
   var pd = getJugadoresPosicion(currentNum);

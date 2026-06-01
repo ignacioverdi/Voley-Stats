@@ -33,8 +33,14 @@ html,body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',
 <script>
 var CUR_NUM = 0;
 function tryInit(n){
-  if(typeof CASLA_JUGADORES!=='undefined'&&typeof objCalcVals!=='undefined'){ init(); }
-  else if(n>0) setTimeout(function(){tryInit(n-1);},200);
+  var ready = typeof CASLA_JUGADORES!=='undefined' && typeof objCalcVals!=='undefined';
+  if(ready){ init(); }
+  else if(n>0){ setTimeout(function(){tryInit(n-1);},300); }
+  else {
+    // Fallback - try anyway
+    if(typeof CASLA_JUGADORES!=='undefined') init();
+    else document.getElementById('main').innerHTML='<div style="text-align:center;padding:60px;color:#64748b;font-size:11px;letter-spacing:2px">Sin datos — verificar que datos_partidos.js esté subido a GitHub</div>';
+  }
 }
 document.fonts.ready.then(function(){tryInit(25);}).catch(function(){tryInit(25);});
 function init(){
