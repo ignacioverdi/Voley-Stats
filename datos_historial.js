@@ -1,5 +1,5 @@
 window.HISTORIAL_DATA = {
-  "generado": "30/5/2026, 02:50:49",
+  "generado": "1/6/2026, 02:22:45",
   "entrenamientos": [
   {
     "fecha": "01/05/2026",
@@ -6333,6 +6333,1446 @@ window.HISTORIAL_DATA = {
           }
         },
         "bEff": 68
+      }
+    ]
+  },
+  {
+    "fecha": "30/05/2026",
+    "tipo": "P",
+    "rival": "LOMAS",
+    "resultado": {
+      "casla": 3,
+      "rival": 2,
+      "sets": [
+        "17-25",
+        "25-16",
+        "25-23",
+        "20-25",
+        "15-10"
+      ]
+    },
+    "jugadores": [
+      {
+        "c": 2,
+        "n": "OJUEZ",
+        "sT": 7,
+        "sEff": 21,
+        "sPunto": 2,
+        "sPos": 2,
+        "sVend": 0,
+        "sAdm": 0,
+        "sNeg": 2,
+        "sErr": 1,
+        "sOrig": "1",
+        "sDest": "6",
+        "rT": 1,
+        "rEff": 50,
+        "rPunto": 0,
+        "rPos": 1,
+        "rAdm": 0,
+        "rNeg": 0,
+        "rVend": 0,
+        "rErr": 0,
+        "aT": 9,
+        "aEff": 78,
+        "aPunto": 8,
+        "aPos": 0,
+        "aAdm": 0,
+        "aNeg": 0,
+        "aVend": 1,
+        "aErr": 0,
+        "aTCQ": 0,
+        "aEffAlta": 0,
+        "bT": 6,
+        "bPt": 2,
+        "bPtPos": 1,
+        "dv4": {
+          "X1": {
+            "tot": 6,
+            "pt": 5,
+            "err": 0,
+            "orig": 3,
+            "dest": "6",
+            "destCounts": {
+              "3": 1,
+              "5": 4,
+              "6": 1
+            }
+          },
+          "XM": {
+            "tot": 2,
+            "pt": 2,
+            "err": 0,
+            "orig": 3,
+            "dest": "1",
+            "destCounts": {
+              "1": 1,
+              "6": 1
+            }
+          },
+          "X2": {
+            "tot": 1,
+            "pt": 1,
+            "err": 0,
+            "orig": 2,
+            "dest": "1",
+            "destCounts": {
+              "1": 1
+            }
+          }
+        },
+        "_sdir_full": {
+          "1": {
+            "6": {
+              "tot": 4,
+              "pt": 2,
+              "pos": 0,
+              "neg": 1,
+              "err": 1
+            }
+          },
+          "6": {
+            "1": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 0,
+              "neg": 1,
+              "err": 0
+            },
+            "6": {
+              "tot": 2,
+              "pt": 0,
+              "pos": 2,
+              "neg": 0,
+              "err": 0
+            }
+          }
+        },
+        "_rdir": {
+          "5": {
+            "tot": 1,
+            "pt": 0,
+            "pos": 1,
+            "neg": 0,
+            "err": 0
+          }
+        },
+        "bEff": 50
+      },
+      {
+        "c": 4,
+        "n": "VAZQUEZ",
+        "sT": 22,
+        "sEff": 14,
+        "sPunto": 3,
+        "sPos": 4,
+        "sVend": 0,
+        "sAdm": 0,
+        "sNeg": 14,
+        "sErr": 1,
+        "sOrig": "1",
+        "sDest": "6",
+        "rT": 1,
+        "rEff": 0,
+        "rPunto": 0,
+        "rPos": 0,
+        "rAdm": 0,
+        "rNeg": 1,
+        "rVend": 0,
+        "rErr": 0,
+        "aT": 3,
+        "aEff": 0,
+        "aPunto": 0,
+        "aPos": 0,
+        "aAdm": 0,
+        "aNeg": 3,
+        "aVend": 0,
+        "aErr": 0,
+        "aTCQ": 0,
+        "aEffAlta": 0,
+        "bT": 4,
+        "bPt": 0,
+        "bPtPos": 2,
+        "dv4": {
+          "P2": {
+            "tot": 2,
+            "pt": 0,
+            "err": 0,
+            "orig": 3,
+            "dest": "4",
+            "destCounts": {
+              "4": 2
+            }
+          },
+          "V6": {
+            "tot": 1,
+            "pt": 0,
+            "err": 0,
+            "orig": 2,
+            "dest": "5",
+            "destCounts": {
+              "5": 1
+            }
+          }
+        },
+        "_sdir_full": {
+          "1": {
+            "1": {
+              "tot": 5,
+              "pt": 1,
+              "pos": 1,
+              "neg": 3,
+              "err": 0
+            },
+            "5": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 0,
+              "neg": 1,
+              "err": 0
+            },
+            "6": {
+              "tot": 7,
+              "pt": 0,
+              "pos": 0,
+              "neg": 6,
+              "err": 1
+            }
+          },
+          "5": {
+            "1": {
+              "tot": 4,
+              "pt": 1,
+              "pos": 1,
+              "neg": 2,
+              "err": 0
+            },
+            "5": {
+              "tot": 1,
+              "pt": 1,
+              "pos": 0,
+              "neg": 0,
+              "err": 0
+            },
+            "6": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 0,
+              "neg": 1,
+              "err": 0
+            }
+          },
+          "6": {
+            "6": {
+              "tot": 3,
+              "pt": 0,
+              "pos": 2,
+              "neg": 1,
+              "err": 0
+            }
+          }
+        },
+        "_rdir": {
+          "5": {
+            "tot": 1,
+            "pt": 0,
+            "pos": 0,
+            "neg": 1,
+            "err": 0
+          }
+        },
+        "bEff": 50
+      },
+      {
+        "c": 5,
+        "n": "RAMOS",
+        "sT": 10,
+        "sEff": -20,
+        "sPunto": 1,
+        "sPos": 2,
+        "sVend": 1,
+        "sAdm": 0,
+        "sNeg": 2,
+        "sErr": 4,
+        "sOrig": "1",
+        "sDest": "5",
+        "rT": 0,
+        "rEff": 0,
+        "rPunto": 0,
+        "rPos": 0,
+        "rAdm": 0,
+        "rNeg": 0,
+        "rVend": 0,
+        "rErr": 0,
+        "aT": 29,
+        "aEff": 41,
+        "aPunto": 16,
+        "aPos": 1,
+        "aAdm": 0,
+        "aNeg": 8,
+        "aVend": 4,
+        "aErr": 0,
+        "aTCQ": 0,
+        "aEffAlta": 0,
+        "bT": 9,
+        "bPt": 3,
+        "bPtPos": 4,
+        "dv4": {
+          "V6": {
+            "tot": 11,
+            "pt": 7,
+            "err": 0,
+            "orig": 2,
+            "dest": "6",
+            "destCounts": {
+              "1": 1,
+              "2": 1,
+              "4": 4,
+              "6": 5
+            }
+          },
+          "PR": {
+            "tot": 1,
+            "pt": 1,
+            "err": 0,
+            "orig": 0,
+            "dest": "",
+            "destCounts": {}
+          },
+          "X8": {
+            "tot": 3,
+            "pt": 1,
+            "err": 0,
+            "orig": 9,
+            "dest": "4",
+            "destCounts": {
+              "4": 2,
+              "5": 1
+            }
+          },
+          "X6": {
+            "tot": 11,
+            "pt": 4,
+            "err": 0,
+            "orig": 2,
+            "dest": "6",
+            "destCounts": {
+              "2": 1,
+              "4": 6,
+              "6": 4
+            }
+          },
+          "V8": {
+            "tot": 3,
+            "pt": 3,
+            "err": 0,
+            "orig": 9,
+            "dest": "4",
+            "destCounts": {
+              "4": 1,
+              "5": 1,
+              "6": 1
+            }
+          }
+        },
+        "_sdir_full": {
+          "1": {
+            "1": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 0,
+              "neg": 1,
+              "err": 0
+            },
+            "5": {
+              "tot": 6,
+              "pt": 1,
+              "pos": 1,
+              "neg": 2,
+              "err": 2
+            },
+            "6": {
+              "tot": 3,
+              "pt": 0,
+              "pos": 1,
+              "neg": 0,
+              "err": 2
+            }
+          }
+        },
+        "_rdir": {},
+        "bEff": 78
+      },
+      {
+        "c": 6,
+        "n": "VILLARRUEL",
+        "sT": 1,
+        "sEff": 0,
+        "sPunto": 0,
+        "sPos": 0,
+        "sVend": 0,
+        "sAdm": 0,
+        "sNeg": 1,
+        "sErr": 0,
+        "sOrig": "6",
+        "sDest": "5",
+        "rT": 1,
+        "rEff": 50,
+        "rPunto": 0,
+        "rPos": 1,
+        "rAdm": 0,
+        "rNeg": 0,
+        "rVend": 0,
+        "rErr": 0,
+        "aT": 0,
+        "aEff": 0,
+        "aPunto": 0,
+        "aPos": 0,
+        "aAdm": 0,
+        "aNeg": 0,
+        "aVend": 0,
+        "aErr": 0,
+        "aTCQ": 0,
+        "aEffAlta": 0,
+        "bT": 0,
+        "bPt": 0,
+        "bPtPos": 0,
+        "dv4": {},
+        "_sdir_full": {
+          "6": {
+            "5": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 0,
+              "neg": 1,
+              "err": 0
+            }
+          }
+        },
+        "_rdir": {
+          "1": {
+            "tot": 1,
+            "pt": 0,
+            "pos": 1,
+            "neg": 0,
+            "err": 0
+          }
+        }
+      },
+      {
+        "c": 9,
+        "n": "GODOY",
+        "sT": 1,
+        "sEff": -100,
+        "sPunto": 0,
+        "sPos": 0,
+        "sVend": 0,
+        "sAdm": 0,
+        "sNeg": 0,
+        "sErr": 1,
+        "sOrig": "5",
+        "sDest": "5",
+        "rT": 0,
+        "rEff": 0,
+        "rPunto": 0,
+        "rPos": 0,
+        "rAdm": 0,
+        "rNeg": 0,
+        "rVend": 0,
+        "rErr": 0,
+        "aT": 0,
+        "aEff": 0,
+        "aPunto": 0,
+        "aPos": 0,
+        "aAdm": 0,
+        "aNeg": 0,
+        "aVend": 0,
+        "aErr": 0,
+        "aTCQ": 0,
+        "aEffAlta": 0,
+        "bT": 0,
+        "bPt": 0,
+        "bPtPos": 0,
+        "dv4": {},
+        "_sdir_full": {
+          "5": {
+            "5": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 0,
+              "neg": 0,
+              "err": 1
+            }
+          }
+        },
+        "_rdir": {}
+      },
+      {
+        "c": 11,
+        "n": "DURDOS",
+        "sT": 14,
+        "sEff": 7,
+        "sPunto": 2,
+        "sPos": 2,
+        "sVend": 1,
+        "sAdm": 0,
+        "sNeg": 7,
+        "sErr": 2,
+        "sOrig": "5",
+        "sDest": "5",
+        "rT": 30,
+        "rEff": 48,
+        "rPunto": 13,
+        "rPos": 8,
+        "rAdm": 0,
+        "rNeg": 6,
+        "rVend": 1,
+        "rErr": 2,
+        "aT": 36,
+        "aEff": 39,
+        "aPunto": 21,
+        "aPos": 3,
+        "aAdm": 0,
+        "aNeg": 5,
+        "aVend": 3,
+        "aErr": 4,
+        "aTCQ": 0,
+        "aEffAlta": 0,
+        "bT": 7,
+        "bPt": 1,
+        "bPtPos": 1,
+        "dv4": {
+          "V5": {
+            "tot": 16,
+            "pt": 7,
+            "err": 2,
+            "orig": 4,
+            "dest": "2",
+            "destCounts": {
+              "1": 2,
+              "2": 9,
+              "3": 1,
+              "4": 1,
+              "5": 1,
+              "6": 1,
+              "7": 1
+            }
+          },
+          "X5": {
+            "tot": 16,
+            "pt": 10,
+            "err": 2,
+            "orig": 4,
+            "dest": "2",
+            "destCounts": {
+              "1": 3,
+              "2": 6,
+              "5": 2,
+              "7": 4,
+              "8": 1
+            }
+          },
+          "PR": {
+            "tot": 3,
+            "pt": 3,
+            "err": 0,
+            "orig": 0,
+            "dest": "",
+            "destCounts": {}
+          },
+          "XP": {
+            "tot": 1,
+            "pt": 1,
+            "err": 0,
+            "orig": 8,
+            "dest": "5",
+            "destCounts": {
+              "5": 1
+            }
+          }
+        },
+        "_sdir_full": {
+          "1": {
+            "3": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 1,
+              "neg": 0,
+              "err": 0
+            },
+            "6": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 0,
+              "neg": 1,
+              "err": 0
+            }
+          },
+          "5": {
+            "1": {
+              "tot": 4,
+              "pt": 1,
+              "pos": 1,
+              "neg": 1,
+              "err": 1
+            },
+            "5": {
+              "tot": 4,
+              "pt": 1,
+              "pos": 0,
+              "neg": 2,
+              "err": 1
+            },
+            "6": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 0,
+              "neg": 1,
+              "err": 0
+            }
+          },
+          "6": {
+            "1": {
+              "tot": 2,
+              "pt": 0,
+              "pos": 0,
+              "neg": 2,
+              "err": 0
+            },
+            "6": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 0,
+              "neg": 1,
+              "err": 0
+            }
+          }
+        },
+        "_rdir": {
+          "1": {
+            "tot": 10,
+            "pt": 6,
+            "pos": 0,
+            "neg": 2,
+            "err": 2
+          },
+          "5": {
+            "tot": 19,
+            "pt": 7,
+            "pos": 8,
+            "neg": 4,
+            "err": 0
+          },
+          "6": {
+            "tot": 1,
+            "pt": 0,
+            "pos": 0,
+            "neg": 1,
+            "err": 0
+          }
+        },
+        "bEff": 29
+      },
+      {
+        "c": 12,
+        "n": "ZANOTTI",
+        "sT": 0,
+        "sEff": 0,
+        "sPunto": 0,
+        "sPos": 0,
+        "sVend": 0,
+        "sAdm": 0,
+        "sNeg": 0,
+        "sErr": 0,
+        "sOrig": "",
+        "sDest": "",
+        "rT": 24,
+        "rEff": 52,
+        "rPunto": 11,
+        "rPos": 6,
+        "rAdm": 0,
+        "rNeg": 5,
+        "rVend": 1,
+        "rErr": 1,
+        "aT": 0,
+        "aEff": 0,
+        "aPunto": 0,
+        "aPos": 0,
+        "aAdm": 0,
+        "aNeg": 0,
+        "aVend": 0,
+        "aErr": 0,
+        "aTCQ": 0,
+        "aEffAlta": 0,
+        "bT": 0,
+        "bPt": 0,
+        "bPtPos": 0,
+        "dv4": {},
+        "_sdir_full": {},
+        "_rdir": {
+          "1": {
+            "tot": 13,
+            "pt": 5,
+            "pos": 4,
+            "neg": 4,
+            "err": 0
+          },
+          "5": {
+            "tot": 10,
+            "pt": 6,
+            "pos": 1,
+            "neg": 2,
+            "err": 1
+          },
+          "6": {
+            "tot": 1,
+            "pt": 0,
+            "pos": 1,
+            "neg": 0,
+            "err": 0
+          }
+        }
+      },
+      {
+        "c": 14,
+        "n": "NIELSON",
+        "sT": 24,
+        "sEff": 18,
+        "sPunto": 4,
+        "sPos": 1,
+        "sVend": 2,
+        "sAdm": 0,
+        "sNeg": 16,
+        "sErr": 1,
+        "sOrig": "6",
+        "sDest": "6",
+        "rT": 27,
+        "rEff": 43,
+        "rPunto": 12,
+        "rPos": 5,
+        "rAdm": 0,
+        "rNeg": 6,
+        "rVend": 2,
+        "rErr": 2,
+        "aT": 34,
+        "aEff": 9,
+        "aPunto": 9,
+        "aPos": 6,
+        "aAdm": 0,
+        "aNeg": 13,
+        "aVend": 3,
+        "aErr": 3,
+        "aTCQ": 0,
+        "aEffAlta": 0,
+        "bT": 3,
+        "bPt": 1,
+        "bPtPos": 1,
+        "dv4": {
+          "X5": {
+            "tot": 21,
+            "pt": 7,
+            "err": 1,
+            "orig": 4,
+            "dest": "2",
+            "destCounts": {
+              "1": 1,
+              "2": 10,
+              "4": 1,
+              "5": 2,
+              "6": 2,
+              "7": 4,
+              "8": 1
+            }
+          },
+          "V5": {
+            "tot": 11,
+            "pt": 1,
+            "err": 1,
+            "orig": 4,
+            "dest": "2",
+            "destCounts": {
+              "1": 5,
+              "2": 3,
+              "3": 2,
+              "5": 1
+            }
+          },
+          "VP": {
+            "tot": 2,
+            "pt": 1,
+            "err": 1,
+            "orig": 8,
+            "dest": "6",
+            "destCounts": {
+              "6": 2
+            }
+          }
+        },
+        "_sdir_full": {
+          "1": {
+            "1": {
+              "tot": 3,
+              "pt": 0,
+              "pos": 0,
+              "neg": 3,
+              "err": 0
+            },
+            "5": {
+              "tot": 2,
+              "pt": 0,
+              "pos": 0,
+              "neg": 2,
+              "err": 0
+            },
+            "6": {
+              "tot": 6,
+              "pt": 2,
+              "pos": 0,
+              "neg": 4,
+              "err": 0
+            }
+          },
+          "6": {
+            "1": {
+              "tot": 6,
+              "pt": 1,
+              "pos": 0,
+              "neg": 5,
+              "err": 0
+            },
+            "5": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 0,
+              "neg": 1,
+              "err": 0
+            },
+            "6": {
+              "tot": 6,
+              "pt": 1,
+              "pos": 1,
+              "neg": 3,
+              "err": 1
+            }
+          }
+        },
+        "_rdir": {
+          "1": {
+            "tot": 8,
+            "pt": 2,
+            "pos": 1,
+            "neg": 4,
+            "err": 1
+          },
+          "5": {
+            "tot": 18,
+            "pt": 10,
+            "pos": 4,
+            "neg": 3,
+            "err": 1
+          },
+          "6": {
+            "tot": 1,
+            "pt": 0,
+            "pos": 0,
+            "neg": 1,
+            "err": 0
+          }
+        },
+        "bEff": 67
+      },
+      {
+        "c": 17,
+        "n": "HERBSOMMER",
+        "sT": 16,
+        "sEff": 22,
+        "sPunto": 2,
+        "sPos": 2,
+        "sVend": 2,
+        "sAdm": 0,
+        "sNeg": 10,
+        "sErr": 0,
+        "sOrig": "5",
+        "sDest": "5",
+        "rT": 0,
+        "rEff": 0,
+        "rPunto": 0,
+        "rPos": 0,
+        "rAdm": 0,
+        "rNeg": 0,
+        "rVend": 0,
+        "rErr": 0,
+        "aT": 20,
+        "aEff": 15,
+        "aPunto": 6,
+        "aPos": 3,
+        "aAdm": 0,
+        "aNeg": 8,
+        "aVend": 0,
+        "aErr": 3,
+        "aTCQ": 0,
+        "aEffAlta": 0,
+        "bT": 25,
+        "bPt": 7,
+        "bPtPos": 5,
+        "dv4": {
+          "XM": {
+            "tot": 11,
+            "pt": 4,
+            "err": 3,
+            "orig": 3,
+            "dest": "1",
+            "destCounts": {
+              "1": 4,
+              "3": 2,
+              "6": 3,
+              "7": 1,
+              "9": 1
+            }
+          },
+          "X1": {
+            "tot": 3,
+            "pt": 2,
+            "err": 0,
+            "orig": 3,
+            "dest": "5",
+            "destCounts": {
+              "3": 1,
+              "5": 2
+            }
+          },
+          "X2": {
+            "tot": 1,
+            "pt": 0,
+            "err": 0,
+            "orig": 2,
+            "dest": "4",
+            "destCounts": {
+              "4": 1
+            }
+          },
+          "PR": {
+            "tot": 1,
+            "pt": 0,
+            "err": 0,
+            "orig": 3,
+            "dest": "6",
+            "destCounts": {
+              "6": 1
+            }
+          },
+          "X7": {
+            "tot": 4,
+            "pt": 0,
+            "err": 0,
+            "orig": 4,
+            "dest": "3",
+            "destCounts": {
+              "1": 1,
+              "3": 3
+            }
+          }
+        },
+        "_sdir_full": {
+          "5": {
+            "3": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 0,
+              "neg": 1,
+              "err": 0
+            },
+            "5": {
+              "tot": 12,
+              "pt": 0,
+              "pos": 2,
+              "neg": 10,
+              "err": 0
+            },
+            "6": {
+              "tot": 3,
+              "pt": 2,
+              "pos": 0,
+              "neg": 1,
+              "err": 0
+            }
+          }
+        },
+        "_rdir": {},
+        "bEff": 48
+      },
+      {
+        "c": 18,
+        "n": "ACOSTA",
+        "sT": 2,
+        "sEff": 0,
+        "sPunto": 0,
+        "sPos": 0,
+        "sVend": 0,
+        "sAdm": 0,
+        "sNeg": 2,
+        "sErr": 0,
+        "sOrig": "1",
+        "sDest": "5",
+        "rT": 0,
+        "rEff": 0,
+        "rPunto": 0,
+        "rPos": 0,
+        "rAdm": 0,
+        "rNeg": 0,
+        "rVend": 0,
+        "rErr": 0,
+        "aT": 6,
+        "aEff": 33,
+        "aPunto": 2,
+        "aPos": 0,
+        "aAdm": 0,
+        "aNeg": 4,
+        "aVend": 0,
+        "aErr": 0,
+        "aTCQ": 0,
+        "aEffAlta": 0,
+        "bT": 1,
+        "bPt": 0,
+        "bPtPos": 1,
+        "dv4": {
+          "V6": {
+            "tot": 2,
+            "pt": 1,
+            "err": 0,
+            "orig": 2,
+            "dest": "1",
+            "destCounts": {
+              "1": 1,
+              "4": 1
+            }
+          },
+          "X6": {
+            "tot": 2,
+            "pt": 0,
+            "err": 0,
+            "orig": 2,
+            "dest": "4",
+            "destCounts": {
+              "4": 1,
+              "9": 1
+            }
+          },
+          "X8": {
+            "tot": 1,
+            "pt": 0,
+            "err": 0,
+            "orig": 9,
+            "dest": "5",
+            "destCounts": {
+              "5": 1
+            }
+          },
+          "V8": {
+            "tot": 1,
+            "pt": 1,
+            "err": 0,
+            "orig": 9,
+            "dest": "1",
+            "destCounts": {
+              "1": 1
+            }
+          }
+        },
+        "_sdir_full": {
+          "1": {
+            "5": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 0,
+              "neg": 1,
+              "err": 0
+            },
+            "6": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 0,
+              "neg": 1,
+              "err": 0
+            }
+          }
+        },
+        "_rdir": {},
+        "bEff": 100
+      },
+      {
+        "c": 19,
+        "n": "DIAZ BOLLI",
+        "sT": 5,
+        "sEff": 40,
+        "sPunto": 2,
+        "sPos": 0,
+        "sVend": 0,
+        "sAdm": 0,
+        "sNeg": 3,
+        "sErr": 0,
+        "sOrig": "1",
+        "sDest": "6",
+        "rT": 0,
+        "rEff": 0,
+        "rPunto": 0,
+        "rPos": 0,
+        "rAdm": 0,
+        "rNeg": 0,
+        "rVend": 0,
+        "rErr": 0,
+        "aT": 0,
+        "aEff": 0,
+        "aPunto": 0,
+        "aPos": 0,
+        "aAdm": 0,
+        "aNeg": 0,
+        "aVend": 0,
+        "aErr": 0,
+        "aTCQ": 0,
+        "aEffAlta": 0,
+        "bT": 0,
+        "bPt": 0,
+        "bPtPos": 0,
+        "dv4": {},
+        "_sdir_full": {
+          "1": {
+            "6": {
+              "tot": 3,
+              "pt": 2,
+              "pos": 0,
+              "neg": 1,
+              "err": 0
+            }
+          },
+          "5": {
+            "5": {
+              "tot": 2,
+              "pt": 0,
+              "pos": 0,
+              "neg": 2,
+              "err": 0
+            }
+          }
+        },
+        "_rdir": {}
+      },
+      {
+        "c": 0,
+        "n": "TOTALES EQUIPO",
+        "sT": 102,
+        "sEff": 12,
+        "sPunto": 16,
+        "sPos": 13,
+        "sVend": 6,
+        "sAdm": 0,
+        "sNeg": 57,
+        "sErr": 10,
+        "sOrig": "1",
+        "sDest": "6",
+        "rT": 84,
+        "rEff": 47,
+        "rPunto": 36,
+        "rPos": 21,
+        "rAdm": 0,
+        "rNeg": 18,
+        "rVend": 4,
+        "rErr": 5,
+        "aT": 137,
+        "aEff": 30,
+        "aPunto": 62,
+        "aPos": 13,
+        "aAdm": 0,
+        "aNeg": 41,
+        "aVend": 11,
+        "aErr": 10,
+        "aTCQ": 0,
+        "aEffAlta": 0,
+        "bT": 55,
+        "bPt": 14,
+        "bPtPos": 15,
+        "dv4": {
+          "XM": {
+            "tot": 13,
+            "pt": 6,
+            "err": 3,
+            "orig": 3,
+            "dest": "1",
+            "destCounts": {
+              "1": 5,
+              "3": 2,
+              "6": 4,
+              "7": 1,
+              "9": 1
+            }
+          },
+          "X5": {
+            "tot": 37,
+            "pt": 17,
+            "err": 3,
+            "orig": 4,
+            "dest": "2",
+            "destCounts": {
+              "1": 4,
+              "2": 16,
+              "4": 1,
+              "5": 4,
+              "6": 2,
+              "7": 8,
+              "8": 2
+            }
+          },
+          "X1": {
+            "tot": 9,
+            "pt": 7,
+            "err": 0,
+            "orig": 3,
+            "dest": "5",
+            "destCounts": {
+              "3": 2,
+              "5": 6,
+              "6": 1
+            }
+          },
+          "V5": {
+            "tot": 27,
+            "pt": 8,
+            "err": 3,
+            "orig": 4,
+            "dest": "2",
+            "destCounts": {
+              "1": 7,
+              "2": 12,
+              "3": 3,
+              "4": 1,
+              "5": 2,
+              "6": 1,
+              "7": 1
+            }
+          },
+          "V6": {
+            "tot": 14,
+            "pt": 8,
+            "err": 0,
+            "orig": 2,
+            "dest": "6",
+            "destCounts": {
+              "1": 2,
+              "2": 1,
+              "4": 5,
+              "5": 1,
+              "6": 5
+            }
+          },
+          "X2": {
+            "tot": 2,
+            "pt": 1,
+            "err": 0,
+            "orig": 2,
+            "dest": "1",
+            "destCounts": {
+              "1": 1,
+              "4": 1
+            }
+          },
+          "X6": {
+            "tot": 13,
+            "pt": 4,
+            "err": 0,
+            "orig": 2,
+            "dest": "6",
+            "destCounts": {
+              "2": 1,
+              "4": 7,
+              "6": 4,
+              "9": 1
+            }
+          },
+          "X8": {
+            "tot": 4,
+            "pt": 1,
+            "err": 0,
+            "orig": 9,
+            "dest": "4",
+            "destCounts": {
+              "4": 2,
+              "5": 2
+            }
+          },
+          "V8": {
+            "tot": 4,
+            "pt": 4,
+            "err": 0,
+            "orig": 9,
+            "dest": "4",
+            "destCounts": {
+              "1": 1,
+              "4": 1,
+              "5": 1,
+              "6": 1
+            }
+          },
+          "PR": {
+            "tot": 5,
+            "pt": 4,
+            "err": 0,
+            "orig": 3,
+            "dest": "6",
+            "destCounts": {
+              "6": 1
+            }
+          },
+          "X7": {
+            "tot": 4,
+            "pt": 0,
+            "err": 0,
+            "orig": 4,
+            "dest": "3",
+            "destCounts": {
+              "1": 1,
+              "3": 3
+            }
+          },
+          "VP": {
+            "tot": 2,
+            "pt": 1,
+            "err": 1,
+            "orig": 8,
+            "dest": "6",
+            "destCounts": {
+              "6": 2
+            }
+          },
+          "P2": {
+            "tot": 2,
+            "pt": 0,
+            "err": 0,
+            "orig": 3,
+            "dest": "4",
+            "destCounts": {
+              "4": 2
+            }
+          },
+          "XP": {
+            "tot": 1,
+            "pt": 1,
+            "err": 0,
+            "orig": 8,
+            "dest": "5",
+            "destCounts": {
+              "5": 1
+            }
+          }
+        },
+        "_sdir_full": {
+          "1": {
+            "1": {
+              "tot": 9,
+              "pt": 1,
+              "pos": 1,
+              "neg": 7,
+              "err": 0
+            },
+            "3": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 1,
+              "neg": 0,
+              "err": 0
+            },
+            "5": {
+              "tot": 10,
+              "pt": 1,
+              "pos": 1,
+              "neg": 6,
+              "err": 2
+            },
+            "6": {
+              "tot": 25,
+              "pt": 6,
+              "pos": 1,
+              "neg": 14,
+              "err": 4
+            }
+          },
+          "5": {
+            "1": {
+              "tot": 8,
+              "pt": 2,
+              "pos": 2,
+              "neg": 3,
+              "err": 1
+            },
+            "3": {
+              "tot": 1,
+              "pt": 0,
+              "pos": 0,
+              "neg": 1,
+              "err": 0
+            },
+            "5": {
+              "tot": 20,
+              "pt": 2,
+              "pos": 2,
+              "neg": 14,
+              "err": 2
+            },
+            "6": {
+              "tot": 5,
+              "pt": 2,
+              "pos": 0,
+              "neg": 3,
+              "err": 0
+            }
+          },
+          "6": {
+            "1": {
+              "tot": 9,
+              "pt": 1,
+              "pos": 0,
+              "neg": 8,
+              "err": 0
+            },
+            "5": {
+              "tot": 2,
+              "pt": 0,
+              "pos": 0,
+              "neg": 2,
+              "err": 0
+            },
+            "6": {
+              "tot": 12,
+              "pt": 1,
+              "pos": 5,
+              "neg": 5,
+              "err": 1
+            }
+          }
+        },
+        "_rdir": {
+          "1": {
+            "tot": 32,
+            "pt": 13,
+            "pos": 6,
+            "neg": 10,
+            "err": 3
+          },
+          "5": {
+            "tot": 49,
+            "pt": 23,
+            "pos": 14,
+            "neg": 10,
+            "err": 2
+          },
+          "6": {
+            "tot": 3,
+            "pt": 0,
+            "pos": 1,
+            "neg": 2,
+            "err": 0
+          }
+        },
+        "bEff": 53
       }
     ]
   }
