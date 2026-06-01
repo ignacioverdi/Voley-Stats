@@ -184,26 +184,7 @@ function buildSelector(){
 }
 
 function selectJug(num){
-  G.num=num; G.tipo='partido'; G.sesion='acumulado'; G.tab='calendario';
-  var jugs=typeof CASLA_JUGADORES!=='undefined'?CASLA_JUGADORES:[];
-  G.jug=jugs.find(function(j){return j.num===num;})||null;
-  var pj=typeof PARTIDOS_JUGADORES!=='undefined'?PARTIDOS_JUGADORES:[];
-  G.partJug=pj.find(function(j){return j.num===num;})||null;
-  var ej=typeof ENTRENAMIENTOS_JUGADORES!=='undefined'?ENTRENAMIENTOS_JUGADORES:[];
-  G.entJug=ej.find(function(j){return j.num===num;})||null;
-
-  // Update selector
-  document.querySelectorAll('.jbtn').forEach(function(b){b.classList.remove('on');});
-  var btns=document.querySelectorAll('.jbtn');
-  btns.forEach(function(b){if(b.textContent.indexOf('#'+num+' ')===0)b.classList.add('on');});
-
-  renderHero();
-  renderBaterias();
-  renderFilters();
-  document.getElementById('tabs').style.display='flex';
-  document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on');});
-  document.querySelectorAll('.tab')[0].classList.add('on');
-  renderContent();
+  window.location.href = 'jugador.html?num=' + num;
 }
 
 // ── HERO ─────────────────────────────────────────────────────────────
