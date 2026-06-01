@@ -83,21 +83,49 @@ function init(){
 }
 
 function getActionCount(pjug, sk){
+  // Returns {tot, pos} - total actions and positive actions
   if(!pjug) return null;
   if(sk.src==='saques'){
-    var t=0; (pjug.saques||[]).forEach(function(s){ if(sk.cods.indexOf(s.cod)>=0) t+=s.tot||0; }); return t||null;
+    var tot=0, pos=0;
+    (pjug.saques||[]).forEach(function(s){
+      if(sk.cods.indexOf(s.cod)>=0){
+        tot += s.tot||0;
+        pos += (s.pts||0) + (s.plus||0); // pts directos + positivos
+      }
+    });
+    return tot ? {tot:tot, pos:pos} : null;
   }
   if(sk.src==='ataques'){
-    var t=0; (pjug.ataques||[]).forEach(function(a){ if(sk.cods.indexOf(a.cod)>=0) t+=a.tot||0; }); return t||null;
+    var tot=0, pos=0;
+    (pjug.ataques||[]).forEach(function(a){
+      if(sk.cods.indexOf(a.cod)>=0){
+        tot += a.tot||0;
+        pos += a.pts||0; // puntos directos
+      }
+    });
+    return tot ? {tot:tot, pos:pos} : null;
   }
   if(sk.src==='rec'){
-    var rec=pjug.recepcion||{},t=0;
-    ['flotado','potencia'].forEach(function(tp){ var r=rec[tp]||{}; ['desde_z1','desde_z6','desde_z5'].forEach(function(z){ if(r[z]&&r[z].total) t+=r[z].total.tot||0; }); });
-    return t||null;
+    var rec=pjug.recepcion||{}, tot=0, pos=0;
+    ['flotado','potencia'].forEach(function(tp){
+      var r=rec[tp]||{};
+      ['desde_z1','desde_z6','desde_z5'].forEach(function(z){
+        if(r[z]&&r[z].total){
+          tot += r[z].total.tot||0;
+          pos += (r[z].total.eff||0) + (r[z].total.pos||0); // # y +
+        }
+      });
+    });
+    return tot ? {tot:tot, pos:pos} : null;
   }
   if(sk.src==='blq'){
     var D=window.HISTORIAL_DATA; if(!D) return null;
-    var t=0; D.entrenamientos.filter(function(e){return e.tipo==='P';}).forEach(function(s){ var jh=(s.jugadores||[]).find(function(x){return x.c===pjug.num;}); if(jh) t+=jh.bT||0; }); return t||null;
+    var tot=0, pos=0;
+    D.entrenamientos.filter(function(e){return e.tipo==='P';}).forEach(function(s){
+      var jh=(s.jugadores||[]).find(function(x){return x.c===pjug.num;});
+      if(jh){ tot+=jh.bT||0; pos+=jh.bPt||0; }
+    });
+    return tot ? {tot:tot, pos:pos} : null;
   }
   return null;
 }
