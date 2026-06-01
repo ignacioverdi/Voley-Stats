@@ -380,19 +380,26 @@ function fmt(v){ return (v<0?'-':'')+Math.abs(v)+'%'; }
 // MAIN TAB SWITCHER
 // ════════════════════════════════════════════════════════════
 function showTab(id, btn){
+  // Pages that open as full page
+  var fullPages = {
+    'analisis':  'analisis.html',
+    'historial': 'historial_voley.html',
+    'baggerone': 'baggerone.html',
+    'prep':      'prep_fisica.html',
+    'armadores': 'armadores.html',
+    'recepcion': 'recepcion.html',
+  };
+  if(fullPages[id]){
+    window.location.href = fullPages[id];
+    return;
+  }
   document.querySelectorAll('.mtab').forEach(b=>b.classList.remove('on'));
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
   btn.classList.add('on');
   document.getElementById('view-'+id).classList.add('on');
   if(id==='equipo')    renderEqTab();
   if(id==='jugador')   renderJugGrid();
-  if(id==='analisis')  renderIframe('iframe-analisis',  'analisis.html');
-  if(id==='historial') renderIframe('iframe-historial', 'historial_voley.html');
   if(id==='objetivos') renderObjetivosTab();
-  if(id==='baggerone') renderIframe('iframe-baggerone', 'baggerone.html');
-  if(id==='prep')      renderIframe('iframe-prep',      'prep_fisica.html');
-  if(id==='armadores') renderIframe('iframe-armadores', 'armadores.html');
-  if(id==='recepcion') renderIframe('iframe-recepcion', 'recepcion.html');
   if(id==='gameplans') renderGamePlans();
 }
 
@@ -713,34 +720,19 @@ function renderEqObjetivos(){
 // ════════════════════════════════════════════════════════════
 function renderJugGrid(){
   var grid=document.getElementById('jug-grid');
-  if(!EQUIPO){grid.innerHTML='<div class="empty">Sin datos de equipo</div>';return;}
-  grid.innerHTML=EQUIPO.jugadores.map(function(j){
+  var jugs = typeof CASLA_JUGADORES!=='undefined' ? CASLA_JUGADORES :
+             (EQUIPO ? EQUIPO.jugadores : []);
+  if(!jugs||!jugs.length){grid.innerHTML='<div class="empty">Sin datos de equipo</div>';return;}
+  grid.innerHTML=jugs.map(function(j){
     var col=POS_COLOR[j.pos]||'#64748b';
-    return'<button class="player-btn'+(JUG_ACTUAL&&JUG_ACTUAL.num===j.num?' on':'')+'" onclick="selectJugador('+j.num+',this)">'
-      +'<div class="pb-num" style="color:'+col+'">#'+j.num+'</div>'
-      +'<div class="pb-name">'+j.nombre+'</div>'
-      +'<div class="pb-pos" style="color:'+col+'">'+j.pos+'</div>'
-      +'</button>';
+    var nm = j.nombre ? j.nombre.replace(/^\d+\s*/,'') : '';
+    return '<a href="jugador.html?num='+j.num+'" style="display:block;text-decoration:none">'      +'<div class="player-btn" style="cursor:pointer">'      +'<div class="pb-num" style="color:'+col+'">#'+j.num+'</div>'      +'<div class="pb-name">'+nm+'</div>'      +'<div class="pb-pos" style="color:'+col+'">'+j.pos+'</div>'      +'</div></a>';
   }).join('');
 }
 
 function selectJugador(num,btn){
-  document.querySelectorAll('.player-btn').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  if(!EQUIPO)return;
-  JUG_ACTUAL=EQUIPO.jugadores.find(j=>j.num===num)||null;
-  if(!JUG_ACTUAL)return;
-  document.getElementById('jug-detail').style.display='block';
-  document.getElementById('jug-hero-num').textContent='#'+JUG_ACTUAL.num;
-  document.getElementById('jug-hero-name').textContent=JUG_ACTUAL.nombre;
-  document.getElementById('jug-hero-pos').textContent=JUG_ACTUAL.pos;
-  var col=POS_COLOR[JUG_ACTUAL.pos]||'#64748b';
-  document.getElementById('jug-hero-num').style.color=col;
-  document.getElementById('jug-hero-num').style.borderColor=col+'44';
-  document.getElementById('jug-hero-num').style.background=col+'18';
-  JUG_TAB='acum';
-  document.querySelectorAll('#view-jugador .stab').forEach(function(b,i){b.classList.toggle('on',i===0);});
-  renderJugContent();
+  // Redirect to jugador.html profile page
+  window.location.href = 'jugador.html?num=' + num;
 }
 
 function showJugTab(tab,btn){
