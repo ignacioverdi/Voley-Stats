@@ -10,6 +10,8 @@
 <script src="datos_armadores.js" onerror="void 0"></script>
 <script src="datos_historial.js"  onerror="void 0"></script>
 <script src="objetivos_config.js" onerror="void 0"></script>
+<script src="datos_partidos.js" onerror="void 0"></script>
+<script src="datos_entrenamientos.js" onerror="void 0"></script>
 <script src="datos_casla.js" onerror="void 0"></script>
 <script src="datos_prep_fisica.js" onerror="void 0"></script>
 <script src="firebase.js"         onerror="void 0"></script>
@@ -520,7 +522,7 @@ function renderEqStats(){
   var rNeg_str  = rT>0 ? fmt(Math.round((rVend+rErr)/rT*100))+'%' : '—';
 
   function mkRect(color, title, stats){
-    var html = '<div style="background:var(--card);border:1px solid var(--b);border-radius:10px;overflow:hidden;min-width:0;flex:1;min-width:180px">';
+    var html = '<div style="background:var(--card);border:1px solid var(--b);border-radius:10px;overflow:hidden">';
     html += '<div style="padding:7px 16px;background:'+color+'11;border-bottom:1px solid '+color+'22;display:flex;align-items:center;gap:6px">';
     html += '<div style="width:5px;height:5px;border-radius:50%;background:'+color+'"></div>';
     html += '<span style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:'+color+'">'+title+'</span>';
@@ -536,7 +538,7 @@ function renderEqStats(){
     return html;
   }
 
-  var rectHTML = '<div style="display:flex;gap:8px;margin-bottom:12px;overflow-x:auto">';
+  var rectHTML = '<div style="display:grid;grid-template-columns:28fr 28fr 28fr 16fr;gap:8px;margin-bottom:12px">';
   rectHTML += mkRect('#F59E0B','Saque',[
     {v:sEff_str, l:'EFF', c:'#F59E0B'},
     {v:sT,       l:'Total'},
