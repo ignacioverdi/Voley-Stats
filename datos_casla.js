@@ -1,10 +1,10 @@
 // datos_casla.js — generado automáticamente por generar_datos_casla.py
-// 31/05/2026 15:14 — División de Honor 2026 — LOMAS
+// 01/06/2026 14:18 — División de Honor 2026 — LOMAS
 // NO EDITAR MANUALMENTE
 
 const CASLA_EQUIPO = "División de Honor 2026";
 const CASLA_TEMPORADA = "LOMAS";
-const CASLA_GENERADO = "31/05/2026 15:14";
+const CASLA_GENERADO = "01/06/2026 14:18";
 
 const CASLA_JUGADORES = [
   {
@@ -129,28 +129,28 @@ const CASLA_JUGADORES = [
         "orig": 6,
         "destinos": [
           {
-            "z": 5,
-            "pct": 30
+            "z": 6,
+            "pct": 32
           },
           {
-            "z": 6,
-            "pct": 22
+            "z": 5,
+            "pct": 25
           },
           {
             "z": 7,
-            "pct": 22
+            "pct": 18
           },
           {
-            "z": 8,
-            "pct": 11
+            "z": 1,
+            "pct": 9
           }
         ],
         "eff": -11,
-        "tot": 38,
+        "tot": 45,
         "pts": 0,
-        "plus": 3,
+        "plus": 5,
         "slash": 0,
-        "err": 5,
+        "err": 6,
         "video": 0,
         "pts_pct": 0
       },
@@ -403,29 +403,29 @@ const CASLA_JUGADORES = [
         "destinos": [
           {
             "z": 6,
-            "pct": 35
+            "pct": 38
           },
           {
             "z": 1,
-            "pct": 18
+            "pct": 23
           },
           {
             "z": 9,
-            "pct": 17
+            "pct": 13
           },
           {
             "z": 8,
-            "pct": 12
+            "pct": 10
           }
         ],
-        "eff": 8,
-        "tot": 74,
+        "eff": 7,
+        "tot": 96,
         "pts": 6,
-        "plus": 5,
+        "plus": 9,
         "slash": 4,
-        "err": 3,
+        "err": 4,
         "video": 0,
-        "pts_pct": 8
+        "pts_pct": 6
       },
       {
         "cod": "SQ",
@@ -620,29 +620,29 @@ const CASLA_JUGADORES = [
         "destinos": [
           {
             "z": 5,
-            "pct": 39
+            "pct": 44
           },
           {
             "z": 6,
-            "pct": 37
+            "pct": 35
           },
           {
             "z": 1,
-            "pct": 16
+            "pct": 15
           },
           {
             "z": 9,
-            "pct": 5
+            "pct": 4
           }
         ],
-        "eff": -29,
-        "tot": 45,
+        "eff": -30,
+        "tot": 55,
         "pts": 4,
-        "plus": 5,
-        "slash": 1,
-        "err": 19,
+        "plus": 7,
+        "slash": 2,
+        "err": 23,
         "video": 0,
-        "pts_pct": 9
+        "pts_pct": 7
       }
     ],
     "video": 0,
@@ -750,11 +750,15 @@ const CASLA_JUGADORES = [
         "destinos": [
           {
             "z": 6,
-            "pct": 100
+            "pct": 80
+          },
+          {
+            "z": 5,
+            "pct": 20
           }
         ],
-        "eff": -29,
-        "tot": 6,
+        "eff": -25,
+        "tot": 7,
         "pts": 0,
         "plus": 1,
         "slash": 0,
@@ -769,9 +773,9 @@ const CASLA_JUGADORES = [
       "flotado": {
         "desde_z1": {
           "total": {
-            "tot": 1,
-            "eff": 0,
-            "pos": 0,
+            "tot": 2,
+            "eff": 25,
+            "pos": 50,
             "neg": 0
           },
           "p1": {
@@ -781,9 +785,9 @@ const CASLA_JUGADORES = [
             "neg": 0
           },
           "p6": {
-            "tot": 1,
+            "tot": 2,
             "eff": 0,
-            "pos": 0,
+            "pos": 50,
             "neg": 0
           },
           "p5": {
@@ -950,7 +954,7 @@ const CASLA_JUGADORES = [
         "destinos": [
           {
             "z": 6,
-            "pct": 31
+            "pct": 30
           },
           {
             "z": 7,
@@ -958,19 +962,19 @@ const CASLA_JUGADORES = [
           },
           {
             "z": 1,
-            "pct": 18
+            "pct": 17
           },
           {
             "z": 8,
-            "pct": 16
+            "pct": 15
           }
         ],
-        "eff": 4,
-        "tot": 50,
+        "eff": 2,
+        "tot": 51,
         "pts": 2,
         "plus": 6,
         "slash": 1,
-        "err": 2,
+        "err": 3,
         "video": 0,
         "pts_pct": 4
       },
@@ -1138,14 +1142,31 @@ const CASLA_JUGADORES = [
       {
         "cod": "XP",
         "orig": 8,
-        "destinos": [],
+        "destinos": [
+          {
+            "z": 1,
+            "pct": 38
+          },
+          {
+            "z": 6,
+            "pct": 38
+          },
+          {
+            "z": 8,
+            "pct": 12
+          },
+          {
+            "z": 5,
+            "pct": 12
+          }
+        ],
         "eff": 16,
-        "tot": 19,
+        "tot": 8,
         "pts": 8,
         "slash": 0,
         "err": 0,
         "video": 0,
-        "pts_pct": 42
+        "pts_pct": 100
       }
     ],
     "saques": [
@@ -1155,28 +1176,28 @@ const CASLA_JUGADORES = [
         "orig": 6,
         "destinos": [
           {
-            "z": 7,
-            "pct": 23
-          },
-          {
             "z": 5,
-            "pct": 21
+            "pct": 22
           },
           {
-            "z": 9,
-            "pct": 19
+            "z": 7,
+            "pct": 20
+          },
+          {
+            "z": 6,
+            "pct": 18
           },
           {
             "z": 1,
-            "pct": 14
+            "pct": 16
           }
         ],
-        "eff": -8,
-        "tot": 44,
+        "eff": -9,
+        "tot": 51,
         "pts": 0,
         "plus": 0,
         "slash": 1,
-        "err": 4,
+        "err": 5,
         "video": 0,
         "pts_pct": 0
       },
@@ -1186,30 +1207,30 @@ const CASLA_JUGADORES = [
         "orig": 6,
         "destinos": [
           {
-            "z": 6,
-            "pct": 42
-          },
-          {
             "z": 5,
-            "pct": 42
+            "pct": 41
           },
           {
-            "z": 8,
-            "pct": 8
+            "z": 6,
+            "pct": 34
           },
           {
             "z": 1,
-            "pct": 8
+            "pct": 19
+          },
+          {
+            "z": 8,
+            "pct": 6
           }
         ],
-        "eff": -35,
-        "tot": 33,
-        "pts": 3,
-        "plus": 4,
-        "slash": 1,
-        "err": 16,
+        "eff": -26,
+        "tot": 40,
+        "pts": 4,
+        "plus": 6,
+        "slash": 2,
+        "err": 17,
         "video": 0,
-        "pts_pct": 9
+        "pts_pct": 10
       }
     ],
     "video": 0,
@@ -1218,9 +1239,9 @@ const CASLA_JUGADORES = [
       "flotado": {
         "desde_z1": {
           "total": {
-            "tot": 34,
-            "eff": 46,
-            "pos": 76,
+            "tot": 35,
+            "eff": 47,
+            "pos": 77,
             "neg": 6
           },
           "p1": {
@@ -1230,9 +1251,9 @@ const CASLA_JUGADORES = [
             "neg": 0
           },
           "p6": {
-            "tot": 16,
-            "eff": 25,
-            "pos": 62,
+            "tot": 17,
+            "eff": 29,
+            "pos": 65,
             "neg": 6
           },
           "p5": {
@@ -1244,9 +1265,9 @@ const CASLA_JUGADORES = [
         },
         "desde_z6": {
           "total": {
-            "tot": 18,
-            "eff": 42,
-            "pos": 56,
+            "tot": 19,
+            "eff": 39,
+            "pos": 53,
             "neg": 0
           },
           "p1": {
@@ -1262,18 +1283,18 @@ const CASLA_JUGADORES = [
             "neg": 0
           },
           "p5": {
-            "tot": 6,
-            "eff": 33,
-            "pos": 50,
+            "tot": 7,
+            "eff": 29,
+            "pos": 43,
             "neg": 0
           }
         },
         "desde_z5": {
           "total": {
-            "tot": 24,
-            "eff": 48,
+            "tot": 38,
+            "eff": 49,
             "pos": 71,
-            "neg": 4
+            "neg": 3
           },
           "p1": {
             "tot": 2,
@@ -1282,15 +1303,15 @@ const CASLA_JUGADORES = [
             "neg": 0
           },
           "p6": {
-            "tot": 13,
-            "eff": 46,
-            "pos": 69,
-            "neg": 8
+            "tot": 18,
+            "eff": 47,
+            "pos": 72,
+            "neg": 6
           },
           "p5": {
-            "tot": 9,
-            "eff": 33,
-            "pos": 78,
+            "tot": 17,
+            "eff": 29,
+            "pos": 71,
             "neg": 0
           }
         }
@@ -1298,10 +1319,10 @@ const CASLA_JUGADORES = [
       "potencia": {
         "desde_z1": {
           "total": {
-            "tot": 15,
-            "eff": 17,
-            "pos": 47,
-            "neg": 20
+            "tot": 24,
+            "eff": 10,
+            "pos": 38,
+            "neg": 21
           },
           "p1": {
             "tot": 2,
@@ -1310,13 +1331,13 @@ const CASLA_JUGADORES = [
             "neg": 0
           },
           "p6": {
-            "tot": 7,
-            "eff": 14,
-            "pos": 57,
-            "neg": 14
+            "tot": 10,
+            "eff": 10,
+            "pos": 40,
+            "neg": 10
           },
           "p5": {
-            "tot": 6,
+            "tot": 12,
             "eff": 0,
             "pos": 33,
             "neg": 33
@@ -1350,28 +1371,28 @@ const CASLA_JUGADORES = [
         },
         "desde_z5": {
           "total": {
-            "tot": 12,
-            "eff": 29,
-            "pos": 42,
-            "neg": 8
+            "tot": 17,
+            "eff": 24,
+            "pos": 41,
+            "neg": 12
           },
           "p1": {
-            "tot": 0,
+            "tot": 2,
             "eff": 0,
             "pos": 0,
             "neg": 0
           },
           "p6": {
-            "tot": 5,
-            "eff": 20,
-            "pos": 40,
-            "neg": 20
-          },
-          "p5": {
             "tot": 7,
             "eff": 29,
-            "pos": 43,
-            "neg": 0
+            "pos": 57,
+            "neg": 14
+          },
+          "p5": {
+            "tot": 8,
+            "eff": 25,
+            "pos": 38,
+            "neg": 12
           }
         }
       }
@@ -1427,21 +1448,21 @@ const CASLA_JUGADORES = [
       "flotado": {
         "desde_z1": {
           "total": {
-            "tot": 28,
-            "eff": 59,
-            "pos": 82,
-            "neg": 4
+            "tot": 31,
+            "eff": 56,
+            "pos": 81,
+            "neg": 3
           },
           "p1": {
-            "tot": 14,
-            "eff": 36,
-            "pos": 36,
+            "tot": 16,
+            "eff": 31,
+            "pos": 31,
             "neg": 0
           },
           "p6": {
-            "tot": 14,
-            "eff": 43,
-            "pos": 79,
+            "tot": 15,
+            "eff": 40,
+            "pos": 80,
             "neg": 7
           },
           "p5": {
@@ -1453,10 +1474,10 @@ const CASLA_JUGADORES = [
         },
         "desde_z6": {
           "total": {
-            "tot": 18,
-            "eff": 53,
-            "pos": 72,
-            "neg": 6
+            "tot": 19,
+            "eff": 50,
+            "pos": 74,
+            "neg": 5
           },
           "p1": {
             "tot": 6,
@@ -1479,22 +1500,22 @@ const CASLA_JUGADORES = [
         },
         "desde_z5": {
           "total": {
-            "tot": 38,
-            "eff": 45,
-            "pos": 66,
-            "neg": 8
+            "tot": 43,
+            "eff": 48,
+            "pos": 67,
+            "neg": 7
           },
           "p1": {
-            "tot": 19,
-            "eff": 26,
-            "pos": 63,
-            "neg": 11
+            "tot": 22,
+            "eff": 32,
+            "pos": 68,
+            "neg": 9
           },
           "p6": {
-            "tot": 15,
-            "eff": 57,
-            "pos": 73,
-            "neg": 7
+            "tot": 17,
+            "eff": 56,
+            "pos": 71,
+            "neg": 6
           },
           "p5": {
             "tot": 4,
@@ -1507,22 +1528,22 @@ const CASLA_JUGADORES = [
       "potencia": {
         "desde_z1": {
           "total": {
-            "tot": 17,
-            "eff": 3,
-            "pos": 18,
-            "neg": 12
+            "tot": 27,
+            "eff": 7,
+            "pos": 22,
+            "neg": 11
           },
           "p1": {
-            "tot": 6,
-            "eff": 0,
-            "pos": 17,
-            "neg": 17
+            "tot": 13,
+            "eff": 8,
+            "pos": 23,
+            "neg": 15
           },
           "p6": {
-            "tot": 11,
+            "tot": 14,
             "eff": 0,
-            "pos": 18,
-            "neg": 9
+            "pos": 21,
+            "neg": 7
           },
           "p5": {
             "tot": 0,
@@ -1559,20 +1580,20 @@ const CASLA_JUGADORES = [
         },
         "desde_z5": {
           "total": {
-            "tot": 2,
-            "eff": -25,
-            "pos": 50,
-            "neg": 50
+            "tot": 7,
+            "eff": -7,
+            "pos": 29,
+            "neg": 29
           },
           "p1": {
-            "tot": 1,
-            "eff": -100,
+            "tot": 5,
+            "eff": -40,
             "pos": 0,
-            "neg": 100
+            "neg": 40
           },
           "p6": {
-            "tot": 1,
-            "eff": 50,
+            "tot": 2,
+            "eff": 75,
             "pos": 100,
             "neg": 0
           },
@@ -1982,15 +2003,15 @@ const CASLA_JUGADORES = [
         "destinos": [
           {
             "z": 6,
-            "pct": 34
+            "pct": 37
           },
           {
             "z": 5,
-            "pct": 21
+            "pct": 20
           },
           {
             "z": 7,
-            "pct": 21
+            "pct": 20
           },
           {
             "z": 9,
@@ -1998,7 +2019,7 @@ const CASLA_JUGADORES = [
           }
         ],
         "eff": 1,
-        "tot": 29,
+        "tot": 30,
         "pts": 0,
         "plus": 3,
         "slash": 1,
@@ -2013,29 +2034,29 @@ const CASLA_JUGADORES = [
         "destinos": [
           {
             "z": 6,
-            "pct": 58
+            "pct": 56
           },
           {
             "z": 1,
-            "pct": 29
+            "pct": 32
           },
           {
             "z": 5,
-            "pct": 10
+            "pct": 11
           },
           {
             "z": 7,
-            "pct": 3
+            "pct": 2
           }
         ],
         "eff": 2,
-        "tot": 77,
+        "tot": 100,
         "pts": 4,
-        "plus": 11,
-        "slash": 2,
-        "err": 6,
+        "plus": 12,
+        "slash": 4,
+        "err": 7,
         "video": 0,
-        "pts_pct": 5
+        "pts_pct": 4
       }
     ],
     "video": 0,
@@ -2070,9 +2091,9 @@ const CASLA_JUGADORES = [
         },
         "desde_z6": {
           "total": {
-            "tot": 12,
-            "eff": 62,
-            "pos": 92,
+            "tot": 13,
+            "eff": 58,
+            "pos": 85,
             "neg": 0
           },
           "p1": {
@@ -2082,9 +2103,9 @@ const CASLA_JUGADORES = [
             "neg": 0
           },
           "p6": {
-            "tot": 7,
-            "eff": 64,
-            "pos": 86,
+            "tot": 8,
+            "eff": 56,
+            "pos": 75,
             "neg": 0
           },
           "p5": {
@@ -2096,56 +2117,56 @@ const CASLA_JUGADORES = [
         },
         "desde_z5": {
           "total": {
-            "tot": 29,
-            "eff": 62,
-            "pos": 83,
-            "neg": 3
+            "tot": 44,
+            "eff": 51,
+            "pos": 73,
+            "neg": 7
           },
           "p1": {
-            "tot": 2,
-            "eff": 50,
-            "pos": 50,
+            "tot": 8,
+            "eff": 38,
+            "pos": 62,
             "neg": 0
           },
           "p6": {
-            "tot": 15,
+            "tot": 17,
             "eff": 53,
-            "pos": 80,
-            "neg": 7
+            "pos": 76,
+            "neg": 6
           },
           "p5": {
-            "tot": 9,
-            "eff": 67,
-            "pos": 89,
-            "neg": 0
+            "tot": 16,
+            "eff": 38,
+            "pos": 69,
+            "neg": 12
           }
         }
       },
       "potencia": {
         "desde_z1": {
           "total": {
-            "tot": 16,
-            "eff": 12,
-            "pos": 44,
+            "tot": 24,
+            "eff": 4,
+            "pos": 33,
             "neg": 25
           },
           "p1": {
-            "tot": 1,
-            "eff": 0,
+            "tot": 3,
+            "eff": -33,
             "pos": 0,
-            "neg": 0
+            "neg": 33
           },
           "p6": {
-            "tot": 8,
-            "eff": 38,
-            "pos": 62,
-            "neg": 12
+            "tot": 12,
+            "eff": 25,
+            "pos": 50,
+            "neg": 8
           },
           "p5": {
-            "tot": 7,
-            "eff": -29,
-            "pos": 29,
-            "neg": 43
+            "tot": 9,
+            "eff": -22,
+            "pos": 22,
+            "neg": 44
           }
         },
         "desde_z6": {
@@ -2176,25 +2197,25 @@ const CASLA_JUGADORES = [
         },
         "desde_z5": {
           "total": {
-            "tot": 7,
-            "eff": 21,
-            "pos": 43,
+            "tot": 10,
+            "eff": 15,
+            "pos": 30,
             "neg": 0
           },
           "p1": {
-            "tot": 3,
+            "tot": 4,
             "eff": 0,
-            "pos": 33,
+            "pos": 25,
             "neg": 0
           },
           "p6": {
-            "tot": 3,
-            "eff": 33,
-            "pos": 67,
+            "tot": 4,
+            "eff": 25,
+            "pos": 50,
             "neg": 0
           },
           "p5": {
-            "tot": 1,
+            "tot": 2,
             "eff": 0,
             "pos": 0,
             "neg": 0
@@ -2463,27 +2484,27 @@ const CASLA_JUGADORES = [
         "orig": 6,
         "destinos": [
           {
+            "z": 5,
+            "pct": 34
+          },
+          {
             "z": 7,
-            "pct": 29
+            "pct": 22
           },
           {
             "z": 6,
-            "pct": 23
-          },
-          {
-            "z": 5,
-            "pct": 21
+            "pct": 22
           },
           {
             "z": 8,
-            "pct": 15
+            "pct": 12
           }
         ],
-        "eff": -2,
-        "tot": 54,
+        "eff": 0,
+        "tot": 70,
         "pts": 0,
-        "plus": 5,
-        "slash": 3,
+        "plus": 7,
+        "slash": 5,
         "err": 4,
         "video": 0,
         "pts_pct": 0
@@ -2663,19 +2684,19 @@ const CASLA_JUGADORES = [
         "destinos": [
           {
             "z": 6,
-            "pct": 58
+            "pct": 57
           },
           {
             "z": 5,
-            "pct": 38
+            "pct": 39
           },
           {
             "z": 1,
             "pct": 4
           }
         ],
-        "eff": -13,
-        "tot": 36,
+        "eff": -12,
+        "tot": 38,
         "pts": 4,
         "plus": 3,
         "slash": 1,
@@ -2695,62 +2716,62 @@ const CASLA_ARMADOR = {
     "rotaciones": [
       {
         "pos": "P1",
-        "total": 30,
+        "total": 43,
         "dist": [
           {
             "zona": 4,
-            "tot": 11,
-            "pts": 4,
+            "tot": 16,
+            "pts": 6,
             "pct": 37,
-            "pct_p": 36
+            "pct_p": 38
           },
           {
             "zona": 3,
-            "tot": 10,
-            "pts": 5,
-            "pct": 33,
-            "pct_p": 50
+            "tot": 16,
+            "pts": 9,
+            "pct": 37,
+            "pct_p": 56
           },
           {
             "zona": 2,
-            "tot": 7,
-            "pts": 3,
-            "pct": 23,
-            "pct_p": 43
+            "tot": 9,
+            "pts": 4,
+            "pct": 21,
+            "pct_p": 44
           },
           {
             "zona": 6,
             "tot": 2,
             "pts": 2,
-            "pct": 7,
+            "pct": 5,
             "pct_p": 100
           }
         ]
       },
       {
         "pos": "P6",
-        "total": 24,
+        "total": 34,
         "dist": [
           {
             "zona": 4,
-            "tot": 9,
-            "pts": 3,
-            "pct": 38,
-            "pct_p": 33
+            "tot": 14,
+            "pts": 6,
+            "pct": 41,
+            "pct_p": 43
           },
           {
             "zona": 3,
-            "tot": 7,
+            "tot": 10,
             "pts": 4,
             "pct": 29,
-            "pct_p": 57
+            "pct_p": 40
           },
           {
             "zona": 2,
-            "tot": 8,
+            "tot": 10,
             "pts": 5,
-            "pct": 33,
-            "pct_p": 62
+            "pct": 29,
+            "pct_p": 50
           },
           {
             "zona": 6,
@@ -2763,21 +2784,89 @@ const CASLA_ARMADOR = {
       },
       {
         "pos": "P5",
-        "total": 26,
+        "total": 29,
         "dist": [
           {
             "zona": 4,
-            "tot": 9,
-            "pts": 6,
-            "pct": 35,
+            "tot": 10,
+            "pts": 7,
+            "pct": 34,
+            "pct_p": 70
+          },
+          {
+            "zona": 3,
+            "tot": 13,
+            "pts": 7,
+            "pct": 45,
+            "pct_p": 54
+          },
+          {
+            "zona": 2,
+            "tot": 6,
+            "pts": 3,
+            "pct": 21,
+            "pct_p": 50
+          },
+          {
+            "zona": 6,
+            "tot": 0,
+            "pts": 0,
+            "pct": 0,
+            "pct_p": 0
+          }
+        ]
+      },
+      {
+        "pos": "P4",
+        "total": 29,
+        "dist": [
+          {
+            "zona": 4,
+            "tot": 12,
+            "pts": 8,
+            "pct": 41,
             "pct_p": 67
           },
           {
             "zona": 3,
-            "tot": 12,
-            "pts": 7,
-            "pct": 46,
-            "pct_p": 58
+            "tot": 10,
+            "pts": 4,
+            "pct": 34,
+            "pct_p": 40
+          },
+          {
+            "zona": 2,
+            "tot": 7,
+            "pts": 3,
+            "pct": 24,
+            "pct_p": 43
+          },
+          {
+            "zona": 6,
+            "tot": 0,
+            "pts": 0,
+            "pct": 0,
+            "pct_p": 0
+          }
+        ]
+      },
+      {
+        "pos": "P3",
+        "total": 26,
+        "dist": [
+          {
+            "zona": 4,
+            "tot": 10,
+            "pts": 5,
+            "pct": 38,
+            "pct_p": 50
+          },
+          {
+            "zona": 3,
+            "tot": 10,
+            "pts": 8,
+            "pct": 38,
+            "pct_p": 80
           },
           {
             "zona": 2,
@@ -2796,103 +2885,35 @@ const CASLA_ARMADOR = {
         ]
       },
       {
-        "pos": "P4",
-        "total": 25,
-        "dist": [
-          {
-            "zona": 4,
-            "tot": 9,
-            "pts": 5,
-            "pct": 36,
-            "pct_p": 56
-          },
-          {
-            "zona": 3,
-            "tot": 10,
-            "pts": 4,
-            "pct": 40,
-            "pct_p": 40
-          },
-          {
-            "zona": 2,
-            "tot": 6,
-            "pts": 3,
-            "pct": 24,
-            "pct_p": 50
-          },
-          {
-            "zona": 6,
-            "tot": 0,
-            "pts": 0,
-            "pct": 0,
-            "pct_p": 0
-          }
-        ]
-      },
-      {
-        "pos": "P3",
-        "total": 24,
-        "dist": [
-          {
-            "zona": 4,
-            "tot": 10,
-            "pts": 5,
-            "pct": 42,
-            "pct_p": 50
-          },
-          {
-            "zona": 3,
-            "tot": 8,
-            "pts": 6,
-            "pct": 33,
-            "pct_p": 75
-          },
-          {
-            "zona": 2,
-            "tot": 5,
-            "pts": 2,
-            "pct": 21,
-            "pct_p": 40
-          },
-          {
-            "zona": 6,
-            "tot": 0,
-            "pts": 0,
-            "pct": 0,
-            "pct_p": 0
-          }
-        ]
-      },
-      {
         "pos": "P2",
-        "total": 18,
+        "total": 22,
         "dist": [
           {
             "zona": 4,
-            "tot": 6,
-            "pts": 1,
-            "pct": 33,
-            "pct_p": 17
+            "tot": 7,
+            "pts": 2,
+            "pct": 32,
+            "pct_p": 29
           },
           {
             "zona": 3,
-            "tot": 8,
-            "pts": 6,
-            "pct": 44,
-            "pct_p": 75
+            "tot": 10,
+            "pts": 7,
+            "pct": 45,
+            "pct_p": 70
           },
           {
             "zona": 2,
-            "tot": 3,
+            "tot": 4,
             "pts": 2,
-            "pct": 17,
-            "pct_p": 67
+            "pct": 18,
+            "pct_p": 50
           },
           {
             "zona": 6,
             "tot": 1,
             "pts": 0,
-            "pct": 6,
+            "pct": 5,
             "pct_p": 0
           }
         ]
@@ -2901,98 +2922,98 @@ const CASLA_ARMADOR = {
     "pills": [
       {
         "label": "P1",
-        "eff": 37,
-        "tot": 30,
-        "pts": 14,
-        "pts_pct": 47,
-        "err_pct": 10
+        "eff": 40,
+        "tot": 43,
+        "pts": 21,
+        "pts_pct": 49,
+        "err_pct": 9
       },
       {
         "label": "P6",
-        "eff": 29,
-        "tot": 24,
-        "pts": 12,
-        "pts_pct": 50,
-        "err_pct": 21
+        "eff": 18,
+        "tot": 34,
+        "pts": 15,
+        "pts_pct": 44,
+        "err_pct": 26
       },
       {
         "label": "P5",
-        "eff": 42,
-        "tot": 26,
-        "pts": 15,
-        "pts_pct": 58,
-        "err_pct": 15
+        "eff": 41,
+        "tot": 29,
+        "pts": 17,
+        "pts_pct": 59,
+        "err_pct": 17
       },
       {
         "label": "P4",
-        "eff": 32,
-        "tot": 25,
-        "pts": 12,
-        "pts_pct": 48,
-        "err_pct": 16
+        "eff": 34,
+        "tot": 29,
+        "pts": 15,
+        "pts_pct": 52,
+        "err_pct": 17
       },
       {
         "label": "P3",
-        "eff": 33,
-        "tot": 24,
-        "pts": 13,
-        "pts_pct": 54,
-        "err_pct": 21
+        "eff": 38,
+        "tot": 26,
+        "pts": 15,
+        "pts_pct": 58,
+        "err_pct": 19
       },
       {
         "label": "P2",
-        "eff": 44,
-        "tot": 18,
-        "pts": 9,
+        "eff": 45,
+        "tot": 22,
+        "pts": 11,
         "pts_pct": 50,
-        "err_pct": 6
+        "err_pct": 5
       },
       {
         "label": "SO",
         "eff": 36,
-        "tot": 147,
-        "pts": 75,
+        "tot": 183,
+        "pts": 94,
         "pts_pct": 51,
-        "err_pct": 15
+        "err_pct": 16
       },
       {
         "label": "TR",
-        "eff": 16,
-        "tot": 122,
-        "pts": 44,
-        "pts_pct": 36,
+        "eff": 17,
+        "tot": 167,
+        "pts": 61,
+        "pts_pct": 37,
         "err_pct": 20
       }
     ],
     "recepcion": [
       {
         "label": "SO",
-        "eff": 37
+        "eff": 36
       },
       {
         "label": "REC #",
-        "eff": 37
+        "eff": 33
       },
       {
         "label": "REC +",
-        "eff": 35
+        "eff": 38
       },
       {
         "label": "REC !",
-        "eff": 59
+        "eff": 56
       },
       {
         "label": "REC -",
-        "eff": 16
+        "eff": 17
       },
       {
         "label": "TRANS",
-        "eff": 16
+        "eff": 17
       }
     ],
     "so": {
       "label": "SO",
-      "total": 147,
+      "total": 183,
       "dist": [
         {
           "zona": 4,
@@ -3033,7 +3054,7 @@ const CASLA_ARMADOR = {
     },
     "tr": {
       "label": "TR",
-      "total": 122,
+      "total": 167,
       "dist": [
         {
           "zona": 4,
@@ -3078,27 +3099,27 @@ const CASLA_ARMADOR = {
     "rotaciones": [
       {
         "pos": "P1",
-        "total": 27,
+        "total": 28,
         "dist": [
           {
             "zona": 4,
             "tot": 11,
             "pts": 3,
-            "pct": 41,
+            "pct": 39,
             "pct_p": 27
           },
           {
             "zona": 3,
-            "tot": 8,
-            "pts": 4,
-            "pct": 30,
-            "pct_p": 50
+            "tot": 9,
+            "pts": 5,
+            "pct": 32,
+            "pct_p": 56
           },
           {
             "zona": 2,
             "tot": 6,
             "pts": 0,
-            "pct": 22,
+            "pct": 21,
             "pct_p": 0
           },
           {
@@ -3284,11 +3305,11 @@ const CASLA_ARMADOR = {
     "pills": [
       {
         "label": "P1",
-        "eff": -4,
-        "tot": 27,
-        "pts": 7,
-        "pts_pct": 26,
-        "err_pct": 30
+        "eff": 0,
+        "tot": 28,
+        "pts": 8,
+        "pts_pct": 29,
+        "err_pct": 29
       },
       {
         "label": "P6",
@@ -3332,9 +3353,9 @@ const CASLA_ARMADOR = {
       },
       {
         "label": "SO",
-        "eff": 33,
-        "tot": 121,
-        "pts": 59,
+        "eff": 34,
+        "tot": 122,
+        "pts": 60,
         "pts_pct": 49,
         "err_pct": 16
       },
@@ -3358,7 +3379,7 @@ const CASLA_ARMADOR = {
       },
       {
         "label": "REC +",
-        "eff": 35
+        "eff": 36
       },
       {
         "label": "REC !",
@@ -3375,7 +3396,7 @@ const CASLA_ARMADOR = {
     ],
     "so": {
       "label": "SO",
-      "total": 121,
+      "total": 122,
       "dist": [
         {
           "zona": 4,

@@ -1,5 +1,5 @@
-// datos_entrenamientos.js — 31/05/2026 15:14
-const ENTRENAMIENTOS_GENERADO = "31/05/2026 15:14";
+// datos_entrenamientos.js — 01/06/2026 14:18
+const ENTRENAMIENTOS_GENERADO = "01/06/2026 14:18";
 const ENTRENAMIENTOS_TOTAL = 3;
 const ENTRENAMIENTOS_META = [
   {
@@ -182,16 +182,16 @@ const ENTRENAMIENTOS_JUGADORES = [
     "recepcion": {},
     "objetivos": {
       "sq": -11,
-      "rec": 12,
-      "bqpos": 66,
+      "rec": 20,
+      "bqpos": 64,
       "bqpt": 34,
-      "atqq": 52,
+      "atqq": 55,
       "atqhb": null,
       "atqx": -100,
       "atqrp": 50,
-      "atqri": 33,
+      "atqri": 71,
       "atqrm": 67,
-      "atqtr": 40
+      "atqtr": 44
     }
   },
   {
@@ -466,17 +466,17 @@ const ENTRENAMIENTOS_JUGADORES = [
     "video": 0,
     "recepcion": {},
     "objetivos": {
-      "sq": 8,
-      "rec": -50,
+      "sq": 7,
+      "rec": -33,
       "bqpos": 50,
-      "bqpt": 11,
+      "bqpt": 9,
       "atqq": null,
       "atqhb": 0,
       "atqx": null,
       "atqrp": 0,
       "atqri": 0,
-      "atqrm": null,
-      "atqtr": 36
+      "atqrm": 0,
+      "atqtr": 33
     }
   },
   {
@@ -643,15 +643,15 @@ const ENTRENAMIENTOS_JUGADORES = [
     "objetivos": {
       "sq": -30,
       "rec": 25,
-      "bqpos": 29,
-      "bqpt": 13,
+      "bqpos": 37,
+      "bqpt": 17,
       "atqq": null,
-      "atqhb": 15,
-      "atqx": 30,
-      "atqrp": 34,
-      "atqri": 14,
-      "atqrm": 12,
-      "atqtr": 27
+      "atqhb": 28,
+      "atqx": 26,
+      "atqrp": 32,
+      "atqri": 15,
+      "atqrm": 21,
+      "atqtr": 32
     }
   },
   {
@@ -856,8 +856,8 @@ const ENTRENAMIENTOS_JUGADORES = [
       }
     },
     "objetivos": {
-      "sq": -29,
-      "rec": 62,
+      "sq": -25,
+      "rec": 60,
       "bqpos": 100,
       "bqpt": 0,
       "atqq": null,
@@ -930,7 +930,7 @@ const ENTRENAMIENTOS_JUGADORES = [
     "video": 0,
     "recepcion": {},
     "objetivos": {
-      "sq": 4,
+      "sq": 2,
       "rec": 0,
       "bqpos": 42,
       "bqpt": 8,
@@ -1316,17 +1316,17 @@ const ENTRENAMIENTOS_JUGADORES = [
       }
     },
     "objetivos": {
-      "sq": -19,
-      "rec": 39,
-      "bqpos": 38,
+      "sq": -16,
+      "rec": 37,
+      "bqpos": 37,
       "bqpt": 13,
       "atqq": null,
-      "atqhb": 8,
-      "atqx": 31,
-      "atqrp": 33,
-      "atqri": 67,
-      "atqrm": 15,
-      "atqtr": 8
+      "atqhb": 10,
+      "atqx": 34,
+      "atqrp": 36,
+      "atqri": 71,
+      "atqrm": 5,
+      "atqtr": 14
     }
   },
   {
@@ -1532,7 +1532,7 @@ const ENTRENAMIENTOS_JUGADORES = [
     },
     "objetivos": {
       "sq": null,
-      "rec": 36,
+      "rec": 34,
       "bqpos": null,
       "bqpt": null,
       "atqq": null,
@@ -2064,16 +2064,16 @@ const ENTRENAMIENTOS_JUGADORES = [
     },
     "objetivos": {
       "sq": 2,
-      "rec": 46,
-      "bqpos": 40,
-      "bqpt": 13,
+      "rec": 40,
+      "bqpos": 42,
+      "bqpt": 15,
       "atqq": null,
-      "atqhb": 19,
-      "atqx": 34,
-      "atqrp": 23,
-      "atqri": 44,
-      "atqrm": 21,
-      "atqtr": 28
+      "atqhb": 16,
+      "atqx": 31,
+      "atqrp": 25,
+      "atqri": 48,
+      "atqrm": 13,
+      "atqtr": 23
     }
   },
   {
@@ -2293,17 +2293,17 @@ const ENTRENAMIENTOS_JUGADORES = [
     "video": 0,
     "recepcion": {},
     "objetivos": {
-      "sq": -2,
+      "sq": 0,
       "rec": null,
-      "bqpos": 43,
+      "bqpos": 44,
       "bqpt": 26,
-      "atqq": 35,
+      "atqq": 29,
       "atqhb": null,
       "atqx": null,
-      "atqrp": 21,
-      "atqri": 58,
+      "atqrp": 22,
+      "atqri": 47,
       "atqrm": null,
-      "atqtr": 44
+      "atqtr": 23
     }
   },
   {
@@ -2346,17 +2346,17 @@ const ENTRENAMIENTOS_JUGADORES = [
     "video": 0,
     "recepcion": {},
     "objetivos": {
-      "sq": -13,
+      "sq": -12,
       "rec": null,
-      "bqpos": 38,
-      "bqpt": 8,
+      "bqpos": 43,
+      "bqpt": 7,
       "atqq": null,
-      "atqhb": -3,
-      "atqx": 31,
-      "atqrp": 25,
+      "atqhb": 3,
+      "atqx": 29,
+      "atqrp": 23,
       "atqri": 58,
-      "atqrm": 33,
-      "atqtr": 6
+      "atqrm": 50,
+      "atqtr": 8
     }
   },
   {
@@ -2399,7 +2399,7 @@ const ENTRENAMIENTOS_JUGADORES = [
     "video": 0,
     "recepcion": {},
     "objetivos": {
-      "sq": 7,
+      "sq": 4,
       "rec": null,
       "bqpos": null,
       "bqpt": null,
@@ -12280,4 +12280,4 @@ const ENTRENAMIENTOS_INDIVIDUAL = [
 ];
 
 // Objetivos del equipo acumulado
-const ENTRENAMIENTOS_EQUIPO_OBJ = {"sq": -6, "rec": 35, "bqpos": 45, "bqpt": 19, "atqq": 45, "atqhb": 11, "atqx": 30, "atqrp": 35, "atqri": 40, "atqrm": 20, "atqtr": 20};
+const ENTRENAMIENTOS_EQUIPO_OBJ = {"sq": -6, "rec": 33, "bqpos": 46, "bqpt": 20, "atqq": 43, "atqhb": 15, "atqx": 29, "atqrp": 35, "atqri": 42, "atqrm": 17, "atqtr": 21};
