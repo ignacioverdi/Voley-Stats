@@ -281,7 +281,7 @@ body{background:#07080f;color:#e2e8f0;font-family:'Barlow Condensed',sans-serif;
 </head>
 <body>
 <div class="hdr">
-  <a href="javascript:history.back()" class="back-btn">← Volver</a>
+  <a id="back-jug" href="jugador.html" class="back-btn">← Perfil</a>
   <div style="flex-shrink:0">
     <div id="jug-title" style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#e2e8f0">ATAQUES</div>
     <div style="font-size:9px;color:#475569;letter-spacing:2px;text-transform:uppercase">CASLA VOLEY</div>
@@ -656,6 +656,8 @@ function renderPage(){
 
   var nm=j.nombre.replace(/^\d+\s*/,'');
   var suffix=currentFiltro==='entrenamiento'?' (ENT)':currentPartido!=='acumulado'?' ('+currentPartido+')':'';
+  document.getElementById('back-jug').href='jugador.html?num='+currentNum;
+  document.getElementById('back-jug').href='jugador.html?num='+currentNum;
   document.getElementById('jug-title').textContent='💥 ATAQUES — '+nm+suffix;
 
   cont.innerHTML='';

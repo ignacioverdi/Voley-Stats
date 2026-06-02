@@ -252,7 +252,6 @@ select, select option {
   background-color: #ffffff !important;
 }
 </style>
-<script src="datos_equipo.js" onerror="void 0"></script>
 <script src="firebase.js" onerror="void 0"></script>
 <script src="lang.js"></script>
 
@@ -610,7 +609,7 @@ select, select option {
           </div>
         </div>
       </div>
-      <div style="position:relative;opacity:1;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;" data-card-idx="0">
+      <div style="position:relative;opacity:1;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;" data-rival="VELEZ">
         <div style="display:flex;align-items:stretch;">
           <!-- Fecha -->
           <div style="background:rgba(255,255,255,.03);border-right:1px solid var(--border);padding:16px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:64px;gap:2px;">
@@ -634,7 +633,7 @@ select, select option {
           </div>
         </div>
       </div>
-      <div style="position:relative;opacity:1;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;" data-card-idx="1">
+      <div style="position:relative;opacity:1;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;" data-rival="DBANF">
         <div style="display:flex;align-items:stretch;">
           <!-- Fecha -->
           <div style="background:rgba(255,255,255,.03);border-right:1px solid var(--border);padding:16px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:64px;gap:2px;">
@@ -658,7 +657,7 @@ select, select option {
           </div>
         </div>
       </div>
-      <div style="position:relative;opacity:1;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;" data-card-idx="2">
+      <div style="position:relative;opacity:1;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;" data-rival="LOMAS">
         
         <div style="display:flex;align-items:stretch;">
           <!-- Fecha -->
@@ -683,7 +682,7 @@ select, select option {
           </div>
         </div>
       </div>
-      <div style="position:relative;opacity:1;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;" data-card-idx="3">
+      <div style="position:relative;opacity:1;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;" data-rival="UBA">
         
         <div style="display:flex;align-items:stretch;">
           <!-- Fecha -->
@@ -707,7 +706,7 @@ select, select option {
           </div>
         </div>
       </div>
-      <div style="position:relative;opacity:1;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;" data-card-idx="4">
+      <div style="position:relative;opacity:1;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;" data-rival="CCC">
         
         <div style="display:flex;align-items:stretch;">
           <!-- Fecha -->
@@ -731,7 +730,7 @@ select, select option {
           </div>
         </div>
       </div>
-      <div style="position:relative;opacity:1;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;" data-card-idx="5">
+      <div style="position:relative;opacity:1;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;" data-rival="BOCA">
         
         <div style="display:flex;align-items:stretch;">
           <!-- Fecha -->
@@ -755,7 +754,7 @@ select, select option {
           </div>
         </div>
       </div>
-      <div style="position:relative;opacity:1;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;" data-card-idx="6">
+      <div style="position:relative;opacity:1;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;" data-rival="RIVER">
         
         <div style="display:flex;align-items:stretch;">
           <!-- Fecha -->
@@ -1174,36 +1173,69 @@ function pinSkip(){
 }
 
 // ── INIT ──────────────────────────────────────────────────────
+
+// ── AUTO-RESULTADOS desde PARTIDOS_META ─────────────────────────────
+function updateResultados(){
+  if(typeof PARTIDOS_META === 'undefined') return;
+  PARTIDOS_META.forEach(function(m){
+    if(!m.sets_casla || !m.sets_rival) return;
+    var rival = (m.rival||'').toUpperCase();
+    // Find card by rival name
+    var card = document.querySelector('[data-rival="'+rival+'"]');
+    if(!card) return;
+    // Check if result already shown
+    if(card.querySelector('.auto-result')) return;
+    // Build result
+    var casla = parseInt(m.sets_casla);
+    var riv   = parseInt(m.sets_rival);
+    var win   = casla > riv;
+    var color = win ? '#22c55e' : '#ef4444';
+    var tipo  = win ? 'VICTORIA' : 'DERROTA';
+    var div = document.createElement('div');
+    div.className = 'auto-result';
+    div.style.cssText = "font-family:'Bebas Neue',sans-serif;font-size:16px;color:"+color+";letter-spacing:2px;";
+    div.innerHTML = casla+' — '+riv+' <span style="font-size:9px;color:#64748b;letter-spacing:1px;">'+tipo+'</span>';
+    // Insert after the CASLA vs RIVAL line
+    var rivalDiv = card.querySelector('[style*="font-size:17px"]');
+    if(rivalDiv && rivalDiv.nextSibling){
+      // Only add if not already there
+      if(!rivalDiv.nextElementSibling || !rivalDiv.nextElementSibling.classList.contains('auto-result')){
+        rivalDiv.parentNode.insertBefore(div, rivalDiv.nextSibling);
+      }
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function(){
   initCountdown();
   initBaggeroneTop3();
   initPin();
   highlightNextMatch();
+  updateResultados();
 });
 
 function highlightNextMatch(){
   var ahora = Date.now();
-  var proxIdx = -1;
+  var proxRival = null;
   
-  // Find next match in FIXTURE
-  for(var i=0; i<FIXTURE.length; i++){
-    if(!FIXTURE[i].jugado && FIXTURE[i].ts > ahora){
-      proxIdx = i;
+  // Find next match in FIXTURE by date
+  var sorted = FIXTURE.slice().sort(function(a,b){ return a.ts - b.ts; });
+  for(var i=0; i<sorted.length; i++){
+    if(!sorted[i].jugado && sorted[i].ts > ahora){
+      proxRival = sorted[i].rival;
       break;
     }
   }
   
-  if(proxIdx < 0) return;
+  if(!proxRival) return;
   
-  // Find the card with data-card-idx matching proxIdx
-  var cards = document.querySelectorAll('[data-card-idx]');
+  // Find the card with data-rival matching next rival
+  var cards = document.querySelectorAll('[data-rival]');
   cards.forEach(function(card){
-    var idx = parseInt(card.getAttribute('data-card-idx'));
-    if(idx === proxIdx){
-      // Apply red border
+    var rival = card.getAttribute('data-rival');
+    if(rival === proxRival){
       card.style.border = '1px solid rgba(232,25,44,.25)';
       card.style.boxShadow = '0 0 20px rgba(232,25,44,.15)';
-      // Add PRÓXIMO badge
       var badge = document.createElement('div');
       badge.textContent = 'PRÓXIMO';
       badge.style.cssText = 'position:absolute;top:-1px;right:12px;background:#e8192c;color:#fff;font-size:8px;font-family:Bebas Neue,sans-serif;letter-spacing:2px;padding:2px 8px;border-radius:0 0 6px 6px';
