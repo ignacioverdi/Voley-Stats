@@ -152,9 +152,9 @@ function renderObjetivos(cid,extra){
     +[['#22c55e','Objetivo'],['#86efac','Cerca'],['#fbbf24','Neutro'],['#ef4444','Lejos']].map(function(x){
       return'<div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#64748b"><div style="width:7px;height:7px;border-radius:50%;background:'+x[0]+'"></div>'+x[1]+'</div>';
     }).join('')+'</div></div>'
-    +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px">'
+    +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px;align-items:flex-end">'
     +Object.keys(metas).map(function(id){
-      return '<div style="flex:1;min-width:60px;text-align:center;padding:4px 2px">'
+      return '<div style="flex:1;min-width:60px;max-width:110px;text-align:center;padding:4px 5px">'
         +'<div style="font-size:10px;font-weight:800;color:#e2e8f0;letter-spacing:0.5px;text-transform:uppercase;line-height:1.3;word-break:break-word">'+metas[id].label+'</div>'
         +'<div style="font-size:10px;color:#22c55e;font-weight:700;margin-top:3px">'+metas[id].obj+'%</div>'
         +'</div>';
@@ -205,8 +205,8 @@ function renderObjetivos(cid,extra){
     +[['#22c55e','Objetivo'],['#86efac','Cerca'],['#fbbf24','Neutro'],['#ef4444','Lejos']].map(function(x){
       return'<div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#64748b"><div style="width:7px;height:7px;border-radius:50%;background:'+x[0]+'"></div>'+x[1]+'</div>';
     }).join('')+'</div></div>'
-    +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px">'
-    +Object.keys(metas).map(function(id){return '<div style="flex:1;min-width:60px;text-align:center;padding:4px 2px">'
+    +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px;align-items:flex-end">'
+    +Object.keys(metas).map(function(id){return '<div style="flex:1;min-width:60px;max-width:110px;text-align:center;padding:4px 5px">'
         +'<div style="font-size:10px;font-weight:800;color:#e2e8f0;letter-spacing:0.5px;text-transform:uppercase;line-height:1.3;word-break:break-word">'+metas[id].label+'</div>'
         +'<div style="font-size:10px;color:#22c55e;font-weight:700;margin-top:3px">'+metas[id].obj+'%</div>'
         +'</div>';}).join('')
@@ -232,9 +232,9 @@ function renderObjetivosJugador(cid,nombre,extra){
     +[['#22c55e','Sobre equipo'],['#86efac','Cerca'],['#fbbf24','Neutro'],['#ef4444','Bajo equipo']].map(function(x){
       return'<div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#64748b"><div style="width:7px;height:7px;border-radius:50%;background:'+x[0]+'"></div>'+x[1]+'</div>';
     }).join('')+'</div></div>'
-    +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px">'
+    +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px;align-items:flex-end">'
     +'<div style="width:64px;flex-shrink:0"></div>'
-    +Object.keys(metas).map(function(id){return '<div style="flex:1;min-width:60px;text-align:center;padding:4px 2px">'
+    +Object.keys(metas).map(function(id){return '<div style="flex:1;min-width:60px;max-width:110px;text-align:center;padding:4px 5px">'
         +'<div style="font-size:10px;font-weight:800;color:#e2e8f0;letter-spacing:0.5px;text-transform:uppercase;line-height:1.3;word-break:break-word">'+metas[id].label+'</div>'
         +'<div style="font-size:10px;color:#22c55e;font-weight:700;margin-top:3px">'+metas[id].obj+'%</div>'
         +'</div>';}).join('')

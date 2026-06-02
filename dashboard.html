@@ -894,6 +894,15 @@ function renderGamePlans(){
   cont.innerHTML = '';
   sorted.forEach(function(gp){
     var done = !!gp.resultado;
+    // Also mark as done if date is in the past (even without resultado)
+    if(!done && gp.fecha){
+      var parts = gp.fecha.split('/');
+      if(parts.length === 3){
+        var matchDate = new Date(parseInt(parts[2]), parseInt(parts[1])-1, parseInt(parts[0]));
+        var today = new Date(); today.setHours(0,0,0,0);
+        if(matchDate < today) done = true;
+      }
+    }
     var card = document.createElement('a');
     card.href = gp.archivo;
     card.style.cssText = 'display:block;background:var(--card);border:1px solid var(--b);border-radius:12px;overflow:hidden;text-decoration:none;color:inherit;transition:border-color .2s,transform .15s';
