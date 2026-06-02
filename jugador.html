@@ -219,7 +219,12 @@ function renderObjetivos(cid,extra){
       return'<div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#64748b"><div style="width:7px;height:7px;border-radius:50%;background:'+x[0]+'"></div>'+x[1]+'</div>';
     }).join('')+'</div></div>'
     +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px">'
-    +Object.keys(metas).map(function(id){return'<div style="flex:1;min-width:60px;max-width:110px;text-align:center;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#94a3b8">'+metas[id].label+'</div>';}).join('')
+    +Object.keys(metas).map(function(id){
+      return '<div style="flex:1;min-width:60px;max-width:110px;text-align:center;padding:2px 0">'
+        +'<div style="font-size:10px;font-weight:800;color:#e2e8f0;letter-spacing:0.5px;text-transform:uppercase;line-height:1.2">'+metas[id].label+'</div>'
+        +'<div style="font-size:9px;color:#64748b;margin-top:2px">obj: '+metas[id].obj+'%</div>'
+        +'</div>';
+    }).join('')
     +'</div><div style="display:flex;gap:8px;width:100%">'
     +Object.keys(metas).map(function(id){
       var m=metas[id],val=vals[id]!==undefined?vals[id]:null;
@@ -244,7 +249,12 @@ function renderObjetivosJugador(cid,nombre,extra){
     }).join('')+'</div></div>'
     +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px">'
     +'<div style="width:64px;flex-shrink:0"></div>'
-    +Object.keys(metas).map(function(id){return'<div style="flex:1;min-width:60px;max-width:110px;text-align:center;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#94a3b8">'+metas[id].label+'</div>';}).join('')
+    +Object.keys(metas).map(function(id){
+      return '<div style="flex:1;min-width:60px;max-width:110px;text-align:center;padding:2px 0">'
+        +'<div style="font-size:10px;font-weight:800;color:#e2e8f0;letter-spacing:0.5px;text-transform:uppercase;line-height:1.2">'+metas[id].label+'</div>'
+        +'<div style="font-size:9px;color:#64748b;margin-top:2px">obj: '+metas[id].obj+'%</div>'
+        +'</div>';
+    }).join('')
     +'</div>';
   rows.forEach(function(row){
     html+='<div style="display:flex;align-items:center;gap:8px;width:100%;margin-bottom:8px">'
@@ -1386,41 +1396,43 @@ function renderEvolucion(jugador){
     var trend = vals.length >= 2 ? vals[vals.length-1] - vals[vals.length-2] : 0;
     var trendStr = trend === 0 ? '→' : trend > 0 ? '↑ +'+trend+'%' : '↓ '+trend+'%';
     var trendCol = trend > 0 ? '#22c55e' : trend < 0 ? '#ef4444' : '#64748b';
-    var maxAbs = Math.max.apply(null, vals.map(function(v){return Math.abs(v);}));
-    if(maxAbs === 0) maxAbs = 1;
+    var maxVal = Math.max.apply(null, vals);
+    var minVal = Math.min.apply(null, vals);
+    var scaleCeil  = Math.max(maxVal, m.obj) + 10;
+    var scaleFloor = Math.min(minVal, 0);
+    var scaleRange = scaleCeil - scaleFloor;
+    if(scaleRange === 0) scaleRange = 1;
 
     html += '<div style="background:rgba(13,14,26,.8);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px 16px">';
-    // Header
     html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">';
     html += '<div style="font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:'+m.color+'">'+m.lbl+'</div>';
     html += '<div style="font-size:11px;color:'+trendCol+';font-weight:700">'+trendStr+'</div>';
     html += '</div>';
 
-    // Bar chart
-    html += '<div style="display:flex;gap:4px;align-items:flex-end;height:120px;margin-bottom:8px">';
+    var objPct = Math.round((m.obj - scaleFloor) / scaleRange * 100);
+    html += '<div style="position:relative;height:160px;margin-bottom:4px">';
+    html += '<div style="position:absolute;left:0;right:0;bottom:'+objPct+'%;border-top:1px dashed rgba(255,255,255,.25)">';
+    html += '<span style="position:absolute;right:2px;top:-12px;font-size:8px;color:rgba(255,255,255,.3)">'+m.obj+'%</span>';
+    html += '</div>';
+    html += '<div style="display:flex;gap:6px;align-items:flex-end;height:100%">';
     data.forEach(function(d, i){
       var v = d[m.key];
       if(v === null){
-        html += '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">';
         html += '<div style="flex:1"></div>';
-        html += '<div style="font-size:7px;color:#334155;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%">'+d.rival.substring(0,4)+'</div>';
-        html += '</div>';
         return;
       }
-      var pct = Math.max(5, Math.abs(v)/maxAbs*100);
-      var barCol = v >= m.obj ? m.color : v >= (m.obj-8) ? '#fbbf24' : '#ef4444';
-      var isLast = i === data.length-1;
-
-      html += '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">';
-      html += '<div style="font-size:10px;font-weight:800;color:'+barCol+'">'+v+'%</div>';
-      html += '<div style="width:100%;height:'+pct+'%;background:'+barCol+(isLast?'':'44')+';border-radius:4px 4px 0 0;border:1px solid '+barCol+(isLast?'':'33')+';min-height:6px;transition:height .3s"></div>';
-      html += '<div style="font-size:9px;color:#475569;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%">'+d.rival.substring(0,5)+'</div>';
+      var barH   = Math.max(4, Math.round((v - scaleFloor) / scaleRange * 100));
+      var barCol = v >= m.obj ? m.color : v >= (m.obj - 8) ? '#fbbf24' : '#ef4444';
+      var isLast = i === data.length - 1;
+      html += '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%">';
+      html += '<div style="font-size:11px;font-weight:800;color:'+barCol+';margin-bottom:3px">'+v+'%</div>';
+      html += '<div style="width:100%;height:'+barH+'%;background:'+barCol+';opacity:'+(isLast?'1':'0.5')+';border-radius:5px 5px 0 0;min-height:4px"></div>';
+      html += '<div style="font-size:9px;color:#475569;margin-top:4px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%">'+d.rival.substring(0,5)+'</div>';
       html += '</div>';
     });
-    html += '</div>';
+    html += '</div></div>';
 
-    // Average vs objective
-    html += '<div style="display:flex;justify-content:space-between;font-size:9px;color:#64748b;border-top:1px solid rgba(255,255,255,.05);padding-top:8px">';
+    html += '<div style="display:flex;justify-content:space-between;font-size:9px;color:#64748b;border-top:1px solid rgba(255,255,255,.05);padding-top:8px;margin-top:4px">';
     html += '<span>Promedio: <b style="color:'+(avg>=m.obj?'#22c55e':'#f59e0b')+'">'+avg+'%</b></span>';
     html += '<span>Objetivo: '+m.obj+'%</span>';
     html += '</div>';
