@@ -154,9 +154,9 @@ function renderObjetivos(cid,extra){
     }).join('')+'</div></div>'
     +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px">'
     +Object.keys(metas).map(function(id){
-      return '<div style="flex:1;min-width:60px;max-width:110px;text-align:center">'
-        +'<div style="font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#e2e8f0;line-height:1.2">'+metas[id].label+'</div>'
-        +'<div style="font-size:9px;color:#64748b;margin-top:2px">obj: '+metas[id].obj+'%</div>'
+      return '<div style="flex:1;min-width:60px;text-align:center;padding:4px 2px">'
+        +'<div style="font-size:10px;font-weight:800;color:#e2e8f0;letter-spacing:0.5px;text-transform:uppercase;line-height:1.3;word-break:break-word">'+metas[id].label+'</div>'
+        +'<div style="font-size:10px;color:#22c55e;font-weight:700;margin-top:3px">'+metas[id].obj+'%</div>'
         +'</div>';
     }).join('')
     +'</div><div style="display:flex;gap:8px;width:100%">'
@@ -206,7 +206,10 @@ function renderObjetivos(cid,extra){
       return'<div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#64748b"><div style="width:7px;height:7px;border-radius:50%;background:'+x[0]+'"></div>'+x[1]+'</div>';
     }).join('')+'</div></div>'
     +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px">'
-    +Object.keys(metas).map(function(id){return'<div style="flex:1;min-width:60px;max-width:110px;text-align:center;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#94a3b8">'+metas[id].label+'</div>';}).join('')
+    +Object.keys(metas).map(function(id){return '<div style="flex:1;min-width:60px;text-align:center;padding:4px 2px">'
+        +'<div style="font-size:10px;font-weight:800;color:#e2e8f0;letter-spacing:0.5px;text-transform:uppercase;line-height:1.3;word-break:break-word">'+metas[id].label+'</div>'
+        +'<div style="font-size:10px;color:#22c55e;font-weight:700;margin-top:3px">'+metas[id].obj+'%</div>'
+        +'</div>';}).join('')
     +'</div><div style="display:flex;gap:8px;width:100%">'
     +Object.keys(metas).map(function(id){
       var m=metas[id],val=vals[id]!==undefined?vals[id]:null;
@@ -231,7 +234,10 @@ function renderObjetivosJugador(cid,nombre,extra){
     }).join('')+'</div></div>'
     +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px">'
     +'<div style="width:64px;flex-shrink:0"></div>'
-    +Object.keys(metas).map(function(id){return'<div style="flex:1;min-width:60px;max-width:110px;text-align:center;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#94a3b8">'+metas[id].label+'</div>';}).join('')
+    +Object.keys(metas).map(function(id){return '<div style="flex:1;min-width:60px;text-align:center;padding:4px 2px">'
+        +'<div style="font-size:10px;font-weight:800;color:#e2e8f0;letter-spacing:0.5px;text-transform:uppercase;line-height:1.3;word-break:break-word">'+metas[id].label+'</div>'
+        +'<div style="font-size:10px;color:#22c55e;font-weight:700;margin-top:3px">'+metas[id].obj+'%</div>'
+        +'</div>';}).join('')
     +'</div>';
   rows.forEach(function(row){
     html+='<div style="display:flex;align-items:center;gap:8px;width:100%;margin-bottom:8px">'
