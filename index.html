@@ -622,7 +622,7 @@ select, select option {
               <span style="font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(34,197,94,.08);color:#22c55e;border:1px solid rgba(34,197,94,.2);letter-spacing:.8px;text-transform:uppercase;font-weight:700;">LOCAL</span>
               <span style="font-size:9px;color:#e8192c;letter-spacing:1px;text-transform:uppercase;animation:pulse 1.5s infinite">● HOY</span>
             </div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1.5px;line-height:1.2;">CASLA <span style='color:#475569;font-size:12px'>vs</span> VELEZ</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1.5px;line-height:1.2;">CASLA <span style='color:#475569;font-size:12px'>vs</span> UBA</div>
             <div style="display:flex;align-items:center;gap:12px;margin-top:2px;">
               <span style="font-size:10px;color:#475569;">🕐 </span>
               <span style="font-size:10px;color:#475569;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;" title="P.OLIMPICO: Av. Coronel Roca 4170, CABA">📍 P.OLIMPICO: Av. Coronel Roca 4170, CABA</span>
@@ -913,20 +913,73 @@ if(window.GAMEPLAN_DATA){
 
 <script>
 // ── DATOS FIXTURE ────────────────────────────────────────────
-var FIXTURE = [
-  {num:5,rival:'VELEZ',cond:'LOCAL',ts:new Date(2026,4,22,21,0,0).getTime()},
-  {num:6,rival:'DBANF',cond:'VISITANTE',ts:new Date(2026,4,26,21,30,0).getTime()},
-  {num:7,rival:'LOMAS',cond:'LOCAL',ts:new Date(2026,4,30,19,0,0).getTime()},
-  {num:8,rival:'UBA',cond:'VISITANTE',ts:new Date(2026,5,9,21,30,0).getTime()},
-  {num:9,rival:'CCC',cond:'LOCAL',ts:new Date(2026,5,13,21,0,0).getTime()},
-  {num:10,rival:'BOCA',cond:'VISITANTE',ts:new Date(2026,5,19,21,0,0).getTime()},
-  {num:11,rival:'RIVER',cond:'LOCAL',ts:new Date(2026,5,27,21,0,0).getTime()},
+// FIXTURE generado automáticamente desde PARTIDOS_META (datos_partidos.js)
+// + próximos partidos hardcodeados que aún no están en el Excel
+var FIXTURE_PROXIMOS = [
+  {rival:'UBA',  cond:'VISITANTE', fecha:'09/06/2026', horario:'21:30'},
+  {rival:'CCC',  cond:'LOCAL',     fecha:'13/06/2026', horario:'21:00'},
+  {rival:'BOCA', cond:'VISITANTE', fecha:'19/06/2026', horario:'21:00'},
+  {rival:'RIVER',cond:'LOCAL',     fecha:'27/06/2026', horario:'21:00'},
 ];
+
+function buildFixture(){
+  var fixture = [];
+  
+  // Partidos jugados desde PARTIDOS_META
+  if(typeof PARTIDOS_META !== 'undefined'){
+    PARTIDOS_META.forEach(function(m, i){
+      var parts = (m.fecha||'').split('/');
+      var ts = parts.length===3
+        ? new Date(parseInt(parts[2]), parseInt(parts[1])-1, parseInt(parts[0]), 21, 0, 0).getTime()
+        : 0;
+      var jugado = !!m.resultado || ts < Date.now();
+      var res = (m.sets_casla && m.sets_rival) ? m.sets_casla+'-'+m.sets_rival : (m.resultado||'');
+      fixture.push({
+        num: i+1,
+        rival: m.rival,
+        fecha: m.fecha,
+        torneo: m.torneo,
+        ts: ts,
+        jugado: jugado,
+        res: res,
+        cond: 'LOCAL', // default - actualizar si se agrega al Excel
+      });
+    });
+  }
+  
+  // Próximos partidos que aún no están en el Excel
+  FIXTURE_PROXIMOS.forEach(function(p, i){
+    // Only add if not already in fixture from PARTIDOS_META
+    var exists = fixture.find(function(f){ return f.rival === p.rival; });
+    if(!exists){
+      var parts = (p.fecha||'').split('/');
+      var ts = parts.length===3
+        ? new Date(parseInt(parts[2]), parseInt(parts[1])-1, parseInt(parts[0]),
+            parseInt((p.horario||'21:00').split(':')[0]),
+            parseInt((p.horario||'21:00').split(':')[1]), 0).getTime()
+        : 0;
+      fixture.push({
+        num: (fixture.length||0)+i+1,
+        rival: p.rival,
+        fecha: p.fecha,
+        torneo: 'División de Honor 2026',
+        ts: ts,
+        jugado: ts < Date.now(),
+        res: '',
+        cond: p.cond,
+        horario: p.horario,
+      });
+    }
+  });
+  
+  return fixture.sort(function(a,b){ return a.ts - b.ts; });
+}
+var FIXTURE = buildFixture();
 
 // ── COUNTDOWN ────────────────────────────────────────────────
 function initCountdown(){
   var ahora = Date.now();
-  var proximo = FIXTURE.find(function(p){ return p.ts > ahora; });
+  var proximo = FIXTURE.find(function(p){ return !p.jugado && p.ts > ahora; });
   if(!proximo){
     document.getElementById('countdown-bar').style.display='none';
     return;

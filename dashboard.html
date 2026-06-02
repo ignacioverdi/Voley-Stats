@@ -932,7 +932,7 @@ function renderGamePlans(){
       +(done?'background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#22c55e':'background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:#f59e0b')
       +'">'+( done?'Jugado':'Próximo')+'</div>'
       +'</div>'
-      +'<div style="font-size:10px;color:#475569;margin-bottom:10px">'+gp.torneo+' · '+fechaFmt+'</div>'
+      +'<div style="font-size:10px;color:#475569;margin-bottom:10px">'+gp.torneo+' · '+fechaFmt+(gp.horario?' · '+gp.horario:'')+'</div>'
       +resHtml
       +'<div style="display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--b)">'
       +'<span style="font-size:9px;color:#475569;letter-spacing:1px;text-transform:uppercase">Ver Game Plan</span>'

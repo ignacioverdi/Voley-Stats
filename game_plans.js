@@ -7,14 +7,15 @@ const GAME_PLANS = [
     torneo:   'División de Honor 2026',
     fecha:    '2026-05-29',
     archivo:  'game_plan_lomas.html',
-    resultado: null, // ej: { casla: 3, rival: 1 }
+    resultado: { casla: 3, rival: 2 },
+    horario:  null,
   },
-  // Próximos rivales — agregar acá:
-  // {
-  //   rival:   'VELEZ',
-  //   torneo:  'División de Honor 2026',
-  //   fecha:   '2026-06-XX',
-  //   archivo: 'game_plan_velez.html',
-  //   resultado: null,
-  // },
+  {
+    rival:    'UBA',
+    torneo:   'División de Honor 2026',
+    fecha:    '2026-06-09',
+    archivo:  'game_plan_uba.html',
+    resultado: null,
+    horario:  '21:30',
+  },
 ];
