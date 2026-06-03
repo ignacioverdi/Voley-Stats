@@ -812,6 +812,7 @@ function renderAccesos(j){
     {icon:'💪', title:'Rutina',        desc:'Mi preparación física',  url:'prep_fisica.html?player='+encodeURIComponent(j.nombre),    color:'#e8192c'},
     {icon:'🎯', title:'Game Plan',     desc:'Plan del próximo partido',url:(typeof GAME_PLANS!=='undefined'&&GAME_PLANS.length?GAME_PLANS.slice().sort(function(a,b){return (b.fecha||'')>(a.fecha||'')?1:-1;})[0].archivo:'game_plan_lomas.html'),                                    color:'#f59e0b'},
     {icon:'📊', title:'Panel en Vivo', desc:'Sesión actual',           url:'panel_voley.html',                                        color:'#22c55e'},
+    {icon:'🔥', title:'Heat Maps',     desc:'Ataque · Saque · Rec · Armado', url:'javascript:showHeatmapMenu()',                            color:'#F97316'},
     {icon:'🏆', title:'Ranking',       desc:'Mi posición en el equipo', url:'ranking.html?num='+j.num,                                color:'#F59E0B'},
     {icon:'🏠', title:'Hub',           desc:'Todo el sistema',         url:'index.html',                                              color:'#64748b', full:true},
   ];
@@ -1444,5 +1445,60 @@ function renderEvolucion(jugador){
 }
 
 </script>
+
+<!-- ── HEAT MAPS OVERLAY ─────────────────────────────────── -->
+<style>
+#hm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;align-items:center;justify-content:center}
+#hm-overlay.open{display:flex}
+.hm-box{background:#0D0E1A;border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:24px;width:min(380px,92vw);box-shadow:0 32px 80px rgba(0,0,0,.6)}
+.hm-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
+.hm-close{background:rgba(255,255,255,.08);border:none;color:#fff;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;transition:background .15s}
+.hm-close:hover{background:rgba(255,255,255,.18)}
+.hm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hm-card{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 10px;border-radius:14px;text-decoration:none;color:#fff;transition:all .18s;border:1px solid}
+.hm-card:hover{transform:translateY(-2px);filter:brightness(1.15)}
+.hm-icon{font-size:28px}
+.hm-lbl{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px}
+.hm-sub{font-size:9px;color:#64748b;text-align:center}
+.hm-footer{margin-top:14px;font-size:10px;color:#475569;text-align:center}
+</style>
+
+<div id="hm-overlay" onclick="if(event.target===this)closeHeatmapMenu()">
+  <div class="hm-box">
+    <div class="hm-title">
+      <span>🔥 HEAT MAPS</span>
+      <button class="hm-close" onclick="closeHeatmapMenu()">✕</button>
+    </div>
+    <div class="hm-grid">
+      <a class="hm-card" href="ataque_casla.html"    style="background:rgba(249,115,22,.08);border-color:rgba(249,115,22,.3)">
+        <span class="hm-icon">⚡</span>
+        <span class="hm-lbl" style="color:#F97316">ATAQUE</span>
+        <span class="hm-sub">EFF · SO/TR · Zonas<br>Combos · Calidad rec.</span>
+      </a>
+      <a class="hm-card" href="saque_casla.html"     style="background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3)">
+        <span class="hm-icon">🎯</span>
+        <span class="hm-lbl" style="color:#22C55E">SAQUE</span>
+        <span class="hm-sub">EFF · Flotado/Potencia<br>Zonas origen/destino</span>
+      </a>
+      <a class="hm-card" href="recepcion_casla.html" style="background:rgba(129,140,248,.08);border-color:rgba(129,140,248,.3)">
+        <span class="hm-icon">🛡️</span>
+        <span class="hm-lbl" style="color:#818CF8">RECEPCION</span>
+        <span class="hm-sub">EFF · Flotado/Potencia<br>Calidad · Zonas</span>
+      </a>
+      <a class="hm-card" href="armador_casla.html"   style="background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.3)">
+        <span class="hm-icon">🎱</span>
+        <span class="hm-lbl" style="color:#F59E0B">ARMADO</span>
+        <span class="hm-sub">Llamadas K1/K7/KM/K2<br>Pos armador · EFF</span>
+      </a>
+    </div>
+    <div class="hm-footer">División de Honor 2026 · 7 partidos analizados</div>
+  </div>
+</div>
+
+<script>
+function showHeatmapMenu(){ document.getElementById('hm-overlay').classList.add('open'); }
+function closeHeatmapMenu(){ document.getElementById('hm-overlay').classList.remove('open'); }
+</script>
+
 </body>
 </html>
