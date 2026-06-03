@@ -1536,5 +1536,383 @@ function showHeatmapMenu(){
 function closeHeatmapMenu(){ document.getElementById('hm-overlay').classList.remove('open'); }
 </script>
 
+<!-- ── NOTIFICATION DOT ─────────────────────────── -->
+<div id="chat-dot"></div>
+
+<!-- ── MIKASA BALL BUTTON ───────────────────────── -->
+<button id="chat-btn" onclick="toggleChat()" title="Consultar al asistente IA">
+  <svg viewBox="0 0 62 62" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="bg" cx="38%" cy="32%" r="65%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#dbeafe"/>
+      </radialGradient>
+      <clipPath id="circle"><circle cx="31" cy="31" r="29"/></clipPath>
+    </defs>
+    <!-- Base ball -->
+    <circle cx="31" cy="31" r="30" fill="#1e3a8a" stroke="#1e40af" stroke-width="1"/>
+    <circle cx="31" cy="31" r="29" fill="url(#bg)"/>
+    <!-- Blue panels (Mikasa style) -->
+    <g clip-path="url(#circle)" fill="none" stroke="#1e3a8a" stroke-width="0">
+      <!-- Top left blue -->
+      <path d="M2,20 Q10,8 22,4 Q28,14 20,26 Q11,22 2,20Z" fill="#1e3a8a" opacity=".9"/>
+      <!-- Right blue -->
+      <path d="M42,4 Q54,10 59,22 Q50,28 40,22 Q40,12 42,4Z" fill="#1e3a8a" opacity=".9"/>
+      <!-- Bottom blue -->
+      <path d="M14,50 Q22,60 36,60 Q38,50 30,44 Q22,46 14,50Z" fill="#1e3a8a" opacity=".9"/>
+      <!-- Center left blue -->
+      <path d="M2,36 Q6,48 14,50 Q22,46 20,36 Q12,32 2,36Z" fill="#1e3a8a" opacity=".85"/>
+    </g>
+    <!-- Yellow accent lines (Mikasa) -->
+    <g clip-path="url(#circle)" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round">
+      <path d="M20,4 Q31,16 38,14 Q44,10 42,4"/>
+      <path d="M42,4 Q40,22 48,30 Q54,28 59,22"/>
+      <path d="M59,36 Q50,40 48,50 Q44,58 36,60"/>
+      <path d="M14,50 Q20,40 20,30 Q12,26 2,36"/>
+      <path d="M2,20 Q12,24 20,26 Q26,18 22,4"/>
+      <path d="M20,26 Q28,30 30,44 Q22,46 14,50"/>
+      <path d="M40,22 Q38,32 48,30"/>
+    </g>
+    <!-- Shine -->
+    <ellipse cx="22" cy="18" rx="7" ry="5" fill="white" opacity=".3" transform="rotate(-20,22,18)"/>
+  </svg>
+</button>
+
+<!-- ── CHAT PANEL ────────────────────────────────── -->
+<div id="chat-panel">
+  <!-- Header -->
+  <div class="chat-hdr">
+    <svg class="chat-hdr-ball" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="20" r="19" fill="#1e3a8a"/>
+      <circle cx="20" cy="20" r="18" fill="#dbeafe"/>
+      <path d="M2,13 Q7,5 15,3 Q18,9 13,17 Q8,14 2,13Z" fill="#1e3a8a" opacity=".9"/>
+      <path d="M27,3 Q34,7 38,14 Q32,18 26,14 Q26,8 27,3Z" fill="#1e3a8a" opacity=".9"/>
+      <path d="M9,32 Q14,38 23,38 Q24,32 19,28 Q14,30 9,32Z" fill="#1e3a8a" opacity=".9"/>
+      <g fill="none" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round">
+        <path d="M13,3 Q20,10 24,9 Q28,6 27,3"/><path d="M27,3 Q26,14 30,19 Q34,18 38,14"/>
+        <path d="M9,32 Q13,26 13,20 Q8,17 2,21"/><path d="M2,13 Q8,16 13,17 Q17,12 15,3"/>
+      </g>
+    </svg>
+    <div class="chat-hdr-info">
+      <div class="chat-hdr-title">ASISTENTE CASLA</div>
+      <div class="chat-status">
+        <div class="chat-dot-green"></div>
+        <span style="font-size:10px;color:var(--muted)">IA activa · DHM 2026</span>
+      </div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+
+  <!-- Messages -->
+  <div id="chat-msgs"></div>
+
+  <!-- Suggestions -->
+  <div id="suggestions">
+    <button class="sugg-btn" onclick="sendSugg(this)" data-es="¿Qué es el EFF?" data-en="What is EFF?" data-de="Was ist EFF?">¿Qué es el EFF?</button>
+    <button class="sugg-btn" onclick="sendSugg(this)" data-es="Stats del equipo" data-en="Team stats" data-de="Teamstatistiken">Stats del equipo</button>
+    <button class="sugg-btn" onclick="sendSugg(this)" data-es="¿Cómo uso los heatmaps?" data-en="How do I use the heatmaps?" data-de="Wie nutze ich die Heatmaps?">¿Cómo uso los heatmaps?</button>
+    <button class="sugg-btn" onclick="sendSugg(this)" data-es="Mejor atacante" data-en="Best attacker" data-de="Bester Angreifer">Mejor atacante</button>
+  </div>
+
+  <!-- Input -->
+  <div class="chat-input-row">
+    <textarea id="chat-input" placeholder="Preguntá sobre stats, táctica, la app..." rows="1"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg()}"
+      oninput="autoResize(this)"></textarea>
+    <button id="chat-send" onclick="sendMsg()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+// ── CASLA DATA CONTEXT ──────────────────────────────────────────
+var CASLA_CONTEXT = {"team": "Club Atletico San Lorenzo de Almagro \u2014 Voley", "season": "Division de Honor Masculina Argentina 2026", "games_played": 7, "rivals": ["Ciudad", "Club Atltico Velez Sarsfield", "Defensores", "Ferro", "Hacoaj", "Lomas", "Untref"], "players": {"1": {"name": "Imanol Salazar", "atk": {"total": 30, "eff": 40, "eff_so": 47, "eff_tr": 27, "kills": 16}, "srv": {"total": 23, "eff": -11, "aces": 0, "errs": 3}, "rec": {"total": 3, "eff": 67, "flotado": 1, "potencia": 2}, "set": {"total": 3}}, "2": {"name": "Agustin Ojuez", "atk": {"total": 76, "eff": 51, "eff_so": 53, "eff_tr": 44, "kills": 46}, "srv": {"total": 45, "eff": -11, "aces": 0, "errs": 6}, "rec": {"total": 5, "eff": 20, "flotado": 5, "potencia": 0}, "set": {"total": 8}}, "3": {"name": "Agustin Romeo Winer", "atk": null, "srv": {"total": 6, "eff": -17, "aces": 0, "errs": 1}, "rec": {"total": 67, "eff": 13, "flotado": 53, "potencia": 13}, "set": {"total": 3}}, "4": {"name": "Ezequiel Vazquez", "atk": {"total": 17, "eff": 24, "eff_so": 0, "eff_tr": 33, "kills": 6}, "srv": {"total": 96, "eff": 7, "aces": 6, "errs": 4}, "rec": {"total": 3, "eff": -33, "flotado": 0, "potencia": 3}, "set": {"total": 450}}, "5": {"name": "Iaki Ramos", "atk": {"total": 151, "eff": 28, "eff_so": 24, "eff_tr": 33, "kills": 69}, "srv": {"total": 57, "eff": -30, "aces": 4, "errs": 24}, "rec": {"total": 2, "eff": 25, "flotado": 2, "potencia": 0}, "set": {"total": 6}}, "9": {"name": "Martin Godoy", "atk": {"total": 5, "eff": 0, "eff_so": 0, "eff_tr": 0, "kills": 2}, "srv": {"total": 51, "eff": 2, "aces": 2, "errs": 3}, "rec": {"total": 4, "eff": 0, "flotado": 3, "potencia": 1}, "set": {"total": 280}}, "11": {"name": "Valentin Durdos", "atk": {"total": 212, "eff": 25, "eff_so": 36, "eff_tr": 14, "kills": 90}, "srv": {"total": 91, "eff": -16, "aces": 4, "errs": 22}, "rec": {"total": 152, "eff": 37, "flotado": 92, "potencia": 60}, "set": {"total": 23}}, "13": {"name": "Mauro Rojas Caruso", "atk": null, "srv": {"total": 4, "eff": -25, "aces": 0, "errs": 1}, "rec": {"total": 4, "eff": 38, "flotado": 4, "potencia": 0}, "set": {"total": 1}}, "14": {"name": "Ramiro Nielson", "atk": {"total": 207, "eff": 25, "eff_so": 27, "eff_tr": 23, "kills": 78}, "srv": {"total": 130, "eff": 2, "aces": 4, "errs": 8}, "rec": {"total": 154, "eff": 40, "flotado": 100, "potencia": 53}, "set": {"total": 30}}, "15": {"name": "Ramiro Lucio Rotezzi", "atk": {"total": 20, "eff": 50, "eff_so": 54, "eff_tr": 43, "kills": 11}, "srv": {"total": 26, "eff": 1, "aces": 1, "errs": 1}, "rec": {"total": 6, "eff": 8, "flotado": 5, "potencia": 1}, "set": {"total": 2}}, "17": {"name": "Leonardo Herbsommer", "atk": {"total": 70, "eff": 29, "eff_so": 30, "eff_tr": 23, "kills": 30}, "srv": {"total": 71, "eff": 0, "aces": 0, "errs": 4}, "rec": null, "set": {"total": 6}}, "18": {"name": "Wilson Acosta", "atk": {"total": 90, "eff": 20, "eff_so": 38, "eff_tr": 6, "kills": 36}, "srv": {"total": 38, "eff": -12, "aces": 4, "errs": 10}, "rec": null, "set": {"total": 8}}, "19": {"name": "Santiago Diaz Bolli", "atk": null, "srv": {"total": 12, "eff": 4, "aces": 0, "errs": 0}, "rec": null, "set": null}, "12": {"name": "Juan Cruz Zanotti", "atk": null, "srv": null, "rec": {"total": 139, "eff": 34, "flotado": 93, "potencia": 46}, "set": {"total": 38}}, "6": {"name": "Juan Simon Villarruel", "atk": {"total": 7, "eff": -29, "eff_so": 0, "eff_tr": -50, "kills": 1}, "srv": {"total": 7, "eff": -25, "aces": 0, "errs": 2}, "rec": {"total": 5, "eff": 60, "flotado": 2, "potencia": 3}, "set": {"total": 2}}}, "rival_stats": {"Ciudad": {"Imanol Salazar": {"atk": 9, "eff": 22}, "Iaki Ramos": {"atk": 32, "eff": 28}, "Valentin Durdos": {"atk": 14, "eff": 50}, "Ramiro Nielson": {"atk": 26, "eff": 15}}, "Club Atltico Velez Sarsfield": {"Imanol Salazar": {"atk": 6, "eff": 83}, "Agustin Ojuez": {"atk": 10, "eff": 50}, "Iaki Ramos": {"atk": 31, "eff": 35}, "Valentin Durdos": {"atk": 30, "eff": 37}, "Ramiro Nielson": {"atk": 27, "eff": 33}, "Ramiro Lucio Rotezzi": {"atk": 9, "eff": 56}}, "Defensores": {"Imanol Salazar": {"atk": 15, "eff": 33}, "Agustin Ojuez": {"atk": 5, "eff": 80}, "Iaki Ramos": {"atk": 27, "eff": -4}, "Valentin Durdos": {"atk": 36, "eff": 19}, "Ramiro Nielson": {"atk": 22, "eff": 14}, "Leonardo Herbsommer": {"atk": 10, "eff": 10}}, "Ferro": {"Agustin Ojuez": {"atk": 20, "eff": 40}, "Ezequiel Vazquez": {"atk": 5, "eff": 0}, "Iaki Ramos": {"atk": 24, "eff": 33}, "Valentin Durdos": {"atk": 32, "eff": 25}, "Ramiro Nielson": {"atk": 40, "eff": 30}, "Ramiro Lucio Rotezzi": {"atk": 11, "eff": 45}, "Wilson Acosta": {"atk": 16, "eff": 25}}, "Hacoaj": {"Agustin Ojuez": {"atk": 15, "eff": 33}, "Iaki Ramos": {"atk": 5, "eff": 40}, "Valentin Durdos": {"atk": 31, "eff": 6}, "Ramiro Nielson": {"atk": 33, "eff": 45}, "Leonardo Herbsommer": {"atk": 22, "eff": 55}, "Wilson Acosta": {"atk": 30, "eff": 30}, "Juan Simon Villarruel": {"atk": 5, "eff": -20}}, "Lomas": {"Agustin Ojuez": {"atk": 14, "eff": 57}, "Ezequiel Vazquez": {"atk": 6, "eff": 50}, "Valentin Durdos": {"atk": 33, "eff": 12}, "Ramiro Nielson": {"atk": 25, "eff": 20}, "Leonardo Herbsommer": {"atk": 16, "eff": 19}, "Wilson Acosta": {"atk": 37, "eff": 8}}, "Untref": {"Agustin Ojuez": {"atk": 9, "eff": 78}, "Iaki Ramos": {"atk": 29, "eff": 41}, "Valentin Durdos": {"atk": 36, "eff": 39}, "Ramiro Nielson": {"atk": 34, "eff": 9}, "Leonardo Herbsommer": {"atk": 20, "eff": 15}, "Wilson Acosta": {"atk": 6, "eff": 33}}}};
+
+// ── SYSTEM PROMPT ───────────────────────────────────────────────
+var SYSTEM_PROMPT = `You are the volleyball analysis assistant for Club Atletico San Lorenzo de Almagro (CASLA), competing in the División de Honor Masculina Argentina 2026.
+
+CRITICAL LANGUAGE RULE: Detect the language of the user's message and ALWAYS respond in that exact language.
+- If they write in Spanish → respond in Spanish
+- If they write in English → respond in English  
+- If they write in German → respond in German (Du-Form, informal)
+- Never mix languages in the same response
+- Match their tone: casual or formal
+
+Club Atletico San Lorenzo de Almagro (CASLA), División de Honor Masculina Argentina 2026.
+
+DATOS DE LA TEMPORADA (7 partidos jugados):
+${JSON.stringify(CASLA_CONTEXT, null, 1)}
+
+TU ROL:
+- Analista de voley experto con acceso a todos los datos del DVW de la temporada
+- Respondés preguntas de jugadores, entrenadores y visitantes
+- Sos directo, concreto y usás los números reales de los datos
+- Cuando te pregunten por un jugador específico, usás sus stats reales
+- Explicás conceptos técnicos de forma clara (EFF, SO, TR, Side Out, etc.)
+- Sabés sobre los heatmaps de la app: ataque, saque, recepción, armado
+- Respondés en español siempre
+- Sos entusiasta y positivo pero honesto con los números
+
+KEY CONCEPTS (you know these in ES/EN/DE):
+- EFF Attack = (# - / - =) / total × 100. Green ≥44%, Yellow ≥36%, Red <36%
+  DE: Angriffswirkung | ES: Eficiencia de ataque
+- EFF Serve = (1×# + 0.5×/ + 0.25×+ - 1×=) / total × 100
+  DE: Aufschlagwirkung | ES: Eficiencia de saque
+- EFF Reception = (1×# + 0.5×+ - 0.5×/ - 1×=) / total × 100
+  DE: Annahmewirkung | ES: Eficiencia de recepción
+- Side Out (SO) = attack after receiving opponent's serve
+  DE: Aufschlagwechsel | ES: Side Out
+- Transition (TR) = attack without own reception
+  DE: Übergang | ES: Transición
+- K1=Front Quick, K7=Seven, KM=Shifted, K2=Back Quick
+  DE: K1=Kurze vorne, K7=Sieben, KM=Versetzt, K2=Kurze hinten
+- Zones 1-9 (1=back right, 4=front left, 6=back middle...)
+  DE: Zonen 1-9 | ES: Zonas 1-9
+- SM=Float serve, SQ=Jump serve | DE: SM=Flatteraufschlag, SQ=Sprungaufschlag
+- RM=Float reception, RQ=Jump reception | DE: RM=Flatterannahme, RQ=Sprungsatzannahme
+
+ABOUT THE APP (voley-stats-iota.vercel.app):
+- Heat Maps: 4 modules (attack, serve, reception, setting) with combinable filters
+- Data from DataVolley .dvw scouting files
+- Dashboard with history, game plan, physical prep, live panel
+- Player profiles with PIN access
+
+CONCEPTS CLAVE QUE MANEJÁS:
+- EFF Ataque = (# - / - =) / total × 100. Verde ≥44%, Amarillo ≥36%, Rojo <36%
+- EFF Saque = (1×# + 0.5×/ + 0.25×+ - 1×=) / total × 100
+- EFF Recepción = (1×# + 0.5×+ - 0.5×/ - 1×=) / total × 100
+- Side Out (SO) = ataque después de recibir el saque rival
+- Transición (TR) = ataque sin recepción previa propia
+- K1=Front Quick, K7=Seven, KM=Shifted, K2=Back Quick
+- Zonas 1-9 del campo de voley (1=zaguero der, 4=delantero izq, etc.)
+- SM=Saque flotado, SQ=Saque de potencia/jump
+- RM=Recepción de flotado, RQ=Recepción de potencia
+
+SOBRE LA APP:
+- Sistema web en voley-stats-iota.vercel.app
+- Heat Maps: 4 módulos (ataque, saque, recepción, armado) con filtros combinables
+- Los datos vienen de archivos .dvw de DataVolley scouting
+- Dashboard con historial, game plan, preparación física, panel en vivo
+- Integración con perfiles de jugador y acceso por PIN
+
+Si no tenés información específica sobre algo, decilo claramente y ofrecé lo que sí podés responder.
+Máximo 3-4 párrafos por respuesta. Usá emojis con moderación.`;
+
+// ── STATE ────────────────────────────────────────────────────────
+var chatHistory = [];
+var isOpen = false;
+var isLoading = false;
+var hasNewMsg = false;
+
+// ── TOGGLE ───────────────────────────────────────────────────────
+function toggleChat() {
+  isOpen = !isOpen;
+  var panel = document.getElementById('chat-panel');
+  if (isOpen) {
+    panel.classList.add('open');
+    document.getElementById('chat-dot').style.display = 'none';
+    hasNewMsg = false;
+    if (chatHistory.length === 0) showWelcome();
+    setTimeout(function(){ document.getElementById('chat-input').focus(); }, 300);
+  } else {
+    panel.classList.remove('open');
+  }
+}
+
+function showWelcome() {
+  // Detect browser language for welcome message
+var lang = (navigator.language || navigator.userLanguage || 'es').toLowerCase().substring(0,2);
+var welcomeMsg = lang === 'de' 
+  ? '👋 Hallo! Ich bin der Analyseassistent von **CASLA Voley**.\n\nIch habe vollständigen Zugriff auf die Daten der DHM-Saison 2026: Angriffs-, Aufschlag-, Annahme- und Stellstatistiken aller Spieler in 7 Spielen.\n\nWie kann ich dir helfen?'
+  : lang === 'en'
+  ? '👋 Hi! I\'m the analysis assistant for **CASLA Voley**.\n\nI have full access to the DHM 2026 season data: attack, serve, reception and setting stats for all players across 7 matches.\n\nHow can I help you?'
+  : '👋 ¡Hola! Soy el asistente de análisis de **CASLA Voley**.\n\nTengo acceso completo a los datos de la temporada DHM 2026: stats de ataque, saque, recepción y armado de todos los jugadores en 7 partidos.\n\n¿En qué te puedo ayudar?';
+addMsg('bot', welcomeMsg);
+}
+
+// ── SEND MESSAGE ─────────────────────────────────────────────────
+function sendMsg() {
+  var input = document.getElementById('chat-input');
+  var text = input.value.trim();
+  if (!text || isLoading) return;
+  input.value = ''; autoResize(input);
+  document.getElementById('suggestions').style.display = 'none';
+  addMsg('user', text);
+  callAPI(text);
+}
+
+function sendSugg(btn) {
+  var text = btn.textContent;
+  document.getElementById('suggestions').style.display = 'none';
+  addMsg('user', text);
+  callAPI(text);
+}
+
+function askDemo(text) {
+  if (!isOpen) toggleChat();
+  setTimeout(function() {
+    document.getElementById('suggestions').style.display = 'none';
+    addMsg('user', text);
+    callAPI(text);
+  }, 300);
+}
+
+// ── API CALL ─────────────────────────────────────────────────────
+async function callAPI(userMsg) {
+  isLoading = true;
+  document.getElementById('chat-send').disabled = true;
+
+  chatHistory.push({ role: 'user', content: userMsg });
+
+  var typingId = addTyping();
+
+  try {
+    var response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: chatHistory.slice(-10) // keep last 10 for context
+      })
+    });
+
+    var data = await response.json();
+    removeTyping(typingId);
+
+    var reply = data.content && data.content[0] ? data.content[0].text : 'Error al conectar. Intentá de nuevo.';
+    chatHistory.push({ role: 'assistant', content: reply });
+    addMsg('bot', reply);
+
+    // Show new suggestions based on context
+    showSmartSuggestions(userMsg, reply);
+
+  } catch(e) {
+    removeTyping(typingId);
+    addMsg('bot', '⚠️ Error de conexión. Verificá tu internet e intentá de nuevo.');
+  }
+
+  isLoading = false;
+  document.getElementById('chat-send').disabled = false;
+}
+
+// ── MESSAGES ─────────────────────────────────────────────────────
+function addMsg(role, text) {
+  var msgs = document.getElementById('chat-msgs');
+  var div = document.createElement('div');
+  div.className = 'msg ' + role;
+
+  var avatar = document.createElement('div');
+  avatar.className = 'msg-avatar';
+  avatar.textContent = role === 'bot' ? '🏐' : '👤';
+
+  var bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  // Simple markdown: bold
+  bubble.innerHTML = text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n/g,'<br>');
+
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  // Notify if closed
+  if (!isOpen && role === 'bot') {
+    document.getElementById('chat-dot').style.display = 'block';
+  }
+}
+
+function addTyping() {
+  var msgs = document.getElementById('chat-msgs');
+  var id = 'typing-' + Date.now();
+  var div = document.createElement('div');
+  div.className = 'msg bot'; div.id = id;
+  div.innerHTML = '<div class="msg-avatar">🏐</div><div class="msg-bubble typing"><span></span><span></span><span></span></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return id;
+}
+
+function removeTyping(id) {
+  var el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+// ── SMART SUGGESTIONS ────────────────────────────────────────────
+var SUGGESTION_SETS = [
+  ['¿Quién ataca mejor?', '¿Cómo está la recepción?', 'Stats por rival'],
+  ['¿Qué es Side Out?', 'Diferencia SO vs TR', '¿Cómo mejorar el EFF?'],
+  ['¿Cómo uso los heatmaps?', '¿Qué significan las zonas?', 'Ver ataque en filtros'],
+  ['¿Quién saca mejor?', 'EFF del equipo', 'Mejor partido de la temporada'],
+];
+
+// Detect language from user message
+function detectLang(text) {
+  // German keywords
+  if (/\b(wie|was|wer|wo|wann|warum|ich|du|er|sie|ist|sind|hat|haben|spieler|angriff|aufschlag|annahme|saison|spiel|team|mannschaft|gut|schlecht|beste|EFF|stats|daten)\b/i.test(text)) return 'de';
+  // English keywords  
+  if (/\b(what|how|who|where|when|why|I|you|he|she|is|are|has|have|player|attack|serve|reception|season|game|team|good|bad|best|stats|data|the|and|or)\b/i.test(text)) return 'en';
+  return 'es';
+}
+
+var SUGGESTION_SETS_LANG = {
+  es: [
+    ['¿Quién ataca mejor?','¿Cómo está la recepción?','Stats por rival'],
+    ['¿Qué es Side Out?','Diferencia SO vs TR','¿Cómo mejorar el EFF?'],
+    ['¿Cómo uso los heatmaps?','¿Qué significan las zonas?','Ver ataque en filtros'],
+    ['¿Quién saca mejor?','EFF del equipo','Mejor partido'],
+  ],
+  en: [
+    ['Who attacks best?','How is reception?','Stats by opponent'],
+    ['What is Side Out?','SO vs TR difference','How to improve EFF?'],
+    ['How to use heatmaps?','What do zones mean?','Filter attack view'],
+    ['Who serves best?','Team EFF','Best match'],
+  ],
+  de: [
+    ['Wer greift am besten an?','Wie ist die Annahme?','Stats nach Gegner'],
+    ['Was ist Side Out?','Unterschied SO vs TR','Wie EFF verbessern?'],
+    ['Wie nutze ich Heatmaps?','Was bedeuten die Zonen?','Angriff filtern'],
+    ['Wer serviert am besten?','Team-EFF','Bestes Spiel'],
+  ]
+};
+
+function showSmartSuggestions(q, a) {
+  var sugg = document.getElementById('suggestions');
+  var lower = q.toLowerCase();
+  var lang = detectLang(q);
+  var sets = SUGGESTION_SETS_LANG[lang] || SUGGESTION_SETS_LANG['es'];
+  var set = sets[Math.floor(Math.random() * sets.length)];
+  if (lower.includes('ataque')||lower.includes('attack')||lower.includes('angriff')||lower.includes('eff')) set = sets[0];
+  else if (lower.includes('saque')||lower.includes('serve')||lower.includes('aufschlag')||lower.includes('recep')||lower.includes('annahme')) set = sets[3];
+  else if (lower.includes('heatmap')||lower.includes('zona')||lower.includes('zone')) set = sets[2];
+  sugg.innerHTML = set.map(function(s) {
+    return '<button class="sugg-btn" onclick="sendSugg(this)">' + s + '</button>';
+  }).join('');
+  sugg.style.display = 'flex';
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────
+function autoResize(el) {
+  el.style.height = '42px';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+// Show dot after 2s to invite user
+setTimeout(function() {
+  if (!isOpen) {
+    document.getElementById('chat-dot').style.display = 'block';
+    setTimeout(function() {
+      document.getElementById('chat-dot').style.display = 'none';
+    }, 4000);
+  }
+}, 2000);
+</script>
 </body>
 </html>
