@@ -198,4 +198,10 @@ document.addEventListener('click',function(e){
   if(vbOpen&&p&&!p.contains(e.target)&&b&&!b.contains(e.target)){vbOpen=false;p.classList.remove('vb-open');}
 });
 
+// Expose to global scope for onclick handlers
+window.vbToggle = vbToggle;
+window.vbSend   = vbSend;
+window.vbSugg   = vbSugg;
+window.vbResize = vbResize;
+
 })();
