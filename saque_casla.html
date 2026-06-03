@@ -338,6 +338,19 @@ function render(){
   content.innerHTML=html;
 }
 window.onload=function(){
+// Auto-select player from URL param ?player=NUM
+(function(){
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var pid = params.get('player');
+    if(pid && PLAYERS[pid]){
+      document.getElementById('psel').value = pid;
+      onPlayerChange(pid);
+      return;
+    }
+  } catch(e){}
+})();
+
   if(pNums.length){
     document.getElementById('psel').value=pNums[0];
     onPlayerChange(String(pNums[0]));

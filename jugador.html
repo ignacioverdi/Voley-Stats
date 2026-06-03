@@ -1469,26 +1469,27 @@ function renderEvolucion(jugador){
       <span>🔥 HEAT MAPS</span>
       <button class="hm-close" onclick="closeHeatmapMenu()">✕</button>
     </div>
+    <div style="font-size:10px;color:#F97316;margin-bottom:12px;text-align:center;font-weight:700;letter-spacing:1px" id="hm-player-name"></div>
     <div class="hm-grid">
-      <a class="hm-card" href="ataque_casla.html"    style="background:rgba(249,115,22,.08);border-color:rgba(249,115,22,.3)">
+      <a class="hm-card" id="hm-atk" href="ataque_casla.html"    style="background:rgba(249,115,22,.08);border-color:rgba(249,115,22,.3)">
         <span class="hm-icon">⚡</span>
         <span class="hm-lbl" style="color:#F97316">ATAQUE</span>
         <span class="hm-sub">EFF · SO/TR · Zonas<br>Combos · Calidad rec.</span>
       </a>
-      <a class="hm-card" href="saque_casla.html"     style="background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3)">
+      <a class="hm-card" id="hm-srv" href="saque_casla.html"     style="background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3)">
         <span class="hm-icon">🎯</span>
         <span class="hm-lbl" style="color:#22C55E">SAQUE</span>
         <span class="hm-sub">EFF · Flotado/Potencia<br>Zonas origen/destino</span>
       </a>
-      <a class="hm-card" href="recepcion_casla.html" style="background:rgba(129,140,248,.08);border-color:rgba(129,140,248,.3)">
+      <a class="hm-card" id="hm-rec" href="recepcion_casla.html" style="background:rgba(129,140,248,.08);border-color:rgba(129,140,248,.3)">
         <span class="hm-icon">🛡️</span>
         <span class="hm-lbl" style="color:#818CF8">RECEPCION</span>
-        <span class="hm-sub">EFF · Flotado/Potencia<br>Calidad · Zonas</span>
+        <span class="hm-sub">EFF · Calidad · Zonas</span>
       </a>
-      <a class="hm-card" href="armador_casla.html"   style="background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.3)">
+      <a class="hm-card" id="hm-arm" href="armador_casla.html"   style="background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.3)">
         <span class="hm-icon">🎱</span>
         <span class="hm-lbl" style="color:#F59E0B">ARMADO</span>
-        <span class="hm-sub">Llamadas K1/K7/KM/K2<br>Pos armador · EFF</span>
+        <span class="hm-sub">Llamadas · Pos · EFF</span>
       </a>
     </div>
     <div class="hm-footer">División de Honor 2026 · 7 partidos analizados</div>
@@ -1496,7 +1497,42 @@ function renderEvolucion(jugador){
 </div>
 
 <script>
-function showHeatmapMenu(){ document.getElementById('hm-overlay').classList.add('open'); }
+var _hmPlayerNum = null;
+function showHeatmapMenu(){
+  // Get current player number from URL or jugador data
+  try {
+    var params = new URLSearchParams(window.location.search);
+    _hmPlayerNum = params.get('num') || params.get('player') || params.get('id');
+    // Also try from global jugador object if available
+    if(!_hmPlayerNum && typeof jugadorActual !== 'undefined' && jugadorActual) {
+      _hmPlayerNum = jugadorActual.num || jugadorActual.id || jugadorActual.camiseta;
+    }
+    // Try from jugador data
+    if(!_hmPlayerNum) {
+      try { 
+        var p2 = new URLSearchParams(window.location.search);
+        var n = parseInt(p2.get('num'));
+        if(n) _hmPlayerNum = n;
+      } catch(e2){}
+    }
+    // Update links
+    var suffix = _hmPlayerNum ? '?player='+_hmPlayerNum : '';
+    document.getElementById('hm-atk').href = 'ataque_casla.html' + suffix;
+    document.getElementById('hm-srv').href = 'saque_casla.html' + suffix;
+    document.getElementById('hm-rec').href = 'recepcion_casla.html' + suffix;
+    document.getElementById('hm-arm').href = 'armador_casla.html' + suffix;
+    // Show player name
+    var nameEl = document.getElementById('hm-player-name');
+    if(_hmPlayerNum && nameEl) {
+      // Try to get player name from the hero section
+    var heroName = document.querySelector('.hero-nombre,.jugador-nombre,.nombre-jugador,h1,h2');
+    var pname = heroName ? heroName.textContent.trim() : ('#' + _hmPlayerNum);
+      nameEl.textContent = '↳ ' + pname.toUpperCase();
+      nameEl.style.display = 'block';
+    } else if(nameEl) { nameEl.style.display = 'none'; }
+  } catch(e) {}
+  document.getElementById('hm-overlay').classList.add('open');
+}
 function closeHeatmapMenu(){ document.getElementById('hm-overlay').classList.remove('open'); }
 </script>
 
