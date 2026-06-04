@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Estadísticas Liga — CASLA</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0f1a;--surface:#111827;--border:rgba(255,255,255,.08);--text:#e2e8f0;--muted:#64748b}
+body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-serif;min-height:100vh;padding-bottom:40px}
+.header{background:linear-gradient(135deg,#0f172a,#1e293b);border-bottom:1px solid var(--border);padding:18px 24px;display:flex;align-items:center;gap:16px}
+.back-btn{color:var(--muted);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px}
+.header h1{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px}
+.subtitle{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
+.season-badge{background:rgba(232,25,44,.15);border:1px solid rgba(232,25,44,.3);color:#f87171;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;margin-left:auto}
+.tabs{display:flex;padding:0 24px;background:rgba(0,0,0,.2);border-bottom:1px solid var(--border)}
+.tab{padding:12px 18px;cursor:pointer;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);border-bottom:2px solid transparent}
+.tab.active{color:#f87171;border-bottom-color:#e8192c}
+.wrap{padding:24px;max-width:1100px;margin:0 auto}
+.teams-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.team-card{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--tc);border-radius:12px;padding:16px}
+.tc-head{margin-bottom:12px}
+.tc-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;color:var(--tc)}
+.tc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.tc-stat{display:flex;flex-direction:column;align-items:center;gap:2px}
+.tcs-lbl{font-size:9px;color:var(--muted);letter-spacing:1px}
+.tcs-val{font-family:'Bebas Neue',sans-serif;font-size:18px}
+.tc-links{display:flex;gap:4px;flex-wrap:wrap}
+.tc-links a{flex:1;text-align:center;padding:7px 4px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;color:var(--text);text-decoration:none;font-size:10px;font-weight:700;letter-spacing:.5px;white-space:nowrap}
+.tc-links a:hover{background:var(--tc);border-color:var(--tc)}
+#players-tab{display:none}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px;color:var(--muted);font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border-bottom:1px solid var(--border)}
+td{padding:8px;border-bottom:1px solid rgba(255,255,255,.04)}
+tr:hover{background:rgba(255,255,255,.02)}
+.filters{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+select{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-size:13px}
+</style></head><body>
+<div class="header">
+  <a href="index.html" class="back-btn">← Hub</a>
+  <div><div class="subtitle">CASLA Voley</div><h1>ESTADÍSTICAS LIGA</h1></div>
+  <div class="season-badge">DHM 2026</div>
+</div>
+<div class="tabs">
+  <div class="tab active" data-t="teams">🏆 Equipos</div>
+  <div class="tab" data-t="players">👤 Jugadores</div>
+</div>
+<div class="wrap">
+  <div id="teams-tab"><div class="teams-grid"><div class="team-card" style="--tc:#22c55e">
+      <div class="tc-head"><span class="tc-name">Ciudad</span></div>
+      <div class="tc-stats">
+        <div class="tc-stat"><span class="tcs-lbl">ATK</span><span class="tcs-val" style="color:#22c55e">+34.5%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">SAQ</span><span class="tcs-val" style="color:#ef4444">-3.5%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">REC</span><span class="tcs-val" style="color:#fbbf24">+28.3%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">BLK</span><span class="tcs-val" style="color:#22c55e">+48.7%</span></div>
+      </div>
+      <div class="tc-links">
+        <a href="ataque_ciudad.html">⚡ ATK</a>
+        <a href="saque_ciudad.html">🎯 SAQ</a>
+        <a href="recepcion_ciudad.html">🛡️ REC</a>
+        <a href="armador_ciudad.html">🎱 ARM</a>
+      </div>
+    </div><div class="team-card" style="--tc:#1e3a8a">
+      <div class="tc-head"><span class="tc-name">Velez</span></div>
+      <div class="tc-stats">
+        <div class="tc-stat"><span class="tcs-lbl">ATK</span><span class="tcs-val" style="color:#fbbf24">+29.9%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">SAQ</span><span class="tcs-val" style="color:#ef4444">-3.4%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">REC</span><span class="tcs-val" style="color:#fbbf24">+27.5%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">BLK</span><span class="tcs-val" style="color:#fbbf24">+39.8%</span></div>
+      </div>
+      <div class="tc-links">
+        <a href="ataque_velez.html">⚡ ATK</a>
+        <a href="saque_velez.html">🎯 SAQ</a>
+        <a href="recepcion_velez.html">🛡️ REC</a>
+        <a href="armador_velez.html">🎱 ARM</a>
+      </div>
+    </div><div class="team-card" style="--tc:#16a34a">
+      <div class="tc-head"><span class="tc-name">Ferro</span></div>
+      <div class="tc-stats">
+        <div class="tc-stat"><span class="tcs-lbl">ATK</span><span class="tcs-val" style="color:#fbbf24">+29.9%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">SAQ</span><span class="tcs-val" style="color:#ef4444">-4.7%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">REC</span><span class="tcs-val" style="color:#fbbf24">+31.9%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">BLK</span><span class="tcs-val" style="color:#22c55e">+41.4%</span></div>
+      </div>
+      <div class="tc-links">
+        <a href="ataque_ferro.html">⚡ ATK</a>
+        <a href="saque_ferro.html">🎯 SAQ</a>
+        <a href="recepcion_ferro.html">🛡️ REC</a>
+        <a href="armador_ferro.html">🎱 ARM</a>
+      </div>
+    </div><div class="team-card" style="--tc:#dc2626">
+      <div class="tc-head"><span class="tc-name">Defensores</span></div>
+      <div class="tc-stats">
+        <div class="tc-stat"><span class="tcs-lbl">ATK</span><span class="tcs-val" style="color:#fbbf24">+28.7%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">SAQ</span><span class="tcs-val" style="color:#ef4444">-3.1%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">REC</span><span class="tcs-val" style="color:#fbbf24">+32.2%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">BLK</span><span class="tcs-val" style="color:#22c55e">+45.6%</span></div>
+      </div>
+      <div class="tc-links">
+        <a href="ataque_defensores.html">⚡ ATK</a>
+        <a href="saque_defensores.html">🎯 SAQ</a>
+        <a href="recepcion_defensores.html">🛡️ REC</a>
+        <a href="armador_defensores.html">🎱 ARM</a>
+      </div>
+    </div><div class="team-card" style="--tc:#e8192c">
+      <div class="tc-head"><span class="tc-name">CASLA</span></div>
+      <div class="tc-stats">
+        <div class="tc-stat"><span class="tcs-lbl">ATK</span><span class="tcs-val" style="color:#fbbf24">+27.9%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">SAQ</span><span class="tcs-val" style="color:#ef4444">-5.7%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">REC</span><span class="tcs-val" style="color:#fbbf24">+33.4%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">BLK</span><span class="tcs-val" style="color:#22c55e">+46.2%</span></div>
+      </div>
+      <div class="tc-links">
+        <a href="ataque_casla.html">⚡ ATK</a>
+        <a href="saque_casla.html">🎯 SAQ</a>
+        <a href="recepcion_casla.html">🛡️ REC</a>
+        <a href="armador_casla.html">🎱 ARM</a>
+      </div>
+    </div><div class="team-card" style="--tc:#f59e0b">
+      <div class="tc-head"><span class="tc-name">Lomas</span></div>
+      <div class="tc-stats">
+        <div class="tc-stat"><span class="tcs-lbl">ATK</span><span class="tcs-val" style="color:#fbbf24">+26.5%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">SAQ</span><span class="tcs-val" style="color:#f97316">+1.4%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">REC</span><span class="tcs-val" style="color:#fbbf24">+36.6%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">BLK</span><span class="tcs-val" style="color:#22c55e">+46.8%</span></div>
+      </div>
+      <div class="tc-links">
+        <a href="ataque_lomas.html">⚡ ATK</a>
+        <a href="saque_lomas.html">🎯 SAQ</a>
+        <a href="recepcion_lomas.html">🛡️ REC</a>
+        <a href="armador_lomas.html">🎱 ARM</a>
+      </div>
+    </div><div class="team-card" style="--tc:#003f7f">
+      <div class="tc-head"><span class="tc-name">Boca</span></div>
+      <div class="tc-stats">
+        <div class="tc-stat"><span class="tcs-lbl">ATK</span><span class="tcs-val" style="color:#fbbf24">+26.1%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">SAQ</span><span class="tcs-val" style="color:#ef4444">-9.2%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">REC</span><span class="tcs-val" style="color:#fbbf24">+25.5%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">BLK</span><span class="tcs-val" style="color:#22c55e">+41.2%</span></div>
+      </div>
+      <div class="tc-links">
+        <a href="ataque_boca.html">⚡ ATK</a>
+        <a href="saque_boca.html">🎯 SAQ</a>
+        <a href="recepcion_boca.html">🛡️ REC</a>
+        <a href="armador_boca.html">🎱 ARM</a>
+      </div>
+    </div><div class="team-card" style="--tc:#d50000">
+      <div class="tc-head"><span class="tc-name">River</span></div>
+      <div class="tc-stats">
+        <div class="tc-stat"><span class="tcs-lbl">ATK</span><span class="tcs-val" style="color:#fbbf24">+25.6%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">SAQ</span><span class="tcs-val" style="color:#ef4444">-4.4%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">REC</span><span class="tcs-val" style="color:#fbbf24">+34.7%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">BLK</span><span class="tcs-val" style="color:#22c55e">+40.4%</span></div>
+      </div>
+      <div class="tc-links">
+        <a href="ataque_river.html">⚡ ATK</a>
+        <a href="saque_river.html">🎯 SAQ</a>
+        <a href="recepcion_river.html">🛡️ REC</a>
+        <a href="armador_river.html">🎱 ARM</a>
+      </div>
+    </div><div class="team-card" style="--tc:#ec4899">
+      <div class="tc-head"><span class="tc-name">Campana</span></div>
+      <div class="tc-stats">
+        <div class="tc-stat"><span class="tcs-lbl">ATK</span><span class="tcs-val" style="color:#fbbf24">+23.7%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">SAQ</span><span class="tcs-val" style="color:#ef4444">-8.8%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">REC</span><span class="tcs-val" style="color:#fbbf24">+32.5%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">BLK</span><span class="tcs-val" style="color:#22c55e">+42.1%</span></div>
+      </div>
+      <div class="tc-links">
+        <a href="ataque_campana.html">⚡ ATK</a>
+        <a href="saque_campana.html">🎯 SAQ</a>
+        <a href="recepcion_campana.html">🛡️ REC</a>
+        <a href="armador_campana.html">🎱 ARM</a>
+      </div>
+    </div><div class="team-card" style="--tc:#fbbf24">
+      <div class="tc-head"><span class="tc-name">UBA</span></div>
+      <div class="tc-stats">
+        <div class="tc-stat"><span class="tcs-lbl">ATK</span><span class="tcs-val" style="color:#fbbf24">+23.3%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">SAQ</span><span class="tcs-val" style="color:#ef4444">-1.3%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">REC</span><span class="tcs-val" style="color:#fbbf24">+29.6%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">BLK</span><span class="tcs-val" style="color:#22c55e">+42.4%</span></div>
+      </div>
+      <div class="tc-links">
+        <a href="ataque_uba.html">⚡ ATK</a>
+        <a href="saque_uba.html">🎯 SAQ</a>
+        <a href="recepcion_uba.html">🛡️ REC</a>
+        <a href="armador_uba.html">🎱 ARM</a>
+      </div>
+    </div><div class="team-card" style="--tc:#0ea5e9">
+      <div class="tc-head"><span class="tc-name">Hacoaj</span></div>
+      <div class="tc-stats">
+        <div class="tc-stat"><span class="tcs-lbl">ATK</span><span class="tcs-val" style="color:#fbbf24">+22.6%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">SAQ</span><span class="tcs-val" style="color:#ef4444">-4.7%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">REC</span><span class="tcs-val" style="color:#fbbf24">+28.9%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">BLK</span><span class="tcs-val" style="color:#22c55e">+44.5%</span></div>
+      </div>
+      <div class="tc-links">
+        <a href="ataque_hacoaj.html">⚡ ATK</a>
+        <a href="saque_hacoaj.html">🎯 SAQ</a>
+        <a href="recepcion_hacoaj.html">🛡️ REC</a>
+        <a href="armador_hacoaj.html">🎱 ARM</a>
+      </div>
+    </div><div class="team-card" style="--tc:#8b5cf6">
+      <div class="tc-head"><span class="tc-name">Untref</span></div>
+      <div class="tc-stats">
+        <div class="tc-stat"><span class="tcs-lbl">ATK</span><span class="tcs-val" style="color:#fbbf24">+20.0%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">SAQ</span><span class="tcs-val" style="color:#ef4444">-6.1%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">REC</span><span class="tcs-val" style="color:#fbbf24">+27.6%</span></div>
+        <div class="tc-stat"><span class="tcs-lbl">BLK</span><span class="tcs-val" style="color:#fbbf24">+36.6%</span></div>
+      </div>
+      <div class="tc-links">
+        <a href="ataque_untref.html">⚡ ATK</a>
+        <a href="saque_untref.html">🎯 SAQ</a>
+        <a href="recepcion_untref.html">🛡️ REC</a>
+        <a href="armador_untref.html">🎱 ARM</a>
+      </div>
+    </div></div></div>
+  <div id="players-tab">
+    <div class="filters">
+      <select id="f-team"><option value="">Todos los equipos</option></select>
+      <select id="f-pos"><option value="">Todas las posiciones</option></select>
+      <select id="f-metric">
+        <option value="atk_eff">Ordenar: Ataque</option>
+        <option value="srv_eff">Ordenar: Saque</option>
+        <option value="rec_eff">Ordenar: Recepción</option>
+        <option value="blk_eff">Ordenar: Bloqueo</option>
+      </select>
+    </div>
+    <table id="ptable"><thead><tr>
+      <th>#</th><th>Jugador</th><th>Equipo</th><th>Pos</th><th>ATK</th><th>SAQ</th><th>REC</th><th>BLK</th>
+    </tr></thead><tbody id="pbody"></tbody></table>
+  </div>
+</div>
+<script>
+var PLAYERS = [{"team": "Hacoaj", "num": 5, "name": "Longo Elia Manuel", "pos_label": "?", "atk_eff": 40.0, "srv_eff": -1.5, "rec_eff": null, "blk_eff": 40.5, "atk_n": 5, "srv_n": 82, "rec_n": 0, "blk_n": 37}, {"team": "Hacoaj", "num": 8, "name": "Rivarola Valentino", "pos_label": "?", "atk_eff": 32.7, "srv_eff": -4.5, "rec_eff": null, "blk_eff": 50.0, "atk_n": 55, "srv_n": 78, "rec_n": 0, "blk_n": 66}, {"team": "Hacoaj", "num": 11, "name": "Forte Bruno", "pos_label": "?", "atk_eff": 18.2, "srv_eff": -14.9, "rec_eff": 28.5, "blk_eff": 38.5, "atk_n": 214, "srv_n": 87, "rec_n": 202, "blk_n": 39}, {"team": "Hacoaj", "num": 2, "name": "Eyhartz Santiago", "pos_label": "?", "atk_eff": null, "srv_eff": null, "rec_eff": 32.9, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 173, "blk_n": 0}, {"team": "Hacoaj", "num": 1, "name": "Bacca Cristian", "pos_label": "?", "atk_eff": 9.0, "srv_eff": -4.8, "rec_eff": 21.3, "blk_eff": 40.9, "atk_n": 78, "srv_n": 26, "rec_n": 47, "blk_n": 22}, {"team": "Hacoaj", "num": 9, "name": "Ledesma Lautaro", "pos_label": "?", "atk_eff": 28.6, "srv_eff": -7.6, "rec_eff": null, "blk_eff": 56.8, "atk_n": 185, "srv_n": 56, "rec_n": 0, "blk_n": 37}, {"team": "Hacoaj", "num": 17, "name": "Meiller Nicolas", "pos_label": "?", "atk_eff": 33.3, "srv_eff": -0.8, "rec_eff": null, "blk_eff": 30.0, "atk_n": 21, "srv_n": 30, "rec_n": 0, "blk_n": 20}, {"team": "Hacoaj", "num": 7, "name": "Vaca Alvarez Marcelo Miguel", "pos_label": "?", "atk_eff": 25.0, "srv_eff": 3.6, "rec_eff": null, "blk_eff": 66.7, "atk_n": 4, "srv_n": 7, "rec_n": 0, "blk_n": 3}, {"team": "Hacoaj", "num": 4, "name": "Di Diego Santiago", "pos_label": "?", "atk_eff": 16.2, "srv_eff": 2.7, "rec_eff": 29.8, "blk_eff": 42.9, "atk_n": 74, "srv_n": 47, "rec_n": 47, "blk_n": 14}, {"team": "Hacoaj", "num": 3, "name": "Yapura Cristian Ramon", "pos_label": "?", "atk_eff": 13.3, "srv_eff": 8.3, "rec_eff": 25.0, "blk_eff": 33.3, "atk_n": 15, "srv_n": 6, "rec_n": 6, "blk_n": 3}, {"team": "Hacoaj", "num": 10, "name": "Freire Gonzalo Luis", "pos_label": "?", "atk_eff": 38.2, "srv_eff": -2.3, "rec_eff": 37.5, "blk_eff": 38.8, "atk_n": 68, "srv_n": 54, "rec_n": 4, "blk_n": 49}, {"team": "Hacoaj", "num": 6, "name": "Calvo Eduardo", "pos_label": "?", "atk_eff": 14.5, "srv_eff": 0.0, "rec_eff": null, "blk_eff": 66.7, "atk_n": 55, "srv_n": 9, "rec_n": 0, "blk_n": 9}, {"team": "Hacoaj", "num": 16, "name": "Tarnofky Lucas", "pos_label": "?", "atk_eff": null, "srv_eff": null, "rec_eff": 0.0, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 11, "blk_n": 0}, {"team": "UBA", "num": 10, "name": "Gomez Julian", "pos_label": "?", "atk_eff": 14.3, "srv_eff": 3.8, "rec_eff": 28.6, "blk_eff": null, "atk_n": 7, "srv_n": 13, "rec_n": 117, "blk_n": 0}, {"team": "UBA", "num": 11, "name": "Vallejo Julin", "pos_label": "?", "atk_eff": 24.3, "srv_eff": 3.1, "rec_eff": -50.0, "blk_eff": 42.1, "atk_n": 259, "srv_n": 90, "rec_n": 1, "blk_n": 38}, {"team": "UBA", "num": 14, "name": "DEL PRETE DAMIAN", "pos_label": "?", "atk_eff": 44.6, "srv_eff": -0.7, "rec_eff": 40.0, "blk_eff": 49.3, "atk_n": 92, "srv_n": 113, "rec_n": 5, "blk_n": 71}, {"team": "UBA", "num": 7, "name": "Mujica Diego", "pos_label": "?", "atk_eff": 27.4, "srv_eff": -7.0, "rec_eff": 29.3, "blk_eff": 45.7, "atk_n": 237, "srv_n": 82, "rec_n": 147, "blk_n": 46}, {"team": "UBA", "num": 19, "name": "Carrasco Juan Pablo", "pos_label": "?", "atk_eff": 5.4, "srv_eff": 5.9, "rec_eff": 29.1, "blk_eff": 41.9, "atk_n": 167, "srv_n": 85, "rec_n": 141, "blk_n": 31}, {"team": "UBA", "num": 17, "name": "Devereux Joaqun", "pos_label": "?", "atk_eff": 38.8, "srv_eff": -10.4, "rec_eff": 0.0, "blk_eff": 50.7, "atk_n": 49, "srv_n": 48, "rec_n": 2, "blk_n": 75}, {"team": "UBA", "num": 18, "name": "Molina Eduardo", "pos_label": "?", "atk_eff": 0.0, "srv_eff": 0.0, "rec_eff": 0.0, "blk_eff": 11.8, "atk_n": 5, "srv_n": 91, "rec_n": 1, "blk_n": 17}, {"team": "UBA", "num": 6, "name": "Rios Berber Emiliano", "pos_label": "?", "atk_eff": null, "srv_eff": 3.1, "rec_eff": null, "blk_eff": 0.0, "atk_n": 0, "srv_n": 16, "rec_n": 0, "blk_n": 1}, {"team": "UBA", "num": 3, "name": "Galli Teo", "pos_label": "?", "atk_eff": -26.7, "srv_eff": -100.0, "rec_eff": null, "blk_eff": 20.0, "atk_n": 15, "srv_n": 1, "rec_n": 0, "blk_n": 5}, {"team": "UBA", "num": 1, "name": "Armendano Julian", "pos_label": "?", "atk_eff": 50.0, "srv_eff": -37.5, "rec_eff": 25.0, "blk_eff": 100.0, "atk_n": 6, "srv_n": 10, "rec_n": 8, "blk_n": 1}, {"team": "UBA", "num": 2, "name": "Desiderio Luciano", "pos_label": "?", "atk_eff": 16.7, "srv_eff": 0.0, "rec_eff": null, "blk_eff": 19.2, "atk_n": 24, "srv_n": 11, "rec_n": 0, "blk_n": 26}, {"team": "UBA", "num": 5, "name": "Levy Nathaniel", "pos_label": "?", "atk_eff": null, "srv_eff": null, "rec_eff": 36.9, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 61, "blk_n": 0}, {"team": "Campana", "num": 12, "name": "Ovalles Alonso Luca Martiniano", "pos_label": "?", "atk_eff": 44.4, "srv_eff": -11.4, "rec_eff": -25.0, "blk_eff": 46.7, "atk_n": 9, "srv_n": 114, "rec_n": 4, "blk_n": 45}, {"team": "Campana", "num": 6, "name": "Gazaba Bautista", "pos_label": "?", "atk_eff": 28.6, "srv_eff": -4.6, "rec_eff": 25.0, "blk_eff": 39.0, "atk_n": 294, "srv_n": 103, "rec_n": 2, "blk_n": 59}, {"team": "Campana", "num": 5, "name": "Fuentes Maximiliano", "pos_label": "?", "atk_eff": 20.5, "srv_eff": 0.0, "rec_eff": 8.3, "blk_eff": 41.2, "atk_n": 44, "srv_n": 83, "rec_n": 6, "blk_n": 51}, {"team": "Campana", "num": 17, "name": "Gomez Leandro", "pos_label": "?", "atk_eff": null, "srv_eff": null, "rec_eff": 38.4, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 198, "blk_n": 0}, {"team": "Campana", "num": 16, "name": "Alamino Juan", "pos_label": "?", "atk_eff": 17.6, "srv_eff": -11.5, "rec_eff": 40.1, "blk_eff": 58.5, "atk_n": 193, "srv_n": 89, "rec_n": 142, "blk_n": 41}, {"team": "Campana", "num": 4, "name": "Damiano Luca", "pos_label": "?", "atk_eff": 20.6, "srv_eff": -13.4, "rec_eff": 18.6, "blk_eff": 41.2, "atk_n": 189, "srv_n": 95, "rec_n": 121, "blk_n": 34}, {"team": "Campana", "num": 2, "name": "Cascu Ramses", "pos_label": "?", "atk_eff": 28.4, "srv_eff": -6.7, "rec_eff": 16.7, "blk_eff": 36.1, "atk_n": 81, "srv_n": 63, "rec_n": 3, "blk_n": 61}, {"team": "Campana", "num": 14, "name": "Furtado Fausto", "pos_label": "?", "atk_eff": 11.8, "srv_eff": -20.0, "rec_eff": 25.0, "blk_eff": 25.0, "atk_n": 17, "srv_n": 5, "rec_n": 4, "blk_n": 4}, {"team": "Campana", "num": 3, "name": "Leone Federico Nicolas", "pos_label": "?", "atk_eff": null, "srv_eff": -25.0, "rec_eff": null, "blk_eff": null, "atk_n": 0, "srv_n": 25, "rec_n": 0, "blk_n": 0}, {"team": "Campana", "num": 9, "name": "Bevilacqua Rojas Gino", "pos_label": "?", "atk_eff": 34.6, "srv_eff": 0.0, "rec_eff": 32.1, "blk_eff": 0.0, "atk_n": 26, "srv_n": 12, "rec_n": 14, "blk_n": 4}, {"team": "Lomas", "num": 12, "name": "Rodriguez David", "pos_label": "?", "atk_eff": null, "srv_eff": null, "rec_eff": 41.1, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 185, "blk_n": 0}, {"team": "Lomas", "num": 7, "name": "Rivero Valentino", "pos_label": "?", "atk_eff": 15.6, "srv_eff": -15.9, "rec_eff": 50.0, "blk_eff": 44.4, "atk_n": 109, "srv_n": 44, "rec_n": 1, "blk_n": 18}, {"team": "Lomas", "num": 4, "name": "Milidoni Tomas", "pos_label": "?", "atk_eff": 23.4, "srv_eff": 2.1, "rec_eff": 37.9, "blk_eff": 56.0, "atk_n": 145, "srv_n": 73, "rec_n": 157, "blk_n": 25}, {"team": "Lomas", "num": 16, "name": "Godoy Guerrieri Luciano", "pos_label": "?", "atk_eff": 37.0, "srv_eff": 5.6, "rec_eff": null, "blk_eff": 50.0, "atk_n": 27, "srv_n": 27, "rec_n": 0, "blk_n": 28}, {"team": "Lomas", "num": 10, "name": "Aulisi Santiago", "pos_label": "?", "atk_eff": 30.7, "srv_eff": 12.0, "rec_eff": 30.1, "blk_eff": 56.5, "atk_n": 176, "srv_n": 100, "rec_n": 98, "blk_n": 23}, {"team": "Lomas", "num": 15, "name": "Lopez Julian", "pos_label": "?", "atk_eff": 33.0, "srv_eff": -0.6, "rec_eff": 25.0, "blk_eff": 48.9, "atk_n": 100, "srv_n": 77, "rec_n": 2, "blk_n": 92}, {"team": "Lomas", "num": 17, "name": "Longo Elia Santiago", "pos_label": "?", "atk_eff": 26.3, "srv_eff": -9.7, "rec_eff": 0.0, "blk_eff": 40.4, "atk_n": 19, "srv_n": 85, "rec_n": 1, "blk_n": 47}, {"team": "Lomas", "num": 2, "name": "Requejo Borghese Felipe", "pos_label": "?", "atk_eff": 0.0, "srv_eff": 6.7, "rec_eff": null, "blk_eff": 0.0, "atk_n": 1, "srv_n": 15, "rec_n": 0, "blk_n": 3}, {"team": "Lomas", "num": 14, "name": "Espelt Ignacio", "pos_label": "?", "atk_eff": 26.2, "srv_eff": 8.5, "rec_eff": 27.9, "blk_eff": 50.0, "atk_n": 221, "srv_n": 91, "rec_n": 52, "blk_n": 32}, {"team": "Lomas", "num": 1, "name": "Torres Benicio", "pos_label": "?", "atk_eff": -13.3, "srv_eff": 2.6, "rec_eff": null, "blk_eff": 0.0, "atk_n": 15, "srv_n": 19, "rec_n": 0, "blk_n": 1}, {"team": "Lomas", "num": 9, "name": "Molini Emiliano", "pos_label": "?", "atk_eff": 36.2, "srv_eff": 0.9, "rec_eff": 0.0, "blk_eff": 42.9, "atk_n": 58, "srv_n": 57, "rec_n": 3, "blk_n": 63}, {"team": "Boca", "num": 9, "name": "Bernasconi Ignacio", "pos_label": "?", "atk_eff": 53.8, "srv_eff": -2.4, "rec_eff": 0.0, "blk_eff": 60.6, "atk_n": 13, "srv_n": 73, "rec_n": 3, "blk_n": 33}, {"team": "Boca", "num": 21, "name": "Bauly Bruno", "pos_label": "?", "atk_eff": 5.9, "srv_eff": -10.4, "rec_eff": null, "blk_eff": 20.0, "atk_n": 17, "srv_n": 12, "rec_n": 0, "blk_n": 5}, {"team": "Boca", "num": 14, "name": "Acosta Sergio", "pos_label": "?", "atk_eff": 25.8, "srv_eff": -19.0, "rec_eff": 24.3, "blk_eff": 41.7, "atk_n": 221, "srv_n": 92, "rec_n": 37, "blk_n": 48}, {"team": "Boca", "num": 12, "name": "Chazarreta Manuel", "pos_label": "?", "atk_eff": 43.6, "srv_eff": -3.6, "rec_eff": 37.5, "blk_eff": 27.6, "atk_n": 55, "srv_n": 56, "rec_n": 4, "blk_n": 58}, {"team": "Boca", "num": 30, "name": "Linares Gaston", "pos_label": "?", "atk_eff": 25.7, "srv_eff": -12.0, "rec_eff": 30.1, "blk_eff": 25.0, "atk_n": 101, "srv_n": 71, "rec_n": 128, "blk_n": 16}, {"team": "Boca", "num": 16, "name": "Lobo Alessandro", "pos_label": "?", "atk_eff": null, "srv_eff": null, "rec_eff": 24.6, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 124, "blk_n": 0}, {"team": "Boca", "num": 20, "name": "Faria Joaquin", "pos_label": "?", "atk_eff": 41.1, "srv_eff": -17.8, "rec_eff": 20.0, "blk_eff": 50.0, "atk_n": 73, "srv_n": 59, "rec_n": 5, "blk_n": 58}, {"team": "Boca", "num": 2, "name": "Drimal Eric", "pos_label": "?", "atk_eff": 33.3, "srv_eff": -8.3, "rec_eff": 43.8, "blk_eff": null, "atk_n": 3, "srv_n": 9, "rec_n": 8, "blk_n": 0}, {"team": "Boca", "num": 23, "name": "Rodriguez Juan", "pos_label": "?", "atk_eff": 0.0, "srv_eff": 10.9, "rec_eff": 0.0, "blk_eff": 50.0, "atk_n": 2, "srv_n": 23, "rec_n": 1, "blk_n": 2}, {"team": "Boca", "num": 10, "name": "Coto Luciano", "pos_label": "?", "atk_eff": 20.8, "srv_eff": -2.5, "rec_eff": 18.5, "blk_eff": 52.4, "atk_n": 192, "srv_n": 69, "rec_n": 108, "blk_n": 21}, {"team": "Boca", "num": 11, "name": "Beltrn Emanuel", "pos_label": "?", "atk_eff": 18.2, "srv_eff": 1.8, "rec_eff": null, "blk_eff": 42.9, "atk_n": 11, "srv_n": 14, "rec_n": 0, "blk_n": 14}, {"team": "Boca", "num": 99, "name": "Benavidez Felipe", "pos_label": "?", "atk_eff": 13.0, "srv_eff": -25.0, "rec_eff": 43.6, "blk_eff": 33.3, "atk_n": 46, "srv_n": 21, "rec_n": 39, "blk_n": 12}, {"team": "Boca", "num": 33, "name": "Flores Elias", "pos_label": "?", "atk_eff": 0.0, "srv_eff": 0.0, "rec_eff": null, "blk_eff": 0.0, "atk_n": 5, "srv_n": 5, "rec_n": 0, "blk_n": 4}, {"team": "Boca", "num": 18, "name": "Handlarz Teo", "pos_label": "?", "atk_eff": null, "srv_eff": null, "rec_eff": 10.9, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 32, "blk_n": 0}, {"team": "Defensores", "num": 30, "name": "Mansilla Maximo", "pos_label": "?", "atk_eff": 11.0, "srv_eff": -3.2, "rec_eff": 36.7, "blk_eff": 53.8, "atk_n": 155, "srv_n": 103, "rec_n": 210, "blk_n": 26}, {"team": "Defensores", "num": 16, "name": "Lopez Peralta Jorge", "pos_label": "?", "atk_eff": 30.4, "srv_eff": -18.3, "rec_eff": -100.0, "blk_eff": 34.8, "atk_n": 204, "srv_n": 89, "rec_n": 1, "blk_n": 46}, {"team": "Defensores", "num": 3, "name": "Wagner Bruno", "pos_label": "?", "atk_eff": 34.0, "srv_eff": -9.9, "rec_eff": 39.8, "blk_eff": 43.2, "atk_n": 238, "srv_n": 119, "rec_n": 166, "blk_n": 44}, {"team": "Defensores", "num": 11, "name": "Morales Maldonado Lautaro", "pos_label": "?", "atk_eff": null, "srv_eff": null, "rec_eff": 26.8, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 151, "blk_n": 0}, {"team": "Defensores", "num": 1, "name": "Barrios Lautaro", "pos_label": "?", "atk_eff": 22.3, "srv_eff": 5.2, "rec_eff": null, "blk_eff": 47.1, "atk_n": 103, "srv_n": 125, "rec_n": 0, "blk_n": 87}, {"team": "Defensores", "num": 5, "name": "Gallardo Agustin", "pos_label": "?", "atk_eff": 54.7, "srv_eff": -3.2, "rec_eff": 0.0, "blk_eff": 58.8, "atk_n": 64, "srv_n": 55, "rec_n": 1, "blk_n": 51}, {"team": "Defensores", "num": 9, "name": "Corvalan Cristian", "pos_label": "?", "atk_eff": 75.0, "srv_eff": -0.5, "rec_eff": -25.0, "blk_eff": 42.6, "atk_n": 4, "srv_n": 106, "rec_n": 8, "blk_n": 47}, {"team": "Defensores", "num": 12, "name": "La Gioia Tomas", "pos_label": "?", "atk_eff": null, "srv_eff": -5.8, "rec_eff": null, "blk_eff": null, "atk_n": 0, "srv_n": 13, "rec_n": 0, "blk_n": 0}, {"team": "Defensores", "num": 4, "name": "Soria Nicolas", "pos_label": "?", "atk_eff": 50.0, "srv_eff": -4.2, "rec_eff": -14.3, "blk_eff": null, "atk_n": 2, "srv_n": 12, "rec_n": 7, "blk_n": 0}, {"team": "Defensores", "num": 18, "name": "Corso Emanuel", "pos_label": "?", "atk_eff": 61.5, "srv_eff": -1.8, "rec_eff": 50.0, "blk_eff": 35.0, "atk_n": 13, "srv_n": 28, "rec_n": 1, "blk_n": 20}, {"team": "Defensores", "num": 7, "name": "Sarmiento Britos Jeremias", "pos_label": "?", "atk_eff": 15.9, "srv_eff": 19.7, "rec_eff": 18.8, "blk_eff": 20.0, "atk_n": 44, "srv_n": 19, "rec_n": 32, "blk_n": 5}, {"team": "Defensores", "num": 17, "name": "Acosta Juan", "pos_label": "?", "atk_eff": 20.0, "srv_eff": 11.5, "rec_eff": 0.0, "blk_eff": 47.4, "atk_n": 10, "srv_n": 24, "rec_n": 1, "blk_n": 19}, {"team": "Defensores", "num": 2, "name": "Corzo Mathias", "pos_label": "?", "atk_eff": 30.1, "srv_eff": 0.0, "rec_eff": null, "blk_eff": 47.1, "atk_n": 83, "srv_n": 28, "rec_n": 0, "blk_n": 17}, {"team": "Velez", "num": 10, "name": "Bravetti Gianluca", "pos_label": "?", "atk_eff": 35.7, "srv_eff": 1.9, "rec_eff": -50.0, "blk_eff": 35.3, "atk_n": 14, "srv_n": 80, "rec_n": 2, "blk_n": 34}, {"team": "Velez", "num": 5, "name": "Vivas Lucas", "pos_label": "?", "atk_eff": 25.7, "srv_eff": -6.9, "rec_eff": 34.4, "blk_eff": 37.5, "atk_n": 105, "srv_n": 69, "rec_n": 80, "blk_n": 16}, {"team": "Velez", "num": 12, "name": "Gomez Franco", "pos_label": "?", "atk_eff": 25.1, "srv_eff": -9.8, "rec_eff": null, "blk_eff": 39.0, "atk_n": 187, "srv_n": 66, "rec_n": 0, "blk_n": 41}, {"team": "Velez", "num": 4, "name": "Hernandez Facundo", "pos_label": "?", "atk_eff": 38.6, "srv_eff": -11.0, "rec_eff": 25.0, "blk_eff": 40.0, "atk_n": 101, "srv_n": 82, "rec_n": 2, "blk_n": 65}, {"team": "Velez", "num": 13, "name": "Gorosito Lus", "pos_label": "?", "atk_eff": 24.8, "srv_eff": 1.9, "rec_eff": 28.6, "blk_eff": 44.4, "atk_n": 129, "srv_n": 91, "rec_n": 175, "blk_n": 36}, {"team": "Velez", "num": 18, "name": "Benitez Ramiro", "pos_label": "?", "atk_eff": 51.8, "srv_eff": 0.4, "rec_eff": 37.5, "blk_eff": 40.0, "atk_n": 85, "srv_n": 69, "rec_n": 4, "blk_n": 70}, {"team": "Velez", "num": 9, "name": "Lueje Juan Pablo", "pos_label": "?", "atk_eff": null, "srv_eff": null, "rec_eff": 18.0, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 75, "blk_n": 0}, {"team": "Velez", "num": 1, "name": "Aloisi Luciano", "pos_label": "?", "atk_eff": 50.0, "srv_eff": 5.8, "rec_eff": -100.0, "blk_eff": 18.2, "atk_n": 2, "srv_n": 30, "rec_n": 1, "blk_n": 11}, {"team": "Velez", "num": 96, "name": "Johansen German", "pos_label": "?", "atk_eff": 26.3, "srv_eff": -23.6, "rec_eff": null, "blk_eff": 38.1, "atk_n": 57, "srv_n": 18, "rec_n": 0, "blk_n": 21}, {"team": "Velez", "num": 11, "name": "Leguizamon Martn", "pos_label": "?", "atk_eff": -40.0, "srv_eff": 1.4, "rec_eff": 35.7, "blk_eff": 50.0, "atk_n": 5, "srv_n": 18, "rec_n": 7, "blk_n": 4}, {"team": "Velez", "num": 3, "name": "Mauritanio Tadeo", "pos_label": "?", "atk_eff": null, "srv_eff": 0.0, "rec_eff": 27.2, "blk_eff": null, "atk_n": 0, "srv_n": 1, "rec_n": 92, "blk_n": 0}, {"team": "Velez", "num": 22, "name": "Olmedo Tomas Agustn", "pos_label": "?", "atk_eff": 57.1, "srv_eff": -6.8, "rec_eff": null, "blk_eff": 40.0, "atk_n": 7, "srv_n": 11, "rec_n": 0, "blk_n": 5}, {"team": "Velez", "num": 6, "name": "Guzman Juan", "pos_label": "?", "atk_eff": 25.0, "srv_eff": -2.4, "rec_eff": 30.4, "blk_eff": 59.1, "atk_n": 68, "srv_n": 41, "rec_n": 79, "blk_n": 22}, {"team": "Velez", "num": 17, "name": "Oldani Ignacio", "pos_label": "?", "atk_eff": 20.0, "srv_eff": 4.2, "rec_eff": null, "blk_eff": 34.5, "atk_n": 15, "srv_n": 18, "rec_n": 0, "blk_n": 29}, {"team": "River", "num": 25, "name": "Girardi Ignazio", "pos_label": "?", "atk_eff": null, "srv_eff": null, "rec_eff": 31.6, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 103, "blk_n": 0}, {"team": "River", "num": 1, "name": "Jose Thiago Ulises", "pos_label": "?", "atk_eff": 22.1, "srv_eff": 1.6, "rec_eff": 44.9, "blk_eff": 41.3, "atk_n": 240, "srv_n": 137, "rec_n": 225, "blk_n": 46}, {"team": "River", "num": 4, "name": "Giulietti Juan Manuel", "pos_label": "?", "atk_eff": 52.4, "srv_eff": 0.0, "rec_eff": 12.5, "blk_eff": 51.7, "atk_n": 21, "srv_n": 150, "rec_n": 4, "blk_n": 58}, {"team": "River", "num": 8, "name": "Turcitu Giuliano", "pos_label": "?", "atk_eff": 25.1, "srv_eff": -8.9, "rec_eff": 27.6, "blk_eff": 31.8, "atk_n": 275, "srv_n": 112, "rec_n": 176, "blk_n": 44}, {"team": "River", "num": 6, "name": "Lopez Fausto", "pos_label": "?", "atk_eff": 44.5, "srv_eff": -4.4, "rec_eff": 36.4, "blk_eff": 39.6, "atk_n": 128, "srv_n": 107, "rec_n": 11, "blk_n": 96}, {"team": "River", "num": 14, "name": "De Coro Santiago", "pos_label": "?", "atk_eff": 53.8, "srv_eff": -4.3, "rec_eff": 0.0, "blk_eff": 32.0, "atk_n": 26, "srv_n": 29, "rec_n": 1, "blk_n": 25}, {"team": "River", "num": 19, "name": "Jauretche Alexander", "pos_label": "?", "atk_eff": 7.9, "srv_eff": 0.0, "rec_eff": null, "blk_eff": 31.2, "atk_n": 38, "srv_n": 17, "rec_n": 0, "blk_n": 16}, {"team": "River", "num": 12, "name": "Garcia Nahuel", "pos_label": "?", "atk_eff": 40.0, "srv_eff": -25.0, "rec_eff": 50.0, "blk_eff": 44.3, "atk_n": 55, "srv_n": 53, "rec_n": 12, "blk_n": 61}, {"team": "River", "num": 7, "name": "Mangini Juan", "pos_label": "?", "atk_eff": 7.7, "srv_eff": -9.4, "rec_eff": -12.5, "blk_eff": 22.2, "atk_n": 117, "srv_n": 48, "rec_n": 4, "blk_n": 18}, {"team": "River", "num": 5, "name": "Hribar Martn", "pos_label": "?", "atk_eff": 16.4, "srv_eff": 6.7, "rec_eff": 16.1, "blk_eff": 41.2, "atk_n": 61, "srv_n": 45, "rec_n": 31, "blk_n": 17}, {"team": "River", "num": 10, "name": "Trucco Federico", "pos_label": "?", "atk_eff": null, "srv_eff": null, "rec_eff": 34.9, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 73, "blk_n": 0}, {"team": "River", "num": 21, "name": "Sansone Lucas", "pos_label": "?", "atk_eff": 0.0, "srv_eff": 3.1, "rec_eff": 0.0, "blk_eff": 42.9, "atk_n": 11, "srv_n": 8, "rec_n": 1, "blk_n": 14}, {"team": "River", "num": 30, "name": "Gomez Mateo", "pos_label": "?", "atk_eff": 29.6, "srv_eff": -5.0, "rec_eff": null, "blk_eff": 50.0, "atk_n": 98, "srv_n": 40, "rec_n": 0, "blk_n": 28}, {"team": "River", "num": 11, "name": "Burgos Martin", "pos_label": "?", "atk_eff": 0.0, "srv_eff": -6.2, "rec_eff": 0.0, "blk_eff": 25.0, "atk_n": 5, "srv_n": 8, "rec_n": 1, "blk_n": 8}, {"team": "CASLA", "num": 9, "name": "Godoy Martin", "pos_label": "ARMADOR", "atk_eff": 0.0, "srv_eff": 2.0, "rec_eff": 0.0, "blk_eff": 42.3, "atk_n": 5, "srv_n": 51, "rec_n": 4, "blk_n": 26}, {"team": "CASLA", "num": 3, "name": "Romeo Winer Agustin", "pos_label": "LIBERO", "atk_eff": null, "srv_eff": -16.7, "rec_eff": 13.4, "blk_eff": null, "atk_n": 0, "srv_n": 6, "rec_n": 67, "blk_n": 0}, {"team": "CASLA", "num": 5, "name": "Ramos Iaki", "pos_label": "OPUESTO", "atk_eff": 27.8, "srv_eff": -30.3, "rec_eff": 25.0, "blk_eff": 37.0, "atk_n": 151, "srv_n": 57, "rec_n": 2, "blk_n": 54}, {"team": "CASLA", "num": 14, "name": "Nielson Ramiro", "pos_label": "PUNTA", "atk_eff": 24.6, "srv_eff": 1.7, "rec_eff": 39.9, "blk_eff": 41.7, "atk_n": 207, "srv_n": 130, "rec_n": 154, "blk_n": 48}, {"team": "CASLA", "num": 11, "name": "Durdos Valentin", "pos_label": "PUNTA", "atk_eff": 25.0, "srv_eff": -16.5, "rec_eff": 36.8, "blk_eff": 37.0, "atk_n": 212, "srv_n": 91, "rec_n": 152, "blk_n": 46}, {"team": "CASLA", "num": 1, "name": "Salazar Imanol", "pos_label": "?", "atk_eff": 40.0, "srv_eff": -10.9, "rec_eff": 66.7, "blk_eff": 50.0, "atk_n": 30, "srv_n": 23, "rec_n": 3, "blk_n": 34}, {"team": "CASLA", "num": 2, "name": "Ojuez Agustin", "pos_label": "CENTRAL", "atk_eff": 51.3, "srv_eff": -10.6, "rec_eff": 20.0, "blk_eff": 64.4, "atk_n": 76, "srv_n": 45, "rec_n": 5, "blk_n": 59}, {"team": "CASLA", "num": 17, "name": "Herbsommer Leonardo", "pos_label": "CENTRAL", "atk_eff": 28.6, "srv_eff": 0.4, "rec_eff": null, "blk_eff": 44.4, "atk_n": 70, "srv_n": 71, "rec_n": 0, "blk_n": 72}, {"team": "CASLA", "num": 15, "name": "Rotezzi Ramiro Lucio", "pos_label": "CENTRAL", "atk_eff": 50.0, "srv_eff": 1.0, "rec_eff": 8.3, "blk_eff": 50.0, "atk_n": 20, "srv_n": 26, "rec_n": 6, "blk_n": 10}, {"team": "CASLA", "num": 4, "name": "Vazquez Ezequiel", "pos_label": "ARMADOR", "atk_eff": 23.5, "srv_eff": 6.5, "rec_eff": -33.3, "blk_eff": 50.0, "atk_n": 17, "srv_n": 96, "rec_n": 3, "blk_n": 32}, {"team": "CASLA", "num": 12, "name": "Zanotti Juan Cruz", "pos_label": "LIBERO", "atk_eff": null, "srv_eff": null, "rec_eff": 34.2, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 139, "blk_n": 0}, {"team": "CASLA", "num": 18, "name": "Acosta Wilson", "pos_label": "OPUESTO", "atk_eff": 20.0, "srv_eff": -12.5, "rec_eff": null, "blk_eff": 42.9, "atk_n": 90, "srv_n": 38, "rec_n": 0, "blk_n": 14}, {"team": "CASLA", "num": 19, "name": "Diaz Bolli Santiago", "pos_label": "?", "atk_eff": null, "srv_eff": 4.2, "rec_eff": null, "blk_eff": null, "atk_n": 0, "srv_n": 12, "rec_n": 0, "blk_n": 0}, {"team": "CASLA", "num": 6, "name": "Villarruel Juan Simon", "pos_label": "PUNTA", "atk_eff": -28.6, "srv_eff": -25.0, "rec_eff": 60.0, "blk_eff": 100.0, "atk_n": 7, "srv_n": 7, "rec_n": 5, "blk_n": 1}, {"team": "Ciudad", "num": 4, "name": "Guidi Samuel", "pos_label": "?", "atk_eff": 21.1, "srv_eff": -9.6, "rec_eff": 26.7, "blk_eff": 45.5, "atk_n": 90, "srv_n": 52, "rec_n": 103, "blk_n": 22}, {"team": "Ciudad", "num": 3, "name": "Ponzio Jonas", "pos_label": "?", "atk_eff": 39.5, "srv_eff": -8.5, "rec_eff": 50.0, "blk_eff": 55.3, "atk_n": 228, "srv_n": 85, "rec_n": 2, "blk_n": 47}, {"team": "Ciudad", "num": 16, "name": "Cejas Jose", "pos_label": "?", "atk_eff": 50.0, "srv_eff": 5.3, "rec_eff": 0.0, "blk_eff": 50.0, "atk_n": 8, "srv_n": 61, "rec_n": 3, "blk_n": 28}, {"team": "Ciudad", "num": 13, "name": "Zanotti Lisandro", "pos_label": "?", "atk_eff": 37.5, "srv_eff": 4.6, "rec_eff": 28.2, "blk_eff": 55.6, "atk_n": 88, "srv_n": 65, "rec_n": 71, "blk_n": 18}, {"team": "Ciudad", "num": 18, "name": "Pavon Ivan", "pos_label": "?", "atk_eff": 5.6, "srv_eff": -12.5, "rec_eff": 0.0, "blk_eff": 41.2, "atk_n": 18, "srv_n": 22, "rec_n": 1, "blk_n": 34}, {"team": "Ciudad", "num": 20, "name": "Soria Sergio Daniel", "pos_label": "?", "atk_eff": 50.9, "srv_eff": -3.8, "rec_eff": 0.0, "blk_eff": 45.8, "atk_n": 53, "srv_n": 66, "rec_n": 2, "blk_n": 48}, {"team": "Ciudad", "num": 5, "name": "Zalcman Damian Javier", "pos_label": "?", "atk_eff": null, "srv_eff": null, "rec_eff": 32.7, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 110, "blk_n": 0}, {"team": "Ciudad", "num": 14, "name": "Vanzetti Pedro", "pos_label": "?", "atk_eff": null, "srv_eff": 0.0, "rec_eff": -20.0, "blk_eff": null, "atk_n": 0, "srv_n": 9, "rec_n": 5, "blk_n": 0}, {"team": "Ciudad", "num": 1, "name": "Gay Mauro", "pos_label": "?", "atk_eff": 29.2, "srv_eff": -20.0, "rec_eff": null, "blk_eff": 57.1, "atk_n": 24, "srv_n": 5, "rec_n": 0, "blk_n": 7}, {"team": "Ciudad", "num": 7, "name": "Rojas Nahuel", "pos_label": "?", "atk_eff": 37.5, "srv_eff": -3.8, "rec_eff": 33.3, "blk_eff": 37.5, "atk_n": 16, "srv_n": 20, "rec_n": 21, "blk_n": 8}, {"team": "Ciudad", "num": 23, "name": "Benitez Ignacio", "pos_label": "?", "atk_eff": 13.3, "srv_eff": -3.3, "rec_eff": null, "blk_eff": 30.0, "atk_n": 15, "srv_n": 23, "rec_n": 0, "blk_n": 20}, {"team": "Ciudad", "num": 10, "name": "Zelayeta Mauro", "pos_label": "?", "atk_eff": 20.6, "srv_eff": 1.9, "rec_eff": 26.2, "blk_eff": 68.8, "atk_n": 63, "srv_n": 53, "rec_n": 40, "blk_n": 16}, {"team": "Ciudad", "num": 8, "name": "Gonzalez Demian", "pos_label": "?", "atk_eff": null, "srv_eff": -6.2, "rec_eff": 0.0, "blk_eff": 33.3, "atk_n": 0, "srv_n": 44, "rec_n": 2, "blk_n": 6}, {"team": "Ciudad", "num": 2, "name": "Gauna Maximiliano", "pos_label": "?", "atk_eff": 63.2, "srv_eff": -5.0, "rec_eff": 100.0, "blk_eff": 52.3, "atk_n": 19, "srv_n": 25, "rec_n": 1, "blk_n": 44}, {"team": "Untref", "num": 9, "name": "Ecker Sebastin", "pos_label": "?", "atk_eff": 30.3, "srv_eff": -14.9, "rec_eff": 35.5, "blk_eff": 54.5, "atk_n": 241, "srv_n": 62, "rec_n": 172, "blk_n": 22}, {"team": "Untref", "num": 13, "name": "Ciccolella Sebastian", "pos_label": "?", "atk_eff": 7.4, "srv_eff": 0.7, "rec_eff": -33.3, "blk_eff": 29.7, "atk_n": 27, "srv_n": 36, "rec_n": 3, "blk_n": 37}, {"team": "Untref", "num": 8, "name": "Retamozo Franco", "pos_label": "?", "atk_eff": 9.6, "srv_eff": -13.8, "rec_eff": 28.8, "blk_eff": 40.0, "atk_n": 94, "srv_n": 47, "rec_n": 66, "blk_n": 15}, {"team": "Untref", "num": 14, "name": "Baracetti Lorenzo", "pos_label": "?", "atk_eff": 46.7, "srv_eff": -25.0, "rec_eff": 37.5, "blk_eff": 0.0, "atk_n": 15, "srv_n": 20, "rec_n": 20, "blk_n": 1}, {"team": "Untref", "num": 10, "name": "Lazo Uriel", "pos_label": "?", "atk_eff": 12.7, "srv_eff": 4.7, "rec_eff": -50.0, "blk_eff": 33.3, "atk_n": 63, "srv_n": 59, "rec_n": 2, "blk_n": 18}, {"team": "Untref", "num": 6, "name": "Garcia Jano", "pos_label": "?", "atk_eff": 11.0, "srv_eff": -2.3, "rec_eff": -25.0, "blk_eff": 5.3, "atk_n": 136, "srv_n": 65, "rec_n": 4, "blk_n": 19}, {"team": "Untref", "num": 19, "name": "Besso Riva Pedro", "pos_label": "?", "atk_eff": null, "srv_eff": null, "rec_eff": 31.6, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 19, "blk_n": 0}, {"team": "Untref", "num": 17, "name": "Fernandez Mateo Julio", "pos_label": "?", "atk_eff": 20.5, "srv_eff": 8.9, "rec_eff": 50.0, "blk_eff": 36.7, "atk_n": 39, "srv_n": 28, "rec_n": 1, "blk_n": 30}, {"team": "Untref", "num": 1, "name": "Lanzani Lautaro", "pos_label": "?", "atk_eff": null, "srv_eff": -9.4, "rec_eff": null, "blk_eff": null, "atk_n": 0, "srv_n": 16, "rec_n": 0, "blk_n": 0}, {"team": "Untref", "num": 7, "name": "Fernandez Ivan Alejandro", "pos_label": "?", "atk_eff": 40.0, "srv_eff": 0.0, "rec_eff": 33.3, "blk_eff": 31.2, "atk_n": 15, "srv_n": 16, "rec_n": 3, "blk_n": 16}, {"team": "Untref", "num": 18, "name": "Lungo Matias", "pos_label": "?", "atk_eff": 33.3, "srv_eff": -2.1, "rec_eff": -33.3, "blk_eff": 50.0, "atk_n": 6, "srv_n": 47, "rec_n": 3, "blk_n": 18}, {"team": "Untref", "num": 2, "name": "Besso Riva Pedro", "pos_label": "?", "atk_eff": null, "srv_eff": null, "rec_eff": 32.3, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 155, "blk_n": 0}, {"team": "Untref", "num": 20, "name": "Vieira Edgar", "pos_label": "?", "atk_eff": 20.0, "srv_eff": -14.3, "rec_eff": 50.0, "blk_eff": 40.9, "atk_n": 30, "srv_n": 35, "rec_n": 1, "blk_n": 44}, {"team": "Untref", "num": 12, "name": "Del Coto Brais", "pos_label": "?", "atk_eff": 15.6, "srv_eff": -3.8, "rec_eff": 5.6, "blk_eff": 50.0, "atk_n": 77, "srv_n": 46, "rec_n": 72, "blk_n": 10}, {"team": "Untref", "num": 11, "name": "Arquez Federico", "pos_label": "?", "atk_eff": 20.0, "srv_eff": -30.0, "rec_eff": -50.0, "blk_eff": 50.0, "atk_n": 5, "srv_n": 10, "rec_n": 2, "blk_n": 4}, {"team": "Ferro", "num": 7, "name": "Ybars Franco", "pos_label": "?", "atk_eff": 19.4, "srv_eff": -5.2, "rec_eff": 29.0, "blk_eff": 44.4, "atk_n": 165, "srv_n": 77, "rec_n": 81, "blk_n": 27}, {"team": "Ferro", "num": 5, "name": "Arguinzonis Bruno", "pos_label": "?", "atk_eff": 38.5, "srv_eff": 8.1, "rec_eff": -41.7, "blk_eff": 39.0, "atk_n": 78, "srv_n": 96, "rec_n": 6, "blk_n": 77}, {"team": "Ferro", "num": 1, "name": "Pussetto Nicolas", "pos_label": "?", "atk_eff": 33.3, "srv_eff": 1.1, "rec_eff": null, "blk_eff": 33.3, "atk_n": 9, "srv_n": 46, "rec_n": 0, "blk_n": 12}, {"team": "Ferro", "num": 12, "name": "Arrigone Francisco", "pos_label": "?", "atk_eff": 30.2, "srv_eff": -6.9, "rec_eff": 35.2, "blk_eff": 28.6, "atk_n": 222, "srv_n": 98, "rec_n": 149, "blk_n": 42}, {"team": "Ferro", "num": 4, "name": "Escobar Andres", "pos_label": "?", "atk_eff": null, "srv_eff": null, "rec_eff": 35.3, "blk_eff": null, "atk_n": 0, "srv_n": 0, "rec_n": 187, "blk_n": 0}, {"team": "Ferro", "num": 3, "name": "Vercelino Juan", "pos_label": "?", "atk_eff": 51.3, "srv_eff": 3.4, "rec_eff": null, "blk_eff": 48.5, "atk_n": 39, "srv_n": 59, "rec_n": 0, "blk_n": 66}, {"team": "Ferro", "num": 14, "name": "Castillo Joaquin", "pos_label": "?", "atk_eff": 24.2, "srv_eff": -21.9, "rec_eff": -100.0, "blk_eff": 42.2, "atk_n": 128, "srv_n": 48, "rec_n": 1, "blk_n": 45}, {"team": "Ferro", "num": 10, "name": "Torres Santiago", "pos_label": "?", "atk_eff": 14.3, "srv_eff": 8.3, "rec_eff": 0.0, "blk_eff": 60.0, "atk_n": 7, "srv_n": 3, "rec_n": 2, "blk_n": 5}, {"team": "Ferro", "num": 11, "name": "Perznianko Santiago", "pos_label": "?", "atk_eff": null, "srv_eff": 9.4, "rec_eff": null, "blk_eff": null, "atk_n": 0, "srv_n": 16, "rec_n": 0, "blk_n": 0}, {"team": "Ferro", "num": 18, "name": "Palomeque Martn", "pos_label": "?", "atk_eff": 36.4, "srv_eff": -8.3, "rec_eff": 100.0, "blk_eff": 44.4, "atk_n": 11, "srv_n": 6, "rec_n": 1, "blk_n": 9}, {"team": "Ferro", "num": 20, "name": "Santaufemia Aquiles", "pos_label": "?", "atk_eff": 100.0, "srv_eff": -4.4, "rec_eff": null, "blk_eff": 50.0, "atk_n": 3, "srv_n": 62, "rec_n": 0, "blk_n": 12}, {"team": "Ferro", "num": 8, "name": "Calvo Leandro", "pos_label": "?", "atk_eff": 34.4, "srv_eff": -17.1, "rec_eff": 36.2, "blk_eff": 35.3, "atk_n": 64, "srv_n": 19, "rec_n": 29, "blk_n": 17}, {"team": "Ferro", "num": 2, "name": "Pereyra Federico", "pos_label": "?", "atk_eff": 35.0, "srv_eff": -15.0, "rec_eff": null, "blk_eff": 55.6, "atk_n": 40, "srv_n": 15, "rec_n": 0, "blk_n": 9}, {"team": "Ferro", "num": 19, "name": "Rodriguez Tomas", "pos_label": "?", "atk_eff": 33.3, "srv_eff": -34.1, "rec_eff": 19.4, "blk_eff": 40.0, "atk_n": 57, "srv_n": 22, "rec_n": 36, "blk_n": 10}, {"team": "Ferro", "num": 6, "name": "Lobo Matias", "pos_label": "?", "atk_eff": 44.4, "srv_eff": 1.9, "rec_eff": null, "blk_eff": 60.0, "atk_n": 9, "srv_n": 13, "rec_n": 0, "blk_n": 10}, {"team": "Ferro", "num": 9, "name": "Steeman Tomas", "pos_label": "?", "atk_eff": -50.0, "srv_eff": -7.4, "rec_eff": null, "blk_eff": 0.0, "atk_n": 2, "srv_n": 17, "rec_n": 0, "blk_n": 4}];
+var TEAMS = ["Ciudad", "Velez", "Ferro", "Defensores", "CASLA", "Lomas", "Boca", "River", "Campana", "UBA", "Hacoaj", "Untref"];
+// tabs
+document.querySelectorAll('.tab').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+    tab.classList.add('active');
+    document.getElementById('teams-tab').style.display = tab.dataset.t==='teams'?'block':'none';
+    document.getElementById('players-tab').style.display = tab.dataset.t==='players'?'block':'none';
+  });
+});
+// populate filters
+var ft=document.getElementById('f-team'); TEAMS.forEach(function(t){var o=document.createElement('option');o.value=t;o.textContent=t;ft.appendChild(o);});
+var positions=Array.from(new Set(PLAYERS.map(function(p){return p.pos_label;}).filter(function(p){return p&&p!=='?';})));
+var fp=document.getElementById('f-pos'); positions.forEach(function(p){var o=document.createElement('option');o.value=p;o.textContent=p;fp.appendChild(o);});
+function ec(v,rec){if(v==null)return '#475569';if(rec)return v>=40?'#22c55e':v>=25?'#fbbf24':v>=10?'#f97316':'#ef4444';return v>=30?'#22c55e':v>=20?'#fbbf24':v>=0?'#f97316':'#ef4444';}
+function fmt(v){return v==null?'—':(v>=0?'+':'')+v+'%';}
+function renderPlayers(){
+  var team=ft.value, pos=fp.value, metric=document.getElementById('f-metric').value;
+  var data=PLAYERS.filter(function(p){return (!team||p.team===team)&&(!pos||p.pos_label===pos)&&p[metric]!=null;})
+                  .sort(function(a,b){return b[metric]-a[metric];});
+  document.getElementById('pbody').innerHTML=data.map(function(p){
+    return '<tr><td>'+p.num+'</td><td>'+p.name+'</td><td>'+p.team+'</td><td>'+(p.pos_label||'—')+'</td>'
+      +'<td style="color:'+ec(p.atk_eff)+'">'+fmt(p.atk_eff)+'</td>'
+      +'<td style="color:'+ec(p.srv_eff)+'">'+fmt(p.srv_eff)+'</td>'
+      +'<td style="color:'+ec(p.rec_eff,true)+'">'+fmt(p.rec_eff)+'</td>'
+      +'<td style="color:'+ec(p.blk_eff,true)+'">'+fmt(p.blk_eff)+'</td></tr>';
+  }).join('');
+}
+ft.addEventListener('change',renderPlayers); fp.addEventListener('change',renderPlayers);
+document.getElementById('f-metric').addEventListener('change',renderPlayers);
+renderPlayers();
+</script></body></html>
