@@ -12,7 +12,7 @@ except ImportError:
 BASE  = os.path.dirname(os.path.abspath(__file__))
 EXCEL = os.path.join(BASE, "CASL_Partidos.xlsx")
 OUT   = os.path.join(BASE, "datos_partidos.js")
-SKIP  = {'INDICE', 'GUIA', 'INSTRUCCIONES', 'PRÓXIMO', 'PLANTEL'}
+SKIP  = {'INDICE', 'GUIA', 'INSTRUCCIONES', 'PRÓXIMO', 'PLANTEL', 'VIDEOS', 'FEEDBACK'}
 
 # ── Helpers ──────────────────────────────────────────────────────────
 def si(v):
@@ -74,6 +74,9 @@ def leer_indice(wb):
             'resultado':  str(row[6]).strip() if row[6] else '',
             'sets_casla': str(row[4]).strip() if row[4] else '',
             'sets_rival': str(row[5]).strip() if row[5] else '',
+            'horario':    str(row[8]).strip() if len(row)>8 and row[8] else '',
+            'condicion':  str(row[9]).strip().upper() if len(row)>9 and row[9] else 'LOCAL',
+            'nombre':     solapa,
         }
     return meta
 
@@ -904,6 +907,64 @@ def leer_feedback(wb):
     return feedbacks
 
 
+def generar_game_plans(meta_dict, base_dir):
+    """Genera game_plans.js desde el INDICE del Excel"""
+    import os
+    
+    entries = []
+    for nombre, m in meta_dict.items():
+        if not isinstance(m, dict): continue
+        if not m.get('fecha'): continue
+        # Check if game plan HTML exists
+        rival_clean = nombre.lower().replace(' ','_').replace('/','')
+        archivo = f'game_plan_{rival_clean}.html'
+        archivo_path = os.path.join(base_dir, archivo)
+        if not os.path.exists(archivo_path):
+            # Try common alternatives
+            for alt in [f'game_plan_{nombre.lower()}.html']:
+                if os.path.exists(os.path.join(base_dir, alt)):
+                    archivo = alt
+                    break
+        
+        res_str = None
+        if m.get('sets_casla') and m.get('sets_rival'):
+            res_str = f"{{'casla':{m['sets_casla']},'rival':{m['sets_rival']}}}"
+        
+        entry = {
+            'rival':    m.get('rival', nombre),
+            'torneo':   m.get('torneo', ''),
+            'fecha':    m.get('fecha', ''),
+            'horario':  m.get('horario', ''),
+            'condicion':m.get('condicion', 'LOCAL'),
+            'archivo':  archivo,
+            'resultado':f"{m['sets_casla']}-{m['sets_rival']}" if m.get('sets_casla') and m.get('sets_rival') else None,
+        }
+        entries.append(entry)
+    
+    if not entries:
+        return
+    
+    js = '// game_plans.js — generado automáticamente por generar_datos_partidos.py\n'
+    js += 'const GAME_PLANS = [\n'
+    for e in entries:
+        res = f"{{'casla': {e['resultado'].split('-')[0]}, 'rival': {e['resultado'].split('-')[1]}}}" if e['resultado'] else 'null'
+        js += f"  {{\n"
+        js += f"    rival:     '{e['rival']}',\n"
+        js += f"    torneo:    '{e['torneo']}',\n"
+        js += f"    fecha:     '{e['fecha']}',\n"
+        js += f"    horario:   '{e['horario']}',\n"
+        js += f"    condicion: '{e['condicion']}',\n"
+        js += f"    archivo:   '{e['archivo']}',\n"
+        js += f"    resultado: {res},\n"
+        js += f"  }},\n"
+    js += '];\n'
+    
+    out = os.path.join(base_dir, 'game_plans.js')
+    with open(out, 'w', encoding='utf-8') as f:
+        f.write(js)
+    print(f"  ✓ game_plans.js generado ({len(entries)} partidos)")
+
+
 def main():
     print("="*50)
     print("CASLA VOLEY — Generar datos_partidos.js")
@@ -1034,6 +1095,8 @@ const PARTIDOS_EQUIPO_OBJ = {json.dumps(equipo_obj, ensure_ascii=False)};
     feedbacks = leer_feedback(wb)
     js += f'const PARTIDOS_FEEDBACK = {json.dumps(feedbacks, ensure_ascii=False)};\n'
     with open(OUT,'w',encoding='utf-8') as f: f.write(js)
+    # Generate game_plans.js
+    generar_game_plans(meta_idx, BASE)
     print(f"\n✓ datos_partidos.js generado ({len(js)//1024}KB) — subir a GitHub")
 
 if __name__ == '__main__':

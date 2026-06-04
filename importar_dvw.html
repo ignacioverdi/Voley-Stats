@@ -74,11 +74,11 @@ select,select option{color:#111!important;background:#fff!important;}
 
   <div class="instrucciones">
     <div class="inst-titulo">⚡ Cómo funciona</div>
-    <div class="inst-paso"><div class="inst-num">1</div><div>Arrastrá o seleccioná el archivo .dvw exportado de DataVolley 4</div></div>
+    <div class="inst-paso"><div class="inst-num">1</div><div>Arrastrá o seleccioná el archivo .dvw exportado de DataVolley 4 (F8 vs UBA y siguientes)</div></div>
     <div class="inst-paso"><div class="inst-num">2</div><div>Elegí si es Partido o Entrenamiento y completá el rival</div></div>
     <div class="inst-paso"><div class="inst-num">3</div><div>El sistema parsea automáticamente todas las acciones de CASLA</div></div>
     <div class="inst-paso"><div class="inst-num">4</div><div>Revisás el resumen y guardás — se agrega al historial automáticamente</div></div>
-    <div class="inst-paso"><div class="inst-num">5</div><div>Descargás el datos_historial.js y lo subís a Netlify</div></div>
+    <div class="inst-paso"><div class="inst-num">5</div><div>Descargás el archivo actualizado y lo subís al repo en GitHub — Vercel lo despliega solo</div></div>
   </div>
 
   <!-- UPLOAD -->
@@ -500,7 +500,7 @@ function guardarHistorial(){
 
   showToast('⏳ Leyendo historial existente...');
 
-  // Leer el historial actual de Netlify para acumular
+  // Leer el historial actual de GitHub/Vercel para acumular
   fetch('/datos_historial.js?nocache=' + Date.now())
     .then(function(r){ return r.text(); })
     .then(function(texto){
@@ -535,11 +535,11 @@ function guardarHistorial(){
       js += '};\n';
 
       descargarJS(js);
-      showToast('✅ Historial acumulado: ' + historialExistente.length + ' sesiones — subilo a Netlify');
+      showToast('✅ Historial acumulado: ' + historialExistente.length + ' sesiones — subilo a GitHub/Vercel');
     })
     .catch(function(){
-      // Si no puede leer Netlify (local/offline), guardar solo la sesión nueva
-      var aviso = confirm('No se pudo leer el historial de Netlify.\n\n' +
+      // Si no puede leer GitHub/Vercel (local/offline), guardar solo la sesión nueva
+      var aviso = confirm('No se pudo leer el historial de GitHub/Vercel.\n\n' +
         '¿Querés descargar solo esta sesión?\n' +
         '(Si tenés sesiones anteriores se van a perder)');
       if(!aviso) return;

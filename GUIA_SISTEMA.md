@@ -254,3 +254,51 @@ Los archivos que se suben a GitHub son:
 - `firebase.js` — conexión en tiempo real
 - `game_plans.js`, `datos_gameplan.js` — planes de juego
 
+
+---
+
+## INTEGRACIÓN DVW — AUTOMATIZAR HISTORIAL
+
+Ahora podés generar `datos_historial.js` sin salir del bat.
+
+### Cómo funciona:
+1. Exportás el partido desde DataVolley como archivo `.dvw`
+2. Lo copiás a la carpeta `DVW/` (se crea automáticamente la primera vez)
+3. Corrés `correr_todo.bat` — detecta los archivos DVW y los procesa automáticamente
+4. Subís `datos_historial.js` a GitHub junto con los demás JS
+
+### Script:
+- `generar_datos_historial.py` — lee los `.dvw` de la carpeta `DVW/` y genera el historial
+- El bat corre este script automáticamente si hay archivos `.dvw` nuevos
+
+---
+
+## GRÁFICO DE EVOLUCIÓN (jugador.html)
+
+Cada perfil de jugador ahora muestra un gráfico de barras con la evolución 
+de Ataque, Saque y Recepción partido a partido.
+
+- Barra del último partido resaltada
+- Promedio de la temporada vs objetivo
+- Tendencia (↑↓→) respecto al partido anterior
+
+---
+
+## NOVEDADES EN DASHBOARD
+
+El dashboard muestra en la parte superior cuándo fue la última actualización
+de datos y cuántos partidos/entrenamientos están cargados.
+
+---
+
+## RANKING (ranking.html)
+
+Página de ranking accesible desde:
+- Dashboard → tab 🏆 Ranking
+- Perfil del jugador → card 🏆 Ranking
+
+Muestra 7 fundamentos con top 3 y botón "Ver todos":
+- Saque, Recepción, Blq #+, Atq Central, Atq Alta, Atq Rápida, Transición
+
+Filtro por posición: Todos / PUNTA / CENTRAL / OPUESTO / ARMADOR / LIBERO
+
