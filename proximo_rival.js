@@ -1,0 +1,1 @@
+window.FIXTURE_DATA = {"proximo": {"fecha": "2026-06-07", "rival": "UBA", "slug": "uba", "cond": "local"}, "fixture": [{"fecha": "2026-06-07", "rival": "UBA", "slug": "uba", "cond": "local"}, {"fecha": "2026-06-14", "rival": "Boca", "slug": "boca", "cond": "visitante"}, {"fecha": "2026-06-21", "rival": "River", "slug": "river", "cond": "local"}]};
