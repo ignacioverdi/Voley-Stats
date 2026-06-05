@@ -1,39 +1,46 @@
-# 🎬 CÓMO CARGAR LOS VIDEOS
+# 🎬 SISTEMA DE VIDEOS + PRÓXIMO RIVAL — TODO AUTOMÁTICO
 
-## El flujo (3 pasos)
+## Un solo Excel para todo
+`videos_casla.xlsx` (o `videos_nafels.xlsx`) tiene:
+- **Solapa FIXTURE** (primera): el calendario de la temporada
+- **Una solapa por equipo**: jugadores y combos pre-llenados para cargar videos
 
-### 1. Llenás el Excel
-Abrís `videos_casla.xlsx` (o `videos_nafels.xlsx`).
-- Tiene **una solapa por equipo** (River, Boca, UBA, etc.)
-- Cada solapa viene **pre-llenada** con todos los jugadores y sus combos (ataques y saques)
-- Buscás la solapa del equipo y pegás el link de YouTube en la columna verde **video_url**
-- Las filas que dejás vacías no tendrán video (el botón queda atenuado)
+## El flujo (súper simple)
 
-### 2. Convertís el Excel a videos.js
-```bash
-python3 build_videos.py videos_casla.xlsx
+### 1. Cargás el FIXTURE (una vez por temporada)
+En la solapa FIXTURE ponés el calendario:
 ```
-Esto genera `videos.js` con todos los videos cargados.
+fecha       | rival     | condicion
+2026-06-07  | UBA       | local
+2026-06-14  | Boca      | visitante
+2026-06-21  | River     | local
+```
+El sistema agarra solo el próximo rival según la fecha de hoy.
 
-### 3. Subís videos.js al repo
-Subís el `videos.js` generado junto al `game_plan.html`.
-Listo: el botón 🎬 de cada combo que tenga video se enciende solo.
+### 2. Cargás los videos (cuando quieras)
+En la solapa del equipo, pegás los links de YouTube en la columna verde.
 
-## Cómo funciona
-- El video se asocia a: EQUIPO + JUGADOR (número) + TIPO (ataque/saque) + COMBO
-- Los videos viven en YouTube (no ocupan espacio en el repo)
-- Al tocar 🎬 se abre el video en una pestaña nueva
-- Funciona igual en los dos sistemas (CASLA y Nafels)
+### 3. Doble-clic en cargar_videos.bat
+Genera `videos.js` + `proximo_rival.js` automáticamente.
 
-## Formato de los links
-Cualquier link de YouTube sirve:
-- https://youtu.be/abc123
-- https://youtube.com/watch?v=abc123
+### 4. Subís a GitHub
+Subís `videos.js` y `proximo_rival.js` al repo.
 
-## Para actualizar
-Cargás más videos en el Excel → corrés build_videos.py → subís el videos.js nuevo.
-El Excel es tu "base de datos" de videos, lo tenés siempre.
+## Qué pasa solo (automático)
+- **El hub muestra "Game Plan vs [próximo rival]"** destacado arriba, con la fecha
+- El link va directo al game plan de ese rival
+- Cuando pasa la fecha, agarra solo el siguiente partido del fixture
+- Los videos aparecen en el botón 🎬 de cada combo
 
-## NOTA
-Si más adelante querés varios videos por combo, o que se reproduzcan
-embebidos (sin salir a YouTube), se puede agregar. Por ahora: 1 video por combo, abre en YouTube.
+## Para los jugadores
+Entran al hub → ven destacado "Game Plan vs UBA (07/06/2026)" → tocan → tienen todo:
+defensa, armadores, recepción, ataques y videos del próximo rival.
+
+## Si hay reprogramación
+Editás la fecha o el rival en la solapa FIXTURE, corrés el .bat, subís. Listo.
+
+## Archivos del sistema (en cada repo)
+- `videos_casla.xlsx` / `videos_nafels.xlsx` — tu base de datos (videos + fixture)
+- `cargar_videos.bat` — doble-clic para generar todo
+- `build_videos.py` — el motor (no lo tocás)
+- `videos.js` + `proximo_rival.js` — los que genera el .bat y subís
