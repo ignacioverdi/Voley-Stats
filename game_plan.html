@@ -908,10 +908,11 @@ function gpBuildJugadores(){
       saques.sort(function(a,b){return b.tot-a.tot;});
     }
     var pos=(GP_TD.roster&&GP_TD.roster[ns])||'OTRO';
-    if(ataques.length+saques.length>0){
+    var recData = (window.RECEPCION_RIVAL_DATA && window.RECEPCION_RIVAL_DATA[(name||'').replace(/^\d+\s*/,'').split(' ')[0].toUpperCase()]) ? window.RECEPCION_RIVAL_DATA[(name||'').replace(/^\d+\s*/,'').split(' ')[0].toUpperCase()].acumulado : null;
+    if(ataques.length+saques.length>0 || recData){
       jugadores.push({num:num,nombre:name,pos:pos,color:GP_POS_COLOR[pos]||'#64748b',
         info:{},ataques:ataques,saques:saques,
-        recepcion: (window.RECEPCION_RIVAL_DATA && window.RECEPCION_RIVAL_DATA[(name||'').replace(/^\d+\s*/,'').split(' ')[0].toUpperCase()]) ? window.RECEPCION_RIVAL_DATA[(name||'').replace(/^\d+\s*/,'').split(' ')[0].toUpperCase()].acumulado : null
+        recepcion: recData
       });
     }
   });
