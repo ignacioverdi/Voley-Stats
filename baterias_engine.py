@@ -58,19 +58,19 @@ def calc_baterias(scout, side):
             if pfx==side:
                 P=get(num); P['S']['T']+=1
                 if res in P['S']: P['S'][res]+=1
-                # zona destino del saque: último grupo de 2 dígitos
+                # zona destino del saque: último grupo de dígitos
                 _segs=body[3:].split('~')
                 _z=None
                 for _s in reversed(_segs):
                     _d=''.join(ch for ch in _s if ch.isdigit())
                     if len(_d)>=2: _z=_d[-1]; break
                     elif len(_d)==1: _z=_d; break
-                if _z: P['_sq_dest'][_z]=P['_sq_dest'].get(_z,0)+1
-                _tp=body[3]  # tipo de saque (Q/M/T)
-                if _tp not in P['_sq_tipo']: P['_sq_tipo'][_tp]={'tot':0,'pt':0,'err':0}
+                _tp=body[3]  # tipo de saque (Q/M/T/H)
+                if _tp not in P['_sq_tipo']: P['_sq_tipo'][_tp]={'tot':0,'pt':0,'err':0,'dest':{}}
                 P['_sq_tipo'][_tp]['tot']+=1
                 if res=='#': P['_sq_tipo'][_tp]['pt']+=1
                 if res=='=': P['_sq_tipo'][_tp]['err']+=1
+                if _z: P['_sq_tipo'][_tp]['dest'][_z]=P['_sq_tipo'][_tp]['dest'].get(_z,0)+1
         elif skill=='R' and pfx==side:
             last_rec=res; rec_valida=True
             P=get(num); P['R']['T']+=1
@@ -181,8 +181,9 @@ def merge_acum(lista_pl):
                     for z,n in P[sec].items(): A[sec][z]=A[sec].get(z,0)+n
                 elif sec=='_sq_tipo':
                     for tp,d in P[sec].items():
-                        if tp not in A[sec]: A[sec][tp]={'tot':0,'pt':0,'err':0}
+                        if tp not in A[sec]: A[sec][tp]={'tot':0,'pt':0,'err':0,'dest':{}}
                         for kk in ('tot','pt','err'): A[sec][tp][kk]+=d.get(kk,0)
+                        for z,n in d.get('dest',{}).items(): A[sec][tp]['dest'][z]=A[sec][tp]['dest'].get(z,0)+n
                 elif sec=='_atk_combo':
                     for cb,d in P[sec].items():
                         if cb not in A[sec]: A[sec][cb]={'tot':0,'#':0,'/':0,'=':0,'orig':0,'dest':{}}
@@ -206,27 +207,44 @@ def to_canchitas(P):
     Devuelve {'saques':[...], 'ataques':[...]}."""
     SQ_TIPO={'Q':'POTENCIA','M':'FLOTADO','T':'POTENCIA','H':'FLOTADO'}
     saques=[]
-    sd=P.get('_sq_dest',{}); st=P.get('_sq_tipo',{})
+    st=P.get('_sq_tipo',{})
     tot_sq=sum(d['tot'] for d in st.values()) if st else 0
     if tot_sq:
-        # destinos globales del saque
-        td=sum(sd.values()) or 1
-        destinos=[{'z':int(z),'pct':round(n/td*100)} for z,n in sorted(sd.items(),key=lambda x:-x[1]) if z.isdigit()][:6]
-        # un cuadro por tipo de saque
+        # un cuadro por tipo de saque, CON SUS PROPIOS DESTINOS
         for tp,d in sorted(st.items(),key=lambda x:-x[1]['tot']):
             if not d['tot']: continue
+            dd=d.get('dest',{})
+            tdd=sum(dd.values()) or 1
+            destinos=[{'z':int(z),'pct':round(n/tdd*100)} for z,n in sorted(dd.items(),key=lambda x:-x[1]) if z.isdigit()][:6]
             eff=round((d['pt']-d['err'])/d['tot']*100) if d['tot'] else None
             saques.append({'cod':'S'+tp,'tipo':SQ_TIPO.get(tp,'SAQUE'),'orig':6,
                 'destinos':destinos,'eff':eff,'tot':d['tot'],'pts':d['pt'],
                 'plus':0,'slash':0,'err':d['err'],'video':None,
                 'pts_pct':round(d['pt']/d['tot']*100) if d['tot'] else 0})
+    # ── ATAQUE: fusionar combos equivalentes (mismo ataque, scout distinto) ──
+    # mapa: cualquier código → código canónico
+    FUSION={'W4':'X5','G4':'V5','W2':'X6','G2':'V6','W3':'X6','G3':'V6',
+            'Y8':'XP','G8':'VP','Y9':'X8','G9':'V8',
+            'J1':'X1','J3':'X2','J4':'XM','JJ':'XM','J2':'X7',
+            'V3':'X6','V4':'X8'}
+    # origen oficial por combo canónico
+    ORIG={'X5':4,'V5':4,'X6':2,'V6':2,'X8':9,'V8':9,'XP':8,'VP':8,
+          'X1':3,'X2':3,'XM':3,'X7':3}
+    fused={}
+    for cb,d in P.get('_atk_combo',{}).items():
+        canon=FUSION.get(cb,cb)
+        if canon not in fused: fused[canon]={'tot':0,'#':0,'/':0,'=':0,'dest':{}}
+        f=fused[canon]
+        f['tot']+=d.get('tot',0); f['#']+=d.get('#',0)
+        f['/']+=d.get('/',0); f['=']+=d.get('=',0)
+        for z,n in d.get('dest',{}).items(): f['dest'][z]=f['dest'].get(z,0)+n
     ataques=[]
-    for cb,d in sorted(P.get('_atk_combo',{}).items(),key=lambda x:-x[1]['tot']):
+    for cb,d in sorted(fused.items(),key=lambda x:-x[1]['tot']):
         if not d['tot']: continue
         td=sum(d['dest'].values()) or 1
         destinos=[{'z':int(z),'pct':round(n/td*100)} for z,n in sorted(d['dest'].items(),key=lambda x:-x[1]) if z.isdigit()][:4]
         eff=round((d['#']-d['/']-d['='])/d['tot']*100) if d['tot'] else None
-        ataques.append({'cod':cb,'tipo':'','orig':d['orig'] or 8,'destinos':destinos,
+        ataques.append({'cod':cb,'tipo':'','orig':ORIG.get(cb,8),'destinos':destinos,
             'eff':eff,'tot':d['tot'],'pts':d['#'],'slash':d['/'],'err':d['='],
             'video':None,'pts_pct':round(d['#']/d['tot']*100) if d['tot'] else 0})
     # recepción por zona: estructura flotado/potencia × desde_zX × pX
