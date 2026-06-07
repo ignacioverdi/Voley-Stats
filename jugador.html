@@ -381,29 +381,16 @@ function renderComparativaJugador(){
   var cur=JUG.find(function(x){ return x.nombre && x.nombre.replace(/^\d+\s*/,'').toLowerCase().split(' ')[0]===nmB; });
   if(!cur||!cur.objetivos){ section.style.display='none'; return; }
 
-  var jv=objGetVals(window._objNombre);          // respeta filtro de partido
+  var jv=objGetVals(window._objNombre);   // respeta filtro de partido
   var eqv=objGetVals(null);
   var pos=(jugador&&jugador.pos)||cur.pos||'';
 
-  // los 4 fundamentos (EFF general de cada skill)
   var FUND=[
     {k:'sq',   l:'Saque',     c:'#f97316'},
     {k:'rec',  l:'Recepción', c:'#22c55e'},
     {k:'atk',  l:'Ataque',    c:'#818cf8'},
     {k:'bqpos',l:'Bloqueo',   c:'#06b6d4'}
   ];
-
-  // compañeros de misma posición (promedio acumulado de cada fundamento)
-  var samePos=JUG.filter(function(x){
-    if(!x.objetivos) return false;
-    var xn=(x.nombre||'').replace(/^\d+\s*/,'').toLowerCase().split(' ')[0];
-    return xn!==nmB && (x.pos||'')===pos;
-  });
-  function avgPos(k){
-    var vals=samePos.map(function(x){return x.objetivos[k];}).filter(function(v){return v!==null&&v!==undefined;});
-    if(!vals.length) return null;
-    return Math.round(vals.reduce(function(a,b){return a+b;},0)/vals.length);
-  }
   function cell(v){ return (v===null||v===undefined)?'—':(v+'%'); }
   function colorEff(v){ if(v===null||v===undefined) return '#475569'; return v>=40?'#22c55e':v>=20?'#86efac':v>=0?'#e2e8f0':'#ef4444'; }
   function diff(a,b){
@@ -411,32 +398,59 @@ function renderComparativaJugador(){
     var d=a-b, col=d>=5?'#22c55e':d>=0?'#86efac':d>=-8?'#fbbf24':'#ef4444';
     return '<span style="color:'+col+';font-weight:800">'+(d>0?'+':'')+d+'</span>';
   }
-  // ── Cuadro 1: vs Equipo ──
-  function tablaVs(titulo, colDer, valDerFn, hayDatos){
-    var rows=FUND.map(function(f){
-      var a=jv[f.k], b=valDerFn(f.k);
-      return '<tr style="border-bottom:1px solid rgba(255,255,255,.04)">'
-        +'<td style="padding:8px 10px;text-align:left;font-size:12px;font-weight:700;color:'+f.c+'">'+f.l+'</td>'
-        +'<td style="padding:8px 10px;font-weight:800;font-family:Bebas Neue,sans-serif;font-size:17px;color:'+colorEff(a)+'">'+cell(a)+'</td>'
-        +'<td style="padding:8px 10px;font-family:Bebas Neue,sans-serif;font-size:17px;color:#94a3b8">'+cell(b)+'</td>'
-        +'<td style="padding:8px 10px;font-size:13px">'+diff(a,b)+'</td>'
-        +'</tr>';
-    }).join('');
-    return '<div style="background:#0d0e1a;border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden;margin-bottom:14px">'
-      +'<table style="width:100%;border-collapse:collapse;font-family:Barlow Condensed,sans-serif">'
-      +'<thead><tr style="background:#0f1020">'
-      +'<th style="padding:9px 10px;text-align:left;font-size:9px;letter-spacing:1px;color:#64748b;text-transform:uppercase">Fundamento</th>'
-      +'<th style="padding:9px 10px;font-size:9px;letter-spacing:1px;color:#818cf8;text-transform:uppercase">Jugador</th>'
-      +'<th style="padding:9px 10px;font-size:9px;letter-spacing:1px;color:#64748b;text-transform:uppercase">'+colDer+'</th>'
-      +'<th style="padding:9px 10px;font-size:9px;letter-spacing:1px;color:#64748b;text-transform:uppercase">Dif</th>'
-      +'</tr></thead><tbody>'+rows+'</tbody></table></div>';
-  }
+  var th='padding:9px 8px;font-size:9px;letter-spacing:1px;color:#64748b;text-transform:uppercase;text-align:center';
+  var td='padding:8px 8px;font-family:Bebas Neue,sans-serif;font-size:17px;text-align:center';
 
-  var html='<div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#64748b;margin-bottom:8px">VS EQUIPO</div>';
-  html+=tablaVs('vs Equipo','Equipo',function(k){return eqv[k];});
-  html+='<div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#64748b;margin:14px 0 8px">VS '+(pos||'POSICIÓN')+' (compañeros)</div>';
-  if(samePos.length){
-    html+=tablaVs('vs Posición',pos||'Pos',function(k){return avgPos(k);});
+  // ════ CUADRO 1: VS EQUIPO ════
+  var rows1=FUND.map(function(f){
+    var a=jv[f.k], b=eqv[f.k];
+    return '<tr style="border-bottom:1px solid rgba(255,255,255,.04)">'
+      +'<td style="padding:8px 10px;text-align:left;font-size:12px;font-weight:700;color:'+f.c+'">'+f.l+'</td>'
+      +'<td style="'+td+';font-weight:800;color:'+colorEff(a)+'">'+cell(a)+'</td>'
+      +'<td style="'+td+';color:#94a3b8">'+cell(b)+'</td>'
+      +'<td style="'+td+';font-size:13px">'+diff(a,b)+'</td>'
+      +'</tr>';
+  }).join('');
+  var html='<div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#64748b;margin-bottom:8px">VS EQUIPO</div>'
+    +'<div style="background:#0d0e1a;border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden;margin-bottom:18px">'
+    +'<table style="width:100%;border-collapse:collapse;font-family:Barlow Condensed,sans-serif">'
+    +'<thead><tr style="background:#0f1020">'
+    +'<th style="'+th+';text-align:left">Fundamento</th>'
+    +'<th style="'+th+';color:#818cf8">Jugador</th>'
+    +'<th style="'+th+'">Equipo</th>'
+    +'<th style="'+th+'">Dif</th>'
+    +'</tr></thead><tbody>'+rows1+'</tbody></table></div>';
+
+  // ════ CUADRO 2: DETALLE vs COMPAÑEROS DE POSICIÓN ════
+  // una fila por cada jugador de la misma posición (incluido el protagonista)
+  var mismaPos=JUG.filter(function(x){ return x.objetivos && (x.pos||'')===pos; });
+  // ordenar: protagonista primero, resto por número
+  mismaPos.sort(function(a,b){
+    var an=(a.nombre||'').replace(/^\d+\s*/,'').toLowerCase().split(' ')[0];
+    var bn=(b.nombre||'').replace(/^\d+\s*/,'').toLowerCase().split(' ')[0];
+    if(an===nmB) return -1; if(bn===nmB) return 1;
+    return (a.num||0)-(b.num||0);
+  });
+  html+='<div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#64748b;margin-bottom:8px">DETALLE vs '+(pos||'POSICIÓN')+'</div>';
+  if(mismaPos.length>1){
+    var thRot='padding:9px 6px;font-size:9px;letter-spacing:.5px;color:#64748b;text-transform:uppercase;text-align:center';
+    var head='<th style="padding:9px 8px;font-size:9px;letter-spacing:1px;color:#64748b;text-transform:uppercase;text-align:left">Jugador</th>'
+      +FUND.map(function(f){ return '<th style="'+thRot+';color:'+f.c+'">'+f.l+'</th>'; }).join('');
+    var rows2=mismaPos.map(function(x){
+      var xn=(x.nombre||'').replace(/^\d+\s*/,'').toLowerCase().split(' ')[0];
+      var esEl=(xn===nmB);
+      // si es el protagonista y hay filtro de partido, usar jv (respeta filtro); el resto usa su acumulado
+      var o = esEl ? jv : x.objetivos;
+      var bg = esEl ? 'background:rgba(129,140,248,.12)' : '';
+      var nombreShow=(x.nombre||'').replace(/^(\d+)\s*/,'#$1 ');
+      var celdas=FUND.map(function(f){ var v=o[f.k]; return '<td style="'+td+';font-size:15px;color:'+colorEff(v)+(esEl?';font-weight:800':'')+'">'+cell(v)+'</td>'; }).join('');
+      return '<tr style="border-bottom:1px solid rgba(255,255,255,.04);'+bg+'">'
+        +'<td style="padding:8px 8px;text-align:left;font-size:11px;font-weight:'+(esEl?'800':'600')+';color:'+(esEl?'#818cf8':'#cbd5e1')+'">'+nombreShow+(esEl?' ◄':'')+'</td>'
+        +celdas+'</tr>';
+    }).join('');
+    html+='<div style="background:#0d0e1a;border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden;overflow-x:auto">'
+      +'<table style="width:100%;border-collapse:collapse;font-family:Barlow Condensed,sans-serif;min-width:340px">'
+      +'<thead><tr style="background:#0f1020">'+head+'</tr></thead><tbody>'+rows2+'</tbody></table></div>';
   } else {
     html+='<div style="padding:14px;color:#475569;font-size:11px;text-align:center;background:#0d0e1a;border:1px solid rgba(255,255,255,.06);border-radius:12px">Sin compañeros de la misma posición para comparar.</div>';
   }
