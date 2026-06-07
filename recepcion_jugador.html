@@ -233,80 +233,92 @@ function renderPage(){
   renderComparativaRecepcion(j, cont, currentNum);
 }
 
-// ── EFF de recepción global de un jugador (desde su estructura recepcion) ──
-function recEffGlobal(jug){
+// ── EFF de recepción por tipo (flotado/potencia/total) de un jugador ──
+function recEffByTipo(jug){
   if(!jug||!jug.recepcion) return null;
-  var tot=0,pt=0,pos=0,neg=0;
-  ['flotado','potencia'].forEach(function(tk){
-    var tp=jug.recepcion[tk]; if(!tp) return;
-    ['desde_z1','desde_z6','desde_z5'].forEach(function(zk){
-      var z=tp[zk]; if(!z||!z.total) return;
-      var t=z.total.tot||0; if(!t) return;
-      tot+=t;
-      // reconstruir conteos desde pos/neg %
-      pt+= Math.round((z.total.pos||0)/100*t);  // aprox: pos incluye # y +
-      neg+=Math.round((z.total.neg||0)/100*t);
+  function effDe(tipoKeys){
+    var sumEff=0,sumTot=0;
+    tipoKeys.forEach(function(tk){
+      var tp=jug.recepcion[tk]; if(!tp) return;
+      ['desde_z1','desde_z6','desde_z5'].forEach(function(zk){
+        var z=tp[zk]; if(!z||!z.total||!z.total.tot) return;
+        sumEff+=z.total.eff*z.total.tot; sumTot+=z.total.tot;
+      });
     });
-  });
-  if(!tot) return null;
-  // EFF aproximado: (pos - neg) ponderado — usamos promedio ponderado de eff por zona
-  var sumEff=0,sumTot=0;
-  ['flotado','potencia'].forEach(function(tk){
-    var tp=jug.recepcion[tk]; if(!tp) return;
-    ['desde_z1','desde_z6','desde_z5'].forEach(function(zk){
-      var z=tp[zk]; if(!z||!z.total||!z.total.tot) return;
-      sumEff+=z.total.eff*z.total.tot; sumTot+=z.total.tot;
-    });
-  });
-  return sumTot>0?Math.round(sumEff/sumTot):null;
+    return sumTot>0?{eff:Math.round(sumEff/sumTot),tot:sumTot}:null;
+  }
+  return {
+    flotado: effDe(['flotado']),
+    potencia: effDe(['potencia']),
+    total: effDe(['flotado','potencia'])
+  };
 }
 
 function renderComparativaRecepcion(j, cont, num){
   var JUG = typeof PARTIDOS_JUGADORES!=='undefined'&&PARTIDOS_JUGADORES.length?PARTIDOS_JUGADORES:(typeof CASLA_JUGADORES!=='undefined'?CASLA_JUGADORES:[]);
   if(!JUG.length) return;
-  var miEff=recEffGlobal(j);
-  if(miEff===null) return;
+  var mio=recEffByTipo(j);
+  if(!mio||!mio.total) return;
   function colorEff(v){ if(v===null||v===undefined) return '#475569'; return v>=25?'#22c55e':v>=5?'#86efac':v>=0?'#94a3b8':v>=-15?'#f97316':'#ef4444'; }
-  // ── vs EQUIPO ──
-  var effs=JUG.map(recEffGlobal).filter(function(v){return v!==null;});
-  var eqEff = effs.length?Math.round(effs.reduce(function(a,b){return a+b;},0)/effs.length):null;
-  var dif = (eqEff!==null)?miEff-eqEff:null;
-  var difC = dif===null?'#475569':dif>=5?'#22c55e':dif>=0?'#86efac':dif>=-8?'#fbbf24':'#ef4444';
+  function cell(o){ return o?o.eff+'%':'—'; }
+  function effV(o){ return o?o.eff:null; }
+  var TIPOS=[{k:'flotado',l:'Flotado',c:'#818cf8'},{k:'potencia',l:'Potencia',c:'#f97316'},{k:'total',l:'Total',c:'#22c55e'}];
+
+  // ── promedio del EQUIPO por tipo ──
+  var eqAvg={};
+  TIPOS.forEach(function(t){
+    var vals=JUG.map(function(c){var r=recEffByTipo(c);return r&&r[t.k]?r[t.k].eff:null;}).filter(function(v){return v!==null;});
+    eqAvg[t.k]=vals.length?Math.round(vals.reduce(function(a,b){return a+b;},0)/vals.length):null;
+  });
+
+  // ── CUADRO 1: VS EQUIPO (3 filas: flotado/potencia/total) ──
+  var rows1=TIPOS.map(function(t){
+    var miE=effV(mio[t.k]); var eqE=eqAvg[t.k];
+    var dif=(miE!==null&&eqE!==null)?miE-eqE:null;
+    var difC=dif===null?'#475569':dif>=5?'#22c55e':dif>=0?'#86efac':dif>=-8?'#fbbf24':'#ef4444';
+    return '<tr style="border-bottom:1px solid rgba(255,255,255,.04)">'
+      +'<td style="padding:8px 10px;text-align:left;font-size:12px;font-weight:700;color:'+t.c+'">'+t.l+'</td>'
+      +'<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:20px;color:'+colorEff(miE)+'">'+(miE!==null?miE+'%':'—')+'</span></td>'
+      +'<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:20px;color:#94a3b8">'+(eqE!==null?eqE+'%':'—')+'</span></td>'
+      +'<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:20px;color:'+difC+'">'+(dif!==null?(dif>=0?'+':'')+dif+'%':'—')+'</span></td>'
+      +'</tr>';
+  }).join('');
   var s1=document.createElement('div');
   s1.style.cssText='margin-top:20px;padding:16px;background:rgba(13,14,26,.8);border:1px solid rgba(255,255,255,.06);border-radius:12px';
   s1.innerHTML='<div style="font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#64748b;margin-bottom:14px">COMPARATIVA VS EQUIPO</div>'
     +'<table style="width:100%;border-collapse:collapse;font-family:Barlow Condensed,sans-serif">'
     +'<thead><tr>'
+    +'<th style="padding:6px 10px;font-size:9px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;text-align:left">Tipo</th>'
     +'<th style="padding:6px 8px;font-size:9px;color:#22c55e;letter-spacing:1.5px;text-transform:uppercase;text-align:center">Vos</th>'
     +'<th style="padding:6px 8px;font-size:9px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;text-align:center">Equipo</th>'
     +'<th style="padding:6px 8px;font-size:9px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;text-align:center">Dif.</th>'
-    +'</tr></thead><tbody><tr>'
-    +'<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:24px;color:'+colorEff(miEff)+'">'+miEff+'%</span></td>'
-    +'<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:24px;color:#94a3b8">'+(eqEff!==null?eqEff+'%':'—')+'</span></td>'
-    +'<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:24px;color:'+difC+'">'+(dif!==null?(dif>=0?'+':'')+dif+'%':'—')+'</span></td>'
-    +'</tr></tbody></table>';
+    +'</tr></thead><tbody>'+rows1+'</tbody></table>';
   cont.appendChild(s1);
-  // ── vs POSICIÓN (una fila por compañero) ──
+
+  // ── CUADRO 2: VS POSICIÓN (una fila por compañero, columnas flotado/potencia/total) ──
   var curInfo=JUG.find(function(c){return c.num===num;});
   var pos=curInfo?curInfo.pos:'';
-  var mismaPos=JUG.filter(function(c){return c.pos===pos && recEffGlobal(c)!==null;});
+  var mismaPos=JUG.filter(function(c){var r=recEffByTipo(c);return c.pos===pos && r && r.total;});
   if(pos && mismaPos.length>1){
     mismaPos.sort(function(a,b){if(a.num===num)return -1;if(b.num===num)return 1;return a.num-b.num;});
-    var rows=mismaPos.map(function(c){
-      var e=recEffGlobal(c);var isCur=c.num===num;
+    var rows2=mismaPos.map(function(c){
+      var r=recEffByTipo(c);var isCur=c.num===num;
       var nm=(c.nombre||'').replace(/^\d+\s*/,'');
+      var celdas=TIPOS.map(function(t){
+        var e=r&&r[t.k]?r[t.k].eff:null;
+        return '<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:18px;color:'+colorEff(e)+(isCur?';font-weight:800':'')+'">'+(e!==null?e+'%':'—')+'</span></td>';
+      }).join('');
       return '<tr style="border-bottom:1px solid rgba(255,255,255,.04);'+(isCur?'background:rgba(232,25,44,.06);':'')+'">'
         +'<td style="padding:8px;font-size:12px;font-weight:'+(isCur?'800':'600')+';color:'+(isCur?'#e8192c':'#94a3b8')+'">'+nm+(isCur?' ←':'')+'</td>'
-        +'<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:20px;color:'+colorEff(e)+'">'+e+'%</span></td>'
-        +'</tr>';
+        +celdas+'</tr>';
     }).join('');
     var s2=document.createElement('div');
     s2.style.cssText='margin-top:12px;padding:14px 16px;background:rgba(13,14,26,.8);border:1px solid rgba(255,255,255,.06);border-radius:12px';
     s2.innerHTML='<div style="font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#818cf8;margin-bottom:12px">VS '+pos+'S</div>'
       +'<table style="width:100%;border-collapse:collapse;font-family:Barlow Condensed,sans-serif">'
       +'<thead><tr><th style="padding:6px 8px;font-size:9px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;text-align:left">Jugador</th>'
-      +'<th style="padding:6px 8px;font-size:9px;color:#22c55e;letter-spacing:1.5px;text-transform:uppercase;text-align:center">EFF Recep.</th></tr></thead>'
-      +'<tbody>'+rows+'</tbody></table>';
+      +TIPOS.map(function(t){return '<th style="padding:6px 8px;font-size:9px;color:'+t.c+';letter-spacing:1.5px;text-transform:uppercase;text-align:center">'+t.l+'</th>';}).join('')
+      +'</tr></thead><tbody>'+rows2+'</tbody></table>';
     cont.appendChild(s2);
   }
 }
