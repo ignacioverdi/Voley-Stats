@@ -1,5 +1,5 @@
 window.HISTORIAL_DATA = {
-  "generado": "07/06/2026, 02:41:46",
+  "generado": "07/06/2026, 09:14:28",
   "entrenamientos": [
     {
       "fecha": "01/05/2026",
@@ -18,7 +18,7 @@ window.HISTORIAL_DATA = {
       "jugadores": [
         {
           "c": 9,
-          "n": "Martin",
+          "n": "Godoy",
           "sT": 18,
           "sEff": -8,
           "sPunto": 0,
@@ -50,7 +50,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 5,
-          "n": "Iaki",
+          "n": "Ramos",
           "sT": 19,
           "sEff": -17,
           "sPunto": 3,
@@ -82,7 +82,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 14,
-          "n": "Ramiro",
+          "n": "Nielson",
           "sT": 14,
           "sEff": -7,
           "sPunto": 0,
@@ -114,7 +114,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 11,
-          "n": "Valentin",
+          "n": "Durdos",
           "sT": 17,
           "sEff": -25,
           "sPunto": 2,
@@ -146,7 +146,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 3,
-          "n": "Agustin",
+          "n": "Romeo Winer",
           "sT": 0,
           "sEff": 0,
           "sPunto": 0,
@@ -178,7 +178,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 15,
-          "n": "Lucio",
+          "n": "Rotezzi",
           "sT": 13,
           "sEff": 10,
           "sPunto": 1,
@@ -210,7 +210,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 2,
-          "n": "Agustin",
+          "n": "Ojuez",
           "sT": 7,
           "sEff": -7,
           "sPunto": 0,
@@ -242,7 +242,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 13,
-          "n": "Mauro",
+          "n": "Rojas Caruso",
           "sT": 1,
           "sEff": 0,
           "sPunto": 0,
@@ -274,7 +274,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 1,
-          "n": "Imanol",
+          "n": "Salazar",
           "sT": 4,
           "sEff": -25,
           "sPunto": 0,
@@ -306,7 +306,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 17,
-          "n": "Brian",
+          "n": "Alderete",
           "sT": 1,
           "sEff": 0,
           "sPunto": 0,
@@ -338,7 +338,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 4,
-          "n": "Ezequiel",
+          "n": "Vazquez",
           "sT": 1,
           "sEff": 0,
           "sPunto": 0,
@@ -386,7 +386,7 @@ window.HISTORIAL_DATA = {
       "jugadores": [
         {
           "c": 9,
-          "n": "Martin",
+          "n": "Godoy",
           "sT": 15,
           "sEff": 10,
           "sPunto": 1,
@@ -418,7 +418,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 3,
-          "n": "Agustin",
+          "n": "Romeo Winer",
           "sT": 0,
           "sEff": 0,
           "sPunto": 0,
@@ -450,7 +450,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 5,
-          "n": "Iaki",
+          "n": "Ramos",
           "sT": 11,
           "sEff": -20,
           "sPunto": 0,
@@ -482,7 +482,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 14,
-          "n": "Ramiro",
+          "n": "Nielson",
           "sT": 10,
           "sEff": -40,
           "sPunto": 0,
@@ -514,7 +514,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 11,
-          "n": "Valentin",
+          "n": "Durdos",
           "sT": 10,
           "sEff": -50,
           "sPunto": 0,
@@ -546,7 +546,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 1,
-          "n": "Imanol",
+          "n": "Salazar",
           "sT": 9,
           "sEff": -17,
           "sPunto": 0,
@@ -578,7 +578,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 2,
-          "n": "Agustin",
+          "n": "Ojuez",
           "sT": 2,
           "sEff": 0,
           "sPunto": 0,
@@ -610,7 +610,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 17,
-          "n": "Leonardo",
+          "n": "Herbsommer",
           "sT": 7,
           "sEff": -11,
           "sPunto": 0,
@@ -642,7 +642,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 13,
-          "n": "Mauro",
+          "n": "Rojas Caruso",
           "sT": 1,
           "sEff": 0,
           "sPunto": 0,
@@ -691,7 +691,7 @@ window.HISTORIAL_DATA = {
       "jugadores": [
         {
           "c": 9,
-          "n": "Martin",
+          "n": "Godoy",
           "sT": 13,
           "sEff": 13,
           "sPunto": 1,
@@ -723,7 +723,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 1,
-          "n": "Imanol",
+          "n": "Salazar",
           "sT": 10,
           "sEff": 0,
           "sPunto": 0,
@@ -755,7 +755,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 12,
-          "n": "Cruz",
+          "n": "Zanotti",
           "sT": 0,
           "sEff": 0,
           "sPunto": 0,
@@ -787,7 +787,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 5,
-          "n": "Iaki",
+          "n": "Ramos",
           "sT": 10,
           "sEff": -38,
           "sPunto": 1,
@@ -819,7 +819,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 14,
-          "n": "Ramiro",
+          "n": "Nielson",
           "sT": 25,
           "sEff": 12,
           "sPunto": 1,
@@ -851,7 +851,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 11,
-          "n": "Valentin",
+          "n": "Durdos",
           "sT": 10,
           "sEff": -32,
           "sPunto": 0,
@@ -883,7 +883,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 17,
-          "n": "Leonardo",
+          "n": "Herbsommer",
           "sT": 9,
           "sEff": 0,
           "sPunto": 0,
@@ -915,7 +915,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 13,
-          "n": "Mauro",
+          "n": "Rojas Caruso",
           "sT": 2,
           "sEff": -50,
           "sPunto": 0,
@@ -947,7 +947,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 4,
-          "n": "Ezequiel",
+          "n": "Vazquez",
           "sT": 6,
           "sEff": 0,
           "sPunto": 0,
@@ -979,7 +979,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 18,
-          "n": "Wilson",
+          "n": "Acosta",
           "sT": 0,
           "sEff": 0,
           "sPunto": 0,
@@ -1011,7 +1011,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 2,
-          "n": "Agustin",
+          "n": "Ojuez",
           "sT": 3,
           "sEff": -33,
           "sPunto": 0,
@@ -1060,7 +1060,7 @@ window.HISTORIAL_DATA = {
       "jugadores": [
         {
           "c": 4,
-          "n": "Ezequiel",
+          "n": "Vazquez",
           "sT": 22,
           "sEff": -8,
           "sPunto": 0,
@@ -1092,7 +1092,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 14,
-          "n": "Ramiro",
+          "n": "Nielson",
           "sT": 16,
           "sEff": 17,
           "sPunto": 2,
@@ -1124,7 +1124,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 12,
-          "n": "Cruz",
+          "n": "Zanotti",
           "sT": 0,
           "sEff": 0,
           "sPunto": 0,
@@ -1156,7 +1156,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 5,
-          "n": "Iaki",
+          "n": "Ramos",
           "sT": 5,
           "sEff": -80,
           "sPunto": 0,
@@ -1188,7 +1188,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 15,
-          "n": "Lucio",
+          "n": "Rotezzi",
           "sT": 13,
           "sEff": -8,
           "sPunto": 0,
@@ -1220,7 +1220,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 2,
-          "n": "Agustin",
+          "n": "Ojuez",
           "sT": 10,
           "sEff": -10,
           "sPunto": 0,
@@ -1252,7 +1252,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 11,
-          "n": "Valentin",
+          "n": "Durdos",
           "sT": 17,
           "sEff": -6,
           "sPunto": 0,
@@ -1284,7 +1284,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 3,
-          "n": "Agustin",
+          "n": "Romeo Winer",
           "sT": 6,
           "sEff": -17,
           "sPunto": 0,
@@ -1316,7 +1316,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 9,
-          "n": "Martin",
+          "n": "Godoy",
           "sT": 2,
           "sEff": 0,
           "sPunto": 0,
@@ -1348,7 +1348,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 18,
-          "n": "Wilson",
+          "n": "Acosta",
           "sT": 9,
           "sEff": 11,
           "sPunto": 2,
@@ -1398,7 +1398,7 @@ window.HISTORIAL_DATA = {
       "jugadores": [
         {
           "c": 14,
-          "n": "Ramiro",
+          "n": "Nielson",
           "sT": 19,
           "sEff": 7,
           "sPunto": 1,
@@ -1430,7 +1430,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 18,
-          "n": "Wilson",
+          "n": "Acosta",
           "sT": 12,
           "sEff": -31,
           "sPunto": 1,
@@ -1462,7 +1462,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 11,
-          "n": "Valentin",
+          "n": "Durdos",
           "sT": 6,
           "sEff": -50,
           "sPunto": 0,
@@ -1494,7 +1494,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 17,
-          "n": "Leonardo",
+          "n": "Herbsommer",
           "sT": 22,
           "sEff": 6,
           "sPunto": 0,
@@ -1526,7 +1526,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 4,
-          "n": "Ezequiel",
+          "n": "Vazquez",
           "sT": 30,
           "sEff": 19,
           "sPunto": 5,
@@ -1558,7 +1558,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 2,
-          "n": "Agustin",
+          "n": "Ojuez",
           "sT": 8,
           "sEff": -9,
           "sPunto": 0,
@@ -1590,7 +1590,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 12,
-          "n": "Cruz",
+          "n": "Zanotti",
           "sT": 0,
           "sEff": 0,
           "sPunto": 0,
@@ -1622,7 +1622,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 19,
-          "n": "Santiago",
+          "n": "Diaz Bolli",
           "sT": 4,
           "sEff": 12,
           "sPunto": 0,
@@ -1654,7 +1654,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 6,
-          "n": "Simon",
+          "n": "Villarruel",
           "sT": 5,
           "sEff": -15,
           "sPunto": 0,
@@ -1686,7 +1686,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 5,
-          "n": "Iaki",
+          "n": "Ramos",
           "sT": 1,
           "sEff": 0,
           "sPunto": 0,
@@ -1718,7 +1718,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 9,
-          "n": "Martin",
+          "n": "Godoy",
           "sT": 2,
           "sEff": 12,
           "sPunto": 0,
@@ -1768,7 +1768,7 @@ window.HISTORIAL_DATA = {
       "jugadores": [
         {
           "c": 4,
-          "n": "Ezequiel",
+          "n": "Vazquez",
           "sT": 15,
           "sEff": 15,
           "sPunto": 1,
@@ -1800,7 +1800,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 17,
-          "n": "Leonardo",
+          "n": "Herbsommer",
           "sT": 16,
           "sEff": -11,
           "sPunto": 0,
@@ -1832,7 +1832,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 14,
-          "n": "Ramiro",
+          "n": "Nielson",
           "sT": 22,
           "sEff": 0,
           "sPunto": 0,
@@ -1864,7 +1864,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 11,
-          "n": "Valentin",
+          "n": "Durdos",
           "sT": 17,
           "sEff": 9,
           "sPunto": 1,
@@ -1896,7 +1896,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 18,
-          "n": "Wilson",
+          "n": "Acosta",
           "sT": 15,
           "sEff": -13,
           "sPunto": 1,
@@ -1928,7 +1928,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 12,
-          "n": "Cruz",
+          "n": "Zanotti",
           "sT": 0,
           "sEff": 0,
           "sPunto": 0,
@@ -1960,7 +1960,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 2,
-          "n": "Agustin",
+          "n": "Ojuez",
           "sT": 8,
           "sEff": -12,
           "sPunto": 0,
@@ -1992,7 +1992,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 19,
-          "n": "Santiago",
+          "n": "Diaz Bolli",
           "sT": 3,
           "sEff": 0,
           "sPunto": 0,
@@ -2024,7 +2024,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 5,
-          "n": "Iaki",
+          "n": "Ramos",
           "sT": 1,
           "sEff": -100,
           "sPunto": 0,
@@ -2056,7 +2056,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 6,
-          "n": "Simon",
+          "n": "Villarruel",
           "sT": 1,
           "sEff": -100,
           "sPunto": 0,
@@ -2106,7 +2106,7 @@ window.HISTORIAL_DATA = {
       "jugadores": [
         {
           "c": 4,
-          "n": "Ezequiel",
+          "n": "Vazquez",
           "sT": 22,
           "sEff": 0,
           "sPunto": 0,
@@ -2138,7 +2138,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 17,
-          "n": "Leonardo",
+          "n": "Herbsommer",
           "sT": 16,
           "sEff": 9,
           "sPunto": 0,
@@ -2170,7 +2170,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 11,
-          "n": "Valentin",
+          "n": "Durdos",
           "sT": 14,
           "sEff": 0,
           "sPunto": 1,
@@ -2202,7 +2202,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 14,
-          "n": "Ramiro",
+          "n": "Nielson",
           "sT": 24,
           "sEff": 1,
           "sPunto": 0,
@@ -2234,7 +2234,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 18,
-          "n": "Wilson",
+          "n": "Acosta",
           "sT": 2,
           "sEff": 0,
           "sPunto": 0,
@@ -2266,7 +2266,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 12,
-          "n": "Cruz",
+          "n": "Zanotti",
           "sT": 0,
           "sEff": 0,
           "sPunto": 0,
@@ -2298,7 +2298,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 2,
-          "n": "Agustin",
+          "n": "Ojuez",
           "sT": 7,
           "sEff": -7,
           "sPunto": 0,
@@ -2330,7 +2330,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 5,
-          "n": "Iaki",
+          "n": "Ramos",
           "sT": 10,
           "sEff": -30,
           "sPunto": 0,
@@ -2362,7 +2362,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 19,
-          "n": "Santiago",
+          "n": "Diaz Bolli",
           "sT": 5,
           "sEff": 0,
           "sPunto": 0,
@@ -2394,7 +2394,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 6,
-          "n": "Simon",
+          "n": "Villarruel",
           "sT": 1,
           "sEff": 0,
           "sPunto": 0,
@@ -2426,7 +2426,7 @@ window.HISTORIAL_DATA = {
         },
         {
           "c": 9,
-          "n": "Martin",
+          "n": "Godoy",
           "sT": 1,
           "sEff": -100,
           "sPunto": 0,

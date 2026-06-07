@@ -92,7 +92,7 @@ def get_players(lines, section):
                 pc=parts[13].strip() if len(parts)>13 else ''
                 pm={'1':'OH','2':'OPP','3':'MB','4':'S','L':'L','5':'OH','':'?'}
                 pos='L' if role=='L' else pm.get(pc,'?')
-                players[num]={'name':f"{last} {first}".strip(),'pos':pos,'num':num}
+                players[num]={'name':f"{last} {first}".strip(),'apellido':last,'pos':pos,'num':num}
             except: pass
     return players
 
@@ -932,7 +932,8 @@ def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025
             bk=sum(1 for x in acts['b'] if x['effect']=='#'); bp=sum(1 for x in acts['b'] if x['effect']=='+')
             bT=len(acts['b']); bEff=round((bk+bp)/bT*100) if bT else 0
             if s['T']+r['T']+a['T']+bT<1: continue
-            nm = NAFELS_NAMES.get(pn, players.get(pn,{}).get('name','').split()[-1] if players.get(pn,{}).get('name') else str(pn))
+            _p = players.get(pn,{})
+            nm = NAFELS_NAMES.get(pn, _p.get('apellido') or (_p.get('name','').split()[0] if _p.get('name') else str(pn)))
             jugs.append({'c':pn,'n':nm,
                 's'+'T':s['T'],'sEff':s['Eff'],'sPunto':s['Punto'],'sPos':s['Pos'],'sNeg':s['Neg'],'sErr':s['Err'],'sAdm':s['Adm'],'sVend':s['Vend'],
                 'rT':r['T'],'rEff':r['Eff'],'rPunto':r['Punto'],'rPos':r['Pos'],'rNeg':r['Neg'],'rErr':r['Err'],'rAdm':r['Adm'],'rVend':r['Vend'],
