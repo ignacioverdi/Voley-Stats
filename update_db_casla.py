@@ -50,6 +50,15 @@ TEAM_NORM = {
 }
 MAIN_TEAM = 'CASLA'
 
+# Posiciones oficiales del plantel CASLA (por número de camiseta).
+# Fuente única de verdad — coincide con EQUIPO_DEMO de jugador.html.
+CASLA_POS_OFICIAL = {
+    2:'CENTRAL', 3:'LIBERO', 4:'ARMADOR', 5:'OPUESTO', 6:'PUNTA',
+    9:'ARMADOR', 10:'CENTRAL', 11:'PUNTA', 12:'LIBERO', 13:'PUNTA',
+    14:'PUNTA', 15:'CENTRAL', 17:'CENTRAL', 18:'OPUESTO', 19:'ARMADOR',
+    20:'PUNTA', 1:'CENTRAL'
+}
+
 
 TEAM_COLORS = {
     'Nafels':'#22c55e','Amriswil':'#3b82f6','Schonenwerd':'#f97316',
@@ -775,7 +784,11 @@ def calc_baterias(scout, side):
                 'B':{'#':0,'+':0,'T':0},
                 'Aall':_na(),
                 'cent':_na(),'alta':_na(),'rap':_na(),
-                'rp':_na(),'ri':_na(),'rm':_na(),'tr':_na()}
+                'rp':_na(),'ri':_na(),'rm':_na(),'tr':_na(),
+                '_sq_dest':{},        # saque: conteo por zona destino
+                '_sq_tipo':{},        # saque: por tipo (Q/M/T) → {tot,pt,err}
+                '_atk_combo':{},      # ataque: por combo → {tot,#,/,=,orig,dest:{}}
+                '_rec':{}}            # recepción: tipo(M/Q) → origen(1/6/5) → pos(1/6/5) → {tot,pt,pos,neg,err}
     pl={}
     def get(num):
         if num not in pl: pl[num]=nuevo()
@@ -792,10 +805,38 @@ def calc_baterias(scout, side):
             if pfx==side:
                 P=get(num); P['S']['T']+=1
                 if res in P['S']: P['S'][res]+=1
+                # zona destino del saque: último grupo de 2 dígitos
+                _segs=body[3:].split('~')
+                _z=None
+                for _s in reversed(_segs):
+                    _d=''.join(ch for ch in _s if ch.isdigit())
+                    if len(_d)>=2: _z=_d[-1]; break
+                    elif len(_d)==1: _z=_d; break
+                if _z: P['_sq_dest'][_z]=P['_sq_dest'].get(_z,0)+1
+                _tp=body[3]  # tipo de saque (Q/M/T)
+                if _tp not in P['_sq_tipo']: P['_sq_tipo'][_tp]={'tot':0,'pt':0,'err':0}
+                P['_sq_tipo'][_tp]['tot']+=1
+                if res=='#': P['_sq_tipo'][_tp]['pt']+=1
+                if res=='=': P['_sq_tipo'][_tp]['err']+=1
         elif skill=='R' and pfx==side:
             last_rec=res; rec_valida=True
             P=get(num); P['R']['T']+=1
             if res in P['R']: P['R'][res]+=1
+            # recepción por zona: tipo(M/Q) origen+pos (2 dígitos finales)
+            _rtp=body[3]  # M=flotado, Q=potencia
+            _rd=None
+            for _s in reversed(body[3:].split('~')):
+                _dd=''.join(ch for ch in _s if ch.isdigit())
+                if len(_dd)>=2: _rd=_dd[-2:]; break
+            if _rd:
+                _orig=_rd[0]; _pos=_rd[1]
+                T=P['_rec'].setdefault(_rtp,{}).setdefault(_orig,{}).setdefault(_pos,{'tot':0,'pt':0,'pos':0,'neg':0,'err':0})
+                T['tot']+=1
+                if res=='#': T['pt']+=1
+                elif res=='+': T['pos']+=1
+                elif res=='/': T['neg']+=1
+                elif res=='=': T['err']+=1
+                elif res=='-': T['neg']+=1
         elif pfx!=side and skill in('A','D','E','B'):
             rec_valida=False
         elif skill=='B' and pfx==side:
@@ -826,10 +867,27 @@ def calc_baterias(scout, side):
                 if res in P['alta']: P['alta'][res]+=1
             P[cat]['T']+=1
             if res in P[cat]: P[cat][res]+=1
-    # agregar equipo (suma de todos)
+            # canchita por combo: origen/destino
+            if combo:
+                if combo not in P['_atk_combo']:
+                    P['_atk_combo'][combo]={'tot':0,'#':0,'/':0,'=':0,'orig':0,'dest':{}}
+                ac=P['_atk_combo'][combo]
+                ac['tot']+=1
+                if res in('#','/','='): ac[res]+=1
+                # zonas: primer segmento de 2 dígitos tras el combo
+                _segs=body[3:].split('~')
+                for _s in _segs[1:]:
+                    _d=''.join(ch for ch in _s if ch.isdigit())
+                    if len(_d)>=2:
+                        if not ac['orig']: ac['orig']=int(_d[0])
+                        _zd=_d[1]
+                        ac['dest'][_zd]=ac['dest'].get(_zd,0)+1
+                        break
+    # agregar equipo (suma de todos) — omitir campos de canchita (dicts)
     eq=nuevo()
     for num,P in pl.items():
         for sec in P:
+            if sec.startswith('_'): continue   # _sq_dest, _sq_tipo, _atk_combo
             for k in P[sec]: eq[sec][k]+=P[sec][k]
     pl['__EQUIPO__']=eq
     return pl
@@ -858,14 +916,100 @@ def merge_acum(lista_pl):
     def nuevo():
         return {'S':{'#':0,'+':0,'/':0,'=':0,'T':0},'R':{'#':0,'+':0,'/':0,'=':0,'T':0},
                 'B':{'#':0,'+':0,'T':0},'Aall':_na(),'cent':_na(),'alta':_na(),'rap':_na(),
-                'rp':_na(),'ri':_na(),'rm':_na(),'tr':_na()}
+                'rp':_na(),'ri':_na(),'rm':_na(),'tr':_na(),
+                '_sq_dest':{},'_sq_tipo':{},'_atk_combo':{},'_rec':{}}
     acum={}
     for pl in lista_pl:
         for num,P in pl.items():
             if num not in acum: acum[num]=nuevo()
+            A=acum[num]
             for sec in P:
-                for k in P[sec]: acum[num][sec][k]+=P[sec][k]
+                if sec=='_sq_dest':
+                    for z,n in P[sec].items(): A[sec][z]=A[sec].get(z,0)+n
+                elif sec=='_sq_tipo':
+                    for tp,d in P[sec].items():
+                        if tp not in A[sec]: A[sec][tp]={'tot':0,'pt':0,'err':0}
+                        for kk in ('tot','pt','err'): A[sec][tp][kk]+=d.get(kk,0)
+                elif sec=='_atk_combo':
+                    for cb,d in P[sec].items():
+                        if cb not in A[sec]: A[sec][cb]={'tot':0,'#':0,'/':0,'=':0,'orig':0,'dest':{}}
+                        ac=A[sec][cb]
+                        ac['tot']+=d.get('tot',0); ac['#']+=d.get('#',0)
+                        ac['/']+=d.get('/',0); ac['=']+=d.get('=',0)
+                        if not ac['orig']: ac['orig']=d.get('orig',0)
+                        for z,n in d.get('dest',{}).items(): ac['dest'][z]=ac['dest'].get(z,0)+n
+                elif sec=='_rec':
+                    for tp,od in P[sec].items():
+                        for orig,pd in od.items():
+                            for pos,d in pd.items():
+                                T=A[sec].setdefault(tp,{}).setdefault(orig,{}).setdefault(pos,{'tot':0,'pt':0,'pos':0,'neg':0,'err':0})
+                                for kk in ('tot','pt','pos','neg','err'): T[kk]+=d.get(kk,0)
+                else:
+                    for k in P[sec]: A[sec][k]+=P[sec][k]
     return acum
+
+def to_canchitas(P):
+    """Convierte los acumuladores de zonas al formato de canchitas de los HTML.
+    Devuelve {'saques':[...], 'ataques':[...]}."""
+    SQ_TIPO={'Q':'POTENCIA','M':'FLOTADO','T':'POTENCIA','H':'FLOTADO'}
+    saques=[]
+    sd=P.get('_sq_dest',{}); st=P.get('_sq_tipo',{})
+    tot_sq=sum(d['tot'] for d in st.values()) if st else 0
+    if tot_sq:
+        # destinos globales del saque
+        td=sum(sd.values()) or 1
+        destinos=[{'z':int(z),'pct':round(n/td*100)} for z,n in sorted(sd.items(),key=lambda x:-x[1]) if z.isdigit()][:6]
+        # un cuadro por tipo de saque
+        for tp,d in sorted(st.items(),key=lambda x:-x[1]['tot']):
+            if not d['tot']: continue
+            eff=round((d['pt']-d['err'])/d['tot']*100) if d['tot'] else None
+            saques.append({'cod':'S'+tp,'tipo':SQ_TIPO.get(tp,'SAQUE'),'orig':6,
+                'destinos':destinos,'eff':eff,'tot':d['tot'],'pts':d['pt'],
+                'plus':0,'slash':0,'err':d['err'],'video':None,
+                'pts_pct':round(d['pt']/d['tot']*100) if d['tot'] else 0})
+    ataques=[]
+    for cb,d in sorted(P.get('_atk_combo',{}).items(),key=lambda x:-x[1]['tot']):
+        if not d['tot']: continue
+        td=sum(d['dest'].values()) or 1
+        destinos=[{'z':int(z),'pct':round(n/td*100)} for z,n in sorted(d['dest'].items(),key=lambda x:-x[1]) if z.isdigit()][:4]
+        eff=round((d['#']-d['/']-d['='])/d['tot']*100) if d['tot'] else None
+        ataques.append({'cod':cb,'tipo':'','orig':d['orig'] or 8,'destinos':destinos,
+            'eff':eff,'tot':d['tot'],'pts':d['#'],'slash':d['/'],'err':d['='],
+            'video':None,'pts_pct':round(d['#']/d['tot']*100) if d['tot'] else 0})
+    # recepción por zona: estructura flotado/potencia × desde_zX × pX
+    def _celda(d):
+        t=d['tot']
+        if not t: return {'tot':0,'eff':0,'pos':0,'neg':0}
+        eff=round((d['pt']*1+d['pos']*0.5-d['neg']*0.5-d['err'])/t*100)
+        pos=round((d['pt']+d['pos'])/t*100)
+        neg=round((d['neg']+d['err'])/t*100)
+        return {'tot':t,'eff':eff,'pos':pos,'neg':neg}
+    def _zona_vacia():
+        return {'total':{'tot':0,'eff':0,'pos':0,'neg':0},'p1':{'tot':0,'eff':0,'pos':0,'neg':0},
+                'p6':{'tot':0,'eff':0,'pos':0,'neg':0},'p5':{'tot':0,'eff':0,'pos':0,'neg':0}}
+    rec_struct={'flotado':{'desde_z1':_zona_vacia(),'desde_z6':_zona_vacia(),'desde_z5':_zona_vacia()},
+                'potencia':{'desde_z1':_zona_vacia(),'desde_z6':_zona_vacia(),'desde_z5':_zona_vacia()}}
+    TIPO_MAP={'M':'flotado','H':'flotado','Q':'potencia','T':'potencia'}
+    ZMAP={'1':'desde_z1','6':'desde_z6','5':'desde_z5'}
+    PMAP={'1':'p1','6':'p6','5':'p5'}
+    rec=P.get('_rec',{})
+    tiene_rec=False
+    for tp,od in rec.items():
+        tkey=TIPO_MAP.get(tp); 
+        if not tkey: continue
+        for orig,pd in od.items():
+            zkey=ZMAP.get(orig)
+            if not zkey: continue
+            # acumular total de la zona
+            ztot={'tot':0,'pt':0,'pos':0,'neg':0,'err':0}
+            for pos,d in pd.items():
+                pkey=PMAP.get(pos)
+                if pkey:
+                    rec_struct[tkey][zkey][pkey]=_celda(d)
+                    tiene_rec=True
+                for kk in ztot: ztot[kk]+=d.get(kk,0)
+            rec_struct[tkey][zkey]['total']=_celda(ztot)
+    return {'saques':saques,'ataques':ataques,'recepcion':rec_struct if tiene_rec else {}}
 
 def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025/26'):
     """Generate datos_historial.js + datos_partidos.js for a specific team from DVW."""
@@ -1020,7 +1164,9 @@ def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025
         jug_obj=[]
         for num,P in bpl.items():
             if num=='__EQUIPO__': continue
-            jug_obj.append({'nombre':bnames.get(num,num),'objetivos':to_pcts(P)})
+            _canch=to_canchitas(P)
+            jug_obj.append({'nombre':bnames.get(num,num),'num':int(num),'objetivos':to_pcts(P),
+                'saques':_canch['saques'],'ataques':_canch['ataques'],'recepcion':_canch.get('recepcion',{})})
         partidos_individual.append({'nombre':g['rival'],'rival':g['rival'],
             'resultado':g['result'],'equipo_obj':to_pcts(bpl['__EQUIPO__']),'jugadores':jug_obj})
 
@@ -1064,9 +1210,11 @@ def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025
             sT=P.get('S',{}).get('T',0)
             rT=P.get('R',{}).get('T',0)
             aT=sum(P.get(g,{}).get('T',0) for g in ['cent','rap','alta'])
-            pos_det=_detectar_pos(num)
+            pos_det=CASLA_POS_OFICIAL.get(num) or _detectar_pos(num)
+            _canch=to_canchitas(P) if P else {'saques':[],'ataques':[],'recepcion':{}}
             partidos_jug.append({'num':num,'nombre':nm,'pos':pos_det,
-                'color':POS_COLOR.get(pos_det,'#64748b'),'info':{},'ataques':[],'saques':[],'recepciones':[],
+                'color':POS_COLOR.get(pos_det,'#64748b'),'info':{},
+                'ataques':_canch['ataques'],'saques':_canch['saques'],'recepciones':[],'recepcion':_canch.get('recepcion',{}),
                 'objetivos':obj_by_num.get(num,{}),
                 'tot_saques':sT,'tot_recep':rT,'tot_ataques':aT})
 

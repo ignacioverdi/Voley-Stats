@@ -385,6 +385,11 @@ function renderComparativaJugador(){
   var eqv=objGetVals(null);
   var pos=(jugador&&jugador.pos)||cur.pos||'';
 
+  // Mapa número→posición oficial (del EQUIPO_DEMO/EQUIPO_DATA)
+  var POS_BY_NUM={};
+  (eqData.jugadores||[]).forEach(function(p){ POS_BY_NUM[p.num]=p.pos; });
+  function posDe(x){ return POS_BY_NUM[x.num] || x.pos || ''; }
+
   var FUND=[
     {k:'sq',   l:'Saque',     c:'#f97316'},
     {k:'rec',  l:'Recepción', c:'#22c55e'},
@@ -423,7 +428,7 @@ function renderComparativaJugador(){
 
   // ════ CUADRO 2: DETALLE vs COMPAÑEROS DE POSICIÓN ════
   // una fila por cada jugador de la misma posición (incluido el protagonista)
-  var mismaPos=JUG.filter(function(x){ return x.objetivos && (x.pos||'')===pos; });
+  var mismaPos=JUG.filter(function(x){ return x.objetivos && posDe(x)===pos; });
   // ordenar: protagonista primero, resto por número
   mismaPos.sort(function(a,b){
     var an=(a.nombre||'').replace(/^\d+\s*/,'').toLowerCase().split(' ')[0];
