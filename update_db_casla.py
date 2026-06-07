@@ -773,6 +773,7 @@ def calc_baterias(scout, side):
         return {'S':{'#':0,'+':0,'/':0,'=':0,'T':0},
                 'R':{'#':0,'+':0,'/':0,'=':0,'T':0},
                 'B':{'#':0,'+':0,'T':0},
+                'Aall':_na(),
                 'cent':_na(),'alta':_na(),'rap':_na(),
                 'rp':_na(),'ri':_na(),'rm':_na(),'tr':_na()}
     pl={}
@@ -810,6 +811,9 @@ def calc_baterias(scout, side):
             else:
                 cat='tr'
             P=get(num)
+            # EFF de ataque GENERAL (todos los ataques)
+            P['Aall']['T']+=1
+            if res in P['Aall']: P['Aall'][res]+=1
             # Central, Rápida y Alta TODAS por TIPO de ataque (body[3])
             if tipo=='Q':
                 P['cent']['T']+=1
@@ -839,6 +843,7 @@ def to_pcts(P):
         'rec':   round((R['#']+0.5*R['+']-0.5*R['/']-R['='])/R['T']*100) if R['T'] else None,
         'bqpos': round((B['#']+B['+'])/B['T']*100) if B['T'] else None,
         'bqpt':  round(B['#']/B['T']*100) if B['T'] else None,
+        'atk':   atk(P['Aall']) if 'Aall' in P else None,
         'atqq':  atk(P['cent']),
         'atqhb': atk(P['alta']),
         'atqx':  atk(P['rap']),
@@ -852,7 +857,7 @@ def merge_acum(lista_pl):
     """Suma acumuladores de varios partidos (lista de dicts {num:acums})."""
     def nuevo():
         return {'S':{'#':0,'+':0,'/':0,'=':0,'T':0},'R':{'#':0,'+':0,'/':0,'=':0,'T':0},
-                'B':{'#':0,'+':0,'T':0},'cent':_na(),'alta':_na(),'rap':_na(),
+                'B':{'#':0,'+':0,'T':0},'Aall':_na(),'cent':_na(),'alta':_na(),'rap':_na(),
                 'rp':_na(),'ri':_na(),'rm':_na(),'tr':_na()}
     acum={}
     for pl in lista_pl:
@@ -861,9 +866,6 @@ def merge_acum(lista_pl):
             for sec in P:
                 for k in P[sec]: acum[num][sec][k]+=P[sec][k]
     return acum
-
-
-
 
 def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025/26'):
     """Generate datos_historial.js + datos_partidos.js for a specific team from DVW."""
