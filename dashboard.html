@@ -374,6 +374,7 @@ function effColor(v){
   if(v===null||v===undefined) return 'var(--mut)';
   return v>=40?'#22c55e':v>=20?'#86efac':v>=0?'var(--txt)':v>=-20?'#f97316':'#ef4444';
 }
+function apellido(nombre){ if(!nombre) return ''; var s=String(nombre).replace(/^\d+\s*/,'').trim(); return s.split(/\s+/)[0]; }
 function fmt(v){ return (v<0?'-':'')+Math.abs(v)+'%'; }
 
 // ════════════════════════════════════════════════════════════
@@ -385,11 +386,11 @@ function showTab(id, btn){
     'analisis':  'analisis.html',
     'historial': 'historial_voley.html',
     'baggerone': 'baggerone.html',
+    'ranking':   'ranking.html',
     'prep':      'prep_fisica.html',
     'armadores': 'armadores.html',
     'heatmaps':  '#heatmaps',
     'recepcion': 'recepcion.html',
-    'ranking':   'ranking.html',
   };
   if(fullPages[id]){
     if(fullPages[id]==='#heatmaps'){ showHeatmapMenu(); return; }
@@ -647,7 +648,7 @@ function renderEqContent(){
       var be=j.bT>0?Math.round((j.bPt+j.bPtPos)/j.bT*100):null;
       var bg=ri%2?'rgba(255,255,255,.015)':'transparent';
       html+='<tr style="background:'+bg+'">'
-        +'<td><div class="t-name"><div class="t-cam">'+j.c+'</div><span style="font-weight:800;font-size:14px">'+j.n+'</span></div></td>'
+        +'<td><div class="t-name"><div class="t-cam">'+j.c+'</div><span style="font-weight:800;font-size:14px">'+apellido(j.n)+'</span></div></td>'
         +(isAcum?'<td style="color:var(--mut)">'+j.PJ+'</td>':'')
         +'<td style="font-size:16px;font-weight:900;color:'+effColor(se)+';border-left:2px solid rgba(245,158,11,.08)">'+(se!==null?fmt(se):'—')+'</td><td style="color:#f59e0b">'+(j.sT||'—')+'</td>'
         +'<td style="font-size:16px;font-weight:900;color:'+effColor(re)+';border-left:2px solid rgba(34,197,94,.08)">'+(re!==null?fmt(re):'—')+'</td><td style="color:#22c55e">'+(j.rT||'—')+'</td>'
@@ -673,7 +674,7 @@ function renderEqContent(){
     Object.keys(tot).forEach(function(k){tot[k]+=(j[k]||0);});
     var bg=ri%2?'rgba(255,255,255,.015)':'transparent';
     html+='<tr style="background:'+bg+'">'
-      +'<td><div class="t-name"><div class="t-cam">'+j.c+'</div><span style="font-weight:800;font-size:14px">'+j.n+'</span></div></td>'
+      +'<td><div class="t-name"><div class="t-cam">'+j.c+'</div><span style="font-weight:800;font-size:14px">'+apellido(j.n)+'</span></div></td>'
       +(isAcum?'<td style="color:var(--mut)">'+j.PJ+'</td>':'')
       +cells.map(function(c,i){return'<td style="font-size:'+(c.b?'16':'13')+'px;font-weight:'+(c.b?900:700)+';color:'+c.c+';'+(i===0?'border-left:2px solid '+cfg.color+'22':'')+'">'+c.v+'</td>';}).join('')
       +'</tr>';
@@ -845,7 +846,7 @@ function renderObjetivosTab(){
     var col=POS_COLOR[j.pos]||'#64748b';
     return'<button class="player-btn" onclick="selectObjJug(\''+j.nombre+'\',\''+j.pos+'\',this)">'
       +'<div class="pb-num" style="color:'+col+'">#'+j.num+'</div>'
-      +'<div class="pb-name">'+j.nombre+'</div>'
+      +'<div class="pb-name">'+apellido(j.nombre)+'</div>'
       +'<div class="pb-pos" style="color:'+col+'">'+j.pos+'</div>'
       +'</button>';
   }).join('');

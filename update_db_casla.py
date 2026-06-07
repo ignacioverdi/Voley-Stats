@@ -735,6 +735,136 @@ try:
 except NameError:
     POS_COLOR = {'ARMADOR':'#a855f7','OPUESTO':'#ef4444','CENTRAL':'#22c55e','PUNTA':'#3b82f6','LIBERO':'#f59e0b','OTRO':'#64748b'}
 
+# ═══ MOTOR DE BATERÍAS (validado 100% vs DataVolley oficial) ═══
+# ════════════════════════════════════════════════════════════════════
+# MOTOR DE BATERÍAS — validado al 100% contra DataVolley oficial (Casla-Velez)
+# Calcula las 11 baterías desde DVW, por jugador y por equipo.
+# ════════════════════════════════════════════════════════════════════
+#
+# LAS 11 BATERÍAS Y SUS FÓRMULAS (FIRMES):
+#  sq    Saque        = (# + 0.5×/ + 0.25×+ − =) / total saques
+#  rec   Recepción    = (# + 0.5×+ − 0.5×/ − =) / total recepciones
+#  bqpos Bloqueo #+   = (blq# + blq+) / total bloqueos
+#  bqpt  Bloqueo #    = blq# / total bloqueos
+#  atqq  Atq Central  = (# − / − =) / total   [tipo de ataque = Q (quick)]
+#  atqhb Atq Alta     = (# − / − =) / total   [tipo de ataque = H (high ball)]
+#  atqx  Atq Rápida   = (# − / − =) / total   [tipo de ataque = T (tense)]
+#  atqrp Atq R#+      = (# − / − =) / total   [primer atk tras recepción #/+]
+#  atqri Atq R!       = (# − / − =) / total   [primer atk tras recepción !]
+#  atqrm Atq R-       = (# − / − =) / total   [primer atk tras recepción -]
+#  atqtr Transición   = (# − / − =) / total   [resto de ataques]
+#
+# REGLA CLAVE DEL CRUCE RECEPCIÓN→ATAQUE:
+#  - La recepción solo cuenta para el PRIMER ataque del equipo tras recibir.
+#  - Si el RIVAL interviene (A/D/E/B) entre la recepción y el ataque,
+#    ese ataque pasa a TRANSICIÓN (no es side-out).
+#  - Todo ataque sin recepción previa válida = transición.
+
+# Clasificación de ataques POR TIPO (body[3]):
+#   H = Alta (high ball)   T = Rápida (tense)   Q = Central (quick)
+
+def _na(): return {'#':0,'/':0,'=':0,'T':0}
+
+def calc_baterias(scout, side):
+    """scout: lista de líneas crudas del [3SCOUT]. side: '*' o 'a'.
+    Devuelve {num: baterias} con num='__EQUIPO__' para el total del equipo."""
+    # acumuladores por jugador
+    def nuevo():
+        return {'S':{'#':0,'+':0,'/':0,'=':0,'T':0},
+                'R':{'#':0,'+':0,'/':0,'=':0,'T':0},
+                'B':{'#':0,'+':0,'T':0},
+                'cent':_na(),'alta':_na(),'rap':_na(),
+                'rp':_na(),'ri':_na(),'rm':_na(),'tr':_na()}
+    pl={}
+    def get(num):
+        if num not in pl: pl[num]=nuevo()
+        return pl[num]
+    last_rec=None; rec_valida=False
+    for l in scout:
+        l=l.strip()
+        if len(l)<5: continue
+        pfx=l[0]; body=l[1:].split(';')[0]
+        if len(body)<5 or not body[:2].isdigit(): continue
+        num=body[:2]; skill=body[2]; res=body[4]
+        if skill=='S':
+            last_rec=None; rec_valida=False
+            if pfx==side:
+                P=get(num); P['S']['T']+=1
+                if res in P['S']: P['S'][res]+=1
+        elif skill=='R' and pfx==side:
+            last_rec=res; rec_valida=True
+            P=get(num); P['R']['T']+=1
+            if res in P['R']: P['R'][res]+=1
+        elif pfx!=side and skill in('A','D','E','B'):
+            rec_valida=False
+        elif skill=='B' and pfx==side:
+            P=get(num); P['B']['T']+=1
+            if res in P['B']: P['B'][res]+=1
+        elif skill=='A' and pfx==side:
+            combo=body[5:7]
+            tipo=body[3]  # tipo de ataque: H=alta, T=tense/rápida, Q=quick/central
+            # categoría por recepción (estado del equipo)
+            if last_rec is not None and rec_valida:
+                rec_valida=False
+                cat='rp' if last_rec in('#','+') else 'ri' if last_rec=='!' else 'rm' if last_rec=='-' else 'tr'
+            else:
+                cat='tr'
+            P=get(num)
+            # Central, Rápida y Alta TODAS por TIPO de ataque (body[3])
+            if tipo=='Q':
+                P['cent']['T']+=1
+                if res in P['cent']: P['cent'][res]+=1
+            elif tipo=='T':
+                P['rap']['T']+=1
+                if res in P['rap']: P['rap'][res]+=1
+            elif tipo=='H':
+                P['alta']['T']+=1
+                if res in P['alta']: P['alta'][res]+=1
+            P[cat]['T']+=1
+            if res in P[cat]: P[cat][res]+=1
+    # agregar equipo (suma de todos)
+    eq=nuevo()
+    for num,P in pl.items():
+        for sec in P:
+            for k in P[sec]: eq[sec][k]+=P[sec][k]
+    pl['__EQUIPO__']=eq
+    return pl
+
+def to_pcts(P):
+    """Convierte acumuladores a las 11 baterías en %."""
+    def atk(d): return round((d['#']-d['/']-d['='])/d['T']*100) if d['T'] else None
+    S=P['S']; R=P['R']; B=P['B']
+    return {
+        'sq':    round((S['#']+0.5*S['/']+0.25*S['+']-S['='])/S['T']*100) if S['T'] else None,
+        'rec':   round((R['#']+0.5*R['+']-0.5*R['/']-R['='])/R['T']*100) if R['T'] else None,
+        'bqpos': round((B['#']+B['+'])/B['T']*100) if B['T'] else None,
+        'bqpt':  round(B['#']/B['T']*100) if B['T'] else None,
+        'atqq':  atk(P['cent']),
+        'atqhb': atk(P['alta']),
+        'atqx':  atk(P['rap']),
+        'atqrp': atk(P['rp']),
+        'atqri': atk(P['ri']),
+        'atqrm': atk(P['rm']),
+        'atqtr': atk(P['tr']),
+    }
+
+def merge_acum(lista_pl):
+    """Suma acumuladores de varios partidos (lista de dicts {num:acums})."""
+    def nuevo():
+        return {'S':{'#':0,'+':0,'/':0,'=':0,'T':0},'R':{'#':0,'+':0,'/':0,'=':0,'T':0},
+                'B':{'#':0,'+':0,'T':0},'cent':_na(),'alta':_na(),'rap':_na(),
+                'rp':_na(),'ri':_na(),'rm':_na(),'tr':_na()}
+    acum={}
+    for pl in lista_pl:
+        for num,P in pl.items():
+            if num not in acum: acum[num]=nuevo()
+            for sec in P:
+                for k in P[sec]: acum[num][sec][k]+=P[sec][k]
+    return acum
+
+
+
+
 def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025/26'):
     """Generate datos_historial.js + datos_partidos.js for a specific team from DVW."""
     from datetime import datetime
@@ -860,11 +990,90 @@ def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025
 
     partidos_meta=[{'nombre':g['rival'],'rival':g['rival'],'fecha':'/'.join(reversed(g['date'].split('-'))),'torneo':f'NLA Suiza {temporada}','resultado':g['result'],'sets_nafels':str(g['tsets']),'sets_rival':str(g['rsets'])} for g in sorted(games,key=lambda x:x['date']) if g['date']]
 
+    # ═══ BATERÍAS (objetivos) por partido, jugador y acumulado ═══
+    def _bat_name_map(content, side):
+        psec = '[3PLAYERS-H]' if side=='*' else '[3PLAYERS-V]'
+        pi=content.find(psec); pe=content.find('[3',pi+5)
+        nm={}
+        for l in content[pi:pe].split('\n'):
+            p=l.split(';')
+            if len(p)>10 and p[1].isdigit():
+                nm[p[1].zfill(2)]=f"{p[1]} {(p[9]+' '+p[10]).strip().title()}"
+        return nm
+
+    bat_all_pl=[]              # acumuladores por partido (para merge)
+    partidos_individual=[]     # baterías por partido
+    for g in sorted(games,key=lambda x:x['date']):
+        if not g['date']: continue
+        with open(g['content_path'], encoding='utf-8', errors='ignore') as f:
+            bcontent=f.read().replace('\r\n','\n')
+        bidx=bcontent.find('[3SCOUT]\n')
+        if bidx<0: continue
+        bscout=bcontent[bidx+9:bcontent.find('\n[3',bidx+9)].split('\n')
+        bside='*' if g['team_home'] else 'a'
+        bpl=calc_baterias(bscout, bside)
+        bat_all_pl.append(bpl)
+        bnames=_bat_name_map(bcontent, bside)
+        jug_obj=[]
+        for num,P in bpl.items():
+            if num=='__EQUIPO__': continue
+            jug_obj.append({'nombre':bnames.get(num,num),'objetivos':to_pcts(P)})
+        partidos_individual.append({'nombre':g['rival'],'rival':g['rival'],
+            'resultado':g['result'],'equipo_obj':to_pcts(bpl['__EQUIPO__']),'jugadores':jug_obj})
+
+    # Acumulado
+    bat_acum=merge_acum(bat_all_pl)
+    equipo_obj_acum=to_pcts(bat_acum['__EQUIPO__'])
+    # Mapa de nombres acumulado (último partido disponible)
+    acum_names={}
+    for g in sorted(games,key=lambda x:x['date']):
+        if not g['date']: continue
+        with open(g['content_path'], encoding='utf-8', errors='ignore') as f:
+            cc=f.read().replace('\r\n','\n')
+        acum_names.update(_bat_name_map(cc, '*' if g['team_home'] else 'a'))
+    # Inyectar objetivos acumulados en cada jugador de partidos_jug
+    obj_by_num={}
+    for num,P in bat_acum.items():
+        if num=='__EQUIPO__': continue
+        obj_by_num[int(num)]=to_pcts(P)
+    for pj in partidos_jug:
+        pj['objetivos']=obj_by_num.get(pj['num'],{})
+    # Si partidos_jug quedó vacío (flujo no pobló desde team_db),
+    # construirlo desde el motor de baterías para tener nombre+objetivos.
+    if not partidos_jug:
+        nums_presentes=set(int(n) for n in bat_acum if n!='__EQUIPO__')
+        # Mapa posición PT/PUNTA/etc → etiqueta del perfil
+        POS_MAP={'MIDDLE':'CENTRAL','OUTSIDE':'PUNTA','OPPOSITE':'OPUESTO','SETTER':'ARMADOR','LIBERO':'LIBERO'}
+        # Detectar posición por su perfil de juego en el acumulado
+        def _detectar_pos(num):
+            P=bat_acum.get(f"{num:02d}") or bat_acum.get(str(num))
+            if not P: return 'OTRO'
+            rT=P['R']['T']; aT=sum(P[g]['T'] for g in ['cent','rap','alta'])
+            cent=P['cent']['T']
+            if rT>15 and aT<=max(2,rT*0.05): return 'LIBERO'
+            if aT<5 and rT<5: return 'OTRO'
+            if aT>0 and cent/aT>0.4: return 'CENTRAL'
+            if rT>=20: return 'PUNTA'
+            return 'OTRO'
+        for num in sorted(nums_presentes):
+            nm=acum_names.get(f"{num:02d}", str(num))  # "14 Nielson Ramiro"
+            P=bat_acum.get(f"{num:02d}") or bat_acum.get(str(num)) or {}
+            sT=P.get('S',{}).get('T',0)
+            rT=P.get('R',{}).get('T',0)
+            aT=sum(P.get(g,{}).get('T',0) for g in ['cent','rap','alta'])
+            pos_det=_detectar_pos(num)
+            partidos_jug.append({'num':num,'nombre':nm,'pos':pos_det,
+                'color':POS_COLOR.get(pos_det,'#64748b'),'info':{},'ataques':[],'saques':[],'recepciones':[],
+                'objetivos':obj_by_num.get(num,{}),
+                'tot_saques':sT,'tot_recep':rT,'tot_ataques':aT})
+
     pjs = f'// datos_partidos.js — {now}\n'
     pjs += f'const PARTIDOS_GENERADO = "{now}";\n'
     pjs += f'const PARTIDOS_TOTAL = {len(partidos_meta)};\n'
     pjs += 'const PARTIDOS_META = ' + json.dumps(partidos_meta, ensure_ascii=False, indent=2) + ';\n'
     pjs += 'const PARTIDOS_JUGADORES = ' + json.dumps(partidos_jug, ensure_ascii=False, indent=2) + ';\n'
+    pjs += 'const PARTIDOS_EQUIPO_OBJ = ' + json.dumps(equipo_obj_acum, ensure_ascii=False) + ';\n'
+    pjs += 'const PARTIDOS_INDIVIDUAL = ' + json.dumps(partidos_individual, ensure_ascii=False, indent=2) + ';\n'
     with open(os.path.join(output_dir,'datos_partidos.js'),'w',encoding='utf-8') as f: f.write(pjs)
 
     return len(historial), len(games)

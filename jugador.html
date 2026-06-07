@@ -234,11 +234,13 @@ function renderObjetivos(cid,extra){
   el.innerHTML=html;
 }
 
-function renderObjetivosJugador(cid,nombre,extra){
+function renderObjetivosJugador(cid,nombre,jugValsArg,eqValsArg){
   var el=document.getElementById(cid); if(!el) return;
   var metas=window.OBJETIVOS_CONFIG.metas;
-  var jugVals=Object.assign({},objCalcVals(nombre),extra||{});
-  var eqVals=objCalcVals(null);
+  // Usar los valores que llegan por parámetro (calculados por objGetVals según el filtro).
+  // Si no llegan, recurrir a objGetVals si existe, sino a objCalcVals (fallback).
+  var jugVals = jugValsArg || (typeof objGetVals!=='undefined'?objGetVals(nombre):objCalcVals(nombre));
+  var eqVals  = eqValsArg  || (typeof objGetVals!=='undefined'?objGetVals(null):objCalcVals(null));
   var rows=[{label:'Jugador',vals:jugVals,isJug:true},{label:'Equipo',vals:eqVals,isJug:false}];
   var html='<div style="font-family:Barlow Condensed,sans-serif;padding:4px 0 8px">'
     +'<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">'
@@ -336,12 +338,9 @@ function setObjTipo(tipo, btn){
 </script>
 <script src="datos_partidos.js" onerror="void 0"></script>
 <script src="datos_entrenamientos.js" onerror="void 0"></script>
-<script>
-
 <script src="firebase.js" onerror="void 0"></script>
 <script src="lang.js" onerror="void 0"></script>
-<script src="datos_historial.js" onerror="window.HISTORIAL_DATA=null"><
-/script>
+<script src="datos_historial.js" onerror="window.HISTORIAL_DATA=null"></script>
 <script src="datos_gameplan.js" onerror="window.GAMEPLAN_DATA=null"></script>
 <script src="datos_prep_fisica.js" onerror="window.PREP_DATA=null"></script>
 <style>
@@ -778,19 +777,24 @@ function renderNextMatch(){
 function renderQuickStats(j){
   var qs    = document.getElementById('quick-stats');
   var color = POS_COLOR[j.pos] || '#64748b';
-  var totSaque=0,totRecep=0,totAtaque=0,totEff=0,countEff=0;
+  var totSaque=0,totRecep=0,totAtaque=0,effAtq=null;
 
-  if(window.HISTORIAL_DATA){
-    window.HISTORIAL_DATA.entrenamientos.forEach(function(e){
-      e.jugadores.forEach(function(jh){
-        if(jh.n === j.nombre){
-          totSaque  += jh.sT||0;
-          totRecep  += jh.rT||0;
-          totAtaque += jh.aT||0;
-          if(jh.aT>0){ totEff+=jh.aEff||0; countEff++; }
-        }
-      });
+  // Leer de PARTIDOS_JUGADORES (datos actuales con baterías)
+  if(typeof PARTIDOS_JUGADORES!=='undefined'){
+    var nmC=(j.nombre||'').replace(/^\d+\s*/,'').toLowerCase().split(' ')[0];
+    var pj=PARTIDOS_JUGADORES.find(function(x){
+      return x.nombre && x.nombre.replace(/^\d+\s*/,'').toLowerCase().split(' ')[0]===nmC;
     });
+    if(pj){
+      totSaque  = pj.tot_saques||0;
+      totRecep  = pj.tot_recep||0;
+      totAtaque = pj.tot_ataques||0;
+      // eff ataque: promedio de las 3 baterías de ataque por tipo si existen
+      if(pj.objetivos){
+        var o=pj.objetivos, vals=[o.atqq,o.atqhb,o.atqx].filter(function(v){return v!==null&&v!==undefined;});
+        if(vals.length) effAtq=Math.round(vals.reduce(function(a,b){return a+b;},0)/vals.length);
+      }
+    }
   }
 
   qs.style.display='grid';
@@ -798,7 +802,7 @@ function renderQuickStats(j){
     {lbl:'Saques',     val:totSaque||'—',  c:color},
     {lbl:'Recepciones',val:totRecep||'—',  c:'#22c55e'},
     {lbl:'Ataques',    val:totAtaque||'—', c:'#818cf8'},
-    {lbl:'Eff. Ataque',val:countEff>0?Math.round(totEff/countEff)+'%':'—', c:'#f59e0b'},
+    {lbl:'Eff. Ataque',val:effAtq!==null?effAtq+'%':'—', c:'#f59e0b'},
   ].map(function(s){
     return '<div class="qs-item"><div class="qs-val" style="color:'+s.c+'">'+s.val+'</div><div class="qs-lbl">'+s.lbl+'</div></div>';
   }).join('');
@@ -812,7 +816,6 @@ function renderAccesos(j){
     {icon:'💪', title:'Rutina',        desc:'Mi preparación física',  url:'prep_fisica.html?player='+encodeURIComponent(j.nombre),    color:'#e8192c'},
     {icon:'🎯', title:'Game Plan',     desc:'Plan del próximo partido',url:(typeof GAME_PLANS!=='undefined'&&GAME_PLANS.length?GAME_PLANS.slice().sort(function(a,b){return (b.fecha||'')>(a.fecha||'')?1:-1;})[0].archivo:'game_plan_lomas.html'),                                    color:'#f59e0b'},
     {icon:'📊', title:'Panel en Vivo', desc:'Sesión actual',           url:'panel_voley.html',                                        color:'#22c55e'},
-    {icon:'🔥', title:'Heat Maps',     desc:'Ataque · Saque · Rec · Armado', url:'javascript:showHeatmapMenu()',                            color:'#F97316'},
     {icon:'🏆', title:'Ranking',       desc:'Mi posición en el equipo', url:'ranking.html?num='+j.num,                                color:'#F59E0B'},
     {icon:'🏠', title:'Hub',           desc:'Todo el sistema',         url:'index.html',                                              color:'#64748b', full:true},
   ];
@@ -1170,185 +1173,53 @@ function renderComparativaJugador(jugador){
   var section = document.getElementById('comparativa-section');
   var cont = document.getElementById('comparativa-content');
   if(!section || !cont) return;
-
-  var jugs = typeof PARTIDOS_JUGADORES !== 'undefined' ? PARTIDOS_JUGADORES : 
-             typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : [];
+  var jugs = typeof PARTIDOS_JUGADORES!=='undefined' ? PARTIDOS_JUGADORES : [];
   if(!jugs.length){ section.style.display='none'; return; }
-
-  var caslaJugs = typeof CASLA_JUGADORES !== 'undefined' ? CASLA_JUGADORES : [];
-  var POS_COLOR = {ARMADOR:'#F59E0B',OPUESTO:'#F97316',PUNTA:'#22C55E',CENTRAL:'#F97316',LIBERO:'#06B6D4'};
-
-  // Get current jugador data
-  var curJug = jugs.find(function(j){ return j.num === jugador.num; });
-  if(!curJug){ section.style.display='none'; return; }
-
-  var pos = jugador.pos || '';
-  var posCol = POS_COLOR[pos] || '#64748b';
-  var curNm = jugador.nombre.replace(/^\d+\s*/,'');
-
-  // Get all jugadores with same position
-  var samePos = jugs.filter(function(j){
-    if(j.num === jugador.num) return false;
-    var info = caslaJugs.find(function(c){ return c.num === j.num; });
-    return info && info.pos === pos;
-  }).map(function(j){
-    var info = caslaJugs.find(function(c){ return c.num === j.num; });
-    return Object.assign({}, j, {pos: info?info.pos:'', nm: info?info.nombre.replace(/^\d+\s*/,''):j.nombre||''});
-  });
-
-  // Metrics to compare
-  var metrics = [
-    {key:'ataque', lbl:'ATAQUE', color:'#F97316', icon:'💥',
-     stats:[
-       {l:'EFF Ataque', fn:function(j){ return j.objetivos&&j.objetivos.atqq!==undefined?j.objetivos.atqq:null; }, fmt:'%'},
-     ]
-    },
-    {key:'saque', lbl:'SAQUE', color:'#F59E0B', icon:'⚡',
-     stats:[
-       {l:'EFF Saque', fn:function(j){ return j.objetivos&&j.objetivos.sq!==undefined?j.objetivos.sq:null; }, fmt:'%'},
-     ]
-    },
-    {key:'recepcion', lbl:'RECEPCIÓN', color:'#22C55E', icon:'🛡',
-     stats:[
-       {l:'EFF Recep.', fn:function(j){ return j.objetivos&&j.objetivos.rec!==undefined?j.objetivos.rec:null; }, fmt:'%'},
-     ]
-    },
-    {key:'bloqueo', lbl:'BLOQUEO', color:'#06B6D4', icon:'🧱',
-     stats:[
-       {l:'EFF Blq #+', fn:function(j){ return j.objetivos&&j.objetivos.bqpos!==undefined?j.objetivos.bqpos:null; }, fmt:'%'},
-     ]
-    },
-  ];
-
-  // Build comparativa using HISTORIAL_DATA for per-jugador stats
-  var D = window.HISTORIAL_DATA;
-  if(!D){ section.style.display='none'; return; }
-
-  // Aggregate stats per jugador from historial
-  function getJugStats(num){
-    var acc = {sT:0,sPunto:0,sVend:0,sPos:0,sErr:0,
-               rT:0,rPunto:0,rPos:0,rVend:0,rErr:0,
-               aT:0,aPunto:0,aVend:0,aErr:0,bT:0,bPt:0,bPtPos:0};
-    D.entrenamientos.filter(function(e){return e.tipo==='P';}).forEach(function(s){
-      var j=(s.jugadores||[]).find(function(j){return j.c===num;});
-      if(!j) return;
-      Object.keys(acc).forEach(function(k){ acc[k]+=(j[k]||0); });
-    });
-    var sEff = acc.sT>0?Math.round((acc.sPunto+.5*acc.sVend+.25*acc.sPos-acc.sErr)/acc.sT*100):null;
-    var rEff = acc.rT>0?Math.round((acc.rPunto+.5*acc.rPos-.5*acc.rVend-acc.rErr)/acc.rT*100):null;
-    var aEff = acc.aT>0?Math.round((acc.aPunto-acc.aVend-acc.aErr)/acc.aT*100):null;
-    var bEff = acc.bT>0?Math.round((acc.bPt+acc.bPtPos)/acc.bT*100):null;
-    return {sEff:sEff,rEff:rEff,aEff:aEff,bEff:bEff,
-            sT:acc.sT,rT:acc.rT,aT:acc.aT,bT:acc.bT,sP:acc.sPunto,bP:acc.bPt};
+  var cur = jugs.find(function(j){ return j.num===jugador.num; });
+  if(!cur || !cur.objetivos){ section.style.display='none'; return; }
+  var eq = typeof PARTIDOS_EQUIPO_OBJ!=='undefined' ? PARTIDOS_EQUIPO_OBJ : {};
+  var pos = jugador.pos||cur.pos||'';
+  // compañeros de misma posición (excluyendo al jugador)
+  var samePos = jugs.filter(function(j){ return j.num!==jugador.num && (j.pos||'')===pos && j.objetivos; });
+  function avgPos(key){
+    var vals=samePos.map(function(j){return j.objetivos[key];}).filter(function(v){return v!==null&&v!==undefined;});
+    if(!vals.length) return null;
+    return Math.round(vals.reduce(function(a,b){return a+b;},0)/vals.length);
   }
-
-  var curStats = getJugStats(jugador.num);
-  var posStats = samePos.map(function(j){
-    return Object.assign({}, j, getJugStats(j.num));
-  });
-
-  // Calc team avg
-  var allNums = jugs.map(function(j){return j.num;});
-  var allStats = allNums.map(getJugStats);
-  function teamAvg(fn){ var v=allStats.map(fn).filter(function(x){return x!==null;}); return v.length?Math.round(v.reduce(function(a,b){return a+b;},0)/v.length):null; }
-  var teamAvgs = {aEff:teamAvg(function(s){return s.aEff;}),sEff:teamAvg(function(s){return s.sEff;}),rEff:teamAvg(function(s){return s.rEff;}),bEff:teamAvg(function(s){return s.bEff;})};
-
-  function effColor(v,obj){ return v===null?'#475569':v>=obj?'#22c55e':v>=(obj-8)?'#fbbf24':'#ef4444'; }
-  function diffColor(d){ return d===null?'#475569':d>=5?'#22c55e':d>=0?'#86efac':d>=-8?'#fbbf24':'#ef4444'; }
-  function diffStr(d){ return d===null?'—':(d>=0?'+':'')+d+'%'; }
-
-  var skillMap = [
-    {key:'aEff',lbl:'Ataque',color:'#F97316',icon:'💥',obj:44,minT:5,totKey:'aT'},
-    {key:'sEff',lbl:'Saque', color:'#F59E0B',icon:'⚡',obj:3, minT:5,totKey:'sT'},
-    {key:'rEff',lbl:'Recep.',color:'#22C55E',icon:'🛡',obj:36,minT:5,totKey:'rT'},
-    {key:'bEff',lbl:'Bloq.', color:'#06B6D4',icon:'🧱',obj:23,minT:3,totKey:'bT'},
+  var METR=[
+    {k:'sq',l:'Saque'},{k:'rec',l:'Recepción'},{k:'bqpos',l:'Bloqueo #+'},
+    {k:'atqq',l:'Atq Central'},{k:'atqhb',l:'Atq Alta'},{k:'atqx',l:'Atq Rápida'},
+    {k:'atqrp',l:'Atq R#+'},{k:'atqri',l:'Atq R!'},{k:'atqrm',l:'Atq R-'},{k:'atqtr',l:'Transición'}
   ];
-
-  var html = '';
-
-  // ── COMPARATIVA VS EQUIPO ─────────────────────────────────────────
-  html += '<div style="background:rgba(13,14,26,.8);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px 16px;margin-bottom:12px">';
-  html += '<div style="font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#64748b;margin-bottom:12px">VS EQUIPO</div>';
-  html += '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-family:Barlow Condensed,sans-serif">';
-  html += '<thead><tr>';
-  html += '<th style="padding:6px 8px;font-size:9px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);text-align:left">Skill</th>';
-  html += '<th style="padding:6px 8px;font-size:9px;color:#818cf8;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);text-align:center">Vos</th>';
-  html += '<th style="padding:6px 8px;font-size:9px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);text-align:center">Equipo</th>';
-  html += '<th style="padding:6px 8px;font-size:9px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);text-align:center">Dif.</th>';
-  html += '<th style="padding:6px 8px;font-size:9px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);text-align:center">Obj.</th>';
-  html += '</tr></thead><tbody>';
-
-  skillMap.forEach(function(m){
-    var myV = curStats[m.key];
-    var teamV = teamAvgs[m.key];
-    var diff = (myV!==null&&teamV!==null)?myV-teamV:null;
-    if(myV===null&&curStats[m.totKey]<m.minT) return;
-    html += '<tr style="border-bottom:1px solid rgba(255,255,255,.04)">';
-    html += '<td style="padding:8px;font-size:12px;font-weight:700;color:'+m.color+'">'+m.icon+' '+m.lbl+'</td>';
-    html += '<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:22px;color:'+effColor(myV,m.obj)+'">'+(myV!==null?myV+'%':'—')+'</span></td>';
-    html += '<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:22px;color:#475569">'+(teamV!==null?teamV+'%':'—')+'</span></td>';
-    html += '<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:22px;color:'+diffColor(diff)+'">'+diffStr(diff)+'</span></td>';
-    html += '<td style="padding:8px;text-align:center;font-size:11px;color:#64748b">'+m.obj+'%</td>';
-    html += '</tr>';
-  });
-  html += '</tbody></table></div></div>';
-
-  // ── COMPARATIVA VS POSICION ───────────────────────────────────────
-  if(samePos.length > 0){
-    html += '<div style="background:rgba(13,14,26,.8);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px 16px">';
-    html += '<div style="font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:'+posCol+';margin-bottom:12px">VS '+pos+'S</div>';
-    html += '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-family:Barlow Condensed,sans-serif">';
-    html += '<thead><tr>';
-    html += '<th style="padding:6px 8px;font-size:9px;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);text-align:left">Jugador</th>';
-    skillMap.forEach(function(m){
-      html += '<th style="padding:6px 8px;font-size:9px;color:'+m.color+';letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);text-align:center">'+m.icon+' '+m.lbl+'</th>';
-    });
-    html += '</tr></thead><tbody>';
-
-    // Current player row first (highlighted)
-    function playerRow(nm, stats, highlight){
-      var bg = highlight ? 'background:rgba(232,25,44,.06);' : '';
-      var nameCol = highlight ? '#e8192c' : '#94a3b8';
-      var row = '<tr style="border-bottom:1px solid rgba(255,255,255,.04);'+bg+'">';
-      row += '<td style="padding:8px;font-size:12px;font-weight:700;color:'+nameCol+'">'+nm+(highlight?' ←':'')+'</td>';
-      skillMap.forEach(function(m){
-        var v = stats[m.key];
-        var col = v!==null?effColor(v,m.obj):'#475569';
-        row += '<td style="padding:8px;text-align:center"><span style="font-family:Bebas Neue,sans-serif;font-size:20px;color:'+col+'">'+(v!==null?v+'%':'—')+'</span></td>';
-      });
-      row += '</tr>';
-      return row;
-    }
-
-    html += playerRow(curNm, curStats, true);
-    posStats.forEach(function(j){
-      html += playerRow(j.nm, j, false);
-    });
-
-    html += '</tbody></table></div></div>';
+  function cell(v){ return v===null||v===undefined?'<span style="color:#475569">—</span>':(v+'%'); }
+  function diffBadge(a,b){
+    if(a===null||a===undefined||b===null||b===undefined) return '<span style="color:#475569">—</span>';
+    var d=a-b; var col=d>=5?'#22c55e':d>=0?'#86efac':d>=-8?'#fbbf24':'#ef4444';
+    return '<span style="color:'+col+';font-weight:800">'+(d>0?'+':'')+d+'</span>';
   }
-
-  cont.innerHTML = html;
-  section.style.display = 'block';
+  var rows=METR.map(function(m){
+    var jv=cur.objetivos[m.k], ev=eq[m.k], pv=avgPos(m.k);
+    return '<tr style="border-bottom:1px solid rgba(255,255,255,.04)">'
+      +'<td style="padding:7px 10px;text-align:left;font-size:11px;color:#cbd5e1">'+m.l+'</td>'
+      +'<td style="padding:7px 10px;font-weight:800;color:#818cf8">'+cell(jv)+'</td>'
+      +'<td style="padding:7px 10px;color:#94a3b8">'+cell(ev)+'</td>'
+      +'<td style="padding:7px 10px">'+diffBadge(jv,ev)+'</td>'
+      +'<td style="padding:7px 10px;color:#94a3b8">'+cell(pv)+'</td>'
+      +'<td style="padding:7px 10px">'+diffBadge(jv,pv)+'</td>'
+      +'</tr>';
+  }).join('');
+  cont.innerHTML='<div class="tabla-wrap" style="background:#0d0e1a;border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden">'
+    +'<table style="width:100%;border-collapse:collapse;font-family:Barlow Condensed,sans-serif">'
+    +'<thead><tr style="background:#0f1020">'
+    +'<th style="padding:9px 10px;text-align:left;font-size:9px;letter-spacing:1px;color:#64748b;text-transform:uppercase">Fundamento</th>'
+    +'<th style="padding:9px 10px;font-size:9px;letter-spacing:1px;color:#818cf8;text-transform:uppercase">Jugador</th>'
+    +'<th style="padding:9px 10px;font-size:9px;letter-spacing:1px;color:#64748b;text-transform:uppercase">Equipo</th>'
+    +'<th style="padding:9px 10px;font-size:9px;letter-spacing:1px;color:#64748b;text-transform:uppercase">vs Eq</th>'
+    +'<th style="padding:9px 10px;font-size:9px;letter-spacing:1px;color:#64748b;text-transform:uppercase">'+(pos||'Pos')+'</th>'
+    +'<th style="padding:9px 10px;font-size:9px;letter-spacing:1px;color:#64748b;text-transform:uppercase">vs Pos</th>'
+    +'</tr></thead><tbody>'+rows+'</tbody></table></div>';
+  section.style.display='block';
 }
-
-
-
-// ── RANKING POR SKILL ─────────────────────────────────────────────────
-
-
-
-
-
-
-// ── RANKING — usa objCalcVals() igual que las baterias ───────────────
-
-
-
-
-
-
-
 
 // ── EVOLUCIÓN DEL RENDIMIENTO ─────────────────────────────────────────
 function renderEvolucion(jugador){
@@ -1445,98 +1316,5 @@ function renderEvolucion(jugador){
 }
 
 </script>
-
-<!-- ── HEAT MAPS OVERLAY ─────────────────────────────────── -->
-<style>
-#hm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;align-items:center;justify-content:center}
-#hm-overlay.open{display:flex}
-.hm-box{background:#0D0E1A;border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:24px;width:min(380px,92vw);box-shadow:0 32px 80px rgba(0,0,0,.6)}
-.hm-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
-.hm-close{background:rgba(255,255,255,.08);border:none;color:#fff;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;transition:background .15s}
-.hm-close:hover{background:rgba(255,255,255,.18)}
-.hm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.hm-card{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 10px;border-radius:14px;text-decoration:none;color:#fff;transition:all .18s;border:1px solid}
-.hm-card:hover{transform:translateY(-2px);filter:brightness(1.15)}
-.hm-icon{font-size:28px}
-.hm-lbl{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px}
-.hm-sub{font-size:9px;color:#64748b;text-align:center}
-.hm-footer{margin-top:14px;font-size:10px;color:#475569;text-align:center}
-</style>
-
-<div id="hm-overlay" onclick="if(event.target===this)closeHeatmapMenu()">
-  <div class="hm-box">
-    <div class="hm-title">
-      <span>🔥 HEAT MAPS</span>
-      <button class="hm-close" onclick="closeHeatmapMenu()">✕</button>
-    </div>
-    <div style="font-size:10px;color:#F97316;margin-bottom:12px;text-align:center;font-weight:700;letter-spacing:1px" id="hm-player-name"></div>
-    <div class="hm-grid">
-      <a class="hm-card" id="hm-atk" href="ataque_casla.html"    style="background:rgba(249,115,22,.08);border-color:rgba(249,115,22,.3)">
-        <span class="hm-icon">⚡</span>
-        <span class="hm-lbl" style="color:#F97316">ATAQUE</span>
-        <span class="hm-sub">EFF · SO/TR · Zonas<br>Combos · Calidad rec.</span>
-      </a>
-      <a class="hm-card" id="hm-srv" href="saque_casla.html"     style="background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3)">
-        <span class="hm-icon">🎯</span>
-        <span class="hm-lbl" style="color:#22C55E">SAQUE</span>
-        <span class="hm-sub">EFF · Flotado/Potencia<br>Zonas origen/destino</span>
-      </a>
-      <a class="hm-card" id="hm-rec" href="recepcion_casla.html" style="background:rgba(129,140,248,.08);border-color:rgba(129,140,248,.3)">
-        <span class="hm-icon">🛡️</span>
-        <span class="hm-lbl" style="color:#818CF8">RECEPCION</span>
-        <span class="hm-sub">EFF · Calidad · Zonas</span>
-      </a>
-      <a class="hm-card" id="hm-arm" href="armador_casla.html"   style="background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.3)">
-        <span class="hm-icon">🎱</span>
-        <span class="hm-lbl" style="color:#F59E0B">ARMADO</span>
-        <span class="hm-sub">Llamadas · Pos · EFF</span>
-      </a>
-    </div>
-    <div class="hm-footer">División de Honor 2026 · 7 partidos analizados</div>
-  </div>
-</div>
-
-<script>
-var _hmPlayerNum = null;
-function showHeatmapMenu(){
-  // Get current player number from URL or jugador data
-  try {
-    var params = new URLSearchParams(window.location.search);
-    _hmPlayerNum = params.get('num') || params.get('player') || params.get('id');
-    // Also try from global jugador object if available
-    if(!_hmPlayerNum && typeof jugadorActual !== 'undefined' && jugadorActual) {
-      _hmPlayerNum = jugadorActual.num || jugadorActual.id || jugadorActual.camiseta;
-    }
-    // Try from jugador data
-    if(!_hmPlayerNum) {
-      try { 
-        var p2 = new URLSearchParams(window.location.search);
-        var n = parseInt(p2.get('num'));
-        if(n) _hmPlayerNum = n;
-      } catch(e2){}
-    }
-    // Update links
-    var suffix = _hmPlayerNum ? '?player='+_hmPlayerNum : '';
-    document.getElementById('hm-atk').href = 'ataque_casla.html' + suffix;
-    document.getElementById('hm-srv').href = 'saque_casla.html' + suffix;
-    document.getElementById('hm-rec').href = 'recepcion_casla.html' + suffix;
-    document.getElementById('hm-arm').href = 'armador_casla.html' + suffix;
-    // Show player name
-    var nameEl = document.getElementById('hm-player-name');
-    if(_hmPlayerNum && nameEl) {
-      // Try to get player name from the hero section
-    var heroName = document.querySelector('.hero-nombre,.jugador-nombre,.nombre-jugador,h1,h2');
-    var pname = heroName ? heroName.textContent.trim() : ('#' + _hmPlayerNum);
-      nameEl.textContent = '↳ ' + pname.toUpperCase();
-      nameEl.style.display = 'block';
-    } else if(nameEl) { nameEl.style.display = 'none'; }
-  } catch(e) {}
-  document.getElementById('hm-overlay').classList.add('open');
-}
-function closeHeatmapMenu(){ document.getElementById('hm-overlay').classList.remove('open'); }
-</script>
-
-
-<script src="chat.js"></script>
 </body>
 </html>
