@@ -1,5 +1,5 @@
-// datos_partidos.js — 08/06/2026, 04:08:36
-const PARTIDOS_GENERADO = "08/06/2026, 04:08:36";
+// datos_partidos.js — 08/06/2026, 11:23:13
+const PARTIDOS_GENERADO = "08/06/2026, 11:23:13";
 const PARTIDOS_TOTAL = 7;
 const PARTIDOS_META = [
   {
@@ -9324,7 +9324,542 @@ const PARTIDOS_INDIVIDUAL = [
         "ataques": [],
         "recepcion": {}
       }
-    ]
+    ],
+    "armadores": {
+      "titular": {
+        "nombre": "9 Godoy Martin",
+        "num": 9,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 5,
+            "total_all": 17,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 2,
+                "pct": 60,
+                "pct_p": 67
+              },
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 2,
+                "pct": 40,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P3",
+            "total": 4,
+            "total_all": 24,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 2,
+                "pct": 75,
+                "pct_p": 67
+              },
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 0,
+                "pct": 25,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P2",
+            "total": 5,
+            "total_all": 10,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 2,
+                "pct": 40,
+                "pct_p": 100
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 1,
+                "pct": 20,
+                "pct_p": 100
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 1,
+                "pct": 20,
+                "pct_p": 100
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 20,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P5",
+            "total": 7,
+            "total_all": 15,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 2,
+                "pct": 43,
+                "pct_p": 67
+              },
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 3,
+                "pct": 43,
+                "pct_p": 100
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 0,
+                "pct": 14,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P6",
+            "total": 8,
+            "total_all": 17,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 1,
+                "pct": 38,
+                "pct_p": 33
+              },
+              {
+                "zona": 2,
+                "tot": 3,
+                "pts": 3,
+                "pct": 38,
+                "pct_p": 100
+              },
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 1,
+                "pct": 25,
+                "pct_p": 50
+              }
+            ]
+          },
+          {
+            "pos": "P1",
+            "total": 8,
+            "total_all": 22,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 4,
+                "pts": 2,
+                "pct": 50,
+                "pct_p": 50
+              },
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 2,
+                "pct": 38,
+                "pct_p": 67
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 0,
+                "pct": 12,
+                "pct_p": 0
+              }
+            ]
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": 27,
+            "tot": 22,
+            "pts": 9,
+            "pts_pct": 41
+          },
+          {
+            "label": "P6",
+            "eff": 47,
+            "tot": 17,
+            "pts": 10,
+            "pts_pct": 59
+          },
+          {
+            "label": "P5",
+            "eff": 27,
+            "tot": 15,
+            "pts": 8,
+            "pts_pct": 53
+          },
+          {
+            "label": "P4",
+            "eff": 47,
+            "tot": 17,
+            "pts": 9,
+            "pts_pct": 53
+          },
+          {
+            "label": "P3",
+            "eff": 29,
+            "tot": 24,
+            "pts": 9,
+            "pts_pct": 38
+          },
+          {
+            "label": "P2",
+            "eff": 80,
+            "tot": 10,
+            "pts": 8,
+            "pts_pct": 80
+          },
+          {
+            "label": "SO",
+            "eff": 45,
+            "tot": 77,
+            "pts": 44,
+            "pts_pct": 57
+          },
+          {
+            "label": "TR",
+            "eff": 21,
+            "tot": 28,
+            "pts": 9,
+            "pts_pct": 32
+          }
+        ],
+        "llamadas": [
+          {
+            "call": "K1",
+            "tot": 28,
+            "eff": 64,
+            "pts_pct": 71,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 12,
+                "pts": 9,
+                "pct": 43,
+                "pct_p": 75
+              },
+              {
+                "zona": 4,
+                "tot": 11,
+                "pts": 6,
+                "pct": 39,
+                "pct_p": 55
+              },
+              {
+                "zona": 2,
+                "tot": 3,
+                "pts": 3,
+                "pct": 11,
+                "pct_p": 100
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 1,
+                "pct": 4,
+                "pct_p": 100
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 1,
+                "pct": 4,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "call": "K7",
+            "tot": 9,
+            "eff": 44,
+            "pts_pct": 56,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 2,
+                "pct": 50,
+                "pct_p": 67
+              },
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 2,
+                "pct": 33,
+                "pct_p": 100
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 0,
+                "pct": 17,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "call": "KM",
+            "tot": 5,
+            "eff": -40,
+            "pts_pct": 20,
+            "dist": [
+              {
+                "zona": 2,
+                "tot": 3,
+                "pts": 1,
+                "pct": 60,
+                "pct_p": 33
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 0,
+                "pct": 20,
+                "pct_p": 0
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 0,
+                "pct": 20,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "call": "KC",
+            "tot": 47,
+            "eff": 30,
+            "pts_pct": 40,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 23,
+                "pts": 9,
+                "pct": 50,
+                "pct_p": 39
+              },
+              {
+                "zona": 2,
+                "tot": 8,
+                "pts": 2,
+                "pct": 17,
+                "pct_p": 25
+              },
+              {
+                "zona": 3,
+                "tot": 7,
+                "pts": 5,
+                "pct": 15,
+                "pct_p": 71
+              },
+              {
+                "zona": 9,
+                "tot": 6,
+                "pts": 3,
+                "pct": 13,
+                "pct_p": 50
+              },
+              {
+                "zona": 8,
+                "tot": 2,
+                "pts": 0,
+                "pct": 4,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "call": "KE",
+            "tot": 7,
+            "eff": 14,
+            "pts_pct": 29,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 5,
+                "pts": 1,
+                "pct": 71,
+                "pct_p": 20
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 1,
+                "pct": 14,
+                "pct_p": 100
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 0,
+                "pct": 14,
+                "pct_p": 0
+              }
+            ]
+          }
+        ],
+        "so": {
+          "eff": 45,
+          "tot": 77
+        },
+        "tr": {
+          "eff": 21,
+          "tot": 28
+        }
+      },
+      "suplente": {
+        "nombre": "14 Nielson Ramiro",
+        "num": 14,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 0,
+            "total_all": 2,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 1,
+                "pct": 100,
+                "pct_p": 50
+              }
+            ]
+          },
+          {
+            "pos": "P3",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P2",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P5",
+            "total": 0,
+            "total_all": 2,
+            "dist": [
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 0,
+                "pct": 100,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P6",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P1",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P6",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P5",
+            "eff": 0,
+            "tot": 2,
+            "pts": 0,
+            "pts_pct": 0
+          },
+          {
+            "label": "P4",
+            "eff": 50,
+            "tot": 2,
+            "pts": 1,
+            "pts_pct": 50
+          },
+          {
+            "label": "P3",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P2",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "SO",
+            "eff": 0,
+            "tot": 3,
+            "pts": 0,
+            "pts_pct": 0
+          },
+          {
+            "label": "TR",
+            "eff": 100,
+            "tot": 1,
+            "pts": 1,
+            "pts_pct": 100
+          }
+        ],
+        "llamadas": [],
+        "so": {
+          "eff": 0,
+          "tot": 3
+        },
+        "tr": {
+          "eff": 100,
+          "tot": 1
+        }
+      }
+    }
   },
   {
     "id": "Ciudad__2026-05-05",
@@ -11725,7 +12260,563 @@ const PARTIDOS_INDIVIDUAL = [
           }
         }
       }
-    ]
+    ],
+    "armadores": {
+      "titular": {
+        "nombre": "9 Godoy Martin",
+        "num": 9,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 8,
+            "total_all": 12,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 2,
+                "pct": 38,
+                "pct_p": 67
+              },
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 1,
+                "pct": 38,
+                "pct_p": 33
+              },
+              {
+                "zona": 9,
+                "tot": 2,
+                "pts": 1,
+                "pct": 25,
+                "pct_p": 50
+              }
+            ]
+          },
+          {
+            "pos": "P3",
+            "total": 1,
+            "total_all": 6,
+            "dist": [
+              {
+                "zona": 9,
+                "tot": 4,
+                "pts": 2,
+                "pct": 67,
+                "pct_p": 50
+              },
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 0,
+                "pct": 17,
+                "pct_p": 0
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 1,
+                "pct": 17,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P2",
+            "total": 1,
+            "total_all": 12,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 6,
+                "pts": 2,
+                "pct": 50,
+                "pct_p": 33
+              },
+              {
+                "zona": 9,
+                "tot": 4,
+                "pts": 2,
+                "pct": 33,
+                "pct_p": 50
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 0,
+                "pct": 8,
+                "pct_p": 0
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 0,
+                "pct": 8,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P5",
+            "total": 5,
+            "total_all": 7,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 1,
+                "pct": 40,
+                "pct_p": 50
+              },
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 1,
+                "pct": 40,
+                "pct_p": 50
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 1,
+                "pct": 20,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P6",
+            "total": 7,
+            "total_all": 9,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 4,
+                "pts": 3,
+                "pct": 57,
+                "pct_p": 75
+              },
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 2,
+                "pct": 29,
+                "pct_p": 100
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 1,
+                "pct": 14,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P1",
+            "total": 8,
+            "total_all": 27,
+            "dist": [
+              {
+                "zona": 2,
+                "tot": 3,
+                "pts": 0,
+                "pct": 38,
+                "pct_p": 0
+              },
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 0,
+                "pct": 25,
+                "pct_p": 0
+              },
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 0,
+                "pct": 25,
+                "pct_p": 0
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 0,
+                "pct": 12,
+                "pct_p": 0
+              }
+            ]
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": 11,
+            "tot": 27,
+            "pts": 7,
+            "pts_pct": 26
+          },
+          {
+            "label": "P6",
+            "eff": 78,
+            "tot": 9,
+            "pts": 7,
+            "pts_pct": 78
+          },
+          {
+            "label": "P5",
+            "eff": 57,
+            "tot": 7,
+            "pts": 4,
+            "pts_pct": 57
+          },
+          {
+            "label": "P4",
+            "eff": 25,
+            "tot": 12,
+            "pts": 7,
+            "pts_pct": 58
+          },
+          {
+            "label": "P3",
+            "eff": 17,
+            "tot": 6,
+            "pts": 3,
+            "pts_pct": 50
+          },
+          {
+            "label": "P2",
+            "eff": 25,
+            "tot": 12,
+            "pts": 4,
+            "pts_pct": 33
+          },
+          {
+            "label": "SO",
+            "eff": 24,
+            "tot": 63,
+            "pts": 25,
+            "pts_pct": 40
+          },
+          {
+            "label": "TR",
+            "eff": 60,
+            "tot": 10,
+            "pts": 7,
+            "pts_pct": 70
+          }
+        ],
+        "llamadas": [
+          {
+            "call": "K1",
+            "tot": 25,
+            "eff": 32,
+            "pts_pct": 48,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 10,
+                "pts": 5,
+                "pct": 42,
+                "pct_p": 50
+              },
+              {
+                "zona": 4,
+                "tot": 7,
+                "pts": 4,
+                "pct": 29,
+                "pct_p": 57
+              },
+              {
+                "zona": 2,
+                "tot": 3,
+                "pts": 1,
+                "pct": 12,
+                "pct_p": 33
+              },
+              {
+                "zona": 9,
+                "tot": 2,
+                "pts": 1,
+                "pct": 8,
+                "pct_p": 50
+              },
+              {
+                "zona": 8,
+                "tot": 2,
+                "pts": 1,
+                "pct": 8,
+                "pct_p": 50
+              }
+            ]
+          },
+          {
+            "call": "K7",
+            "tot": 5,
+            "eff": 40,
+            "pts_pct": 60,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 1,
+                "pct": 50,
+                "pct_p": 50
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 25,
+                "pct_p": 100
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 1,
+                "pct": 25,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "call": "KM",
+            "tot": 5,
+            "eff": -20,
+            "pts_pct": 0,
+            "dist": [
+              {
+                "zona": 2,
+                "tot": 4,
+                "pts": 0,
+                "pct": 80,
+                "pct_p": 0
+              },
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 0,
+                "pct": 20,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "call": "KC",
+            "tot": 22,
+            "eff": 36,
+            "pts_pct": 50,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 12,
+                "pts": 5,
+                "pct": 55,
+                "pct_p": 42
+              },
+              {
+                "zona": 9,
+                "tot": 5,
+                "pts": 3,
+                "pct": 23,
+                "pct_p": 60
+              },
+              {
+                "zona": 2,
+                "tot": 3,
+                "pts": 2,
+                "pct": 14,
+                "pct_p": 67
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 1,
+                "pct": 5,
+                "pct_p": 100
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 0,
+                "pct": 5,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "call": "KE",
+            "tot": 8,
+            "eff": 25,
+            "pts_pct": 50,
+            "dist": [
+              {
+                "zona": 9,
+                "tot": 3,
+                "pts": 1,
+                "pct": 38,
+                "pct_p": 33
+              },
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 1,
+                "pct": 38,
+                "pct_p": 33
+              },
+              {
+                "zona": 2,
+                "tot": 2,
+                "pts": 2,
+                "pct": 25,
+                "pct_p": 100
+              }
+            ]
+          }
+        ],
+        "so": {
+          "eff": 24,
+          "tot": 63
+        },
+        "tr": {
+          "eff": 60,
+          "tot": 10
+        }
+      },
+      "suplente": {
+        "nombre": "11 Durdos Valentin",
+        "num": 11,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P3",
+            "total": 0,
+            "total_all": 1,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 1,
+                "pct": 100,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P2",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P5",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P6",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P1",
+            "total": 0,
+            "total_all": 4,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 1,
+                "pct": 75,
+                "pct_p": 33
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 0,
+                "pct": 25,
+                "pct_p": 0
+              }
+            ]
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": 25,
+            "tot": 4,
+            "pts": 1,
+            "pts_pct": 25
+          },
+          {
+            "label": "P6",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P5",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P4",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P3",
+            "eff": 100,
+            "tot": 1,
+            "pts": 1,
+            "pts_pct": 100
+          },
+          {
+            "label": "P2",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "SO",
+            "eff": 50,
+            "tot": 4,
+            "pts": 2,
+            "pts_pct": 50
+          },
+          {
+            "label": "TR",
+            "eff": 0,
+            "tot": 1,
+            "pts": 0,
+            "pts_pct": 0
+          }
+        ],
+        "llamadas": [],
+        "so": {
+          "eff": 50,
+          "tot": 4
+        },
+        "tr": {
+          "eff": 0,
+          "tot": 1
+        }
+      }
+    }
   },
   {
     "id": "Ferro__2026-05-08",
@@ -14755,7 +15846,623 @@ const PARTIDOS_INDIVIDUAL = [
           }
         }
       }
-    ]
+    ],
+    "armadores": {
+      "titular": {
+        "nombre": "9 Godoy Martin",
+        "num": 9,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 3,
+            "total_all": 5,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 1,
+                "pct": 67,
+                "pct_p": 50
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 0,
+                "pct": 33,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P3",
+            "total": 6,
+            "total_all": 8,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 50
+              },
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 50
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 0,
+                "pct": 17,
+                "pct_p": 0
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 0,
+                "pct": 17,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P2",
+            "total": 6,
+            "total_all": 15,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 2,
+                "pct": 50,
+                "pct_p": 67
+              },
+              {
+                "zona": 9,
+                "tot": 2,
+                "pts": 2,
+                "pct": 33,
+                "pct_p": 100
+              },
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 0,
+                "pct": 17,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P5",
+            "total": 9,
+            "total_all": 14,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 7,
+                "pts": 2,
+                "pct": 78,
+                "pct_p": 29
+              },
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 0,
+                "pct": 11,
+                "pct_p": 0
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 0,
+                "pct": 11,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P6",
+            "total": 5,
+            "total_all": 16,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 4,
+                "pts": 2,
+                "pct": 80,
+                "pct_p": 50
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 0,
+                "pct": 20,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P1",
+            "total": 7,
+            "total_all": 11,
+            "dist": [
+              {
+                "zona": 2,
+                "tot": 3,
+                "pts": 0,
+                "pct": 43,
+                "pct_p": 0
+              },
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 1,
+                "pct": 43,
+                "pct_p": 33
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 14,
+                "pct_p": 100
+              }
+            ]
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": 0,
+            "tot": 11,
+            "pts": 3,
+            "pts_pct": 27
+          },
+          {
+            "label": "P6",
+            "eff": 6,
+            "tot": 16,
+            "pts": 4,
+            "pts_pct": 25
+          },
+          {
+            "label": "P5",
+            "eff": 7,
+            "tot": 14,
+            "pts": 4,
+            "pts_pct": 29
+          },
+          {
+            "label": "P4",
+            "eff": 0,
+            "tot": 5,
+            "pts": 2,
+            "pts_pct": 40
+          },
+          {
+            "label": "P3",
+            "eff": 12,
+            "tot": 8,
+            "pts": 3,
+            "pts_pct": 38
+          },
+          {
+            "label": "P2",
+            "eff": 60,
+            "tot": 15,
+            "pts": 10,
+            "pts_pct": 67
+          },
+          {
+            "label": "SO",
+            "eff": 19,
+            "tot": 58,
+            "pts": 22,
+            "pts_pct": 38
+          },
+          {
+            "label": "TR",
+            "eff": 9,
+            "tot": 11,
+            "pts": 4,
+            "pts_pct": 36
+          }
+        ],
+        "llamadas": [
+          {
+            "call": "K1",
+            "tot": 21,
+            "eff": 0,
+            "pts_pct": 29,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 10,
+                "pts": 3,
+                "pct": 50,
+                "pct_p": 30
+              },
+              {
+                "zona": 4,
+                "tot": 6,
+                "pts": 3,
+                "pct": 30,
+                "pct_p": 50
+              },
+              {
+                "zona": 2,
+                "tot": 2,
+                "pts": 0,
+                "pct": 10,
+                "pct_p": 0
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 0,
+                "pct": 5,
+                "pct_p": 0
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 0,
+                "pct": 5,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "call": "K7",
+            "tot": 16,
+            "eff": 31,
+            "pts_pct": 44,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 7,
+                "pts": 2,
+                "pct": 44,
+                "pct_p": 29
+              },
+              {
+                "zona": 3,
+                "tot": 4,
+                "pts": 3,
+                "pct": 25,
+                "pct_p": 75
+              },
+              {
+                "zona": 2,
+                "tot": 3,
+                "pts": 0,
+                "pct": 19,
+                "pct_p": 0
+              },
+              {
+                "zona": 9,
+                "tot": 2,
+                "pts": 2,
+                "pct": 12,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "call": "KE",
+            "tot": 6,
+            "eff": 0,
+            "pts_pct": 33,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 50
+              },
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 50
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 0,
+                "pct": 17,
+                "pct_p": 0
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 0,
+                "pct": 17,
+                "pct_p": 0
+              }
+            ]
+          }
+        ],
+        "so": {
+          "eff": 19,
+          "tot": 58
+        },
+        "tr": {
+          "eff": 9,
+          "tot": 11
+        }
+      },
+      "suplente": {
+        "nombre": "4 Vazquez Ezequiel",
+        "num": 4,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 3,
+            "total_all": 5,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 0,
+                "pct": 67,
+                "pct_p": 0
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 0,
+                "pct": 33,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P3",
+            "total": 3,
+            "total_all": 5,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 1,
+                "pct": 67,
+                "pct_p": 50
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P2",
+            "total": 5,
+            "total_all": 6,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 2,
+                "pct": 60,
+                "pct_p": 67
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 0,
+                "pct": 20,
+                "pct_p": 0
+              },
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 0,
+                "pct": 20,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P5",
+            "total": 3,
+            "total_all": 4,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 1,
+                "pct": 67,
+                "pct_p": 50
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 0,
+                "pct": 33,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P6",
+            "total": 2,
+            "total_all": 2,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 50,
+                "pct_p": 100
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 1,
+                "pct": 50,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P1",
+            "total": 5,
+            "total_all": 7,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 0,
+                "pct": 40,
+                "pct_p": 0
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 0,
+                "pct": 20,
+                "pct_p": 0
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 20,
+                "pct_p": 100
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 1,
+                "pct": 20,
+                "pct_p": 100
+              }
+            ]
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": 29,
+            "tot": 7,
+            "pts": 3,
+            "pts_pct": 43
+          },
+          {
+            "label": "P6",
+            "eff": 100,
+            "tot": 2,
+            "pts": 2,
+            "pts_pct": 100
+          },
+          {
+            "label": "P5",
+            "eff": 25,
+            "tot": 4,
+            "pts": 2,
+            "pts_pct": 50
+          },
+          {
+            "label": "P4",
+            "eff": 0,
+            "tot": 5,
+            "pts": 1,
+            "pts_pct": 20
+          },
+          {
+            "label": "P3",
+            "eff": 0,
+            "tot": 5,
+            "pts": 2,
+            "pts_pct": 40
+          },
+          {
+            "label": "P2",
+            "eff": 17,
+            "tot": 6,
+            "pts": 2,
+            "pts_pct": 33
+          },
+          {
+            "label": "SO",
+            "eff": 26,
+            "tot": 27,
+            "pts": 12,
+            "pts_pct": 44
+          },
+          {
+            "label": "TR",
+            "eff": -50,
+            "tot": 2,
+            "pts": 0,
+            "pts_pct": 0
+          }
+        ],
+        "llamadas": [
+          {
+            "call": "K1",
+            "tot": 19,
+            "eff": 32,
+            "pts_pct": 47,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 7,
+                "pts": 2,
+                "pct": 37,
+                "pct_p": 29
+              },
+              {
+                "zona": 3,
+                "tot": 7,
+                "pts": 5,
+                "pct": 37,
+                "pct_p": 71
+              },
+              {
+                "zona": 2,
+                "tot": 2,
+                "pts": 1,
+                "pct": 11,
+                "pct_p": 50
+              },
+              {
+                "zona": 9,
+                "tot": 2,
+                "pts": 0,
+                "pct": 11,
+                "pct_p": 0
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 1,
+                "pct": 5,
+                "pct_p": 100
+              }
+            ]
+          }
+        ],
+        "so": {
+          "eff": 26,
+          "tot": 27
+        },
+        "tr": {
+          "eff": -50,
+          "tot": 2
+        }
+      }
+    }
   },
   {
     "id": "Hacoaj__2026-05-16",
@@ -18125,7 +19832,586 @@ const PARTIDOS_INDIVIDUAL = [
         ],
         "recepcion": {}
       }
-    ]
+    ],
+    "armadores": {
+      "titular": {
+        "nombre": "4 Vazquez Ezequiel",
+        "num": 4,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 10,
+            "total_all": 19,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 5,
+                "pts": 1,
+                "pct": 50,
+                "pct_p": 20
+              },
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 2,
+                "pct": 30,
+                "pct_p": 67
+              },
+              {
+                "zona": 9,
+                "tot": 2,
+                "pts": 1,
+                "pct": 20,
+                "pct_p": 50
+              }
+            ]
+          },
+          {
+            "pos": "P3",
+            "total": 10,
+            "total_all": 22,
+            "dist": [
+              {
+                "zona": 9,
+                "tot": 4,
+                "pts": 2,
+                "pct": 40,
+                "pct_p": 50
+              },
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 2,
+                "pct": 30,
+                "pct_p": 67
+              },
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 2,
+                "pct": 30,
+                "pct_p": 67
+              }
+            ]
+          },
+          {
+            "pos": "P2",
+            "total": 4,
+            "total_all": 15,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 0,
+                "pct": 50,
+                "pct_p": 0
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 1,
+                "pct": 25,
+                "pct_p": 100
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 25,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P5",
+            "total": 11,
+            "total_all": 16,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 7,
+                "pts": 5,
+                "pct": 64,
+                "pct_p": 71
+              },
+              {
+                "zona": 2,
+                "tot": 2,
+                "pts": 1,
+                "pct": 18,
+                "pct_p": 50
+              },
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 2,
+                "pct": 18,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P6",
+            "total": 1,
+            "total_all": 10,
+            "dist": [
+              {
+                "zona": 2,
+                "tot": 4,
+                "pts": 4,
+                "pct": 40,
+                "pct_p": 100
+              },
+              {
+                "zona": 4,
+                "tot": 4,
+                "pts": 1,
+                "pct": 40,
+                "pct_p": 25
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 10,
+                "pct_p": 100
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 0,
+                "pct": 10,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P1",
+            "total": 9,
+            "total_all": 25,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 4,
+                "pts": 2,
+                "pct": 44,
+                "pct_p": 50
+              },
+              {
+                "zona": 2,
+                "tot": 3,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 33
+              },
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 2,
+                "pct": 22,
+                "pct_p": 100
+              }
+            ]
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": 40,
+            "tot": 25,
+            "pts": 13,
+            "pts_pct": 52
+          },
+          {
+            "label": "P6",
+            "eff": 50,
+            "tot": 10,
+            "pts": 6,
+            "pts_pct": 60
+          },
+          {
+            "label": "P5",
+            "eff": 50,
+            "tot": 16,
+            "pts": 9,
+            "pts_pct": 56
+          },
+          {
+            "label": "P4",
+            "eff": 16,
+            "tot": 19,
+            "pts": 6,
+            "pts_pct": 32
+          },
+          {
+            "label": "P3",
+            "eff": 32,
+            "tot": 22,
+            "pts": 11,
+            "pts_pct": 50
+          },
+          {
+            "label": "P2",
+            "eff": 20,
+            "tot": 15,
+            "pts": 5,
+            "pts_pct": 33
+          },
+          {
+            "label": "SO",
+            "eff": 38,
+            "tot": 79,
+            "pts": 39,
+            "pts_pct": 49
+          },
+          {
+            "label": "TR",
+            "eff": 21,
+            "tot": 28,
+            "pts": 11,
+            "pts_pct": 39
+          }
+        ],
+        "llamadas": [
+          {
+            "call": "K1",
+            "tot": 45,
+            "eff": 42,
+            "pts_pct": 53,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 19,
+                "pts": 11,
+                "pct": 45,
+                "pct_p": 58
+              },
+              {
+                "zona": 4,
+                "tot": 12,
+                "pts": 8,
+                "pct": 29,
+                "pct_p": 67
+              },
+              {
+                "zona": 9,
+                "tot": 6,
+                "pts": 3,
+                "pct": 14,
+                "pct_p": 50
+              },
+              {
+                "zona": 2,
+                "tot": 5,
+                "pts": 2,
+                "pct": 12,
+                "pct_p": 40
+              }
+            ]
+          },
+          {
+            "call": "KM",
+            "tot": 10,
+            "eff": 80,
+            "pts_pct": 80,
+            "dist": [
+              {
+                "zona": 2,
+                "tot": 4,
+                "pts": 4,
+                "pct": 40,
+                "pct_p": 100
+              },
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 1,
+                "pct": 20,
+                "pct_p": 50
+              },
+              {
+                "zona": 9,
+                "tot": 2,
+                "pts": 2,
+                "pct": 20,
+                "pct_p": 100
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 1,
+                "pct": 10,
+                "pct_p": 100
+              },
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 0,
+                "pct": 10,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "call": "KC",
+            "tot": 37,
+            "eff": 11,
+            "pts_pct": 30,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 22,
+                "pts": 7,
+                "pct": 59,
+                "pct_p": 32
+              },
+              {
+                "zona": 9,
+                "tot": 7,
+                "pts": 3,
+                "pct": 19,
+                "pct_p": 43
+              },
+              {
+                "zona": 2,
+                "tot": 4,
+                "pts": 0,
+                "pct": 11,
+                "pct_p": 0
+              },
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 0,
+                "pct": 5,
+                "pct_p": 0
+              },
+              {
+                "zona": 8,
+                "tot": 2,
+                "pts": 1,
+                "pct": 5,
+                "pct_p": 50
+              }
+            ]
+          },
+          {
+            "call": "KE",
+            "tot": 6,
+            "eff": 50,
+            "pts_pct": 67,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 3,
+                "pct": 50,
+                "pct_p": 100
+              },
+              {
+                "zona": 2,
+                "tot": 2,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 50
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 0,
+                "pct": 17,
+                "pct_p": 0
+              }
+            ]
+          }
+        ],
+        "so": {
+          "eff": 38,
+          "tot": 79
+        },
+        "tr": {
+          "eff": 21,
+          "tot": 28
+        }
+      },
+      "suplente": {
+        "nombre": "9 Godoy Martin",
+        "num": 9,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P3",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P2",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P5",
+            "total": 2,
+            "total_all": 2,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 0,
+                "pct": 50,
+                "pct_p": 0
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 0,
+                "pct": 50,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P6",
+            "total": 2,
+            "total_all": 2,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 50,
+                "pct_p": 100
+              },
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 1,
+                "pct": 50,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P1",
+            "total": 2,
+            "total_all": 2,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 1,
+                "pct": 100,
+                "pct_p": 50
+              }
+            ]
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": 50,
+            "tot": 2,
+            "pts": 1,
+            "pts_pct": 50
+          },
+          {
+            "label": "P6",
+            "eff": 100,
+            "tot": 2,
+            "pts": 2,
+            "pts_pct": 100
+          },
+          {
+            "label": "P5",
+            "eff": -50,
+            "tot": 2,
+            "pts": 0,
+            "pts_pct": 0
+          },
+          {
+            "label": "P4",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P3",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P2",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "SO",
+            "eff": 33,
+            "tot": 6,
+            "pts": 3,
+            "pts_pct": 50
+          },
+          {
+            "label": "TR",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          }
+        ],
+        "llamadas": [
+          {
+            "call": "K1",
+            "tot": 6,
+            "eff": 33,
+            "pts_pct": 50,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 4,
+                "pts": 2,
+                "pct": 67,
+                "pct_p": 50
+              },
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 1,
+                "pct": 17,
+                "pct_p": 100
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 0,
+                "pct": 17,
+                "pct_p": 0
+              }
+            ]
+          }
+        ],
+        "so": {
+          "eff": 33,
+          "tot": 6
+        },
+        "tr": {
+          "eff": null,
+          "tot": 0
+        }
+      }
+    }
   },
   {
     "id": "Velez__2026-05-22",
@@ -20526,7 +22812,567 @@ const PARTIDOS_INDIVIDUAL = [
         ],
         "recepcion": {}
       }
-    ]
+    ],
+    "armadores": {
+      "titular": {
+        "nombre": "4 Vazquez Ezequiel",
+        "num": 4,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 6,
+            "total_all": 13,
+            "dist": [
+              {
+                "zona": 9,
+                "tot": 2,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 50
+              },
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 50
+              },
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 50
+              }
+            ]
+          },
+          {
+            "pos": "P3",
+            "total": 4,
+            "total_all": 13,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 2,
+                "pct": 75,
+                "pct_p": 67
+              },
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 0,
+                "pct": 25,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P2",
+            "total": 9,
+            "total_all": 20,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 4,
+                "pts": 3,
+                "pct": 44,
+                "pct_p": 75
+              },
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 33
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 1,
+                "pct": 11,
+                "pct_p": 100
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 0,
+                "pct": 11,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P5",
+            "total": 6,
+            "total_all": 19,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 2,
+                "pct": 50,
+                "pct_p": 67
+              },
+              {
+                "zona": 2,
+                "tot": 2,
+                "pts": 0,
+                "pct": 33,
+                "pct_p": 0
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 0,
+                "pct": 17,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P6",
+            "total": 9,
+            "total_all": 23,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 4,
+                "pts": 2,
+                "pct": 44,
+                "pct_p": 50
+              },
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 2,
+                "pct": 33,
+                "pct_p": 67
+              },
+              {
+                "zona": 2,
+                "tot": 2,
+                "pts": 2,
+                "pct": 22,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P1",
+            "total": 7,
+            "total_all": 23,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 1,
+                "pct": 43,
+                "pct_p": 33
+              },
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 2,
+                "pct": 43,
+                "pct_p": 67
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 1,
+                "pct": 14,
+                "pct_p": 100
+              }
+            ]
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": 61,
+            "tot": 23,
+            "pts": 14,
+            "pts_pct": 61
+          },
+          {
+            "label": "P6",
+            "eff": 22,
+            "tot": 23,
+            "pts": 10,
+            "pts_pct": 43
+          },
+          {
+            "label": "P5",
+            "eff": 37,
+            "tot": 19,
+            "pts": 10,
+            "pts_pct": 53
+          },
+          {
+            "label": "P4",
+            "eff": 23,
+            "tot": 13,
+            "pts": 6,
+            "pts_pct": 46
+          },
+          {
+            "label": "P3",
+            "eff": 46,
+            "tot": 13,
+            "pts": 7,
+            "pts_pct": 54
+          },
+          {
+            "label": "P2",
+            "eff": 25,
+            "tot": 20,
+            "pts": 9,
+            "pts_pct": 45
+          },
+          {
+            "label": "SO",
+            "eff": 41,
+            "tot": 90,
+            "pts": 48,
+            "pts_pct": 53
+          },
+          {
+            "label": "TR",
+            "eff": 14,
+            "tot": 21,
+            "pts": 8,
+            "pts_pct": 38
+          }
+        ],
+        "llamadas": [
+          {
+            "call": "K1",
+            "tot": 39,
+            "eff": 41,
+            "pts_pct": 56,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 15,
+                "pts": 7,
+                "pct": 41,
+                "pct_p": 47
+              },
+              {
+                "zona": 3,
+                "tot": 14,
+                "pts": 9,
+                "pct": 38,
+                "pct_p": 64
+              },
+              {
+                "zona": 2,
+                "tot": 5,
+                "pts": 3,
+                "pct": 14,
+                "pct_p": 60
+              },
+              {
+                "zona": 9,
+                "tot": 3,
+                "pts": 2,
+                "pct": 8,
+                "pct_p": 67
+              }
+            ]
+          },
+          {
+            "call": "K7",
+            "tot": 5,
+            "eff": 20,
+            "pts_pct": 40,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 100
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 0,
+                "pct": 33,
+                "pct_p": 0
+              },
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 0,
+                "pct": 33,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "call": "KE",
+            "tot": 16,
+            "eff": 44,
+            "pts_pct": 56,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 9,
+                "pts": 4,
+                "pct": 60,
+                "pct_p": 44
+              },
+              {
+                "zona": 9,
+                "tot": 3,
+                "pts": 2,
+                "pct": 20,
+                "pct_p": 67
+              },
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 3,
+                "pct": 20,
+                "pct_p": 100
+              }
+            ]
+          }
+        ],
+        "so": {
+          "eff": 41,
+          "tot": 90
+        },
+        "tr": {
+          "eff": 14,
+          "tot": 21
+        }
+      },
+      "suplente": {
+        "nombre": "9 Godoy Martin",
+        "num": 9,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 2,
+            "total_all": 3,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 0,
+                "pct": 67,
+                "pct_p": 0
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P3",
+            "total": 1,
+            "total_all": 2,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 0,
+                "pct": 50,
+                "pct_p": 0
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 50,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P2",
+            "total": 0,
+            "total_all": 1,
+            "dist": [
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 1,
+                "pct": 100,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P5",
+            "total": 1,
+            "total_all": 1,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 1,
+                "pct": 100,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P6",
+            "total": 4,
+            "total_all": 5,
+            "dist": [
+              {
+                "zona": 2,
+                "tot": 2,
+                "pts": 0,
+                "pct": 50,
+                "pct_p": 0
+              },
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 1,
+                "pct": 50,
+                "pct_p": 50
+              }
+            ]
+          },
+          {
+            "pos": "P1",
+            "total": 2,
+            "total_all": 7,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 4,
+                "pts": 1,
+                "pct": 57,
+                "pct_p": 25
+              },
+              {
+                "zona": 2,
+                "tot": 2,
+                "pts": 1,
+                "pct": 29,
+                "pct_p": 50
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 0,
+                "pct": 14,
+                "pct_p": 0
+              }
+            ]
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": 0,
+            "tot": 7,
+            "pts": 2,
+            "pts_pct": 29
+          },
+          {
+            "label": "P6",
+            "eff": 40,
+            "tot": 5,
+            "pts": 2,
+            "pts_pct": 40
+          },
+          {
+            "label": "P5",
+            "eff": 100,
+            "tot": 1,
+            "pts": 1,
+            "pts_pct": 100
+          },
+          {
+            "label": "P4",
+            "eff": 33,
+            "tot": 3,
+            "pts": 1,
+            "pts_pct": 33
+          },
+          {
+            "label": "P3",
+            "eff": 50,
+            "tot": 2,
+            "pts": 1,
+            "pts_pct": 50
+          },
+          {
+            "label": "P2",
+            "eff": 100,
+            "tot": 1,
+            "pts": 1,
+            "pts_pct": 100
+          },
+          {
+            "label": "SO",
+            "eff": 28,
+            "tot": 18,
+            "pts": 7,
+            "pts_pct": 39
+          },
+          {
+            "label": "TR",
+            "eff": 100,
+            "tot": 1,
+            "pts": 1,
+            "pts_pct": 100
+          }
+        ],
+        "llamadas": [
+          {
+            "call": "K1",
+            "tot": 9,
+            "eff": 11,
+            "pts_pct": 22,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 5,
+                "pts": 1,
+                "pct": 56,
+                "pct_p": 20
+              },
+              {
+                "zona": 2,
+                "tot": 2,
+                "pts": 0,
+                "pct": 22,
+                "pct_p": 0
+              },
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 1,
+                "pct": 22,
+                "pct_p": 50
+              }
+            ]
+          }
+        ],
+        "so": {
+          "eff": 28,
+          "tot": 18
+        },
+        "tr": {
+          "eff": 100,
+          "tot": 1
+        }
+      }
+    }
   },
   {
     "id": "Defensores__2026-05-26",
@@ -23525,7 +26371,535 @@ const PARTIDOS_INDIVIDUAL = [
           }
         }
       }
-    ]
+    ],
+    "armadores": {
+      "titular": {
+        "nombre": "4 Vazquez Ezequiel",
+        "num": 4,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 6,
+            "total_all": 8,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 2,
+                "pct": 50,
+                "pct_p": 67
+              },
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 2,
+                "pct": 33,
+                "pct_p": 100
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 1,
+                "pct": 17,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P3",
+            "total": 7,
+            "total_all": 18,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 4,
+                "pts": 2,
+                "pct": 57,
+                "pct_p": 50
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 0,
+                "pct": 14,
+                "pct_p": 0
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 0,
+                "pct": 14,
+                "pct_p": 0
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 14,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P2",
+            "total": 0,
+            "total_all": 8,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 4,
+                "pts": 2,
+                "pct": 50,
+                "pct_p": 50
+              },
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 2,
+                "pct": 38,
+                "pct_p": 67
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 1,
+                "pct": 12,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P5",
+            "total": 6,
+            "total_all": 15,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 2,
+                "pct": 50,
+                "pct_p": 67
+              },
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 50
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 1,
+                "pct": 17,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P6",
+            "total": 12,
+            "total_all": 28,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 5,
+                "pts": 1,
+                "pct": 42,
+                "pct_p": 20
+              },
+              {
+                "zona": 2,
+                "tot": 4,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 25
+              },
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 1,
+                "pct": 25,
+                "pct_p": 33
+              }
+            ]
+          },
+          {
+            "pos": "P1",
+            "total": 9,
+            "total_all": 19,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 4,
+                "pts": 1,
+                "pct": 44,
+                "pct_p": 25
+              },
+              {
+                "zona": 2,
+                "tot": 2,
+                "pts": 1,
+                "pct": 22,
+                "pct_p": 50
+              },
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 0,
+                "pct": 22,
+                "pct_p": 0
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 1,
+                "pct": 11,
+                "pct_p": 100
+              }
+            ]
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": 0,
+            "tot": 19,
+            "pts": 7,
+            "pts_pct": 37
+          },
+          {
+            "label": "P6",
+            "eff": 7,
+            "tot": 28,
+            "pts": 8,
+            "pts_pct": 29
+          },
+          {
+            "label": "P5",
+            "eff": 47,
+            "tot": 15,
+            "pts": 9,
+            "pts_pct": 60
+          },
+          {
+            "label": "P4",
+            "eff": 75,
+            "tot": 8,
+            "pts": 6,
+            "pts_pct": 75
+          },
+          {
+            "label": "P3",
+            "eff": 17,
+            "tot": 18,
+            "pts": 5,
+            "pts_pct": 28
+          },
+          {
+            "label": "P2",
+            "eff": 62,
+            "tot": 8,
+            "pts": 5,
+            "pts_pct": 62
+          },
+          {
+            "label": "SO",
+            "eff": 33,
+            "tot": 73,
+            "pts": 34,
+            "pts_pct": 47
+          },
+          {
+            "label": "TR",
+            "eff": -4,
+            "tot": 23,
+            "pts": 6,
+            "pts_pct": 26
+          }
+        ],
+        "llamadas": [
+          {
+            "call": "K1",
+            "tot": 35,
+            "eff": 20,
+            "pts_pct": 40,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 16,
+                "pts": 7,
+                "pct": 47,
+                "pct_p": 44
+              },
+              {
+                "zona": 3,
+                "tot": 9,
+                "pts": 4,
+                "pct": 26,
+                "pct_p": 44
+              },
+              {
+                "zona": 2,
+                "tot": 6,
+                "pts": 1,
+                "pct": 18,
+                "pct_p": 17
+              },
+              {
+                "zona": 9,
+                "tot": 2,
+                "pts": 1,
+                "pct": 6,
+                "pct_p": 50
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 1,
+                "pct": 3,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "call": "K2",
+            "tot": 5,
+            "eff": 80,
+            "pts_pct": 80,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 2,
+                "pct": 60,
+                "pct_p": 67
+              },
+              {
+                "zona": 2,
+                "tot": 2,
+                "pts": 2,
+                "pct": 40,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "call": "KC",
+            "tot": 5,
+            "eff": 60,
+            "pts_pct": 60,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 5,
+                "pts": 3,
+                "pct": 100,
+                "pct_p": 60
+              }
+            ]
+          },
+          {
+            "call": "KE",
+            "tot": 5,
+            "eff": 40,
+            "pts_pct": 40,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 0,
+                "pct": 60,
+                "pct_p": 0
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 20,
+                "pct_p": 100
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 1,
+                "pct": 20,
+                "pct_p": 100
+              }
+            ]
+          }
+        ],
+        "so": {
+          "eff": 33,
+          "tot": 73
+        },
+        "tr": {
+          "eff": -4,
+          "tot": 23
+        }
+      },
+      "suplente": {
+        "nombre": "9 Godoy Martin",
+        "num": 9,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P3",
+            "total": 1,
+            "total_all": 4,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 0,
+                "pct": 50,
+                "pct_p": 0
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 0,
+                "pct": 25,
+                "pct_p": 0
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 0,
+                "pct": 25,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P2",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P5",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P6",
+            "total": 1,
+            "total_all": 2,
+            "dist": [
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 0,
+                "pct": 50,
+                "pct_p": 0
+              },
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 1,
+                "pct": 50,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P1",
+            "total": 0,
+            "total_all": 2,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 0,
+                "pct": 50,
+                "pct_p": 0
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 1,
+                "pct": 50,
+                "pct_p": 100
+              }
+            ]
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": 50,
+            "tot": 2,
+            "pts": 1,
+            "pts_pct": 50
+          },
+          {
+            "label": "P6",
+            "eff": 50,
+            "tot": 2,
+            "pts": 1,
+            "pts_pct": 50
+          },
+          {
+            "label": "P5",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P4",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P3",
+            "eff": -50,
+            "tot": 4,
+            "pts": 0,
+            "pts_pct": 0
+          },
+          {
+            "label": "P2",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "SO",
+            "eff": 0,
+            "tot": 8,
+            "pts": 2,
+            "pts_pct": 25
+          },
+          {
+            "label": "TR",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          }
+        ],
+        "llamadas": [],
+        "so": {
+          "eff": 0,
+          "tot": 8
+        },
+        "tr": {
+          "eff": null,
+          "tot": 0
+        }
+      }
+    }
   },
   {
     "id": "Lomas__2026-05-30",
@@ -26492,6 +29866,433 @@ const PARTIDOS_INDIVIDUAL = [
         "ataques": [],
         "recepcion": {}
       }
-    ]
+    ],
+    "armadores": {
+      "titular": {
+        "nombre": "4 Vazquez Ezequiel",
+        "num": 4,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 4,
+            "total_all": 12,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 3,
+                "pct": 75,
+                "pct_p": 100
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 0,
+                "pct": 25,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P3",
+            "total": 2,
+            "total_all": 9,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 4,
+                "pts": 0,
+                "pct": 44,
+                "pct_p": 0
+              },
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 3,
+                "pct": 33,
+                "pct_p": 100
+              },
+              {
+                "zona": 9,
+                "tot": 2,
+                "pts": 1,
+                "pct": 22,
+                "pct_p": 50
+              }
+            ]
+          },
+          {
+            "pos": "P2",
+            "total": 4,
+            "total_all": 12,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 1,
+                "pct": 50,
+                "pct_p": 50
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 0,
+                "pct": 25,
+                "pct_p": 0
+              },
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 1,
+                "pct": 25,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P5",
+            "total": 3,
+            "total_all": 18,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 100
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 0,
+                "pct": 33,
+                "pct_p": 0
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 1,
+                "pct": 33,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P6",
+            "total": 10,
+            "total_all": 29,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 5,
+                "pts": 3,
+                "pct": 50,
+                "pct_p": 60
+              },
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 0,
+                "pct": 30,
+                "pct_p": 0
+              },
+              {
+                "zona": 2,
+                "tot": 2,
+                "pts": 0,
+                "pct": 20,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P1",
+            "total": 13,
+            "total_all": 31,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 6,
+                "pts": 4,
+                "pct": 46,
+                "pct_p": 67
+              },
+              {
+                "zona": 4,
+                "tot": 5,
+                "pts": 2,
+                "pct": 38,
+                "pct_p": 40
+              },
+              {
+                "zona": 2,
+                "tot": 2,
+                "pts": 1,
+                "pct": 15,
+                "pct_p": 50
+              }
+            ]
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": 29,
+            "tot": 31,
+            "pts": 13,
+            "pts_pct": 42
+          },
+          {
+            "label": "P6",
+            "eff": 10,
+            "tot": 29,
+            "pts": 8,
+            "pts_pct": 28
+          },
+          {
+            "label": "P5",
+            "eff": 39,
+            "tot": 18,
+            "pts": 11,
+            "pts_pct": 61
+          },
+          {
+            "label": "P4",
+            "eff": 58,
+            "tot": 12,
+            "pts": 8,
+            "pts_pct": 67
+          },
+          {
+            "label": "P3",
+            "eff": 22,
+            "tot": 9,
+            "pts": 4,
+            "pts_pct": 44
+          },
+          {
+            "label": "P2",
+            "eff": 42,
+            "tot": 12,
+            "pts": 7,
+            "pts_pct": 58
+          },
+          {
+            "label": "SO",
+            "eff": 32,
+            "tot": 84,
+            "pts": 39,
+            "pts_pct": 46
+          },
+          {
+            "label": "TR",
+            "eff": 22,
+            "tot": 27,
+            "pts": 12,
+            "pts_pct": 44
+          }
+        ],
+        "llamadas": [
+          {
+            "call": "K1",
+            "tot": 36,
+            "eff": 36,
+            "pts_pct": 56,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 15,
+                "pts": 10,
+                "pct": 43,
+                "pct_p": 67
+              },
+              {
+                "zona": 3,
+                "tot": 13,
+                "pts": 7,
+                "pct": 37,
+                "pct_p": 54
+              },
+              {
+                "zona": 2,
+                "tot": 5,
+                "pts": 2,
+                "pct": 14,
+                "pct_p": 40
+              },
+              {
+                "zona": 9,
+                "tot": 2,
+                "pts": 0,
+                "pct": 6,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "call": "KE",
+            "tot": 18,
+            "eff": 44,
+            "pts_pct": 56,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 10,
+                "pts": 4,
+                "pct": 56,
+                "pct_p": 40
+              },
+              {
+                "zona": 2,
+                "tot": 4,
+                "pts": 2,
+                "pct": 22,
+                "pct_p": 50
+              },
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 2,
+                "pct": 11,
+                "pct_p": 100
+              },
+              {
+                "zona": 9,
+                "tot": 2,
+                "pts": 2,
+                "pct": 11,
+                "pct_p": 100
+              }
+            ]
+          }
+        ],
+        "so": {
+          "eff": 32,
+          "tot": 84
+        },
+        "tr": {
+          "eff": 22,
+          "tot": 27
+        }
+      },
+      "suplente": {
+        "nombre": "9 Godoy Martin",
+        "num": 9,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P3",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P2",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P5",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P6",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P1",
+            "total": 1,
+            "total_all": 1,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 100,
+                "pct_p": 100
+              }
+            ]
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": 100,
+            "tot": 1,
+            "pts": 1,
+            "pts_pct": 100
+          },
+          {
+            "label": "P6",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P5",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P4",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P3",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P2",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "SO",
+            "eff": 100,
+            "tot": 1,
+            "pts": 1,
+            "pts_pct": 100
+          },
+          {
+            "label": "TR",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          }
+        ],
+        "llamadas": [],
+        "so": {
+          "eff": 100,
+          "tot": 1
+        },
+        "tr": {
+          "eff": null,
+          "tot": 0
+        }
+      }
+    }
   }
 ];
+const PARTIDOS_ARMADOR = {"titular": {"nombre": "4 Vazquez Ezequiel", "num": 4, "rotaciones": [{"pos": "P4", "total": 29, "total_all": 57, "dist": [{"zona": 4, "tot": 12, "pts": 8, "pct": 41, "pct_p": 67}, {"zona": 3, "tot": 10, "pts": 4, "pct": 34, "pct_p": 40}, {"zona": 9, "tot": 7, "pts": 3, "pct": 24, "pct_p": 43}]}, {"pos": "P3", "total": 26, "total_all": 67, "dist": [{"zona": 4, "tot": 10, "pts": 5, "pct": 38, "pct_p": 50}, {"zona": 3, "tot": 10, "pts": 8, "pct": 38, "pct_p": 80}, {"zona": 9, "tot": 5, "pts": 2, "pct": 19, "pct_p": 40}, {"zona": 2, "tot": 1, "pts": 0, "pct": 4, "pct_p": 0}]}, {"pos": "P2", "total": 22, "total_all": 61, "dist": [{"zona": 3, "tot": 10, "pts": 7, "pct": 45, "pct_p": 70}, {"zona": 4, "tot": 7, "pts": 2, "pct": 32, "pct_p": 29}, {"zona": 9, "tot": 4, "pts": 2, "pct": 18, "pct_p": 50}, {"zona": 8, "tot": 1, "pts": 0, "pct": 5, "pct_p": 0}]}, {"pos": "P5", "total": 29, "total_all": 72, "dist": [{"zona": 3, "tot": 13, "pts": 7, "pct": 45, "pct_p": 54}, {"zona": 4, "tot": 10, "pts": 7, "pct": 34, "pct_p": 70}, {"zona": 2, "tot": 6, "pts": 3, "pct": 21, "pct_p": 50}]}, {"pos": "P6", "total": 34, "total_all": 92, "dist": [{"zona": 4, "tot": 14, "pts": 6, "pct": 41, "pct_p": 43}, {"zona": 3, "tot": 10, "pts": 4, "pct": 29, "pct_p": 40}, {"zona": 2, "tot": 10, "pts": 5, "pct": 29, "pct_p": 50}]}, {"pos": "P1", "total": 43, "total_all": 105, "dist": [{"zona": 4, "tot": 16, "pts": 6, "pct": 37, "pct_p": 38}, {"zona": 3, "tot": 16, "pts": 9, "pct": 37, "pct_p": 56}, {"zona": 2, "tot": 9, "pts": 4, "pct": 21, "pct_p": 44}, {"zona": 8, "tot": 2, "pts": 2, "pct": 5, "pct_p": 100}]}], "pills": [{"label": "P1", "eff": 33, "tot": 105, "pts": 50, "pts_pct": 48}, {"label": "P6", "eff": 18, "tot": 92, "pts": 34, "pts_pct": 37}, {"label": "P5", "eff": 42, "tot": 72, "pts": 41, "pts_pct": 57}, {"label": "P4", "eff": 33, "tot": 57, "pts": 27, "pts_pct": 47}, {"label": "P3", "eff": 27, "tot": 67, "pts": 29, "pts_pct": 43}, {"label": "P2", "eff": 31, "tot": 61, "pts": 28, "pts_pct": 46}, {"label": "SO", "eff": 35, "tot": 353, "pts": 172, "pts_pct": 49}, {"label": "TR", "eff": 13, "tot": 101, "pts": 37, "pts_pct": 37}], "llamadas": [{"call": "K1", "tot": 174, "eff": 35, "pts_pct": 51, "dist": [{"zona": 4, "tot": 65, "pts": 34, "pct": 39, "pct_p": 52}, {"zona": 3, "tot": 62, "pts": 36, "pct": 37, "pct_p": 58}, {"zona": 2, "tot": 23, "pts": 9, "pct": 14, "pct_p": 39}, {"zona": 9, "tot": 15, "pts": 6, "pct": 9, "pct_p": 40}, {"zona": 8, "tot": 2, "pts": 2, "pct": 1, "pct_p": 100}]}, {"call": "K7", "tot": 10, "eff": 10, "pts_pct": 30, "dist": [{"zona": 4, "tot": 2, "pts": 0, "pct": 40, "pct_p": 0}, {"zona": 3, "tot": 2, "pts": 1, "pct": 40, "pct_p": 50}, {"zona": 8, "tot": 1, "pts": 0, "pct": 20, "pct_p": 0}]}, {"call": "KM", "tot": 17, "eff": 59, "pts_pct": 59, "dist": [{"zona": 2, "tot": 6, "pts": 5, "pct": 35, "pct_p": 83}, {"zona": 3, "tot": 5, "pts": 2, "pct": 29, "pct_p": 40}, {"zona": 9, "tot": 3, "pts": 2, "pct": 18, "pct_p": 67}, {"zona": 4, "tot": 2, "pts": 0, "pct": 12, "pct_p": 0}, {"zona": 8, "tot": 1, "pts": 1, "pct": 6, "pct_p": 100}]}, {"call": "K2", "tot": 7, "eff": 71, "pts_pct": 71, "dist": [{"zona": 3, "tot": 4, "pts": 2, "pct": 57, "pct_p": 50}, {"zona": 2, "tot": 2, "pts": 2, "pct": 29, "pct_p": 100}, {"zona": 9, "tot": 1, "pts": 1, "pct": 14, "pct_p": 100}]}, {"call": "KC", "tot": 43, "eff": 16, "pts_pct": 33, "dist": [{"zona": 4, "tot": 22, "pts": 7, "pct": 51, "pct_p": 32}, {"zona": 3, "tot": 8, "pts": 3, "pct": 19, "pct_p": 38}, {"zona": 9, "tot": 7, "pts": 3, "pct": 16, "pct_p": 43}, {"zona": 2, "tot": 4, "pts": 0, "pct": 9, "pct_p": 0}, {"zona": 8, "tot": 2, "pts": 1, "pct": 5, "pct_p": 50}]}, {"call": "KP", "tot": 8, "eff": 50, "pts_pct": 50, "dist": [{"zona": 4, "tot": 4, "pts": 1, "pct": 50, "pct_p": 25}, {"zona": 3, "tot": 3, "pts": 2, "pct": 38, "pct_p": 67}, {"zona": 8, "tot": 1, "pts": 1, "pct": 12, "pct_p": 100}]}, {"call": "KE", "tot": 47, "eff": 38, "pts_pct": 53, "dist": [{"zona": 4, "tot": 27, "pts": 11, "pct": 59, "pct_p": 41}, {"zona": 9, "tot": 7, "pts": 5, "pct": 15, "pct_p": 71}, {"zona": 2, "tot": 6, "pts": 3, "pct": 13, "pct_p": 50}, {"zona": 3, "tot": 6, "pts": 6, "pct": 13, "pct_p": 100}]}], "so": {"eff": 35, "tot": 353}, "tr": {"eff": 13, "tot": 101}}, "suplente": {"nombre": "9 Godoy Martin", "num": 9, "rotaciones": [{"pos": "P4", "total": 18, "total_all": 37, "dist": [{"zona": 4, "tot": 9, "pts": 4, "pct": 50, "pct_p": 44}, {"zona": 3, "tot": 7, "pts": 5, "pct": 39, "pct_p": 71}, {"zona": 9, "tot": 2, "pts": 1, "pct": 11, "pct_p": 50}]}, {"pos": "P3", "total": 13, "total_all": 44, "dist": [{"zona": 3, "tot": 6, "pts": 3, "pct": 46, "pct_p": 50}, {"zona": 4, "tot": 4, "pts": 1, "pct": 31, "pct_p": 25}, {"zona": 8, "tot": 2, "pts": 1, "pct": 15, "pct_p": 50}, {"zona": 9, "tot": 1, "pts": 0, "pct": 8, "pct_p": 0}]}, {"pos": "P2", "total": 12, "total_all": 38, "dist": [{"zona": 4, "tot": 4, "pts": 3, "pct": 33, "pct_p": 75}, {"zona": 3, "tot": 4, "pts": 3, "pct": 33, "pct_p": 75}, {"zona": 9, "tot": 3, "pts": 3, "pct": 25, "pct_p": 100}, {"zona": 8, "tot": 1, "pts": 1, "pct": 8, "pct_p": 100}]}, {"pos": "P5", "total": 24, "total_all": 39, "dist": [{"zona": 3, "tot": 13, "pts": 6, "pct": 54, "pct_p": 46}, {"zona": 4, "tot": 7, "pts": 4, "pct": 29, "pct_p": 57}, {"zona": 2, "tot": 3, "pts": 1, "pct": 12, "pct_p": 33}, {"zona": 8, "tot": 1, "pts": 0, "pct": 4, "pct_p": 0}]}, {"pos": "P6", "total": 27, "total_all": 51, "dist": [{"zona": 4, "tot": 10, "pts": 6, "pct": 37, "pct_p": 60}, {"zona": 3, "tot": 9, "pts": 6, "pct": 33, "pct_p": 67}, {"zona": 2, "tot": 8, "pts": 4, "pct": 30, "pct_p": 50}]}, {"pos": "P1", "total": 28, "total_all": 72, "dist": [{"zona": 4, "tot": 11, "pts": 3, "pct": 39, "pct_p": 27}, {"zona": 3, "tot": 9, "pts": 5, "pct": 32, "pct_p": 56}, {"zona": 2, "tot": 6, "pts": 0, "pct": 21, "pct_p": 0}, {"zona": 8, "tot": 2, "pts": 0, "pct": 7, "pct_p": 0}]}], "pills": [{"label": "P1", "eff": 17, "tot": 72, "pts": 24, "pts_pct": 33}, {"label": "P6", "eff": 41, "tot": 51, "pts": 26, "pts_pct": 51}, {"label": "P5", "eff": 23, "tot": 39, "pts": 17, "pts_pct": 44}, {"label": "P4", "eff": 32, "tot": 37, "pts": 19, "pts_pct": 51}, {"label": "P3", "eff": 18, "tot": 44, "pts": 16, "pts_pct": 36}, {"label": "P2", "eff": 55, "tot": 38, "pts": 23, "pts_pct": 61}, {"label": "SO", "eff": 30, "tot": 231, "pts": 104, "pts_pct": 45}, {"label": "TR", "eff": 28, "tot": 50, "pts": 21, "pts_pct": 42}], "llamadas": [{"call": "K1", "tot": 92, "eff": 32, "pts_pct": 48, "dist": [{"zona": 3, "tot": 40, "pts": 21, "pct": 44, "pct_p": 52}, {"zona": 4, "tot": 30, "pts": 15, "pct": 33, "pct_p": 50}, {"zona": 2, "tot": 11, "pts": 4, "pct": 12, "pct_p": 36}, {"zona": 8, "tot": 5, "pts": 2, "pct": 6, "pct_p": 40}, {"zona": 9, "tot": 4, "pts": 2, "pct": 4, "pct_p": 50}]}, {"call": "K7", "tot": 30, "eff": 37, "pts_pct": 50, "dist": [{"zona": 4, "tot": 12, "pts": 5, "pct": 46, "pct_p": 42}, {"zona": 3, "tot": 7, "pts": 6, "pct": 27, "pct_p": 86}, {"zona": 2, "tot": 5, "pts": 1, "pct": 19, "pct_p": 20}, {"zona": 9, "tot": 2, "pts": 2, "pct": 8, "pct_p": 100}]}, {"call": "KM", "tot": 12, "eff": -17, "pts_pct": 17, "dist": [{"zona": 2, "tot": 8, "pts": 1, "pct": 67, "pct_p": 12}, {"zona": 4, "tot": 2, "pts": 1, "pct": 17, "pct_p": 50}, {"zona": 9, "tot": 1, "pts": 0, "pct": 8, "pct_p": 0}, {"zona": 8, "tot": 1, "pts": 0, "pct": 8, "pct_p": 0}]}, {"call": "KC", "tot": 69, "eff": 32, "pts_pct": 43, "dist": [{"zona": 4, "tot": 35, "pts": 14, "pct": 51, "pct_p": 40}, {"zona": 2, "tot": 11, "pts": 4, "pct": 16, "pct_p": 36}, {"zona": 9, "tot": 11, "pts": 6, "pct": 16, "pct_p": 55}, {"zona": 3, "tot": 8, "pts": 5, "pct": 12, "pct_p": 62}, {"zona": 8, "tot": 3, "pts": 1, "pct": 4, "pct_p": 33}]}, {"call": "KP", "tot": 6, "eff": 50, "pts_pct": 50, "dist": [{"zona": 4, "tot": 3, "pts": 1, "pct": 100, "pct_p": 33}]}, {"call": "KE", "tot": 24, "eff": 21, "pts_pct": 42, "dist": [{"zona": 4, "tot": 12, "pts": 4, "pct": 50, "pct_p": 33}, {"zona": 2, "tot": 5, "pts": 4, "pct": 21, "pct_p": 80}, {"zona": 9, "tot": 5, "pts": 1, "pct": 21, "pct_p": 20}, {"zona": 3, "tot": 2, "pts": 1, "pct": 8, "pct_p": 50}]}], "so": {"eff": 30, "tot": 231}, "tr": {"eff": 28, "tot": 50}}};
