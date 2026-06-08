@@ -1,8 +1,9 @@
-// datos_partidos.js — 08/06/2026, 03:33:39
-const PARTIDOS_GENERADO = "08/06/2026, 03:33:39";
+// datos_partidos.js — 08/06/2026, 04:08:36
+const PARTIDOS_GENERADO = "08/06/2026, 04:08:36";
 const PARTIDOS_TOTAL = 7;
 const PARTIDOS_META = [
   {
+    "id": "Untref__2026-05-01",
     "nombre": "Untref",
     "rival": "Untref",
     "fecha": "01/05/2026",
@@ -12,6 +13,7 @@ const PARTIDOS_META = [
     "sets_rival": "1"
   },
   {
+    "id": "Ciudad__2026-05-05",
     "nombre": "Ciudad",
     "rival": "Ciudad",
     "fecha": "05/05/2026",
@@ -21,6 +23,7 @@ const PARTIDOS_META = [
     "sets_rival": "3"
   },
   {
+    "id": "Ferro__2026-05-08",
     "nombre": "Ferro",
     "rival": "Ferro",
     "fecha": "08/05/2026",
@@ -30,6 +33,7 @@ const PARTIDOS_META = [
     "sets_rival": "3"
   },
   {
+    "id": "Hacoaj__2026-05-16",
     "nombre": "Hacoaj",
     "rival": "Hacoaj",
     "fecha": "16/05/2026",
@@ -39,6 +43,7 @@ const PARTIDOS_META = [
     "sets_rival": "1"
   },
   {
+    "id": "Velez__2026-05-22",
     "nombre": "Velez",
     "rival": "Velez",
     "fecha": "22/05/2026",
@@ -48,6 +53,7 @@ const PARTIDOS_META = [
     "sets_rival": "2"
   },
   {
+    "id": "Defensores__2026-05-26",
     "nombre": "Defensores",
     "rival": "Defensores",
     "fecha": "26/05/2026",
@@ -57,6 +63,7 @@ const PARTIDOS_META = [
     "sets_rival": "3"
   },
   {
+    "id": "Lomas__2026-05-30",
     "nombre": "Lomas",
     "rival": "Lomas",
     "fecha": "30/05/2026",
@@ -6108,8 +6115,10 @@ const PARTIDOS_JUGADORES = [
 const PARTIDOS_EQUIPO_OBJ = {"sq": -6, "rec": 33, "bqpos": 46, "bqpt": 20, "atk": 28, "atqq": 43, "atqhb": 15, "atqx": 29, "atqrp": 35, "atqri": 42, "atqrm": 17, "atqtr": 21};
 const PARTIDOS_INDIVIDUAL = [
   {
+    "id": "Untref__2026-05-01",
     "nombre": "Untref",
     "rival": "Untref",
+    "fecha": "01/05/2026",
     "resultado": "V",
     "equipo_obj": {
       "sq": -11,
@@ -9318,8 +9327,10 @@ const PARTIDOS_INDIVIDUAL = [
     ]
   },
   {
+    "id": "Ciudad__2026-05-05",
     "nombre": "Ciudad",
     "rival": "Ciudad",
+    "fecha": "05/05/2026",
     "resultado": "D",
     "equipo_obj": {
       "sq": -18,
@@ -11717,8 +11728,10 @@ const PARTIDOS_INDIVIDUAL = [
     ]
   },
   {
+    "id": "Ferro__2026-05-08",
     "nombre": "Ferro",
     "rival": "Ferro",
+    "fecha": "08/05/2026",
     "resultado": "D",
     "equipo_obj": {
       "sq": -5,
@@ -14745,8 +14758,10 @@ const PARTIDOS_INDIVIDUAL = [
     ]
   },
   {
+    "id": "Hacoaj__2026-05-16",
     "nombre": "Hacoaj",
     "rival": "Hacoaj",
+    "fecha": "16/05/2026",
     "resultado": "V",
     "equipo_obj": {
       "sq": -6,
@@ -18113,8 +18128,10 @@ const PARTIDOS_INDIVIDUAL = [
     ]
   },
   {
+    "id": "Velez__2026-05-22",
     "nombre": "Velez",
     "rival": "Velez",
+    "fecha": "22/05/2026",
     "resultado": "V",
     "equipo_obj": {
       "sq": 1,
@@ -20512,8 +20529,10 @@ const PARTIDOS_INDIVIDUAL = [
     ]
   },
   {
+    "id": "Defensores__2026-05-26",
     "nombre": "Defensores",
     "rival": "Defensores",
+    "fecha": "26/05/2026",
     "resultado": "D",
     "equipo_obj": {
       "sq": -3,
@@ -23509,8 +23528,10 @@ const PARTIDOS_INDIVIDUAL = [
     ]
   },
   {
+    "id": "Lomas__2026-05-30",
     "nombre": "Lomas",
     "rival": "Lomas",
+    "fecha": "30/05/2026",
     "resultado": "V",
     "equipo_obj": {
       "sq": -3,
