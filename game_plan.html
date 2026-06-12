@@ -2814,13 +2814,14 @@ function gpRenderRotaciones(){
     grid.forEach(function(row,ri){
       row.forEach(function(zn){
         var z=bz[zn], net=ri===0?'border-top:3px solid #cbd5e1;':'';
+        var pipe=(zn===8)?'box-shadow:0 0 0 2px #ef4444 inset;border-radius:9px;':'';
         if(z){
-          cells+='<div title="Zona '+zn+(z.top?' · '+z.top:'')+'" style="border:1px solid rgba(255,255,255,.12);'+net+'padding:6px 3px;min-height:48px;display:flex;flex-direction:column;justify-content:center;gap:3px">'
+          cells+='<div title="Zona '+zn+(zn===8?' · ataque de zaga (pipe)':'')+(z.top?' · '+z.top:'')+'" style="border:1px solid rgba(255,255,255,.12);'+net+pipe+'padding:6px 3px;min-height:48px;display:flex;flex-direction:column;justify-content:center;gap:3px">'
             +'<div style="display:flex;justify-content:space-around;font-size:13px;line-height:1;font-weight:700"><span style="color:#e5e7eb">'+z.n+'</span><span style="color:#60a5fa">'+z.pct+'%</span></div>'
             +'<div style="display:flex;justify-content:space-around;font-size:13px;line-height:1;font-weight:700"><span style="color:#c084fc">'+z.k+'</span><span style="color:#4ade80">'+z.kpct+'%</span></div>'
             +'</div>';
         } else {
-          cells+='<div style="border:1px solid rgba(255,255,255,.06);'+net+'min-height:48px"></div>';
+          cells+='<div style="border:1px solid rgba(255,255,255,.06);'+net+pipe+'min-height:48px"></div>';
         }
       });
     });
@@ -2837,6 +2838,7 @@ function gpRenderRotaciones(){
     +'<span><b style="color:#60a5fa">%</b> del total de esa rotación</span>'
     +'<span><b style="color:#c084fc">N°</b> kills (puntos)</span>'
     +'<span><b style="color:#4ade80">%</b> eficacia (kill%)</span>'
+    +'<span style="color:#ef4444">🔴 zona 8 = ataque de zaga (pipe)</span>'
     +'<span style="color:#64748b">· Arriba la red (zonas 4·3·2) · abajo el fondo (5·6·1) · C = colocador en esa posición</span></div>';
   cont.innerHTML=html;
 }
