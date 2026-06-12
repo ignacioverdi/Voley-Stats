@@ -1,6 +1,6 @@
-// datos_partidos.js — 08/06/2026, 11:23:13
-const PARTIDOS_GENERADO = "08/06/2026, 11:23:13";
-const PARTIDOS_TOTAL = 7;
+// datos_partidos.js — 12/06/2026, 08:38:57
+const PARTIDOS_GENERADO = "12/06/2026, 08:38:57";
+const PARTIDOS_TOTAL = 8;
 const PARTIDOS_META = [
   {
     "id": "Untref__2026-05-01",
@@ -71,6 +71,16 @@ const PARTIDOS_META = [
     "resultado": "V",
     "sets_nafels": "3",
     "sets_rival": "2"
+  },
+  {
+    "id": "UBA__2026-06-09",
+    "nombre": "UBA",
+    "rival": "UBA",
+    "fecha": "09/06/2026",
+    "torneo": "NLA Suiza 2026",
+    "resultado": "V",
+    "sets_nafels": "3",
+    "sets_rival": "1"
   }
 ];
 const PARTIDOS_JUGADORES = [
@@ -615,6 +625,36 @@ const PARTIDOS_JUGADORES = [
     "info": {},
     "ataques": [
       {
+        "cod": "XM",
+        "tipo": "",
+        "orig": 3,
+        "destinos": [
+          {
+            "z": 1,
+            "pct": 28
+          },
+          {
+            "z": 6,
+            "pct": 25
+          },
+          {
+            "z": 3,
+            "pct": 12
+          },
+          {
+            "z": 5,
+            "pct": 12
+          }
+        ],
+        "eff": 45,
+        "tot": 33,
+        "pts": 19,
+        "slash": 1,
+        "err": 3,
+        "video": null,
+        "pts_pct": 58
+      },
+      {
         "cod": "X1",
         "tipo": "",
         "orig": 3,
@@ -643,36 +683,6 @@ const PARTIDOS_JUGADORES = [
         "err": 2,
         "video": null,
         "pts_pct": 61
-      },
-      {
-        "cod": "XM",
-        "tipo": "",
-        "orig": 3,
-        "destinos": [
-          {
-            "z": 1,
-            "pct": 36
-          },
-          {
-            "z": 6,
-            "pct": 27
-          },
-          {
-            "z": 3,
-            "pct": 14
-          },
-          {
-            "z": 9,
-            "pct": 9
-          }
-        ],
-        "eff": 50,
-        "tot": 22,
-        "pts": 13,
-        "slash": 1,
-        "err": 1,
-        "video": null,
-        "pts_pct": 59
       },
       {
         "cod": "X7",
@@ -755,16 +765,20 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 4,
-            "pct": 100
+            "pct": 50
+          },
+          {
+            "z": 3,
+            "pct": 50
           }
         ],
-        "eff": -100,
-        "tot": 1,
-        "pts": 0,
+        "eff": 0,
+        "tot": 2,
+        "pts": 1,
         "slash": 1,
         "err": 0,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 50
       },
       {
         "cod": "P2",
@@ -788,35 +802,35 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 6,
-            "pct": 31
+            "pct": 35
           },
           {
             "z": 5,
-            "pct": 24
+            "pct": 21
           },
           {
             "z": 7,
-            "pct": 18
+            "pct": 15
           },
           {
             "z": 1,
-            "pct": 11
+            "pct": 15
           },
           {
             "z": 8,
-            "pct": 9
+            "pct": 8
           },
           {
             "z": 9,
-            "pct": 7
+            "pct": 6
           }
         ],
-        "eff": -13,
-        "tot": 45,
+        "eff": -17,
+        "tot": 52,
         "pts": 0,
         "plus": 0,
         "slash": 0,
-        "err": 6,
+        "err": 9,
         "video": null,
         "pts_pct": 0
       }
@@ -1129,22 +1143,22 @@ const PARTIDOS_JUGADORES = [
       }
     },
     "objetivos": {
-      "sq": -11,
+      "sq": -14,
       "rec": 20,
-      "bqpos": 64,
-      "bqpt": 34,
-      "atk": 51,
-      "atqq": 55,
+      "bqpos": 60,
+      "bqpt": 31,
+      "atk": 50,
+      "atqq": 52,
       "atqhb": null,
       "atqx": -100,
       "atqrp": 50,
-      "atqri": 71,
+      "atqri": 75,
       "atqrm": 67,
-      "atqtr": 44
+      "atqtr": 37
     },
-    "tot_saques": 45,
+    "tot_saques": 52,
     "tot_recep": 5,
-    "tot_ataques": 72
+    "tot_ataques": 83
   },
   {
     "num": 3,
@@ -1550,29 +1564,29 @@ const PARTIDOS_JUGADORES = [
         "orig": 3,
         "destinos": [
           {
-            "z": 8,
-            "pct": 25
-          },
-          {
-            "z": 9,
-            "pct": 25
-          },
-          {
             "z": 4,
-            "pct": 25
+            "pct": 33
           },
           {
             "z": 7,
-            "pct": 25
+            "pct": 33
+          },
+          {
+            "z": 8,
+            "pct": 17
+          },
+          {
+            "z": 9,
+            "pct": 17
           }
         ],
-        "eff": 50,
-        "tot": 4,
+        "eff": 14,
+        "tot": 7,
         "pts": 2,
-        "slash": 0,
+        "slash": 1,
         "err": 0,
         "video": null,
-        "pts_pct": 50
+        "pts_pct": 29
       },
       {
         "cod": "V6",
@@ -1641,37 +1655,56 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 6,
-            "pct": 38
+            "pct": 39
           },
           {
             "z": 1,
-            "pct": 24
+            "pct": 26
           },
           {
             "z": 9,
-            "pct": 12
-          },
-          {
-            "z": 5,
-            "pct": 9
+            "pct": 11
           },
           {
             "z": 8,
             "pct": 9
           },
           {
+            "z": 5,
+            "pct": 8
+          },
+          {
             "z": 7,
-            "pct": 7
+            "pct": 6
           }
         ],
-        "eff": 2,
-        "tot": 96,
-        "pts": 6,
+        "eff": 3,
+        "tot": 114,
+        "pts": 9,
         "plus": 0,
         "slash": 0,
-        "err": 4,
+        "err": 6,
         "video": null,
-        "pts_pct": 6
+        "pts_pct": 8
+      },
+      {
+        "cod": "SQ",
+        "tipo": "POTENCIA",
+        "orig": 6,
+        "destinos": [
+          {
+            "z": 6,
+            "pct": 100
+          }
+        ],
+        "eff": 0,
+        "tot": 1,
+        "pts": 0,
+        "plus": 0,
+        "slash": 0,
+        "err": 0,
+        "video": null,
+        "pts_pct": 0
       }
     ],
     "recepciones": [],
@@ -1984,18 +2017,18 @@ const PARTIDOS_JUGADORES = [
     "objetivos": {
       "sq": 7,
       "rec": -33,
-      "bqpos": 50,
+      "bqpos": 51,
       "bqpt": 9,
-      "atk": 24,
+      "atk": 15,
       "atqq": null,
       "atqhb": 0,
       "atqx": null,
       "atqrp": 0,
       "atqri": 0,
-      "atqrm": 0,
-      "atqtr": 33
+      "atqrm": -33,
+      "atqtr": 29
     },
-    "tot_saques": 96,
+    "tot_saques": 115,
     "tot_recep": 3,
     "tot_ataques": 3
   },
@@ -2012,29 +2045,29 @@ const PARTIDOS_JUGADORES = [
         "orig": 2,
         "destinos": [
           {
-            "z": 4,
-            "pct": 27
+            "z": 1,
+            "pct": 28
           },
           {
-            "z": 1,
-            "pct": 25
+            "z": 4,
+            "pct": 26
           },
           {
             "z": 6,
-            "pct": 21
+            "pct": 20
           },
           {
             "z": 9,
-            "pct": 8
+            "pct": 7
           }
         ],
-        "eff": 29,
-        "tot": 52,
+        "eff": 28,
+        "tot": 54,
         "pts": 21,
         "slash": 2,
         "err": 4,
         "video": null,
-        "pts_pct": 40
+        "pts_pct": 39
       },
       {
         "cod": "V6",
@@ -2043,28 +2076,28 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 4,
-            "pct": 34
+            "pct": 35
           },
           {
             "z": 1,
-            "pct": 32
+            "pct": 30
           },
           {
             "z": 6,
-            "pct": 16
+            "pct": 15
           },
           {
             "z": 5,
             "pct": 8
           }
         ],
-        "eff": 20,
-        "tot": 41,
-        "pts": 17,
+        "eff": 19,
+        "tot": 43,
+        "pts": 18,
         "slash": 5,
-        "err": 4,
+        "err": 5,
         "video": null,
-        "pts_pct": 41
+        "pts_pct": 42
       },
       {
         "cod": "X8",
@@ -2073,24 +2106,24 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 5,
-            "pct": 42
+            "pct": 40
           },
           {
             "z": 4,
-            "pct": 24
+            "pct": 26
           },
           {
             "z": 1,
-            "pct": 21
+            "pct": 20
           },
           {
             "z": 6,
-            "pct": 9
+            "pct": 11
           }
         ],
-        "eff": 20,
-        "tot": 35,
-        "pts": 17,
+        "eff": 22,
+        "tot": 37,
+        "pts": 18,
         "slash": 5,
         "err": 5,
         "video": null,
@@ -2184,15 +2217,15 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 5,
-            "pct": 39
+            "pct": 38
           },
           {
             "z": 6,
-            "pct": 31
+            "pct": 30
           },
           {
             "z": 1,
-            "pct": 24
+            "pct": 25
           },
           {
             "z": 9,
@@ -2201,14 +2234,18 @@ const PARTIDOS_JUGADORES = [
           {
             "z": 7,
             "pct": 2
+          },
+          {
+            "z": 4,
+            "pct": 2
           }
         ],
         "eff": -35,
-        "tot": 55,
+        "tot": 57,
         "pts": 4,
         "plus": 0,
         "slash": 0,
-        "err": 23,
+        "err": 24,
         "video": null,
         "pts_pct": 7
       },
@@ -2540,22 +2577,22 @@ const PARTIDOS_JUGADORES = [
       }
     },
     "objetivos": {
-      "sq": -30,
+      "sq": -31,
       "rec": 25,
-      "bqpos": 37,
+      "bqpos": 40,
       "bqpt": 17,
-      "atk": 28,
+      "atk": 27,
       "atqq": null,
-      "atqhb": 28,
+      "atqhb": 27,
       "atqx": 26,
-      "atqrp": 32,
-      "atqri": 15,
+      "atqrp": 31,
+      "atqri": 14,
       "atqrm": 21,
       "atqtr": 32
     },
-    "tot_saques": 57,
+    "tot_saques": 59,
     "tot_recep": 2,
-    "tot_ataques": 148
+    "tot_ataques": 154
   },
   {
     "num": 6,
@@ -2571,28 +2608,28 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 2,
-            "pct": 43
+            "pct": 44
           },
           {
             "z": 1,
-            "pct": 29
+            "pct": 22
           },
           {
             "z": 3,
-            "pct": 14
+            "pct": 11
           },
           {
             "z": 6,
-            "pct": 14
+            "pct": 11
           }
         ],
-        "eff": -29,
-        "tot": 7,
+        "eff": -22,
+        "tot": 9,
         "pts": 1,
         "slash": 2,
         "err": 1,
         "video": null,
-        "pts_pct": 14
+        "pts_pct": 11
       }
     ],
     "saques": [
@@ -2620,6 +2657,25 @@ const PARTIDOS_JUGADORES = [
         "plus": 0,
         "slash": 0,
         "err": 2,
+        "video": null,
+        "pts_pct": 0
+      },
+      {
+        "cod": "SM",
+        "tipo": "FLOTADO",
+        "orig": 6,
+        "destinos": [
+          {
+            "z": 1,
+            "pct": 100
+          }
+        ],
+        "eff": 0,
+        "tot": 1,
+        "pts": 0,
+        "plus": 0,
+        "slash": 0,
+        "err": 0,
         "video": null,
         "pts_pct": 0
       }
@@ -2932,22 +2988,22 @@ const PARTIDOS_JUGADORES = [
       }
     },
     "objetivos": {
-      "sq": -25,
+      "sq": -19,
       "rec": 60,
       "bqpos": 100,
       "bqpt": 0,
-      "atk": -29,
+      "atk": -22,
       "atqq": null,
       "atqhb": null,
-      "atqx": -29,
+      "atqx": -22,
       "atqrp": 0,
       "atqri": 0,
       "atqrm": null,
-      "atqtr": -50
+      "atqtr": -33
     },
-    "tot_saques": 7,
+    "tot_saques": 8,
     "tot_recep": 5,
-    "tot_ataques": 7
+    "tot_ataques": 9
   },
   {
     "num": 9,
@@ -3005,23 +3061,23 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 6,
-            "pct": 27
+            "pct": 28
           },
           {
             "z": 1,
-            "pct": 20
+            "pct": 19
           },
           {
             "z": 7,
-            "pct": 20
+            "pct": 19
           },
           {
             "z": 8,
-            "pct": 14
+            "pct": 13
           },
           {
             "z": 9,
-            "pct": 12
+            "pct": 11
           },
           {
             "z": 3,
@@ -3029,7 +3085,7 @@ const PARTIDOS_JUGADORES = [
           }
         ],
         "eff": -2,
-        "tot": 51,
+        "tot": 53,
         "pts": 2,
         "plus": 0,
         "slash": 0,
@@ -3359,7 +3415,7 @@ const PARTIDOS_JUGADORES = [
       "atqrm": null,
       "atqtr": 0
     },
-    "tot_saques": 51,
+    "tot_saques": 53,
     "tot_recep": 4,
     "tot_ataques": 0
   },
@@ -3377,7 +3433,7 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 2,
-            "pct": 32
+            "pct": 36
           },
           {
             "z": 7,
@@ -3385,20 +3441,20 @@ const PARTIDOS_JUGADORES = [
           },
           {
             "z": 6,
-            "pct": 14
+            "pct": 13
           },
           {
             "z": 1,
-            "pct": 11
+            "pct": 10
           }
         ],
-        "eff": 32,
-        "tot": 114,
-        "pts": 53,
+        "eff": 36,
+        "tot": 138,
+        "pts": 66,
         "slash": 5,
         "err": 11,
         "video": null,
-        "pts_pct": 46
+        "pts_pct": 48
       },
       {
         "cod": "V5",
@@ -3407,25 +3463,25 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 2,
-            "pct": 44
+            "pct": 46
           },
           {
             "z": 1,
             "pct": 17
           },
           {
-            "z": 6,
+            "z": 5,
             "pct": 9
           },
           {
-            "z": 5,
-            "pct": 8
+            "z": 6,
+            "pct": 9
           }
         ],
         "eff": 11,
-        "tot": 65,
-        "pts": 21,
-        "slash": 6,
+        "tot": 71,
+        "pts": 23,
+        "slash": 7,
         "err": 8,
         "video": null,
         "pts_pct": 32
@@ -3437,7 +3493,7 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 1,
-            "pct": 31
+            "pct": 30
           },
           {
             "z": 6,
@@ -3449,16 +3505,16 @@ const PARTIDOS_JUGADORES = [
           },
           {
             "z": 5,
-            "pct": 12
+            "pct": 15
           }
         ],
-        "eff": 20,
-        "tot": 20,
-        "pts": 9,
-        "slash": 0,
+        "eff": 21,
+        "tot": 24,
+        "pts": 11,
+        "slash": 1,
         "err": 5,
         "video": null,
-        "pts_pct": 45
+        "pts_pct": 46
       },
       {
         "cod": "PR",
@@ -3519,16 +3575,20 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 2,
-            "pct": 100
+            "pct": 50
+          },
+          {
+            "z": 8,
+            "pct": 50
           }
         ],
-        "eff": 0,
-        "tot": 2,
-        "pts": 1,
+        "eff": 33,
+        "tot": 3,
+        "pts": 2,
         "slash": 0,
         "err": 1,
         "video": null,
-        "pts_pct": 50
+        "pts_pct": 67
       }
     ],
     "saques": [
@@ -3538,23 +3598,23 @@ const PARTIDOS_JUGADORES = [
         "orig": 6,
         "destinos": [
           {
-            "z": 5,
-            "pct": 22
-          },
-          {
-            "z": 7,
-            "pct": 20
-          },
-          {
             "z": 6,
-            "pct": 18
+            "pct": 21
           },
           {
             "z": 1,
-            "pct": 18
+            "pct": 21
+          },
+          {
+            "z": 5,
+            "pct": 19
           },
           {
             "z": 9,
+            "pct": 16
+          },
+          {
+            "z": 7,
             "pct": 16
           },
           {
@@ -3562,14 +3622,14 @@ const PARTIDOS_JUGADORES = [
             "pct": 8
           }
         ],
-        "eff": -10,
-        "tot": 51,
-        "pts": 0,
+        "eff": -6,
+        "tot": 63,
+        "pts": 1,
         "plus": 0,
         "slash": 0,
         "err": 5,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 2
       },
       {
         "cod": "SQ",
@@ -3586,7 +3646,7 @@ const PARTIDOS_JUGADORES = [
           },
           {
             "z": 1,
-            "pct": 15
+            "pct": 14
           },
           {
             "z": 8,
@@ -3594,17 +3654,17 @@ const PARTIDOS_JUGADORES = [
           },
           {
             "z": 3,
-            "pct": 2
+            "pct": 5
           }
         ],
-        "eff": -32,
-        "tot": 40,
+        "eff": -35,
+        "tot": 43,
         "pts": 4,
         "plus": 0,
         "slash": 0,
-        "err": 17,
+        "err": 19,
         "video": null,
-        "pts_pct": 10
+        "pts_pct": 9
       }
     ],
     "recepciones": [],
@@ -3636,24 +3696,24 @@ const PARTIDOS_JUGADORES = [
             "err": 1
           },
           "P1": {
-            "tot": 3,
-            "eff": 67,
+            "tot": 4,
+            "eff": 62,
             "pos": 100,
             "neg": 0,
             "pt": 1,
-            "mas": 2,
+            "mas": 3,
             "neu": 0,
             "med": 0,
             "ovp": 0,
             "err": 0
           },
           "total": {
-            "tot": 35,
+            "tot": 36,
             "eff": 47,
-            "pos": 77,
+            "pos": 78,
             "neg": 6,
             "pt": 9,
-            "mas": 18,
+            "mas": 19,
             "neu": 5,
             "med": 1,
             "ovp": 1,
@@ -3662,23 +3722,23 @@ const PARTIDOS_JUGADORES = [
         },
         "desde_z6": {
           "P5": {
-            "tot": 7,
-            "eff": 29,
-            "pos": 43,
+            "tot": 8,
+            "eff": 25,
+            "pos": 38,
             "neg": 0,
             "pt": 1,
             "mas": 2,
-            "neu": 3,
+            "neu": 4,
             "med": 1,
             "ovp": 0,
             "err": 0
           },
           "P6": {
-            "tot": 9,
-            "eff": 50,
-            "pos": 67,
+            "tot": 10,
+            "eff": 55,
+            "pos": 70,
             "neg": 0,
-            "pt": 3,
+            "pt": 4,
             "mas": 3,
             "neu": 2,
             "med": 1,
@@ -3686,50 +3746,50 @@ const PARTIDOS_JUGADORES = [
             "err": 0
           },
           "P1": {
-            "tot": 3,
-            "eff": 33,
-            "pos": 33,
+            "tot": 4,
+            "eff": 25,
+            "pos": 25,
             "neg": 0,
             "pt": 1,
             "mas": 0,
             "neu": 1,
-            "med": 1,
+            "med": 2,
             "ovp": 0,
             "err": 0
           },
           "total": {
-            "tot": 19,
+            "tot": 22,
             "eff": 39,
-            "pos": 53,
+            "pos": 50,
             "neg": 0,
-            "pt": 5,
+            "pt": 6,
             "mas": 5,
-            "neu": 6,
-            "med": 3,
+            "neu": 7,
+            "med": 4,
             "ovp": 0,
             "err": 0
           }
         },
         "desde_z5": {
           "P5": {
-            "tot": 17,
+            "tot": 22,
             "eff": 50,
-            "pos": 71,
+            "pos": 77,
             "neg": 0,
             "pt": 5,
-            "mas": 7,
+            "mas": 12,
             "neu": 1,
             "med": 4,
             "ovp": 0,
             "err": 0
           },
           "P6": {
-            "tot": 19,
-            "eff": 50,
-            "pos": 74,
+            "tot": 21,
+            "eff": 52,
+            "pos": 76,
             "neg": 5,
-            "pt": 6,
-            "mas": 8,
+            "pt": 7,
+            "mas": 9,
             "neu": 3,
             "med": 1,
             "ovp": 1,
@@ -3748,12 +3808,12 @@ const PARTIDOS_JUGADORES = [
             "err": 0
           },
           "total": {
-            "tot": 38,
-            "eff": 49,
-            "pos": 71,
-            "neg": 3,
-            "pt": 11,
-            "mas": 16,
+            "tot": 45,
+            "eff": 50,
+            "pos": 76,
+            "neg": 2,
+            "pt": 12,
+            "mas": 22,
             "neu": 5,
             "med": 5,
             "ovp": 1,
@@ -3776,14 +3836,14 @@ const PARTIDOS_JUGADORES = [
             "err": 3
           },
           "P6": {
-            "tot": 10,
-            "eff": 20,
-            "pos": 40,
-            "neg": 10,
+            "tot": 11,
+            "eff": 18,
+            "pos": 36,
+            "neg": 9,
             "pt": 2,
             "mas": 2,
             "neu": 3,
-            "med": 2,
+            "med": 3,
             "ovp": 0,
             "err": 1
           },
@@ -3800,64 +3860,64 @@ const PARTIDOS_JUGADORES = [
             "err": 0
           },
           "total": {
-            "tot": 24,
+            "tot": 25,
             "eff": 10,
-            "pos": 38,
-            "neg": 21,
+            "pos": 36,
+            "neg": 20,
             "pt": 5,
             "mas": 4,
             "neu": 5,
-            "med": 5,
+            "med": 6,
             "ovp": 1,
             "err": 4
           }
         },
         "desde_z6": {
           "P5": {
-            "tot": 7,
-            "eff": 36,
-            "pos": 57,
-            "neg": 14,
-            "pt": 2,
+            "tot": 9,
+            "eff": 39,
+            "pos": 56,
+            "neg": 11,
+            "pt": 3,
             "mas": 2,
             "neu": 1,
-            "med": 1,
+            "med": 2,
             "ovp": 1,
             "err": 0
           },
           "P6": {
-            "tot": 11,
-            "eff": 36,
-            "pos": 64,
-            "neg": 18,
-            "pt": 4,
+            "tot": 13,
+            "eff": 38,
+            "pos": 62,
+            "neg": 15,
+            "pt": 5,
             "mas": 3,
-            "neu": 1,
+            "neu": 2,
             "med": 1,
             "ovp": 1,
             "err": 1
           },
           "P1": {
-            "tot": 1,
-            "eff": 50,
-            "pos": 100,
+            "tot": 2,
+            "eff": 25,
+            "pos": 50,
             "neg": 0,
             "pt": 0,
             "mas": 1,
             "neu": 0,
-            "med": 0,
+            "med": 1,
             "ovp": 0,
             "err": 0
           },
           "total": {
-            "tot": 19,
-            "eff": 37,
-            "pos": 63,
-            "neg": 16,
-            "pt": 6,
+            "tot": 24,
+            "eff": 38,
+            "pos": 58,
+            "neg": 12,
+            "pt": 8,
             "mas": 6,
-            "neu": 2,
-            "med": 2,
+            "neu": 3,
+            "med": 4,
             "ovp": 2,
             "err": 1
           }
@@ -3915,22 +3975,22 @@ const PARTIDOS_JUGADORES = [
       }
     },
     "objetivos": {
-      "sq": -16,
-      "rec": 37,
-      "bqpos": 37,
+      "sq": -14,
+      "rec": 38,
+      "bqpos": 38,
       "bqpt": 13,
-      "atk": 25,
+      "atk": 28,
       "atqq": null,
-      "atqhb": 10,
-      "atqx": 32,
-      "atqrp": 36,
-      "atqri": 71,
-      "atqrm": 5,
-      "atqtr": 14
+      "atqhb": 11,
+      "atqx": 36,
+      "atqrp": 40,
+      "atqri": 75,
+      "atqrm": 4,
+      "atqtr": 17
     },
-    "tot_saques": 91,
-    "tot_recep": 152,
-    "tot_ataques": 186
+    "tot_saques": 106,
+    "tot_recep": 169,
+    "tot_ataques": 220
   },
   {
     "num": 12,
@@ -3969,24 +4029,24 @@ const PARTIDOS_JUGADORES = [
             "err": 0
           },
           "P1": {
-            "tot": 16,
+            "tot": 17,
             "eff": 56,
-            "pos": 81,
+            "pos": 82,
             "neg": 0,
             "pt": 5,
-            "mas": 8,
+            "mas": 9,
             "neu": 1,
             "med": 2,
             "ovp": 0,
             "err": 0
           },
           "total": {
-            "tot": 31,
+            "tot": 32,
             "eff": 56,
             "pos": 81,
             "neg": 3,
             "pt": 11,
-            "mas": 14,
+            "mas": 15,
             "neu": 2,
             "med": 3,
             "ovp": 1,
@@ -4057,39 +4117,39 @@ const PARTIDOS_JUGADORES = [
             "err": 0
           },
           "P6": {
-            "tot": 17,
-            "eff": 56,
-            "pos": 71,
-            "neg": 6,
-            "pt": 8,
-            "mas": 4,
+            "tot": 23,
+            "eff": 61,
+            "pos": 78,
+            "neg": 4,
+            "pt": 11,
+            "mas": 7,
             "neu": 3,
             "med": 1,
             "ovp": 1,
             "err": 0
           },
           "P1": {
-            "tot": 22,
+            "tot": 29,
             "eff": 45,
-            "pos": 68,
-            "neg": 9,
-            "pt": 9,
-            "mas": 6,
-            "neu": 2,
+            "pos": 69,
+            "neg": 10,
+            "pt": 11,
+            "mas": 9,
+            "neu": 3,
             "med": 3,
-            "ovp": 0,
+            "ovp": 1,
             "err": 2
           },
           "total": {
-            "tot": 43,
-            "eff": 48,
-            "pos": 67,
+            "tot": 56,
+            "eff": 50,
+            "pos": 71,
             "neg": 7,
-            "pt": 17,
-            "mas": 12,
-            "neu": 6,
+            "pt": 22,
+            "mas": 18,
+            "neu": 7,
             "med": 5,
-            "ovp": 1,
+            "ovp": 2,
             "err": 2
           }
         }
@@ -4109,38 +4169,38 @@ const PARTIDOS_JUGADORES = [
             "err": 0
           },
           "P6": {
-            "tot": 14,
-            "eff": 7,
-            "pos": 21,
-            "neg": 7,
+            "tot": 17,
+            "eff": 6,
+            "pos": 18,
+            "neg": 6,
             "pt": 0,
             "mas": 3,
-            "neu": 8,
-            "med": 2,
+            "neu": 10,
+            "med": 3,
             "ovp": 1,
             "err": 0
           },
           "P1": {
-            "tot": 13,
-            "eff": 8,
-            "pos": 23,
-            "neg": 15,
+            "tot": 16,
+            "eff": 6,
+            "pos": 19,
+            "neg": 12,
             "pt": 2,
             "mas": 1,
             "neu": 5,
-            "med": 3,
+            "med": 6,
             "ovp": 1,
             "err": 1
           },
           "total": {
-            "tot": 27,
-            "eff": 7,
-            "pos": 22,
-            "neg": 11,
+            "tot": 33,
+            "eff": 6,
+            "pos": 18,
+            "neg": 9,
             "pt": 2,
             "mas": 4,
-            "neu": 13,
-            "med": 5,
+            "neu": 15,
+            "med": 9,
             "ovp": 2,
             "err": 1
           }
@@ -4159,38 +4219,38 @@ const PARTIDOS_JUGADORES = [
             "err": 0
           },
           "P6": {
-            "tot": 3,
-            "eff": 0,
-            "pos": 33,
-            "neg": 33,
+            "tot": 4,
+            "eff": 12,
+            "pos": 50,
+            "neg": 25,
             "pt": 1,
-            "mas": 0,
+            "mas": 1,
             "neu": 1,
             "med": 0,
             "ovp": 0,
             "err": 1
           },
           "P1": {
-            "tot": 9,
-            "eff": -17,
-            "pos": 11,
-            "neg": 22,
+            "tot": 10,
+            "eff": -15,
+            "pos": 10,
+            "neg": 20,
             "pt": 0,
             "mas": 1,
             "neu": 1,
-            "med": 5,
+            "med": 6,
             "ovp": 0,
             "err": 2
           },
           "total": {
-            "tot": 12,
-            "eff": -12,
-            "pos": 17,
-            "neg": 25,
+            "tot": 14,
+            "eff": -7,
+            "pos": 21,
+            "neg": 21,
             "pt": 1,
-            "mas": 1,
+            "mas": 2,
             "neu": 2,
-            "med": 5,
+            "med": 6,
             "ovp": 0,
             "err": 3
           }
@@ -4249,7 +4309,7 @@ const PARTIDOS_JUGADORES = [
     },
     "objetivos": {
       "sq": null,
-      "rec": 34,
+      "rec": 35,
       "bqpos": null,
       "bqpt": null,
       "atk": null,
@@ -4262,7 +4322,7 @@ const PARTIDOS_JUGADORES = [
       "atqtr": null
     },
     "tot_saques": 0,
-    "tot_recep": 139,
+    "tot_recep": 161,
     "tot_ataques": 0
   },
   {
@@ -4640,11 +4700,11 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 2,
-            "pct": 42
+            "pct": 44
           },
           {
             "z": 1,
-            "pct": 22
+            "pct": 19
           },
           {
             "z": 7,
@@ -4655,13 +4715,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 7
           }
         ],
-        "eff": 31,
-        "tot": 120,
-        "pts": 51,
-        "slash": 7,
-        "err": 7,
+        "eff": 30,
+        "tot": 145,
+        "pts": 60,
+        "slash": 9,
+        "err": 8,
         "video": null,
-        "pts_pct": 42
+        "pts_pct": 41
       },
       {
         "cod": "V5",
@@ -4670,28 +4730,28 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 2,
-            "pct": 31
+            "pct": 33
           },
           {
             "z": 1,
-            "pct": 30
+            "pct": 28
           },
           {
             "z": 5,
             "pct": 11
           },
           {
-            "z": 4,
+            "z": 6,
             "pct": 9
           }
         ],
-        "eff": 18,
-        "tot": 77,
-        "pts": 24,
+        "eff": 22,
+        "tot": 89,
+        "pts": 30,
         "slash": 4,
         "err": 6,
         "video": null,
-        "pts_pct": 31
+        "pts_pct": 34
       },
       {
         "cod": "VP",
@@ -4756,6 +4816,24 @@ const PARTIDOS_JUGADORES = [
         "pts_pct": 0
       },
       {
+        "cod": "XP",
+        "tipo": "",
+        "orig": 8,
+        "destinos": [
+          {
+            "z": 3,
+            "pct": 100
+          }
+        ],
+        "eff": 0,
+        "tot": 2,
+        "pts": 1,
+        "slash": 0,
+        "err": 1,
+        "video": null,
+        "pts_pct": 50
+      },
+      {
         "cod": "PR",
         "tipo": "",
         "orig": 8,
@@ -4767,19 +4845,6 @@ const PARTIDOS_JUGADORES = [
         "err": 0,
         "video": null,
         "pts_pct": 100
-      },
-      {
-        "cod": "XP",
-        "tipo": "",
-        "orig": 8,
-        "destinos": [],
-        "eff": -100,
-        "tot": 1,
-        "pts": 0,
-        "slash": 0,
-        "err": 1,
-        "video": null,
-        "pts_pct": 0
       }
     ],
     "saques": [
@@ -4790,11 +4855,11 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 6,
-            "pct": 53
+            "pct": 52
           },
           {
             "z": 1,
-            "pct": 33
+            "pct": 34
           },
           {
             "z": 5,
@@ -4813,14 +4878,14 @@ const PARTIDOS_JUGADORES = [
             "pct": 1
           }
         ],
-        "eff": -3,
-        "tot": 100,
-        "pts": 4,
+        "eff": -2,
+        "tot": 102,
+        "pts": 5,
         "plus": 0,
         "slash": 0,
         "err": 7,
         "video": null,
-        "pts_pct": 4
+        "pts_pct": 5
       },
       {
         "cod": "SM",
@@ -4828,38 +4893,38 @@ const PARTIDOS_JUGADORES = [
         "orig": 6,
         "destinos": [
           {
+            "z": 1,
+            "pct": 35
+          },
+          {
             "z": 6,
-            "pct": 37
+            "pct": 30
           },
           {
             "z": 7,
-            "pct": 20
+            "pct": 11
           },
           {
             "z": 5,
-            "pct": 20
+            "pct": 11
           },
           {
             "z": 9,
-            "pct": 10
+            "pct": 7
           },
           {
             "z": 8,
-            "pct": 7
-          },
-          {
-            "z": 1,
-            "pct": 7
+            "pct": 6
           }
         ],
-        "eff": -3,
-        "tot": 30,
-        "pts": 0,
+        "eff": 2,
+        "tot": 54,
+        "pts": 3,
         "plus": 0,
         "slash": 0,
-        "err": 1,
+        "err": 2,
         "video": null,
-        "pts_pct": 0
+        "pts_pct": 6
       }
     ],
     "recepciones": [],
@@ -4917,11 +4982,11 @@ const PARTIDOS_JUGADORES = [
         },
         "desde_z6": {
           "P5": {
-            "tot": 5,
-            "eff": 70,
+            "tot": 6,
+            "eff": 75,
             "pos": 100,
             "neg": 0,
-            "pt": 2,
+            "pt": 3,
             "mas": 3,
             "neu": 0,
             "med": 0,
@@ -4929,13 +4994,13 @@ const PARTIDOS_JUGADORES = [
             "err": 0
           },
           "P6": {
-            "tot": 8,
-            "eff": 56,
-            "pos": 75,
+            "tot": 11,
+            "eff": 50,
+            "pos": 73,
             "neg": 0,
             "pt": 3,
-            "mas": 3,
-            "neu": 1,
+            "mas": 5,
+            "neu": 2,
             "med": 1,
             "ovp": 0,
             "err": 0
@@ -4953,13 +5018,13 @@ const PARTIDOS_JUGADORES = [
             "err": 0
           },
           "total": {
-            "tot": 13,
-            "eff": 62,
-            "pos": 85,
+            "tot": 17,
+            "eff": 59,
+            "pos": 82,
             "neg": 0,
-            "pt": 5,
-            "mas": 6,
-            "neu": 1,
+            "pt": 6,
+            "mas": 8,
+            "neu": 2,
             "med": 1,
             "ovp": 0,
             "err": 0
@@ -4979,23 +5044,23 @@ const PARTIDOS_JUGADORES = [
             "err": 0
           },
           "P6": {
-            "tot": 19,
-            "eff": 53,
-            "pos": 79,
-            "neg": 5,
-            "pt": 6,
-            "mas": 9,
-            "neu": 2,
-            "med": 1,
+            "tot": 25,
+            "eff": 46,
+            "pos": 68,
+            "neg": 4,
+            "pt": 7,
+            "mas": 10,
+            "neu": 4,
+            "med": 3,
             "ovp": 1,
             "err": 0
           },
           "P1": {
-            "tot": 8,
-            "eff": 50,
-            "pos": 62,
+            "tot": 9,
+            "eff": 56,
+            "pos": 67,
             "neg": 0,
-            "pt": 3,
+            "pt": 4,
             "mas": 2,
             "neu": 3,
             "med": 0,
@@ -5019,26 +5084,26 @@ const PARTIDOS_JUGADORES = [
       "potencia": {
         "desde_z1": {
           "P5": {
-            "tot": 9,
-            "eff": -22,
-            "pos": 22,
-            "neg": 44,
+            "tot": 10,
+            "eff": -20,
+            "pos": 20,
+            "neg": 40,
             "pt": 1,
             "mas": 1,
-            "neu": 1,
+            "neu": 2,
             "med": 2,
             "ovp": 1,
             "err": 3
           },
           "P6": {
-            "tot": 12,
-            "eff": 33,
-            "pos": 50,
-            "neg": 8,
+            "tot": 14,
+            "eff": 29,
+            "pos": 43,
+            "neg": 7,
             "pt": 4,
             "mas": 2,
-            "neu": 3,
-            "med": 2,
+            "neu": 4,
+            "med": 3,
             "ovp": 0,
             "err": 1
           },
@@ -5055,49 +5120,49 @@ const PARTIDOS_JUGADORES = [
             "err": 1
           },
           "total": {
-            "tot": 24,
+            "tot": 27,
             "eff": 4,
-            "pos": 33,
-            "neg": 25,
+            "pos": 30,
+            "neg": 22,
             "pt": 5,
             "mas": 3,
-            "neu": 5,
-            "med": 5,
+            "neu": 7,
+            "med": 6,
             "ovp": 1,
             "err": 5
           }
         },
         "desde_z6": {
           "P5": {
-            "tot": 4,
+            "tot": 6,
             "eff": 0,
-            "pos": 50,
-            "neg": 25,
+            "pos": 33,
+            "neg": 17,
             "pt": 0,
             "mas": 2,
-            "neu": 0,
+            "neu": 2,
             "med": 1,
             "ovp": 0,
             "err": 1
           },
           "P6": {
-            "tot": 15,
-            "eff": 37,
+            "tot": 20,
+            "eff": 40,
             "pos": 60,
-            "neg": 7,
-            "pt": 4,
-            "mas": 5,
-            "neu": 2,
-            "med": 3,
+            "neg": 5,
+            "pt": 6,
+            "mas": 6,
+            "neu": 3,
+            "med": 4,
             "ovp": 0,
             "err": 1
           },
           "P1": {
-            "tot": 0,
-            "eff": 0,
-            "pos": 0,
+            "tot": 1,
+            "eff": 100,
+            "pos": 100,
             "neg": 0,
-            "pt": 0,
+            "pt": 1,
             "mas": 0,
             "neu": 0,
             "med": 0,
@@ -5105,14 +5170,14 @@ const PARTIDOS_JUGADORES = [
             "err": 0
           },
           "total": {
-            "tot": 19,
-            "eff": 29,
-            "pos": 58,
-            "neg": 11,
-            "pt": 4,
-            "mas": 7,
-            "neu": 2,
-            "med": 4,
+            "tot": 27,
+            "eff": 33,
+            "pos": 56,
+            "neg": 7,
+            "pt": 7,
+            "mas": 8,
+            "neu": 5,
+            "med": 5,
             "ovp": 0,
             "err": 2
           }
@@ -5170,22 +5235,22 @@ const PARTIDOS_JUGADORES = [
       }
     },
     "objetivos": {
-      "sq": 2,
+      "sq": 5,
       "rec": 40,
-      "bqpos": 42,
-      "bqpt": 15,
-      "atk": 25,
+      "bqpos": 44,
+      "bqpt": 17,
+      "atk": 26,
       "atqq": null,
-      "atqhb": 16,
-      "atqx": 31,
-      "atqrp": 25,
-      "atqri": 48,
-      "atqrm": 13,
-      "atqtr": 23
+      "atqhb": 20,
+      "atqx": 30,
+      "atqrp": 26,
+      "atqri": 32,
+      "atqrm": 16,
+      "atqtr": 27
     },
-    "tot_saques": 130,
-    "tot_recep": 154,
-    "tot_ataques": 205
+    "tot_saques": 156,
+    "tot_recep": 179,
+    "tot_ataques": 243
   },
   {
     "num": 15,
@@ -5194,6 +5259,36 @@ const PARTIDOS_JUGADORES = [
     "color": "#22c55e",
     "info": {},
     "ataques": [
+      {
+        "cod": "XM",
+        "tipo": "",
+        "orig": 3,
+        "destinos": [
+          {
+            "z": 3,
+            "pct": 50
+          },
+          {
+            "z": 6,
+            "pct": 20
+          },
+          {
+            "z": 1,
+            "pct": 20
+          },
+          {
+            "z": 9,
+            "pct": 10
+          }
+        ],
+        "eff": 40,
+        "tot": 10,
+        "pts": 5,
+        "slash": 1,
+        "err": 0,
+        "video": null,
+        "pts_pct": 50
+      },
       {
         "cod": "X1",
         "tipo": "",
@@ -5221,36 +5316,6 @@ const PARTIDOS_JUGADORES = [
         "pts": 5,
         "slash": 0,
         "err": 1,
-        "video": null,
-        "pts_pct": 56
-      },
-      {
-        "cod": "XM",
-        "tipo": "",
-        "orig": 3,
-        "destinos": [
-          {
-            "z": 3,
-            "pct": 44
-          },
-          {
-            "z": 6,
-            "pct": 22
-          },
-          {
-            "z": 1,
-            "pct": 22
-          },
-          {
-            "z": 9,
-            "pct": 11
-          }
-        ],
-        "eff": 56,
-        "tot": 9,
-        "pts": 5,
-        "slash": 0,
-        "err": 0,
         "video": null,
         "pts_pct": 56
       },
@@ -5626,18 +5691,18 @@ const PARTIDOS_JUGADORES = [
       "rec": 8,
       "bqpos": 50,
       "bqpt": 10,
-      "atk": 50,
-      "atqq": 50,
+      "atk": 43,
+      "atqq": 42,
       "atqhb": null,
       "atqx": null,
-      "atqrp": 50,
+      "atqrp": 38,
       "atqri": 100,
       "atqrm": null,
       "atqtr": 43
     },
     "tot_saques": 26,
     "tot_recep": 6,
-    "tot_ataques": 18
+    "tot_ataques": 19
   },
   {
     "num": 17,
@@ -5652,29 +5717,59 @@ const PARTIDOS_JUGADORES = [
         "orig": 3,
         "destinos": [
           {
-            "z": 7,
-            "pct": 22
-          },
-          {
             "z": 3,
-            "pct": 22
+            "pct": 24
           },
           {
-            "z": 6,
+            "z": 7,
             "pct": 20
           },
           {
-            "z": 1,
-            "pct": 15
+            "z": 9,
+            "pct": 18
+          },
+          {
+            "z": 6,
+            "pct": 18
           }
         ],
-        "eff": 20,
-        "tot": 40,
-        "pts": 18,
+        "eff": 22,
+        "tot": 45,
+        "pts": 20,
         "slash": 2,
         "err": 8,
         "video": null,
-        "pts_pct": 45
+        "pts_pct": 44
+      },
+      {
+        "cod": "X7",
+        "tipo": "",
+        "orig": 3,
+        "destinos": [
+          {
+            "z": 3,
+            "pct": 39
+          },
+          {
+            "z": 1,
+            "pct": 28
+          },
+          {
+            "z": 9,
+            "pct": 17
+          },
+          {
+            "z": 8,
+            "pct": 6
+          }
+        ],
+        "eff": 32,
+        "tot": 19,
+        "pts": 7,
+        "slash": 0,
+        "err": 1,
+        "video": null,
+        "pts_pct": 37
       },
       {
         "cod": "X1",
@@ -5705,36 +5800,6 @@ const PARTIDOS_JUGADORES = [
         "err": 0,
         "video": null,
         "pts_pct": 53
-      },
-      {
-        "cod": "X7",
-        "tipo": "",
-        "orig": 3,
-        "destinos": [
-          {
-            "z": 3,
-            "pct": 42
-          },
-          {
-            "z": 9,
-            "pct": 25
-          },
-          {
-            "z": 1,
-            "pct": 17
-          },
-          {
-            "z": 8,
-            "pct": 8
-          }
-        ],
-        "eff": 33,
-        "tot": 12,
-        "pts": 4,
-        "slash": 0,
-        "err": 0,
-        "video": null,
-        "pts_pct": 33
       },
       {
         "cod": "X6",
@@ -5799,15 +5864,15 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 5,
-            "pct": 35
+            "pct": 29
           },
           {
             "z": 6,
-            "pct": 23
+            "pct": 28
           },
           {
             "z": 7,
-            "pct": 21
+            "pct": 18
           },
           {
             "z": 8,
@@ -5815,19 +5880,19 @@ const PARTIDOS_JUGADORES = [
           },
           {
             "z": 1,
-            "pct": 6
+            "pct": 8
           },
           {
-            "z": 9,
-            "pct": 3
+            "z": 3,
+            "pct": 4
           }
         ],
-        "eff": -6,
-        "tot": 71,
+        "eff": -8,
+        "tot": 85,
         "pts": 0,
         "plus": 0,
         "slash": 0,
-        "err": 4,
+        "err": 7,
         "video": null,
         "pts_pct": 0
       }
@@ -5835,22 +5900,22 @@ const PARTIDOS_JUGADORES = [
     "recepciones": [],
     "recepcion": {},
     "objetivos": {
-      "sq": 0,
+      "sq": -2,
       "rec": null,
-      "bqpos": 44,
-      "bqpt": 26,
+      "bqpos": 49,
+      "bqpt": 30,
       "atk": 29,
-      "atqq": 29,
+      "atqq": 30,
       "atqhb": null,
       "atqx": null,
       "atqrp": 22,
-      "atqri": 47,
-      "atqrm": null,
-      "atqtr": 23
+      "atqri": 50,
+      "atqrm": 100,
+      "atqtr": 22
     },
-    "tot_saques": 71,
+    "tot_saques": 85,
     "tot_recep": 0,
-    "tot_ataques": 68
+    "tot_ataques": 80
   },
   {
     "num": 18,
@@ -5866,28 +5931,58 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 4,
-            "pct": 37
-          },
-          {
-            "z": 1,
-            "pct": 23
+            "pct": 41
           },
           {
             "z": 9,
-            "pct": 17
+            "pct": 20
+          },
+          {
+            "z": 1,
+            "pct": 16
           },
           {
             "z": 6,
-            "pct": 7
+            "pct": 9
           }
         ],
-        "eff": 30,
-        "tot": 30,
-        "pts": 14,
-        "slash": 5,
-        "err": 0,
+        "eff": 32,
+        "tot": 44,
+        "pts": 21,
+        "slash": 6,
+        "err": 1,
         "video": null,
-        "pts_pct": 47
+        "pts_pct": 48
+      },
+      {
+        "cod": "X8",
+        "tipo": "",
+        "orig": 9,
+        "destinos": [
+          {
+            "z": 5,
+            "pct": 28
+          },
+          {
+            "z": 1,
+            "pct": 24
+          },
+          {
+            "z": 4,
+            "pct": 24
+          },
+          {
+            "z": 9,
+            "pct": 10
+          }
+        ],
+        "eff": 27,
+        "tot": 30,
+        "pts": 15,
+        "slash": 0,
+        "err": 7,
+        "video": null,
+        "pts_pct": 50
       },
       {
         "cod": "V6",
@@ -5896,11 +5991,11 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 1,
-            "pct": 37
+            "pct": 36
           },
           {
             "z": 4,
-            "pct": 22
+            "pct": 25
           },
           {
             "z": 9,
@@ -5911,43 +6006,13 @@ const PARTIDOS_JUGADORES = [
             "pct": 7
           }
         ],
-        "eff": 0,
-        "tot": 27,
+        "eff": -4,
+        "tot": 28,
         "pts": 5,
-        "slash": 4,
+        "slash": 5,
         "err": 1,
         "video": null,
-        "pts_pct": 19
-      },
-      {
-        "cod": "X8",
-        "tipo": "",
-        "orig": 9,
-        "destinos": [
-          {
-            "z": 5,
-            "pct": 29
-          },
-          {
-            "z": 1,
-            "pct": 25
-          },
-          {
-            "z": 4,
-            "pct": 21
-          },
-          {
-            "z": 9,
-            "pct": 12
-          }
-        ],
-        "eff": 28,
-        "tot": 25,
-        "pts": 13,
-        "slash": 0,
-        "err": 6,
-        "video": null,
-        "pts_pct": 52
+        "pts_pct": 18
       },
       {
         "cod": "V8",
@@ -5955,25 +6020,25 @@ const PARTIDOS_JUGADORES = [
         "orig": 9,
         "destinos": [
           {
-            "z": 1,
+            "z": 4,
             "pct": 50
           },
           {
-            "z": 4,
-            "pct": 33
+            "z": 1,
+            "pct": 38
           },
           {
             "z": 6,
-            "pct": 17
+            "pct": 12
           }
         ],
-        "eff": 33,
-        "tot": 6,
+        "eff": 12,
+        "tot": 8,
         "pts": 3,
-        "slash": 1,
+        "slash": 2,
         "err": 0,
         "video": null,
-        "pts_pct": 50
+        "pts_pct": 38
       },
       {
         "cod": "PR",
@@ -6010,50 +6075,54 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 6,
-            "pct": 42
+            "pct": 46
           },
           {
             "z": 5,
-            "pct": 29
+            "pct": 25
           },
           {
             "z": 1,
-            "pct": 21
+            "pct": 19
           },
           {
             "z": 3,
-            "pct": 8
+            "pct": 6
+          },
+          {
+            "z": 8,
+            "pct": 4
           }
         ],
-        "eff": -16,
-        "tot": 38,
-        "pts": 4,
+        "eff": -12,
+        "tot": 48,
+        "pts": 5,
         "plus": 0,
         "slash": 0,
-        "err": 10,
+        "err": 11,
         "video": null,
-        "pts_pct": 11
+        "pts_pct": 10
       }
     ],
     "recepciones": [],
     "recepcion": {},
     "objetivos": {
-      "sq": -12,
+      "sq": -9,
       "rec": null,
-      "bqpos": 43,
-      "bqpt": 7,
+      "bqpos": 53,
+      "bqpt": 11,
       "atk": 20,
       "atqq": null,
-      "atqhb": 3,
-      "atqx": 29,
-      "atqrp": 23,
-      "atqri": 58,
-      "atqrm": 50,
-      "atqtr": 8
+      "atqhb": -3,
+      "atqx": 30,
+      "atqrp": 22,
+      "atqri": 69,
+      "atqrm": 40,
+      "atqtr": 5
     },
-    "tot_saques": 38,
+    "tot_saques": 48,
     "tot_recep": 0,
-    "tot_ataques": 89
+    "tot_ataques": 111
   },
   {
     "num": 19,
@@ -6070,19 +6139,23 @@ const PARTIDOS_JUGADORES = [
         "destinos": [
           {
             "z": 6,
-            "pct": 50
+            "pct": 56
           },
           {
             "z": 5,
-            "pct": 25
+            "pct": 19
           },
           {
             "z": 7,
-            "pct": 25
+            "pct": 19
+          },
+          {
+            "z": 9,
+            "pct": 6
           }
         ],
         "eff": 0,
-        "tot": 12,
+        "tot": 16,
         "pts": 0,
         "plus": 0,
         "slash": 0,
@@ -6094,7 +6167,7 @@ const PARTIDOS_JUGADORES = [
     "recepciones": [],
     "recepcion": {},
     "objetivos": {
-      "sq": 4,
+      "sq": 5,
       "rec": null,
       "bqpos": null,
       "bqpt": null,
@@ -6107,12 +6180,12 @@ const PARTIDOS_JUGADORES = [
       "atqrm": null,
       "atqtr": null
     },
-    "tot_saques": 12,
+    "tot_saques": 16,
     "tot_recep": 0,
     "tot_ataques": 0
   }
 ];
-const PARTIDOS_EQUIPO_OBJ = {"sq": -6, "rec": 33, "bqpos": 46, "bqpt": 20, "atk": 28, "atqq": 43, "atqhb": 15, "atqx": 29, "atqrp": 35, "atqri": 42, "atqrm": 17, "atqtr": 21};
+const PARTIDOS_EQUIPO_OBJ = {"sq": -5, "rec": 34, "bqpos": 48, "bqpt": 20, "atk": 28, "atqq": 42, "atqhb": 16, "atqx": 30, "atqrp": 35, "atqri": 43, "atqrm": 16, "atqtr": 22};
 const PARTIDOS_INDIVIDUAL = [
   {
     "id": "Untref__2026-05-01",
@@ -9859,6 +9932,216 @@ const PARTIDOS_INDIVIDUAL = [
           "tot": 1
         }
       }
+    },
+    "transicion": {
+      "titular": {
+        "rots": [
+          {
+            "pos": 1,
+            "n": 11,
+            "eff": 27,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 5,
+                "pts": 2,
+                "pct": 45
+              },
+              {
+                "p": "P2",
+                "n": 4,
+                "pts": 1,
+                "pct": 36
+              },
+              {
+                "p": "P3",
+                "n": 1,
+                "pts": 0,
+                "pct": 9
+              },
+              {
+                "p": "P8",
+                "n": 1,
+                "pts": 0,
+                "pct": 9
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 2,
+            "n": 4,
+            "eff": 50,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 2,
+                "pts": 0,
+                "pct": 50
+              },
+              {
+                "p": "P9",
+                "n": 2,
+                "pts": 2,
+                "pct": 50
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 3,
+            "n": 14,
+            "eff": 36,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 6,
+                "pts": 2,
+                "pct": 43
+              },
+              {
+                "p": "P3",
+                "n": 4,
+                "pts": 3,
+                "pct": 29
+              },
+              {
+                "p": "P9",
+                "n": 3,
+                "pts": 1,
+                "pct": 21
+              },
+              {
+                "p": "P8",
+                "n": 1,
+                "pts": 0,
+                "pct": 7
+              }
+            ],
+            "concentrada": false
+          },
+          {
+            "pos": 4,
+            "n": 9,
+            "eff": 44,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 7,
+                "pts": 4,
+                "pct": 78
+              },
+              {
+                "p": "P9",
+                "n": 1,
+                "pts": 0,
+                "pct": 11
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 5,
+            "n": 3,
+            "eff": -33,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 2,
+                "pts": 0,
+                "pct": 67
+              },
+              {
+                "p": "P3",
+                "n": 1,
+                "pts": 1,
+                "pct": 33
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 6,
+            "n": 7,
+            "eff": 29,
+            "dist": [
+              {
+                "p": "P2",
+                "n": 4,
+                "pts": 1,
+                "pct": 57
+              },
+              {
+                "p": "P3",
+                "n": 2,
+                "pts": 2,
+                "pct": 29
+              },
+              {
+                "p": "P4",
+                "n": 1,
+                "pts": 1,
+                "pct": 14
+              }
+            ],
+            "concentrada": true
+          }
+        ],
+        "debil": {
+          "pos": 1,
+          "n": 11,
+          "eff": 27,
+          "dist": [
+            {
+              "p": "P4",
+              "n": 5,
+              "pts": 2,
+              "pct": 45
+            },
+            {
+              "p": "P2",
+              "n": 4,
+              "pts": 1,
+              "pct": 36
+            },
+            {
+              "p": "P3",
+              "n": 1,
+              "pts": 0,
+              "pct": 9
+            },
+            {
+              "p": "P8",
+              "n": 1,
+              "pts": 0,
+              "pct": 9
+            }
+          ],
+          "concentrada": true
+        },
+        "fuerte": {
+          "pos": 4,
+          "n": 9,
+          "eff": 44,
+          "dist": [
+            {
+              "p": "P4",
+              "n": 7,
+              "pts": 4,
+              "pct": 78
+            },
+            {
+              "p": "P9",
+              "n": 1,
+              "pts": 0,
+              "pct": 11
+            }
+          ],
+          "concentrada": true
+        },
+        "setter": "9 Godoy Martin"
+      },
+      "suplente": null
     }
   },
   {
@@ -12816,6 +13099,150 @@ const PARTIDOS_INDIVIDUAL = [
           "tot": 1
         }
       }
+    },
+    "transicion": {
+      "titular": {
+        "rots": [
+          {
+            "pos": 1,
+            "n": 14,
+            "eff": 29,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 9,
+                "pts": 3,
+                "pct": 64
+              },
+              {
+                "p": "P3",
+                "n": 2,
+                "pts": 0,
+                "pct": 14
+              },
+              {
+                "p": "P2",
+                "n": 2,
+                "pts": 1,
+                "pct": 14
+              },
+              {
+                "p": "P8",
+                "n": 1,
+                "pts": 1,
+                "pct": 7
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 2,
+            "n": 4,
+            "eff": 25,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 2,
+                "pts": 1,
+                "pct": 50
+              },
+              {
+                "p": "P9",
+                "n": 2,
+                "pts": 1,
+                "pct": 50
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 3,
+            "n": 2,
+            "vacio": true
+          },
+          {
+            "pos": 4,
+            "n": 1,
+            "vacio": true
+          },
+          {
+            "pos": 5,
+            "n": 1,
+            "vacio": true
+          },
+          {
+            "pos": 6,
+            "n": 1,
+            "vacio": true
+          }
+        ],
+        "debil": {
+          "pos": 1,
+          "n": 14,
+          "eff": 29,
+          "dist": [
+            {
+              "p": "P4",
+              "n": 9,
+              "pts": 3,
+              "pct": 64
+            },
+            {
+              "p": "P3",
+              "n": 2,
+              "pts": 0,
+              "pct": 14
+            },
+            {
+              "p": "P2",
+              "n": 2,
+              "pts": 1,
+              "pct": 14
+            },
+            {
+              "p": "P8",
+              "n": 1,
+              "pts": 1,
+              "pct": 7
+            }
+          ],
+          "concentrada": true
+        },
+        "fuerte": {
+          "pos": 1,
+          "n": 14,
+          "eff": 29,
+          "dist": [
+            {
+              "p": "P4",
+              "n": 9,
+              "pts": 3,
+              "pct": 64
+            },
+            {
+              "p": "P3",
+              "n": 2,
+              "pts": 0,
+              "pct": 14
+            },
+            {
+              "p": "P2",
+              "n": 2,
+              "pts": 1,
+              "pct": 14
+            },
+            {
+              "p": "P8",
+              "n": 1,
+              "pts": 1,
+              "pct": 7
+            }
+          ],
+          "concentrada": true
+        },
+        "setter": "9 Godoy Martin"
+      },
+      "suplente": null
     }
   },
   {
@@ -16462,6 +16889,162 @@ const PARTIDOS_INDIVIDUAL = [
           "tot": 2
         }
       }
+    },
+    "transicion": {
+      "titular": {
+        "rots": [
+          {
+            "pos": 1,
+            "n": 3,
+            "eff": 0,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 1,
+                "pts": 1,
+                "pct": 33
+              },
+              {
+                "p": "P2",
+                "n": 1,
+                "pts": 0,
+                "pct": 33
+              }
+            ],
+            "concentrada": false
+          },
+          {
+            "pos": 2,
+            "n": 7,
+            "eff": 71,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 2,
+                "pts": 0,
+                "pct": 29
+              },
+              {
+                "p": "P3",
+                "n": 2,
+                "pts": 2,
+                "pct": 29
+              },
+              {
+                "p": "P9",
+                "n": 2,
+                "pts": 2,
+                "pct": 29
+              }
+            ],
+            "concentrada": false
+          },
+          {
+            "pos": 3,
+            "n": 0,
+            "vacio": true
+          },
+          {
+            "pos": 4,
+            "n": 1,
+            "vacio": true
+          },
+          {
+            "pos": 5,
+            "n": 5,
+            "eff": 20,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 5,
+                "pts": 2,
+                "pct": 100
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 6,
+            "n": 8,
+            "eff": -12,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 3,
+                "pts": 0,
+                "pct": 38
+              },
+              {
+                "p": "P2",
+                "n": 3,
+                "pts": 1,
+                "pct": 38
+              },
+              {
+                "p": "P3",
+                "n": 1,
+                "pts": 0,
+                "pct": 12
+              }
+            ],
+            "concentrada": false
+          }
+        ],
+        "debil": {
+          "pos": 6,
+          "n": 8,
+          "eff": -12,
+          "dist": [
+            {
+              "p": "P4",
+              "n": 3,
+              "pts": 0,
+              "pct": 38
+            },
+            {
+              "p": "P2",
+              "n": 3,
+              "pts": 1,
+              "pct": 38
+            },
+            {
+              "p": "P3",
+              "n": 1,
+              "pts": 0,
+              "pct": 12
+            }
+          ],
+          "concentrada": false
+        },
+        "fuerte": {
+          "pos": 6,
+          "n": 8,
+          "eff": -12,
+          "dist": [
+            {
+              "p": "P4",
+              "n": 3,
+              "pts": 0,
+              "pct": 38
+            },
+            {
+              "p": "P2",
+              "n": 3,
+              "pts": 1,
+              "pct": 38
+            },
+            {
+              "p": "P3",
+              "n": 1,
+              "pts": 0,
+              "pct": 12
+            }
+          ],
+          "concentrada": false
+        },
+        "setter": "9 Godoy Martin"
+      },
+      "suplente": null
     }
   },
   {
@@ -20411,6 +20994,192 @@ const PARTIDOS_INDIVIDUAL = [
           "tot": 0
         }
       }
+    },
+    "transicion": {
+      "titular": {
+        "rots": [
+          {
+            "pos": 1,
+            "n": 11,
+            "eff": 36,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 5,
+                "pts": 4,
+                "pct": 45
+              },
+              {
+                "p": "P2",
+                "n": 4,
+                "pts": 0,
+                "pct": 36
+              },
+              {
+                "p": "P8",
+                "n": 2,
+                "pts": 2,
+                "pct": 18
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 2,
+            "n": 9,
+            "eff": 11,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 3,
+                "pts": 1,
+                "pct": 33
+              },
+              {
+                "p": "P9",
+                "n": 3,
+                "pts": 1,
+                "pct": 33
+              },
+              {
+                "p": "P3",
+                "n": 2,
+                "pts": 0,
+                "pct": 22
+              }
+            ],
+            "concentrada": false
+          },
+          {
+            "pos": 3,
+            "n": 9,
+            "eff": 33,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 6,
+                "pts": 2,
+                "pct": 67
+              },
+              {
+                "p": "P9",
+                "n": 3,
+                "pts": 2,
+                "pct": 33
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 4,
+            "n": 7,
+            "eff": -14,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 5,
+                "pts": 0,
+                "pct": 71
+              },
+              {
+                "p": "P9",
+                "n": 2,
+                "pts": 1,
+                "pct": 29
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 5,
+            "n": 3,
+            "eff": 0,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 3,
+                "pts": 0,
+                "pct": 100
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 6,
+            "n": 3,
+            "eff": -33,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 2,
+                "pts": 0,
+                "pct": 67
+              },
+              {
+                "p": "P8",
+                "n": 1,
+                "pts": 0,
+                "pct": 33
+              }
+            ],
+            "concentrada": true
+          }
+        ],
+        "debil": {
+          "pos": 2,
+          "n": 9,
+          "eff": 11,
+          "dist": [
+            {
+              "p": "P4",
+              "n": 3,
+              "pts": 1,
+              "pct": 33
+            },
+            {
+              "p": "P9",
+              "n": 3,
+              "pts": 1,
+              "pct": 33
+            },
+            {
+              "p": "P3",
+              "n": 2,
+              "pts": 0,
+              "pct": 22
+            }
+          ],
+          "concentrada": false
+        },
+        "fuerte": {
+          "pos": 1,
+          "n": 11,
+          "eff": 36,
+          "dist": [
+            {
+              "p": "P4",
+              "n": 5,
+              "pts": 4,
+              "pct": 45
+            },
+            {
+              "p": "P2",
+              "n": 4,
+              "pts": 0,
+              "pct": 36
+            },
+            {
+              "p": "P8",
+              "n": 2,
+              "pts": 2,
+              "pct": 18
+            }
+          ],
+          "concentrada": true
+        },
+        "setter": "4 Vazquez Ezequiel"
+      },
+      "suplente": null
     }
   },
   {
@@ -23372,6 +24141,219 @@ const PARTIDOS_INDIVIDUAL = [
           "tot": 1
         }
       }
+    },
+    "transicion": {
+      "titular": {
+        "rots": [
+          {
+            "pos": 1,
+            "n": 9,
+            "eff": 78,
+            "dist": [
+              {
+                "p": "P2",
+                "n": 4,
+                "pts": 3,
+                "pct": 44
+              },
+              {
+                "p": "P4",
+                "n": 3,
+                "pts": 3,
+                "pct": 33
+              },
+              {
+                "p": "P3",
+                "n": 1,
+                "pts": 1,
+                "pct": 11
+              },
+              {
+                "p": "P8",
+                "n": 1,
+                "pts": 0,
+                "pct": 11
+              }
+            ],
+            "concentrada": false
+          },
+          {
+            "pos": 2,
+            "n": 7,
+            "eff": 14,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 4,
+                "pts": 2,
+                "pct": 57
+              },
+              {
+                "p": "P9",
+                "n": 2,
+                "pts": 1,
+                "pct": 29
+              },
+              {
+                "p": "P3",
+                "n": 1,
+                "pts": 0,
+                "pct": 14
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 3,
+            "n": 6,
+            "eff": 50,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 4,
+                "pts": 2,
+                "pct": 67
+              },
+              {
+                "p": "P3",
+                "n": 1,
+                "pts": 1,
+                "pct": 17
+              },
+              {
+                "p": "P9",
+                "n": 1,
+                "pts": 1,
+                "pct": 17
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 4,
+            "n": 2,
+            "vacio": true
+          },
+          {
+            "pos": 5,
+            "n": 8,
+            "eff": 38,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 5,
+                "pts": 3,
+                "pct": 62
+              },
+              {
+                "p": "P3",
+                "n": 3,
+                "pts": 1,
+                "pct": 38
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 6,
+            "n": 11,
+            "eff": -9,
+            "dist": [
+              {
+                "p": "P2",
+                "n": 4,
+                "pts": 1,
+                "pct": 36
+              },
+              {
+                "p": "P4",
+                "n": 3,
+                "pts": 1,
+                "pct": 27
+              },
+              {
+                "p": "P3",
+                "n": 3,
+                "pts": 0,
+                "pct": 27
+              },
+              {
+                "p": "P8",
+                "n": 1,
+                "pts": 0,
+                "pct": 9
+              }
+            ],
+            "concentrada": false
+          }
+        ],
+        "debil": {
+          "pos": 6,
+          "n": 11,
+          "eff": -9,
+          "dist": [
+            {
+              "p": "P2",
+              "n": 4,
+              "pts": 1,
+              "pct": 36
+            },
+            {
+              "p": "P4",
+              "n": 3,
+              "pts": 1,
+              "pct": 27
+            },
+            {
+              "p": "P3",
+              "n": 3,
+              "pts": 0,
+              "pct": 27
+            },
+            {
+              "p": "P8",
+              "n": 1,
+              "pts": 0,
+              "pct": 9
+            }
+          ],
+          "concentrada": false
+        },
+        "fuerte": {
+          "pos": 1,
+          "n": 9,
+          "eff": 78,
+          "dist": [
+            {
+              "p": "P2",
+              "n": 4,
+              "pts": 3,
+              "pct": 44
+            },
+            {
+              "p": "P4",
+              "n": 3,
+              "pts": 3,
+              "pct": 33
+            },
+            {
+              "p": "P3",
+              "n": 1,
+              "pts": 1,
+              "pct": 11
+            },
+            {
+              "p": "P8",
+              "n": 1,
+              "pts": 0,
+              "pct": 11
+            }
+          ],
+          "concentrada": false
+        },
+        "setter": "4 Vazquez Ezequiel"
+      },
+      "suplente": null
     }
   },
   {
@@ -26899,6 +27881,66 @@ const PARTIDOS_INDIVIDUAL = [
           "tot": 0
         }
       }
+    },
+    "transicion": {
+      "titular": {
+        "rots": [
+          {
+            "pos": 1,
+            "n": 6,
+            "eff": -50,
+            "dist": [],
+            "concentrada": false
+          },
+          {
+            "pos": 2,
+            "n": 0,
+            "vacio": true
+          },
+          {
+            "pos": 3,
+            "n": 6,
+            "eff": -17,
+            "dist": [],
+            "concentrada": false
+          },
+          {
+            "pos": 4,
+            "n": 2,
+            "vacio": true
+          },
+          {
+            "pos": 5,
+            "n": 6,
+            "eff": 17,
+            "dist": [],
+            "concentrada": false
+          },
+          {
+            "pos": 6,
+            "n": 12,
+            "eff": 0,
+            "dist": [],
+            "concentrada": false
+          }
+        ],
+        "debil": {
+          "pos": 6,
+          "n": 12,
+          "eff": 0,
+          "dist": [],
+          "concentrada": false
+        },
+        "fuerte": {
+          "pos": 6,
+          "n": 12,
+          "eff": 0,
+          "dist": [],
+          "concentrada": false
+        },
+        "setter": "4 Vazquez Ezequiel"
+      },
+      "suplente": null
     }
   },
   {
@@ -30292,7 +31334,2756 @@ const PARTIDOS_INDIVIDUAL = [
           "tot": 0
         }
       }
+    },
+    "transicion": {
+      "titular": {
+        "rots": [
+          {
+            "pos": 1,
+            "n": 15,
+            "eff": 7,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 8,
+                "pts": 0,
+                "pct": 53
+              },
+              {
+                "p": "P2",
+                "n": 5,
+                "pts": 3,
+                "pct": 33
+              },
+              {
+                "p": "P3",
+                "n": 1,
+                "pts": 0,
+                "pct": 7
+              },
+              {
+                "p": "P8",
+                "n": 1,
+                "pts": 1,
+                "pct": 7
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 2,
+            "n": 6,
+            "eff": 17,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 6,
+                "pts": 3,
+                "pct": 100
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 3,
+            "n": 3,
+            "eff": 0,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 2,
+                "pts": 0,
+                "pct": 67
+              },
+              {
+                "p": "P9",
+                "n": 1,
+                "pts": 1,
+                "pct": 33
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 4,
+            "n": 3,
+            "eff": 67,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 2,
+                "pts": 1,
+                "pct": 67
+              },
+              {
+                "p": "P3",
+                "n": 1,
+                "pts": 1,
+                "pct": 33
+              }
+            ],
+            "concentrada": true
+          },
+          {
+            "pos": 5,
+            "n": 7,
+            "eff": 29,
+            "dist": [
+              {
+                "p": "P3",
+                "n": 3,
+                "pts": 3,
+                "pct": 43
+              },
+              {
+                "p": "P4",
+                "n": 2,
+                "pts": 1,
+                "pct": 29
+              },
+              {
+                "p": "P2",
+                "n": 2,
+                "pts": 0,
+                "pct": 29
+              }
+            ],
+            "concentrada": false
+          },
+          {
+            "pos": 6,
+            "n": 11,
+            "eff": 27,
+            "dist": [
+              {
+                "p": "P4",
+                "n": 6,
+                "pts": 3,
+                "pct": 55
+              },
+              {
+                "p": "P2",
+                "n": 3,
+                "pts": 0,
+                "pct": 27
+              },
+              {
+                "p": "P3",
+                "n": 2,
+                "pts": 0,
+                "pct": 18
+              }
+            ],
+            "concentrada": true
+          }
+        ],
+        "debil": {
+          "pos": 1,
+          "n": 15,
+          "eff": 7,
+          "dist": [
+            {
+              "p": "P4",
+              "n": 8,
+              "pts": 0,
+              "pct": 53
+            },
+            {
+              "p": "P2",
+              "n": 5,
+              "pts": 3,
+              "pct": 33
+            },
+            {
+              "p": "P3",
+              "n": 1,
+              "pts": 0,
+              "pct": 7
+            },
+            {
+              "p": "P8",
+              "n": 1,
+              "pts": 1,
+              "pct": 7
+            }
+          ],
+          "concentrada": true
+        },
+        "fuerte": {
+          "pos": 6,
+          "n": 11,
+          "eff": 27,
+          "dist": [
+            {
+              "p": "P4",
+              "n": 6,
+              "pts": 3,
+              "pct": 55
+            },
+            {
+              "p": "P2",
+              "n": 3,
+              "pts": 0,
+              "pct": 27
+            },
+            {
+              "p": "P3",
+              "n": 2,
+              "pts": 0,
+              "pct": 18
+            }
+          ],
+          "concentrada": true
+        },
+        "setter": "4 Vazquez Ezequiel"
+      },
+      "suplente": null
+    }
+  },
+  {
+    "id": "UBA__2026-06-09",
+    "nombre": "UBA",
+    "rival": "UBA",
+    "fecha": "09/06/2026",
+    "resultado": "V",
+    "equipo_obj": {
+      "sq": 2,
+      "rec": 41,
+      "bqpos": 60,
+      "bqpt": 26,
+      "atk": 31,
+      "atqq": 29,
+      "atqhb": 22,
+      "atqx": 35,
+      "atqrp": 39,
+      "atqri": 50,
+      "atqrm": 11,
+      "atqtr": 26
+    },
+    "jugadores": [
+      {
+        "nombre": "4 Vazquez Ezequiel",
+        "num": 4,
+        "objetivos": {
+          "sq": 8,
+          "rec": null,
+          "bqpos": 67,
+          "bqpt": 0,
+          "atk": -33,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": -100,
+          "atqtr": 0
+        },
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 50
+              },
+              {
+                "z": 1,
+                "pct": 39
+              },
+              {
+                "z": 8,
+                "pct": 6
+              },
+              {
+                "z": 3,
+                "pct": 6
+              }
+            ],
+            "eff": 6,
+            "tot": 18,
+            "pts": 3,
+            "plus": 0,
+            "slash": 0,
+            "err": 2,
+            "video": null,
+            "pts_pct": 17
+          },
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 100
+              }
+            ],
+            "eff": 0,
+            "tot": 1,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "ataques": [
+          {
+            "cod": "XM",
+            "tipo": "",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 4,
+                "pct": 50
+              },
+              {
+                "z": 7,
+                "pct": 50
+              }
+            ],
+            "eff": -33,
+            "tot": 3,
+            "pts": 0,
+            "slash": 1,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "recepcion": {}
+      },
+      {
+        "nombre": "14 Nielson Ramiro",
+        "num": 14,
+        "objetivos": {
+          "sq": 19,
+          "rec": 40,
+          "bqpos": 67,
+          "bqpt": 33,
+          "atk": 34,
+          "atqq": null,
+          "atqhb": 50,
+          "atqx": 27,
+          "atqrp": 50,
+          "atqri": -50,
+          "atqrm": 50,
+          "atqtr": 43
+        },
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 1,
+                "pct": 71
+              },
+              {
+                "z": 6,
+                "pct": 21
+              },
+              {
+                "z": 9,
+                "pct": 4
+              },
+              {
+                "z": 8,
+                "pct": 4
+              }
+            ],
+            "eff": 8,
+            "tot": 24,
+            "pts": 3,
+            "plus": 0,
+            "slash": 0,
+            "err": 1,
+            "video": null,
+            "pts_pct": 12
+          },
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 1,
+                "pct": 100
+              }
+            ],
+            "eff": 50,
+            "tot": 2,
+            "pts": 1,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 50
+          }
+        ],
+        "ataques": [
+          {
+            "cod": "X5",
+            "tipo": "",
+            "orig": 4,
+            "destinos": [
+              {
+                "z": 2,
+                "pct": 50
+              },
+              {
+                "z": 7,
+                "pct": 12
+              },
+              {
+                "z": 4,
+                "pct": 12
+              },
+              {
+                "z": 6,
+                "pct": 8
+              }
+            ],
+            "eff": 24,
+            "tot": 25,
+            "pts": 9,
+            "slash": 2,
+            "err": 1,
+            "video": null,
+            "pts_pct": 36
+          },
+          {
+            "cod": "V5",
+            "tipo": "",
+            "orig": 4,
+            "destinos": [
+              {
+                "z": 2,
+                "pct": 45
+              },
+              {
+                "z": 1,
+                "pct": 18
+              },
+              {
+                "z": 5,
+                "pct": 9
+              },
+              {
+                "z": 3,
+                "pct": 9
+              }
+            ],
+            "eff": 50,
+            "tot": 12,
+            "pts": 6,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 50
+          },
+          {
+            "cod": "XP",
+            "tipo": "",
+            "orig": 8,
+            "destinos": [
+              {
+                "z": 3,
+                "pct": 100
+              }
+            ],
+            "eff": 100,
+            "tot": 1,
+            "pts": 1,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 100
+          }
+        ],
+        "recepcion": {
+          "flotado": {
+            "desde_z1": {
+              "P5": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              }
+            },
+            "desde_z6": {
+              "P5": {
+                "tot": 1,
+                "eff": 100,
+                "pos": 100,
+                "neg": 0,
+                "pt": 1,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 3,
+                "eff": 33,
+                "pos": 67,
+                "neg": 0,
+                "pt": 0,
+                "mas": 2,
+                "neu": 1,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 4,
+                "eff": 50,
+                "pos": 75,
+                "neg": 0,
+                "pt": 1,
+                "mas": 2,
+                "neu": 1,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              }
+            },
+            "desde_z5": {
+              "P5": {
+                "tot": 3,
+                "eff": 67,
+                "pos": 67,
+                "neg": 0,
+                "pt": 2,
+                "mas": 0,
+                "neu": 1,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 6,
+                "eff": 25,
+                "pos": 33,
+                "neg": 0,
+                "pt": 1,
+                "mas": 1,
+                "neu": 2,
+                "med": 2,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 1,
+                "eff": 100,
+                "pos": 100,
+                "neg": 0,
+                "pt": 1,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 10,
+                "eff": 45,
+                "pos": 50,
+                "neg": 0,
+                "pt": 4,
+                "mas": 1,
+                "neu": 3,
+                "med": 2,
+                "ovp": 0,
+                "err": 0
+              }
+            }
+          },
+          "potencia": {
+            "desde_z1": {
+              "P5": {
+                "tot": 1,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 1,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 2,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 1,
+                "med": 1,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 3,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 2,
+                "med": 1,
+                "ovp": 0,
+                "err": 0
+              }
+            },
+            "desde_z6": {
+              "P5": {
+                "tot": 2,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 2,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 5,
+                "eff": 50,
+                "pos": 60,
+                "neg": 0,
+                "pt": 2,
+                "mas": 1,
+                "neu": 1,
+                "med": 1,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 1,
+                "eff": 100,
+                "pos": 100,
+                "neg": 0,
+                "pt": 1,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 8,
+                "eff": 44,
+                "pos": 50,
+                "neg": 0,
+                "pt": 3,
+                "mas": 1,
+                "neu": 3,
+                "med": 1,
+                "ovp": 0,
+                "err": 0
+              }
+            },
+            "desde_z5": {
+              "P5": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              }
+            }
+          }
+        }
+      },
+      {
+        "nombre": "12 Zanotti Juan Cruz",
+        "num": 12,
+        "objetivos": {
+          "sq": null,
+          "rec": 39,
+          "bqpos": null,
+          "bqpt": null,
+          "atk": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        },
+        "saques": [],
+        "ataques": [],
+        "recepcion": {
+          "flotado": {
+            "desde_z1": {
+              "P5": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 1,
+                "eff": 50,
+                "pos": 100,
+                "neg": 0,
+                "pt": 0,
+                "mas": 1,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 1,
+                "eff": 50,
+                "pos": 100,
+                "neg": 0,
+                "pt": 0,
+                "mas": 1,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              }
+            },
+            "desde_z6": {
+              "P5": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              }
+            },
+            "desde_z5": {
+              "P5": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 6,
+                "eff": 75,
+                "pos": 100,
+                "neg": 0,
+                "pt": 3,
+                "mas": 3,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 7,
+                "eff": 43,
+                "pos": 71,
+                "neg": 14,
+                "pt": 2,
+                "mas": 3,
+                "neu": 1,
+                "med": 0,
+                "ovp": 1,
+                "err": 0
+              },
+              "total": {
+                "tot": 13,
+                "eff": 58,
+                "pos": 85,
+                "neg": 8,
+                "pt": 5,
+                "mas": 6,
+                "neu": 1,
+                "med": 0,
+                "ovp": 1,
+                "err": 0
+              }
+            }
+          },
+          "potencia": {
+            "desde_z1": {
+              "P5": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 3,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 2,
+                "med": 1,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 3,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 3,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 6,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 2,
+                "med": 4,
+                "ovp": 0,
+                "err": 0
+              }
+            },
+            "desde_z6": {
+              "P5": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 1,
+                "eff": 50,
+                "pos": 100,
+                "neg": 0,
+                "pt": 0,
+                "mas": 1,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 1,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 1,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 2,
+                "eff": 25,
+                "pos": 50,
+                "neg": 0,
+                "pt": 0,
+                "mas": 1,
+                "neu": 0,
+                "med": 1,
+                "ovp": 0,
+                "err": 0
+              }
+            },
+            "desde_z5": {
+              "P5": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              }
+            }
+          }
+        }
+      },
+      {
+        "nombre": "5 Ramos Iaki",
+        "num": 5,
+        "objetivos": {
+          "sq": -38,
+          "rec": null,
+          "bqpos": 75,
+          "bqpt": 25,
+          "atk": 17,
+          "atqq": null,
+          "atqhb": 0,
+          "atqx": 25,
+          "atqrp": 0,
+          "atqri": 0,
+          "atqrm": null,
+          "atqtr": 33
+        },
+        "saques": [
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 1,
+                "pct": 50
+              },
+              {
+                "z": 4,
+                "pct": 50
+              }
+            ],
+            "eff": -50,
+            "tot": 2,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 1,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "ataques": [
+          {
+            "cod": "X6",
+            "tipo": "",
+            "orig": 2,
+            "destinos": [
+              {
+                "z": 1,
+                "pct": 100
+              }
+            ],
+            "eff": 0,
+            "tot": 2,
+            "pts": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "X8",
+            "tipo": "",
+            "orig": 9,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 50
+              },
+              {
+                "z": 4,
+                "pct": 50
+              }
+            ],
+            "eff": 50,
+            "tot": 2,
+            "pts": 1,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 50
+          },
+          {
+            "cod": "V6",
+            "tipo": "",
+            "orig": 2,
+            "destinos": [
+              {
+                "z": 9,
+                "pct": 50
+              },
+              {
+                "z": 4,
+                "pct": 50
+              }
+            ],
+            "eff": 0,
+            "tot": 2,
+            "pts": 1,
+            "slash": 0,
+            "err": 1,
+            "video": null,
+            "pts_pct": 50
+          }
+        ],
+        "recepcion": {}
+      },
+      {
+        "nombre": "11 Durdos Valentin",
+        "num": 11,
+        "objetivos": {
+          "sq": -2,
+          "rec": 44,
+          "bqpos": 44,
+          "bqpt": 11,
+          "atk": 46,
+          "atqq": null,
+          "atqhb": 17,
+          "atqx": 50,
+          "atqrp": 64,
+          "atqri": 100,
+          "atqrm": 0,
+          "atqtr": 35
+        },
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 33
+              },
+              {
+                "z": 1,
+                "pct": 33
+              },
+              {
+                "z": 9,
+                "pct": 17
+              },
+              {
+                "z": 8,
+                "pct": 8
+              },
+              {
+                "z": 5,
+                "pct": 8
+              }
+            ],
+            "eff": 8,
+            "tot": 12,
+            "pts": 1,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 8
+          },
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 33
+              },
+              {
+                "z": 5,
+                "pct": 33
+              },
+              {
+                "z": 3,
+                "pct": 33
+              }
+            ],
+            "eff": -67,
+            "tot": 3,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 2,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "ataques": [
+          {
+            "cod": "X5",
+            "tipo": "",
+            "orig": 4,
+            "destinos": [
+              {
+                "z": 2,
+                "pct": 50
+              },
+              {
+                "z": 5,
+                "pct": 12
+              },
+              {
+                "z": 7,
+                "pct": 12
+              },
+              {
+                "z": 6,
+                "pct": 12
+              }
+            ],
+            "eff": 54,
+            "tot": 24,
+            "pts": 13,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 54
+          },
+          {
+            "cod": "V5",
+            "tipo": "",
+            "orig": 4,
+            "destinos": [
+              {
+                "z": 2,
+                "pct": 67
+              },
+              {
+                "z": 1,
+                "pct": 17
+              },
+              {
+                "z": 5,
+                "pct": 17
+              }
+            ],
+            "eff": 17,
+            "tot": 6,
+            "pts": 2,
+            "slash": 1,
+            "err": 0,
+            "video": null,
+            "pts_pct": 33
+          },
+          {
+            "cod": "XP",
+            "tipo": "",
+            "orig": 8,
+            "destinos": [
+              {
+                "z": 5,
+                "pct": 25
+              },
+              {
+                "z": 3,
+                "pct": 25
+              },
+              {
+                "z": 6,
+                "pct": 25
+              },
+              {
+                "z": 1,
+                "pct": 25
+              }
+            ],
+            "eff": 25,
+            "tot": 4,
+            "pts": 2,
+            "slash": 1,
+            "err": 0,
+            "video": null,
+            "pts_pct": 50
+          },
+          {
+            "cod": "X6",
+            "tipo": "",
+            "orig": 2,
+            "destinos": [
+              {
+                "z": 8,
+                "pct": 100
+              }
+            ],
+            "eff": 100,
+            "tot": 1,
+            "pts": 1,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 100
+          }
+        ],
+        "recepcion": {
+          "flotado": {
+            "desde_z1": {
+              "P5": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 1,
+                "eff": 50,
+                "pos": 100,
+                "neg": 0,
+                "pt": 0,
+                "mas": 1,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 1,
+                "eff": 50,
+                "pos": 100,
+                "neg": 0,
+                "pt": 0,
+                "mas": 1,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              }
+            },
+            "desde_z6": {
+              "P5": {
+                "tot": 1,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 1,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 1,
+                "eff": 100,
+                "pos": 100,
+                "neg": 0,
+                "pt": 1,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 1,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 1,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 3,
+                "eff": 33,
+                "pos": 33,
+                "neg": 0,
+                "pt": 1,
+                "mas": 0,
+                "neu": 1,
+                "med": 1,
+                "ovp": 0,
+                "err": 0
+              }
+            },
+            "desde_z5": {
+              "P5": {
+                "tot": 5,
+                "eff": 50,
+                "pos": 100,
+                "neg": 0,
+                "pt": 0,
+                "mas": 5,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 2,
+                "eff": 75,
+                "pos": 100,
+                "neg": 0,
+                "pt": 1,
+                "mas": 1,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 7,
+                "eff": 57,
+                "pos": 100,
+                "neg": 0,
+                "pt": 1,
+                "mas": 6,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              }
+            }
+          },
+          "potencia": {
+            "desde_z1": {
+              "P5": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 1,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 1,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 1,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 1,
+                "ovp": 0,
+                "err": 0
+              }
+            },
+            "desde_z6": {
+              "P5": {
+                "tot": 2,
+                "eff": 50,
+                "pos": 50,
+                "neg": 0,
+                "pt": 1,
+                "mas": 0,
+                "neu": 0,
+                "med": 1,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 2,
+                "eff": 50,
+                "pos": 50,
+                "neg": 0,
+                "pt": 1,
+                "mas": 0,
+                "neu": 1,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 1,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 1,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 5,
+                "eff": 40,
+                "pos": 40,
+                "neg": 0,
+                "pt": 2,
+                "mas": 0,
+                "neu": 1,
+                "med": 2,
+                "ovp": 0,
+                "err": 0
+              }
+            },
+            "desde_z5": {
+              "P5": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P6": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "P1": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              },
+              "total": {
+                "tot": 0,
+                "eff": 0,
+                "pos": 0,
+                "neg": 0,
+                "pt": 0,
+                "mas": 0,
+                "neu": 0,
+                "med": 0,
+                "ovp": 0,
+                "err": 0
+              }
+            }
+          }
+        }
+      },
+      {
+        "nombre": "17 Herbsommer Leonardo",
+        "num": 17,
+        "objetivos": {
+          "sq": -12,
+          "rec": null,
+          "bqpos": 75,
+          "bqpt": 50,
+          "atk": 33,
+          "atqq": 33,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 20,
+          "atqri": 100,
+          "atqrm": 100,
+          "atqtr": 20
+        },
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 57
+              },
+              {
+                "z": 1,
+                "pct": 21
+              },
+              {
+                "z": 3,
+                "pct": 14
+              },
+              {
+                "z": 8,
+                "pct": 7
+              }
+            ],
+            "eff": -21,
+            "tot": 14,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 3,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "ataques": [
+          {
+            "cod": "X7",
+            "tipo": "",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 1,
+                "pct": 50
+              },
+              {
+                "z": 3,
+                "pct": 33
+              },
+              {
+                "z": 7,
+                "pct": 17
+              }
+            ],
+            "eff": 29,
+            "tot": 7,
+            "pts": 3,
+            "slash": 0,
+            "err": 1,
+            "video": null,
+            "pts_pct": 43
+          },
+          {
+            "cod": "XM",
+            "tipo": "",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 3,
+                "pct": 40
+              },
+              {
+                "z": 9,
+                "pct": 40
+              },
+              {
+                "z": 1,
+                "pct": 20
+              }
+            ],
+            "eff": 40,
+            "tot": 5,
+            "pts": 2,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 40
+          }
+        ],
+        "recepcion": {}
+      },
+      {
+        "nombre": "2 Ojuez Agustin",
+        "num": 2,
+        "objetivos": {
+          "sq": -39,
+          "rec": null,
+          "bqpos": 36,
+          "bqpt": 18,
+          "atk": 42,
+          "atqq": 36,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": 50,
+          "atqri": 100,
+          "atqrm": null,
+          "atqtr": 0
+        },
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 57
+              },
+              {
+                "z": 1,
+                "pct": 43
+              }
+            ],
+            "eff": -43,
+            "tot": 7,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 3,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "ataques": [
+          {
+            "cod": "XM",
+            "tipo": "",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 5,
+                "pct": 40
+              },
+              {
+                "z": 6,
+                "pct": 20
+              },
+              {
+                "z": 8,
+                "pct": 10
+              },
+              {
+                "z": 1,
+                "pct": 10
+              }
+            ],
+            "eff": 36,
+            "tot": 11,
+            "pts": 6,
+            "slash": 0,
+            "err": 2,
+            "video": null,
+            "pts_pct": 55
+          },
+          {
+            "cod": "X6",
+            "tipo": "",
+            "orig": 2,
+            "destinos": [
+              {
+                "z": 3,
+                "pct": 100
+              }
+            ],
+            "eff": 100,
+            "tot": 1,
+            "pts": 1,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 100
+          }
+        ],
+        "recepcion": {}
+      },
+      {
+        "nombre": "9 Godoy Martin",
+        "num": 9,
+        "objetivos": {
+          "sq": 0,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atk": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        },
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 5,
+                "pct": 50
+              },
+              {
+                "z": 6,
+                "pct": 50
+              }
+            ],
+            "eff": 0,
+            "tot": 2,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "ataques": [],
+        "recepcion": {}
+      },
+      {
+        "nombre": "19 Diaz Bolli Santiago",
+        "num": 19,
+        "objetivos": {
+          "sq": 6,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atk": null,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        },
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 75
+              },
+              {
+                "z": 9,
+                "pct": 25
+              }
+            ],
+            "eff": 0,
+            "tot": 4,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "ataques": [],
+        "recepcion": {}
+      },
+      {
+        "nombre": "18 Acosta Wilson",
+        "num": 18,
+        "objetivos": {
+          "sq": 2,
+          "rec": null,
+          "bqpos": 80,
+          "bqpt": 20,
+          "atk": 18,
+          "atqq": null,
+          "atqhb": -67,
+          "atqx": 32,
+          "atqrp": 20,
+          "atqri": 100,
+          "atqrm": 0,
+          "atqtr": -8
+        },
+        "saques": [
+          {
+            "cod": "SQ",
+            "tipo": "POTENCIA",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 6,
+                "pct": 60
+              },
+              {
+                "z": 8,
+                "pct": 20
+              },
+              {
+                "z": 1,
+                "pct": 10
+              },
+              {
+                "z": 5,
+                "pct": 10
+              }
+            ],
+            "eff": 0,
+            "tot": 10,
+            "pts": 1,
+            "plus": 0,
+            "slash": 0,
+            "err": 1,
+            "video": null,
+            "pts_pct": 10
+          }
+        ],
+        "ataques": [
+          {
+            "cod": "X6",
+            "tipo": "",
+            "orig": 2,
+            "destinos": [
+              {
+                "z": 4,
+                "pct": 50
+              },
+              {
+                "z": 9,
+                "pct": 29
+              },
+              {
+                "z": 6,
+                "pct": 14
+              },
+              {
+                "z": 2,
+                "pct": 7
+              }
+            ],
+            "eff": 36,
+            "tot": 14,
+            "pts": 7,
+            "slash": 1,
+            "err": 1,
+            "video": null,
+            "pts_pct": 50
+          },
+          {
+            "cod": "X8",
+            "tipo": "",
+            "orig": 9,
+            "destinos": [
+              {
+                "z": 4,
+                "pct": 40
+              },
+              {
+                "z": 2,
+                "pct": 20
+              },
+              {
+                "z": 1,
+                "pct": 20
+              },
+              {
+                "z": 5,
+                "pct": 20
+              }
+            ],
+            "eff": 20,
+            "tot": 5,
+            "pts": 2,
+            "slash": 0,
+            "err": 1,
+            "video": null,
+            "pts_pct": 40
+          },
+          {
+            "cod": "V8",
+            "tipo": "",
+            "orig": 9,
+            "destinos": [
+              {
+                "z": 4,
+                "pct": 100
+              }
+            ],
+            "eff": -50,
+            "tot": 2,
+            "pts": 0,
+            "slash": 1,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          },
+          {
+            "cod": "V6",
+            "tipo": "",
+            "orig": 2,
+            "destinos": [
+              {
+                "z": 4,
+                "pct": 100
+              }
+            ],
+            "eff": -100,
+            "tot": 1,
+            "pts": 0,
+            "slash": 1,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "recepcion": {}
+      },
+      {
+        "nombre": "15 Rotezzi Ramiro Lucio",
+        "num": 15,
+        "objetivos": {
+          "sq": null,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atk": -100,
+          "atqq": -100,
+          "atqhb": null,
+          "atqx": null,
+          "atqrp": -100,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": null
+        },
+        "saques": [],
+        "ataques": [
+          {
+            "cod": "XM",
+            "tipo": "",
+            "orig": 3,
+            "destinos": [
+              {
+                "z": 3,
+                "pct": 100
+              }
+            ],
+            "eff": -100,
+            "tot": 1,
+            "pts": 0,
+            "slash": 1,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "recepcion": {}
+      },
+      {
+        "nombre": "6 Villarruel Juan Simon",
+        "num": 6,
+        "objetivos": {
+          "sq": 25,
+          "rec": null,
+          "bqpos": null,
+          "bqpt": null,
+          "atk": 0,
+          "atqq": null,
+          "atqhb": null,
+          "atqx": 0,
+          "atqrp": null,
+          "atqri": null,
+          "atqrm": null,
+          "atqtr": 0
+        },
+        "saques": [
+          {
+            "cod": "SM",
+            "tipo": "FLOTADO",
+            "orig": 6,
+            "destinos": [
+              {
+                "z": 1,
+                "pct": 100
+              }
+            ],
+            "eff": 0,
+            "tot": 1,
+            "pts": 0,
+            "plus": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "ataques": [
+          {
+            "cod": "X5",
+            "tipo": "",
+            "orig": 4,
+            "destinos": [
+              {
+                "z": 2,
+                "pct": 50
+              },
+              {
+                "z": 7,
+                "pct": 50
+              }
+            ],
+            "eff": 0,
+            "tot": 2,
+            "pts": 0,
+            "slash": 0,
+            "err": 0,
+            "video": null,
+            "pts_pct": 0
+          }
+        ],
+        "recepcion": {}
+      }
+    ],
+    "armadores": {
+      "titular": {
+        "nombre": "4 Vazquez Ezequiel",
+        "num": 4,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 6,
+            "total_all": 12,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 3,
+                "pct": 50,
+                "pct_p": 100
+              },
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 3,
+                "pct": 50,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P3",
+            "total": 4,
+            "total_all": 16,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 1,
+                "pct": 50,
+                "pct_p": 50
+              },
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 1,
+                "pct": 50,
+                "pct_p": 50
+              }
+            ]
+          },
+          {
+            "pos": "P2",
+            "total": 5,
+            "total_all": 13,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 0,
+                "pct": 40,
+                "pct_p": 0
+              },
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 0,
+                "pct": 20,
+                "pct_p": 0
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 0,
+                "pct": 20,
+                "pct_p": 0
+              },
+              {
+                "zona": 8,
+                "tot": 1,
+                "pts": 1,
+                "pct": 20,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P5",
+            "total": 7,
+            "total_all": 17,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 3,
+                "pts": 1,
+                "pct": 43,
+                "pct_p": 33
+              },
+              {
+                "zona": 2,
+                "tot": 2,
+                "pts": 0,
+                "pct": 29,
+                "pct_p": 0
+              },
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 1,
+                "pct": 29,
+                "pct_p": 50
+              }
+            ]
+          },
+          {
+            "pos": "P6",
+            "total": 5,
+            "total_all": 20,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 0,
+                "pct": 40,
+                "pct_p": 0
+              },
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 1,
+                "pct": 40,
+                "pct_p": 50
+              },
+              {
+                "zona": 2,
+                "tot": 1,
+                "pts": 1,
+                "pct": 20,
+                "pct_p": 100
+              }
+            ]
+          },
+          {
+            "pos": "P1",
+            "total": 7,
+            "total_all": 21,
+            "dist": [
+              {
+                "zona": 2,
+                "tot": 3,
+                "pts": 1,
+                "pct": 43,
+                "pct_p": 33
+              },
+              {
+                "zona": 8,
+                "tot": 2,
+                "pts": 1,
+                "pct": 29,
+                "pct_p": 50
+              },
+              {
+                "zona": 3,
+                "tot": 1,
+                "pts": 1,
+                "pct": 14,
+                "pct_p": 100
+              },
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 1,
+                "pct": 14,
+                "pct_p": 100
+              }
+            ]
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": 29,
+            "tot": 21,
+            "pts": 8,
+            "pts_pct": 38
+          },
+          {
+            "label": "P6",
+            "eff": 45,
+            "tot": 20,
+            "pts": 9,
+            "pts_pct": 45
+          },
+          {
+            "label": "P5",
+            "eff": 18,
+            "tot": 17,
+            "pts": 6,
+            "pts_pct": 35
+          },
+          {
+            "label": "P4",
+            "eff": 83,
+            "tot": 12,
+            "pts": 10,
+            "pts_pct": 83
+          },
+          {
+            "label": "P3",
+            "eff": 25,
+            "tot": 16,
+            "pts": 8,
+            "pts_pct": 50
+          },
+          {
+            "label": "P2",
+            "eff": 31,
+            "tot": 13,
+            "pts": 4,
+            "pts_pct": 31
+          },
+          {
+            "label": "SO",
+            "eff": 34,
+            "tot": 70,
+            "pts": 31,
+            "pts_pct": 44
+          },
+          {
+            "label": "TR",
+            "eff": 41,
+            "tot": 29,
+            "pts": 14,
+            "pts_pct": 48
+          }
+        ],
+        "llamadas": [
+          {
+            "call": "K1",
+            "tot": 29,
+            "eff": 41,
+            "pts_pct": 52,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 10,
+                "pts": 5,
+                "pct": 34,
+                "pct_p": 50
+              },
+              {
+                "zona": 3,
+                "tot": 10,
+                "pts": 6,
+                "pct": 34,
+                "pct_p": 60
+              },
+              {
+                "zona": 2,
+                "tot": 6,
+                "pts": 2,
+                "pct": 21,
+                "pct_p": 33
+              },
+              {
+                "zona": 8,
+                "tot": 2,
+                "pts": 2,
+                "pct": 7,
+                "pct_p": 100
+              },
+              {
+                "zona": 9,
+                "tot": 1,
+                "pts": 0,
+                "pct": 3,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "call": "K2",
+            "tot": 5,
+            "eff": 60,
+            "pts_pct": 60,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 2,
+                "pts": 0,
+                "pct": 50,
+                "pct_p": 0
+              },
+              {
+                "zona": 4,
+                "tot": 2,
+                "pts": 2,
+                "pct": 50,
+                "pct_p": 100
+              }
+            ]
+          }
+        ],
+        "so": {
+          "eff": 34,
+          "tot": 70
+        },
+        "tr": {
+          "eff": 41,
+          "tot": 29
+        }
+      },
+      "suplente": {
+        "nombre": "9 Godoy Martin",
+        "num": 9,
+        "rotaciones": [
+          {
+            "pos": "P4",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P3",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P2",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P5",
+            "total": 0,
+            "total_all": 0,
+            "dist": []
+          },
+          {
+            "pos": "P6",
+            "total": 0,
+            "total_all": 1,
+            "dist": [
+              {
+                "zona": 4,
+                "tot": 1,
+                "pts": 0,
+                "pct": 100,
+                "pct_p": 0
+              }
+            ]
+          },
+          {
+            "pos": "P1",
+            "total": 2,
+            "total_all": 3,
+            "dist": [
+              {
+                "zona": 3,
+                "tot": 3,
+                "pts": 0,
+                "pct": 100,
+                "pct_p": 0
+              }
+            ]
+          }
+        ],
+        "pills": [
+          {
+            "label": "P1",
+            "eff": -33,
+            "tot": 3,
+            "pts": 0,
+            "pts_pct": 0
+          },
+          {
+            "label": "P6",
+            "eff": 0,
+            "tot": 1,
+            "pts": 0,
+            "pts_pct": 0
+          },
+          {
+            "label": "P5",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P4",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P3",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "P2",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          },
+          {
+            "label": "SO",
+            "eff": -25,
+            "tot": 4,
+            "pts": 0,
+            "pts_pct": 0
+          },
+          {
+            "label": "TR",
+            "eff": null,
+            "tot": 0,
+            "pts": 0,
+            "pts_pct": null
+          }
+        ],
+        "llamadas": [],
+        "so": {
+          "eff": -25,
+          "tot": 4
+        },
+        "tr": {
+          "eff": null,
+          "tot": 0
+        }
+      }
+    },
+    "transicion": {
+      "titular": {
+        "rots": [
+          {
+            "pos": 1,
+            "n": 11,
+            "eff": 9,
+            "dist": [],
+            "concentrada": false
+          },
+          {
+            "pos": 2,
+            "n": 4,
+            "eff": 25,
+            "dist": [],
+            "concentrada": false
+          },
+          {
+            "pos": 3,
+            "n": 10,
+            "eff": 30,
+            "dist": [],
+            "concentrada": false
+          },
+          {
+            "pos": 4,
+            "n": 3,
+            "eff": 67,
+            "dist": [],
+            "concentrada": false
+          },
+          {
+            "pos": 5,
+            "n": 6,
+            "eff": 17,
+            "dist": [],
+            "concentrada": false
+          },
+          {
+            "pos": 6,
+            "n": 13,
+            "eff": 46,
+            "dist": [],
+            "concentrada": false
+          }
+        ],
+        "debil": {
+          "pos": 1,
+          "n": 11,
+          "eff": 9,
+          "dist": [],
+          "concentrada": false
+        },
+        "fuerte": {
+          "pos": 6,
+          "n": 13,
+          "eff": 46,
+          "dist": [],
+          "concentrada": false
+        },
+        "setter": "4 Vazquez Ezequiel"
+      },
+      "suplente": null
     }
   }
 ];
-const PARTIDOS_ARMADOR = {"titular": {"nombre": "4 Vazquez Ezequiel", "num": 4, "rotaciones": [{"pos": "P4", "total": 29, "total_all": 57, "dist": [{"zona": 4, "tot": 12, "pts": 8, "pct": 41, "pct_p": 67}, {"zona": 3, "tot": 10, "pts": 4, "pct": 34, "pct_p": 40}, {"zona": 9, "tot": 7, "pts": 3, "pct": 24, "pct_p": 43}]}, {"pos": "P3", "total": 26, "total_all": 67, "dist": [{"zona": 4, "tot": 10, "pts": 5, "pct": 38, "pct_p": 50}, {"zona": 3, "tot": 10, "pts": 8, "pct": 38, "pct_p": 80}, {"zona": 9, "tot": 5, "pts": 2, "pct": 19, "pct_p": 40}, {"zona": 2, "tot": 1, "pts": 0, "pct": 4, "pct_p": 0}]}, {"pos": "P2", "total": 22, "total_all": 61, "dist": [{"zona": 3, "tot": 10, "pts": 7, "pct": 45, "pct_p": 70}, {"zona": 4, "tot": 7, "pts": 2, "pct": 32, "pct_p": 29}, {"zona": 9, "tot": 4, "pts": 2, "pct": 18, "pct_p": 50}, {"zona": 8, "tot": 1, "pts": 0, "pct": 5, "pct_p": 0}]}, {"pos": "P5", "total": 29, "total_all": 72, "dist": [{"zona": 3, "tot": 13, "pts": 7, "pct": 45, "pct_p": 54}, {"zona": 4, "tot": 10, "pts": 7, "pct": 34, "pct_p": 70}, {"zona": 2, "tot": 6, "pts": 3, "pct": 21, "pct_p": 50}]}, {"pos": "P6", "total": 34, "total_all": 92, "dist": [{"zona": 4, "tot": 14, "pts": 6, "pct": 41, "pct_p": 43}, {"zona": 3, "tot": 10, "pts": 4, "pct": 29, "pct_p": 40}, {"zona": 2, "tot": 10, "pts": 5, "pct": 29, "pct_p": 50}]}, {"pos": "P1", "total": 43, "total_all": 105, "dist": [{"zona": 4, "tot": 16, "pts": 6, "pct": 37, "pct_p": 38}, {"zona": 3, "tot": 16, "pts": 9, "pct": 37, "pct_p": 56}, {"zona": 2, "tot": 9, "pts": 4, "pct": 21, "pct_p": 44}, {"zona": 8, "tot": 2, "pts": 2, "pct": 5, "pct_p": 100}]}], "pills": [{"label": "P1", "eff": 33, "tot": 105, "pts": 50, "pts_pct": 48}, {"label": "P6", "eff": 18, "tot": 92, "pts": 34, "pts_pct": 37}, {"label": "P5", "eff": 42, "tot": 72, "pts": 41, "pts_pct": 57}, {"label": "P4", "eff": 33, "tot": 57, "pts": 27, "pts_pct": 47}, {"label": "P3", "eff": 27, "tot": 67, "pts": 29, "pts_pct": 43}, {"label": "P2", "eff": 31, "tot": 61, "pts": 28, "pts_pct": 46}, {"label": "SO", "eff": 35, "tot": 353, "pts": 172, "pts_pct": 49}, {"label": "TR", "eff": 13, "tot": 101, "pts": 37, "pts_pct": 37}], "llamadas": [{"call": "K1", "tot": 174, "eff": 35, "pts_pct": 51, "dist": [{"zona": 4, "tot": 65, "pts": 34, "pct": 39, "pct_p": 52}, {"zona": 3, "tot": 62, "pts": 36, "pct": 37, "pct_p": 58}, {"zona": 2, "tot": 23, "pts": 9, "pct": 14, "pct_p": 39}, {"zona": 9, "tot": 15, "pts": 6, "pct": 9, "pct_p": 40}, {"zona": 8, "tot": 2, "pts": 2, "pct": 1, "pct_p": 100}]}, {"call": "K7", "tot": 10, "eff": 10, "pts_pct": 30, "dist": [{"zona": 4, "tot": 2, "pts": 0, "pct": 40, "pct_p": 0}, {"zona": 3, "tot": 2, "pts": 1, "pct": 40, "pct_p": 50}, {"zona": 8, "tot": 1, "pts": 0, "pct": 20, "pct_p": 0}]}, {"call": "KM", "tot": 17, "eff": 59, "pts_pct": 59, "dist": [{"zona": 2, "tot": 6, "pts": 5, "pct": 35, "pct_p": 83}, {"zona": 3, "tot": 5, "pts": 2, "pct": 29, "pct_p": 40}, {"zona": 9, "tot": 3, "pts": 2, "pct": 18, "pct_p": 67}, {"zona": 4, "tot": 2, "pts": 0, "pct": 12, "pct_p": 0}, {"zona": 8, "tot": 1, "pts": 1, "pct": 6, "pct_p": 100}]}, {"call": "K2", "tot": 7, "eff": 71, "pts_pct": 71, "dist": [{"zona": 3, "tot": 4, "pts": 2, "pct": 57, "pct_p": 50}, {"zona": 2, "tot": 2, "pts": 2, "pct": 29, "pct_p": 100}, {"zona": 9, "tot": 1, "pts": 1, "pct": 14, "pct_p": 100}]}, {"call": "KC", "tot": 43, "eff": 16, "pts_pct": 33, "dist": [{"zona": 4, "tot": 22, "pts": 7, "pct": 51, "pct_p": 32}, {"zona": 3, "tot": 8, "pts": 3, "pct": 19, "pct_p": 38}, {"zona": 9, "tot": 7, "pts": 3, "pct": 16, "pct_p": 43}, {"zona": 2, "tot": 4, "pts": 0, "pct": 9, "pct_p": 0}, {"zona": 8, "tot": 2, "pts": 1, "pct": 5, "pct_p": 50}]}, {"call": "KP", "tot": 8, "eff": 50, "pts_pct": 50, "dist": [{"zona": 4, "tot": 4, "pts": 1, "pct": 50, "pct_p": 25}, {"zona": 3, "tot": 3, "pts": 2, "pct": 38, "pct_p": 67}, {"zona": 8, "tot": 1, "pts": 1, "pct": 12, "pct_p": 100}]}, {"call": "KE", "tot": 47, "eff": 38, "pts_pct": 53, "dist": [{"zona": 4, "tot": 27, "pts": 11, "pct": 59, "pct_p": 41}, {"zona": 9, "tot": 7, "pts": 5, "pct": 15, "pct_p": 71}, {"zona": 2, "tot": 6, "pts": 3, "pct": 13, "pct_p": 50}, {"zona": 3, "tot": 6, "pts": 6, "pct": 13, "pct_p": 100}]}], "so": {"eff": 35, "tot": 353}, "tr": {"eff": 13, "tot": 101}}, "suplente": {"nombre": "9 Godoy Martin", "num": 9, "rotaciones": [{"pos": "P4", "total": 18, "total_all": 37, "dist": [{"zona": 4, "tot": 9, "pts": 4, "pct": 50, "pct_p": 44}, {"zona": 3, "tot": 7, "pts": 5, "pct": 39, "pct_p": 71}, {"zona": 9, "tot": 2, "pts": 1, "pct": 11, "pct_p": 50}]}, {"pos": "P3", "total": 13, "total_all": 44, "dist": [{"zona": 3, "tot": 6, "pts": 3, "pct": 46, "pct_p": 50}, {"zona": 4, "tot": 4, "pts": 1, "pct": 31, "pct_p": 25}, {"zona": 8, "tot": 2, "pts": 1, "pct": 15, "pct_p": 50}, {"zona": 9, "tot": 1, "pts": 0, "pct": 8, "pct_p": 0}]}, {"pos": "P2", "total": 12, "total_all": 38, "dist": [{"zona": 4, "tot": 4, "pts": 3, "pct": 33, "pct_p": 75}, {"zona": 3, "tot": 4, "pts": 3, "pct": 33, "pct_p": 75}, {"zona": 9, "tot": 3, "pts": 3, "pct": 25, "pct_p": 100}, {"zona": 8, "tot": 1, "pts": 1, "pct": 8, "pct_p": 100}]}, {"pos": "P5", "total": 24, "total_all": 39, "dist": [{"zona": 3, "tot": 13, "pts": 6, "pct": 54, "pct_p": 46}, {"zona": 4, "tot": 7, "pts": 4, "pct": 29, "pct_p": 57}, {"zona": 2, "tot": 3, "pts": 1, "pct": 12, "pct_p": 33}, {"zona": 8, "tot": 1, "pts": 0, "pct": 4, "pct_p": 0}]}, {"pos": "P6", "total": 27, "total_all": 51, "dist": [{"zona": 4, "tot": 10, "pts": 6, "pct": 37, "pct_p": 60}, {"zona": 3, "tot": 9, "pts": 6, "pct": 33, "pct_p": 67}, {"zona": 2, "tot": 8, "pts": 4, "pct": 30, "pct_p": 50}]}, {"pos": "P1", "total": 28, "total_all": 72, "dist": [{"zona": 4, "tot": 11, "pts": 3, "pct": 39, "pct_p": 27}, {"zona": 3, "tot": 9, "pts": 5, "pct": 32, "pct_p": 56}, {"zona": 2, "tot": 6, "pts": 0, "pct": 21, "pct_p": 0}, {"zona": 8, "tot": 2, "pts": 0, "pct": 7, "pct_p": 0}]}], "pills": [{"label": "P1", "eff": 17, "tot": 72, "pts": 24, "pts_pct": 33}, {"label": "P6", "eff": 41, "tot": 51, "pts": 26, "pts_pct": 51}, {"label": "P5", "eff": 23, "tot": 39, "pts": 17, "pts_pct": 44}, {"label": "P4", "eff": 32, "tot": 37, "pts": 19, "pts_pct": 51}, {"label": "P3", "eff": 18, "tot": 44, "pts": 16, "pts_pct": 36}, {"label": "P2", "eff": 55, "tot": 38, "pts": 23, "pts_pct": 61}, {"label": "SO", "eff": 30, "tot": 231, "pts": 104, "pts_pct": 45}, {"label": "TR", "eff": 28, "tot": 50, "pts": 21, "pts_pct": 42}], "llamadas": [{"call": "K1", "tot": 92, "eff": 32, "pts_pct": 48, "dist": [{"zona": 3, "tot": 40, "pts": 21, "pct": 44, "pct_p": 52}, {"zona": 4, "tot": 30, "pts": 15, "pct": 33, "pct_p": 50}, {"zona": 2, "tot": 11, "pts": 4, "pct": 12, "pct_p": 36}, {"zona": 8, "tot": 5, "pts": 2, "pct": 6, "pct_p": 40}, {"zona": 9, "tot": 4, "pts": 2, "pct": 4, "pct_p": 50}]}, {"call": "K7", "tot": 30, "eff": 37, "pts_pct": 50, "dist": [{"zona": 4, "tot": 12, "pts": 5, "pct": 46, "pct_p": 42}, {"zona": 3, "tot": 7, "pts": 6, "pct": 27, "pct_p": 86}, {"zona": 2, "tot": 5, "pts": 1, "pct": 19, "pct_p": 20}, {"zona": 9, "tot": 2, "pts": 2, "pct": 8, "pct_p": 100}]}, {"call": "KM", "tot": 12, "eff": -17, "pts_pct": 17, "dist": [{"zona": 2, "tot": 8, "pts": 1, "pct": 67, "pct_p": 12}, {"zona": 4, "tot": 2, "pts": 1, "pct": 17, "pct_p": 50}, {"zona": 9, "tot": 1, "pts": 0, "pct": 8, "pct_p": 0}, {"zona": 8, "tot": 1, "pts": 0, "pct": 8, "pct_p": 0}]}, {"call": "KC", "tot": 69, "eff": 32, "pts_pct": 43, "dist": [{"zona": 4, "tot": 35, "pts": 14, "pct": 51, "pct_p": 40}, {"zona": 2, "tot": 11, "pts": 4, "pct": 16, "pct_p": 36}, {"zona": 9, "tot": 11, "pts": 6, "pct": 16, "pct_p": 55}, {"zona": 3, "tot": 8, "pts": 5, "pct": 12, "pct_p": 62}, {"zona": 8, "tot": 3, "pts": 1, "pct": 4, "pct_p": 33}]}, {"call": "KP", "tot": 6, "eff": 50, "pts_pct": 50, "dist": [{"zona": 4, "tot": 3, "pts": 1, "pct": 100, "pct_p": 33}]}, {"call": "KE", "tot": 24, "eff": 21, "pts_pct": 42, "dist": [{"zona": 4, "tot": 12, "pts": 4, "pct": 50, "pct_p": 33}, {"zona": 2, "tot": 5, "pts": 4, "pct": 21, "pct_p": 80}, {"zona": 9, "tot": 5, "pts": 1, "pct": 21, "pct_p": 20}, {"zona": 3, "tot": 2, "pts": 1, "pct": 8, "pct_p": 50}]}], "so": {"eff": 30, "tot": 231}, "tr": {"eff": 28, "tot": 50}}};
+const PARTIDOS_ARMADOR = {"titular": {"nombre": "4 Vazquez Ezequiel", "num": 4, "rotaciones": [{"pos": "P4", "total": 35, "total_all": 69, "dist": [{"zona": 4, "tot": 15, "pts": 11, "pct": 43, "pct_p": 73}, {"zona": 3, "tot": 13, "pts": 7, "pct": 37, "pct_p": 54}, {"zona": 9, "tot": 7, "pts": 3, "pct": 20, "pct_p": 43}]}, {"pos": "P3", "total": 30, "total_all": 83, "dist": [{"zona": 4, "tot": 12, "pts": 6, "pct": 40, "pct_p": 50}, {"zona": 3, "tot": 12, "pts": 9, "pct": 40, "pct_p": 75}, {"zona": 9, "tot": 5, "pts": 2, "pct": 17, "pct_p": 40}, {"zona": 2, "tot": 1, "pts": 0, "pct": 3, "pct_p": 0}]}, {"pos": "P2", "total": 27, "total_all": 74, "dist": [{"zona": 3, "tot": 12, "pts": 7, "pct": 44, "pct_p": 58}, {"zona": 4, "tot": 8, "pts": 2, "pct": 30, "pct_p": 25}, {"zona": 9, "tot": 5, "pts": 2, "pct": 19, "pct_p": 40}, {"zona": 8, "tot": 2, "pts": 1, "pct": 7, "pct_p": 50}]}, {"pos": "P5", "total": 36, "total_all": 89, "dist": [{"zona": 3, "tot": 15, "pts": 8, "pct": 42, "pct_p": 53}, {"zona": 4, "tot": 13, "pts": 8, "pct": 36, "pct_p": 62}, {"zona": 2, "tot": 8, "pts": 3, "pct": 22, "pct_p": 38}]}, {"pos": "P6", "total": 39, "total_all": 112, "dist": [{"zona": 4, "tot": 16, "pts": 7, "pct": 41, "pct_p": 44}, {"zona": 3, "tot": 12, "pts": 4, "pct": 31, "pct_p": 33}, {"zona": 2, "tot": 11, "pts": 6, "pct": 28, "pct_p": 55}]}, {"pos": "P1", "total": 50, "total_all": 126, "dist": [{"zona": 4, "tot": 17, "pts": 7, "pct": 34, "pct_p": 41}, {"zona": 3, "tot": 17, "pts": 10, "pct": 34, "pct_p": 59}, {"zona": 2, "tot": 12, "pts": 5, "pct": 24, "pct_p": 42}, {"zona": 8, "tot": 4, "pts": 3, "pct": 8, "pct_p": 75}]}], "pills": [{"label": "P1", "eff": 33, "tot": 126, "pts": 58, "pts_pct": 46}, {"label": "P6", "eff": 23, "tot": 112, "pts": 43, "pts_pct": 38}, {"label": "P5", "eff": 37, "tot": 89, "pts": 47, "pts_pct": 53}, {"label": "P4", "eff": 42, "tot": 69, "pts": 37, "pts_pct": 54}, {"label": "P3", "eff": 27, "tot": 83, "pts": 37, "pts_pct": 45}, {"label": "P2", "eff": 31, "tot": 74, "pts": 32, "pts_pct": 43}, {"label": "SO", "eff": 35, "tot": 423, "pts": 203, "pts_pct": 48}, {"label": "TR", "eff": 19, "tot": 130, "pts": 51, "pts_pct": 39}], "llamadas": [{"call": "K1", "tot": 203, "eff": 36, "pts_pct": 51, "dist": [{"zona": 4, "tot": 75, "pts": 39, "pct": 38, "pct_p": 52}, {"zona": 3, "tot": 72, "pts": 42, "pct": 37, "pct_p": 58}, {"zona": 2, "tot": 29, "pts": 11, "pct": 15, "pct_p": 38}, {"zona": 9, "tot": 16, "pts": 6, "pct": 8, "pct_p": 38}, {"zona": 8, "tot": 4, "pts": 4, "pct": 2, "pct_p": 100}]}, {"call": "K7", "tot": 10, "eff": 10, "pts_pct": 30, "dist": [{"zona": 4, "tot": 2, "pts": 0, "pct": 40, "pct_p": 0}, {"zona": 3, "tot": 2, "pts": 1, "pct": 40, "pct_p": 50}, {"zona": 8, "tot": 1, "pts": 0, "pct": 20, "pct_p": 0}]}, {"call": "KM", "tot": 17, "eff": 59, "pts_pct": 59, "dist": [{"zona": 2, "tot": 6, "pts": 5, "pct": 35, "pct_p": 83}, {"zona": 3, "tot": 5, "pts": 2, "pct": 29, "pct_p": 40}, {"zona": 9, "tot": 3, "pts": 2, "pct": 18, "pct_p": 67}, {"zona": 4, "tot": 2, "pts": 0, "pct": 12, "pct_p": 0}, {"zona": 8, "tot": 1, "pts": 1, "pct": 6, "pct_p": 100}]}, {"call": "K2", "tot": 12, "eff": 67, "pts_pct": 67, "dist": [{"zona": 3, "tot": 6, "pts": 2, "pct": 55, "pct_p": 33}, {"zona": 2, "tot": 2, "pts": 2, "pct": 18, "pct_p": 100}, {"zona": 4, "tot": 2, "pts": 2, "pct": 18, "pct_p": 100}, {"zona": 9, "tot": 1, "pts": 1, "pct": 9, "pct_p": 100}]}, {"call": "KC", "tot": 43, "eff": 16, "pts_pct": 33, "dist": [{"zona": 4, "tot": 22, "pts": 7, "pct": 51, "pct_p": 32}, {"zona": 3, "tot": 8, "pts": 3, "pct": 19, "pct_p": 38}, {"zona": 9, "tot": 7, "pts": 3, "pct": 16, "pct_p": 43}, {"zona": 2, "tot": 4, "pts": 0, "pct": 9, "pct_p": 0}, {"zona": 8, "tot": 2, "pts": 1, "pct": 5, "pct_p": 50}]}, {"call": "KP", "tot": 8, "eff": 50, "pts_pct": 50, "dist": [{"zona": 4, "tot": 4, "pts": 1, "pct": 50, "pct_p": 25}, {"zona": 3, "tot": 3, "pts": 2, "pct": 38, "pct_p": 67}, {"zona": 8, "tot": 1, "pts": 1, "pct": 12, "pct_p": 100}]}, {"call": "KE", "tot": 48, "eff": 38, "pts_pct": 52, "dist": [{"zona": 4, "tot": 28, "pts": 11, "pct": 60, "pct_p": 39}, {"zona": 9, "tot": 7, "pts": 5, "pct": 15, "pct_p": 71}, {"zona": 2, "tot": 6, "pts": 3, "pct": 13, "pct_p": 50}, {"zona": 3, "tot": 6, "pts": 6, "pct": 13, "pct_p": 100}]}, {"call": "KB", "tot": 6, "eff": 67, "pts_pct": 67, "dist": [{"zona": 3, "tot": 2, "pts": 1, "pct": 33, "pct_p": 50}, {"zona": 2, "tot": 2, "pts": 2, "pct": 33, "pct_p": 100}, {"zona": 4, "tot": 1, "pts": 1, "pct": 17, "pct_p": 100}, {"zona": 9, "tot": 1, "pts": 0, "pct": 17, "pct_p": 0}]}], "so": {"eff": 35, "tot": 423}, "tr": {"eff": 19, "tot": 130}}, "suplente": {"nombre": "9 Godoy Martin", "num": 9, "rotaciones": [{"pos": "P4", "total": 18, "total_all": 37, "dist": [{"zona": 4, "tot": 9, "pts": 4, "pct": 50, "pct_p": 44}, {"zona": 3, "tot": 7, "pts": 5, "pct": 39, "pct_p": 71}, {"zona": 9, "tot": 2, "pts": 1, "pct": 11, "pct_p": 50}]}, {"pos": "P3", "total": 13, "total_all": 44, "dist": [{"zona": 3, "tot": 6, "pts": 3, "pct": 46, "pct_p": 50}, {"zona": 4, "tot": 4, "pts": 1, "pct": 31, "pct_p": 25}, {"zona": 8, "tot": 2, "pts": 1, "pct": 15, "pct_p": 50}, {"zona": 9, "tot": 1, "pts": 0, "pct": 8, "pct_p": 0}]}, {"pos": "P2", "total": 12, "total_all": 38, "dist": [{"zona": 4, "tot": 4, "pts": 3, "pct": 33, "pct_p": 75}, {"zona": 3, "tot": 4, "pts": 3, "pct": 33, "pct_p": 75}, {"zona": 9, "tot": 3, "pts": 3, "pct": 25, "pct_p": 100}, {"zona": 8, "tot": 1, "pts": 1, "pct": 8, "pct_p": 100}]}, {"pos": "P5", "total": 24, "total_all": 39, "dist": [{"zona": 3, "tot": 13, "pts": 6, "pct": 54, "pct_p": 46}, {"zona": 4, "tot": 7, "pts": 4, "pct": 29, "pct_p": 57}, {"zona": 2, "tot": 3, "pts": 1, "pct": 12, "pct_p": 33}, {"zona": 8, "tot": 1, "pts": 0, "pct": 4, "pct_p": 0}]}, {"pos": "P6", "total": 27, "total_all": 52, "dist": [{"zona": 4, "tot": 10, "pts": 6, "pct": 37, "pct_p": 60}, {"zona": 3, "tot": 9, "pts": 6, "pct": 33, "pct_p": 67}, {"zona": 2, "tot": 8, "pts": 4, "pct": 30, "pct_p": 50}]}, {"pos": "P1", "total": 30, "total_all": 75, "dist": [{"zona": 4, "tot": 11, "pts": 3, "pct": 37, "pct_p": 27}, {"zona": 3, "tot": 11, "pts": 5, "pct": 37, "pct_p": 45}, {"zona": 2, "tot": 6, "pts": 0, "pct": 20, "pct_p": 0}, {"zona": 8, "tot": 2, "pts": 0, "pct": 7, "pct_p": 0}]}], "pills": [{"label": "P1", "eff": 15, "tot": 75, "pts": 24, "pts_pct": 32}, {"label": "P6", "eff": 40, "tot": 52, "pts": 26, "pts_pct": 50}, {"label": "P5", "eff": 23, "tot": 39, "pts": 17, "pts_pct": 44}, {"label": "P4", "eff": 32, "tot": 37, "pts": 19, "pts_pct": 51}, {"label": "P3", "eff": 18, "tot": 44, "pts": 16, "pts_pct": 36}, {"label": "P2", "eff": 55, "tot": 38, "pts": 23, "pts_pct": 61}, {"label": "SO", "eff": 29, "tot": 235, "pts": 104, "pts_pct": 44}, {"label": "TR", "eff": 28, "tot": 50, "pts": 21, "pts_pct": 42}], "llamadas": [{"call": "K1", "tot": 94, "eff": 31, "pts_pct": 47, "dist": [{"zona": 3, "tot": 42, "pts": 21, "pct": 46, "pct_p": 50}, {"zona": 4, "tot": 30, "pts": 15, "pct": 33, "pct_p": 50}, {"zona": 2, "tot": 11, "pts": 4, "pct": 12, "pct_p": 36}, {"zona": 8, "tot": 5, "pts": 2, "pct": 5, "pct_p": 40}, {"zona": 9, "tot": 4, "pts": 2, "pct": 4, "pct_p": 50}]}, {"call": "K7", "tot": 30, "eff": 37, "pts_pct": 50, "dist": [{"zona": 4, "tot": 12, "pts": 5, "pct": 46, "pct_p": 42}, {"zona": 3, "tot": 7, "pts": 6, "pct": 27, "pct_p": 86}, {"zona": 2, "tot": 5, "pts": 1, "pct": 19, "pct_p": 20}, {"zona": 9, "tot": 2, "pts": 2, "pct": 8, "pct_p": 100}]}, {"call": "KM", "tot": 12, "eff": -17, "pts_pct": 17, "dist": [{"zona": 2, "tot": 8, "pts": 1, "pct": 67, "pct_p": 12}, {"zona": 4, "tot": 2, "pts": 1, "pct": 17, "pct_p": 50}, {"zona": 9, "tot": 1, "pts": 0, "pct": 8, "pct_p": 0}, {"zona": 8, "tot": 1, "pts": 0, "pct": 8, "pct_p": 0}]}, {"call": "KC", "tot": 69, "eff": 32, "pts_pct": 43, "dist": [{"zona": 4, "tot": 35, "pts": 14, "pct": 51, "pct_p": 40}, {"zona": 2, "tot": 11, "pts": 4, "pct": 16, "pct_p": 36}, {"zona": 9, "tot": 11, "pts": 6, "pct": 16, "pct_p": 55}, {"zona": 3, "tot": 8, "pts": 5, "pct": 12, "pct_p": 62}, {"zona": 8, "tot": 3, "pts": 1, "pct": 4, "pct_p": 33}]}, {"call": "KP", "tot": 6, "eff": 50, "pts_pct": 50, "dist": [{"zona": 4, "tot": 3, "pts": 1, "pct": 100, "pct_p": 33}]}, {"call": "KE", "tot": 24, "eff": 21, "pts_pct": 42, "dist": [{"zona": 4, "tot": 12, "pts": 4, "pct": 50, "pct_p": 33}, {"zona": 2, "tot": 5, "pts": 4, "pct": 21, "pct_p": 80}, {"zona": 9, "tot": 5, "pts": 1, "pct": 21, "pct_p": 20}, {"zona": 3, "tot": 2, "pts": 1, "pct": 8, "pct_p": 50}]}], "so": {"eff": 29, "tot": 235}, "tr": {"eff": 28, "tot": 50}}};
+const PARTIDOS_TRANSICION = {"titular": {"rots": [{"pos": 1, "n": 53, "eff": 21, "dist": [{"p": "P4", "n": 17, "pts": 8, "pct": 32}, {"p": "P2", "n": 13, "pts": 6, "pct": 25}, {"p": "P8", "n": 4, "pts": 3, "pct": 8}, {"p": "P3", "n": 2, "pts": 1, "pct": 4}], "concentrada": false}, {"pos": 2, "n": 26, "eff": 15, "dist": [{"p": "P4", "n": 13, "pts": 6, "pct": 50}, {"p": "P9", "n": 5, "pts": 2, "pct": 19}, {"p": "P3", "n": 3, "pts": 0, "pct": 12}], "concentrada": true}, {"pos": 3, "n": 36, "eff": 19, "dist": [{"p": "P4", "n": 12, "pts": 4, "pct": 33}, {"p": "P9", "n": 5, "pts": 4, "pct": 14}, {"p": "P3", "n": 3, "pts": 1, "pct": 8}], "concentrada": false}, {"pos": 4, "n": 19, "eff": 26, "dist": [{"p": "P4", "n": 9, "pts": 1, "pct": 47}, {"p": "P9", "n": 3, "pts": 1, "pct": 16}, {"p": "P3", "n": 2, "pts": 2, "pct": 11}], "concentrada": true}, {"pos": 5, "n": 31, "eff": 26, "dist": [{"p": "P4", "n": 11, "pts": 5, "pct": 35}, {"p": "P3", "n": 6, "pts": 4, "pct": 19}, {"p": "P2", "n": 2, "pts": 0, "pct": 6}], "concentrada": false}, {"pos": 6, "n": 50, "eff": 14, "dist": [{"p": "P4", "n": 11, "pts": 4, "pct": 22}, {"p": "P2", "n": 7, "pts": 1, "pct": 14}, {"p": "P3", "n": 5, "pts": 0, "pct": 10}, {"p": "P8", "n": 2, "pts": 0, "pct": 4}], "concentrada": false}], "debil": {"pos": 6, "n": 50, "eff": 14, "dist": [{"p": "P4", "n": 11, "pts": 4, "pct": 22}, {"p": "P2", "n": 7, "pts": 1, "pct": 14}, {"p": "P3", "n": 5, "pts": 0, "pct": 10}, {"p": "P8", "n": 2, "pts": 0, "pct": 4}], "concentrada": false}, "fuerte": {"pos": 5, "n": 31, "eff": 26, "dist": [{"p": "P4", "n": 11, "pts": 5, "pct": 35}, {"p": "P3", "n": 6, "pts": 4, "pct": 19}, {"p": "P2", "n": 2, "pts": 0, "pct": 6}], "concentrada": false}, "setter": "4 Vazquez Ezequiel"}, "suplente": {"rots": [{"pos": 1, "n": 31, "eff": 16, "dist": [{"p": "P4", "n": 16, "pts": 6, "pct": 52}, {"p": "P2", "n": 7, "pts": 2, "pct": 23}, {"p": "P3", "n": 4, "pts": 0, "pct": 13}, {"p": "P8", "n": 2, "pts": 1, "pct": 6}], "concentrada": true}, {"pos": 2, "n": 16, "eff": 56, "dist": [{"p": "P9", "n": 7, "pts": 6, "pct": 44}, {"p": "P4", "n": 6, "pts": 1, "pct": 38}, {"p": "P3", "n": 2, "pts": 2, "pct": 12}], "concentrada": false}, {"pos": 3, "n": 19, "eff": 26, "dist": [{"p": "P4", "n": 6, "pts": 2, "pct": 32}, {"p": "P3", "n": 5, "pts": 4, "pct": 26}, {"p": "P9", "n": 5, "pts": 2, "pct": 26}, {"p": "P8", "n": 1, "pts": 0, "pct": 5}], "concentrada": false}, {"pos": 4, "n": 12, "eff": 50, "dist": [{"p": "P4", "n": 9, "pts": 5, "pct": 75}, {"p": "P9", "n": 2, "pts": 1, "pct": 17}], "concentrada": true}, {"pos": 5, "n": 9, "eff": 11, "dist": [{"p": "P4", "n": 7, "pts": 2, "pct": 78}, {"p": "P3", "n": 1, "pts": 1, "pct": 11}, {"p": "P2", "n": 1, "pts": 1, "pct": 11}], "concentrada": true}, {"pos": 6, "n": 18, "eff": 22, "dist": [{"p": "P2", "n": 7, "pts": 2, "pct": 39}, {"p": "P4", "n": 6, "pts": 3, "pct": 33}, {"p": "P3", "n": 3, "pts": 2, "pct": 17}], "concentrada": false}], "debil": {"pos": 5, "n": 9, "eff": 11, "dist": [{"p": "P4", "n": 7, "pts": 2, "pct": 78}, {"p": "P3", "n": 1, "pts": 1, "pct": 11}, {"p": "P2", "n": 1, "pts": 1, "pct": 11}], "concentrada": true}, "fuerte": {"pos": 2, "n": 16, "eff": 56, "dist": [{"p": "P9", "n": 7, "pts": 6, "pct": 44}, {"p": "P4", "n": 6, "pts": 1, "pct": 38}, {"p": "P3", "n": 2, "pts": 2, "pct": 12}], "concentrada": false}, "setter": "9 Godoy Martin"}};
