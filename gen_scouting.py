@@ -421,10 +421,23 @@ def build_team(disp, team):
         so = [a for a in ra if a.get('so')]
         dc = Counter(a['_pnum'] for a in ra)
         dist = [{'name':apellido_of(n),'pct':ipct(c,len(ra))} for n,c in dc.most_common(3)]
+        # distribucion por zona de ataque (origen): total, %, kills, kill%, top atacante
+        zc = defaultdict(list)
+        for a in ra:
+            if a.get('orig'): zc[a['orig']].append(a)
+        zones = []
+        for z, za in zc.items():
+            kills = sum(1 for a in za if a['effect']=='#')
+            pc = Counter(a['_pnum'] for a in za)
+            topn = pc.most_common(1)[0][0] if pc else 0
+            zones.append({'z':z,'n':len(za),'pct':ipct(len(za),len(ra)),
+                          'k':kills,'kpct':ipct(kills,len(za)),
+                          'top':apellido_of(topn) if topn else ''})
+        zones.sort(key=lambda x:-x['n'])
         rotations.append({
             'r': r, 'atk': len(ra), 'eff': rint(eng.eff_atk(ra)),
             'so_eff': hit(so), 'so_n': len(so),
-            'dist': dist, 'front': fronts.get(r, []),
+            'dist': dist, 'front': fronts.get(r, []), 'zones': zones,
         })
 
     # ── EN SISTEMA vs FUERA DE SISTEMA (sobre el ataque de side-out) ──
@@ -481,15 +494,28 @@ def build_team(disp, team):
     return {'matches':nfiles,'serve':serve,'attack':attack,'set':setd,'recep':recep,
             'rotations':rotations,'sistema':sistema}
 
+def slugify(disp):
+    SLUG = {'San Lorenzo':'casla','River':'river','Vélez':'velez','Boca':'boca',
+            'Defensores':'defensores','Ciudad':'ciudad','UNTREF':'untref','Ferro':'ferro',
+            'Lomas':'lomas','Hacoaj':'hacoaj','UBA':'uba','Campana':'campana'}
+    if disp in SLUG: return SLUG[disp]
+    s = disp.lower()
+    for a,b in (('á','a'),('é','e'),('í','i'),('ó','o'),('ú','u'),('ñ','n')): s = s.replace(a,b)
+    return re.sub(r'[^a-z0-9]', '', s.split()[0]) if s.split() else s
+
 def main():
     teams = collect()
     out = {}
     for disp, team in teams.items():
         if len(team['files']) < MIN_MATCHES: continue
-        out[disp] = build_team(disp, team)
+        td = build_team(disp, team)
+        td['slug'] = slugify(disp)
+        out[disp] = td
     # ordenar por cantidad de partidos (desc)
     out = dict(sorted(out.items(), key=lambda kv:-kv[1]['matches']))
-    js = 'window.SCOUTING_RIVAL = ' + json.dumps(out, ensure_ascii=False) + ';\n'
+    by_slug = {v['slug']: disp for disp, v in out.items()}
+    js = ('window.SCOUTING_RIVAL = ' + json.dumps(out, ensure_ascii=False) + ';\n'
+          + 'window.SCOUTING_BY_SLUG = ' + json.dumps(by_slug, ensure_ascii=False) + ';\n')
     path = os.path.join(OUTPUT_DIR, 'scouting_rival.js')
     with open(path, 'w', encoding='utf-8') as f:
         f.write(js)

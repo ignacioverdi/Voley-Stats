@@ -263,6 +263,7 @@ select, select option {
 </style>
 <script src="lang.js" onerror="void 0"></script>
 <script src="liga_data.js"></script>
+<script src="scouting_rival.js" onerror="window.SCOUTING_RIVAL=window.SCOUTING_RIVAL||{}"></script>
 <script src="videos.js" onerror="window.VIDEOS_DATA=window.VIDEOS_DATA||{}"></script>
 </head>
 <body>
@@ -303,6 +304,15 @@ select, select option {
         Sin datos de transición
       </div>
     </div>
+  </div>
+
+  <!-- DISTRIBUCIÓN POR ROTACIÓN (por zona, con eficacia) -->
+  <div style="margin-top:32px" id="seccion-rotaciones">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:#e2e8f0;margin-bottom:6px">
+      DISTRIBUCIÓN POR ROTACIÓN
+      <span style="font-size:11px;font-family:'Barlow Condensed',sans-serif;color:#475569;letter-spacing:1px;margin-left:12px;font-weight:400">Cómo distribuye en cada rotación · por zona · con eficacia</span>
+    </div>
+    <div id="rotaciones-content"></div>
   </div>
 
   <!-- SI NEUTRALIZAMOS A X -->
@@ -2784,8 +2794,52 @@ function renderRecepcionRival(){
 // Llamar armador y juego
 (function(){var _f=function(){
   setTimeout(function(){renderArmador();
-  renderRecepcionRival();renderTransicion();renderNeutralizar();renderJuego();},100);
+  renderRecepcionRival();renderTransicion();renderNeutralizar();renderJuego();gpRenderRotaciones();},100);
 };if(document.fonts&&document.fonts.ready){document.fonts.ready.then(_f).catch(_f);}else{setTimeout(_f,80);}})();
+
+function gpRenderRotaciones(){
+  var cont=document.getElementById('rotaciones-content'); if(!cont) return;
+  var SR=window.SCOUTING_RIVAL||{}, BS=window.SCOUTING_BY_SLUG||{};
+  var nm=BS[GP_RIVAL_SLUG]||(typeof GP_TD!=='undefined'&&GP_TD?GP_TD.name:null);
+  var data=nm?SR[nm]:null;
+  if(!data||!data.rotations){
+    cont.innerHTML='<div style="color:#64748b;font-family:Barlow Condensed,sans-serif;font-size:13px;letter-spacing:.5px;padding:18px;border:1px solid rgba(255,255,255,.06);border-radius:12px">Sin datos de rotación para este rival (revisá que esté subido scouting_rival.js).</div>';
+    return;
+  }
+  var grid=[[4,3,2],[7,8,9],[5,6,1]], order=[4,3,2,5,6,1];
+  function court(rn){
+    var rot=data.rotations[rn-1], bz={};
+    if(rot&&rot.zones) rot.zones.forEach(function(z){bz[z.z]=z;});
+    var atk=rot?rot.atk:0, cells='';
+    grid.forEach(function(row,ri){
+      row.forEach(function(zn){
+        var z=bz[zn], net=ri===0?'border-top:3px solid #cbd5e1;':'';
+        if(z){
+          cells+='<div title="Zona '+zn+(z.top?' · '+z.top:'')+'" style="border:1px solid rgba(255,255,255,.12);'+net+'padding:6px 3px;min-height:48px;display:flex;flex-direction:column;justify-content:center;gap:3px">'
+            +'<div style="display:flex;justify-content:space-around;font-size:13px;line-height:1;font-weight:700"><span style="color:#e5e7eb">'+z.n+'</span><span style="color:#60a5fa">'+z.pct+'%</span></div>'
+            +'<div style="display:flex;justify-content:space-around;font-size:13px;line-height:1;font-weight:700"><span style="color:#c084fc">'+z.k+'</span><span style="color:#4ade80">'+z.kpct+'%</span></div>'
+            +'</div>';
+        } else {
+          cells+='<div style="border:1px solid rgba(255,255,255,.06);'+net+'min-height:48px"></div>';
+        }
+      });
+    });
+    return '<div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px">'
+      +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:9px"><span style="background:#e8192c;color:#fff;font-family:Bebas Neue,sans-serif;font-size:16px;letter-spacing:1px;padding:2px 11px;border-radius:5px">C'+rn+'</span>'
+      +'<span style="font-family:Barlow Condensed,sans-serif;font-size:11px;color:#64748b;letter-spacing:.5px">'+atk+' ataques</span></div>'
+      +'<div style="display:grid;grid-template-columns:repeat(3,1fr)">'+cells+'</div></div>';
+  }
+  var html='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">';
+  order.forEach(function(rn){ html+=court(rn); });
+  html+='</div>';
+  html+='<div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-family:Barlow Condensed,sans-serif;font-size:11px;letter-spacing:.5px;color:#94a3b8">'
+    +'<span><b style="color:#e5e7eb">N°</b> total ataques</span>'
+    +'<span><b style="color:#60a5fa">%</b> del total de esa rotación</span>'
+    +'<span><b style="color:#c084fc">N°</b> kills (puntos)</span>'
+    +'<span><b style="color:#4ade80">%</b> eficacia (kill%)</span>'
+    +'<span style="color:#64748b">· Arriba la red (zonas 4·3·2) · abajo el fondo (5·6·1) · C = colocador en esa posición</span></div>';
+  cont.innerHTML=html;
+}
 
 function gpDistRotacionValidada(rotPos){
   // Recalcula distribución de una rotación con el sistema VALIDADO (P4/P3/P2/P8/P9)
