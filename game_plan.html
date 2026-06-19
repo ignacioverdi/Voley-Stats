@@ -2516,10 +2516,12 @@ function gpScoutingReport(){
   var roster=GP_TD.roster||{};
   var medias=gpMediasLiga();
   function ape(n){
+    // CASLA: los nombres vienen como "Apellido Nombre" (apellido primero).
+    // El apellido es todo MENOS la última palabra (que es el nombre de pila),
+    // contemplando apellidos compuestos (ej: "Requejo Borghese Felipe" → "Requejo Borghese").
     n=(n||'').replace(/^\d+\s*/,'').trim();
-    var p=n.split(/\s+/), pre=['DE','DEL','DI','LA','LE','VAN','VON','DER','DEN','MC','DA','SAN','SANTA'];
-    var a=p[p.length-1]||'';
-    if(p.length>=3&&pre.indexOf(p[p.length-2].toUpperCase())>=0)a=p[p.length-2]+' '+a;
+    var p=n.split(/\s+/);
+    var a=(p.length<=1)?(p[0]||''):p.slice(0,p.length-1).join(' ');
     return a.split(' ').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1).toLowerCase();}).join(' ');
   }
   function sig(p){return {OUTSIDE:'OH',MIDDLE:'MB',OPPOSITE:'OP',SETTER:'S',LIBERO:'L'}[p]||'';}
