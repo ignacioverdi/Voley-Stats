@@ -1,5 +1,5 @@
-// datos_partidos.js — 24/06/2026, 08:24:28
-const PARTIDOS_GENERADO = "24/06/2026, 08:24:28";
+// datos_partidos.js — 24/06/2026, 13:35:08
+const PARTIDOS_GENERADO = "24/06/2026, 13:35:08";
 const PARTIDOS_TOTAL = 10;
 const PARTIDOS_META = [
   {
@@ -9997,17 +9997,17 @@ const PARTIDOS_INDIVIDUAL = [
           },
           {
             "label": "SO",
-            "eff": 45,
-            "tot": 77,
-            "pts": 44,
-            "pts_pct": 57
+            "eff": 46,
+            "tot": 57,
+            "pts": 33,
+            "pts_pct": 58
           },
           {
             "label": "TR",
-            "eff": 21,
-            "tot": 28,
-            "pts": 9,
-            "pts_pct": 32
+            "eff": 31,
+            "tot": 48,
+            "pts": 20,
+            "pts_pct": 42
           }
         ],
         "llamadas": [
@@ -10186,12 +10186,12 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "so": {
-          "eff": 45,
-          "tot": 77
+          "eff": 46,
+          "tot": 57
         },
         "tr": {
-          "eff": 21,
-          "tot": 28
+          "eff": 31,
+          "tot": 48
         }
       },
       "suplente": {
@@ -10297,26 +10297,26 @@ const PARTIDOS_INDIVIDUAL = [
           {
             "label": "SO",
             "eff": 0,
-            "tot": 3,
+            "tot": 2,
             "pts": 0,
             "pts_pct": 0
           },
           {
             "label": "TR",
-            "eff": 100,
-            "tot": 1,
+            "eff": 50,
+            "tot": 2,
             "pts": 1,
-            "pts_pct": 100
+            "pts_pct": 50
           }
         ],
         "llamadas": [],
         "so": {
           "eff": 0,
-          "tot": 3
+          "tot": 2
         },
         "tr": {
-          "eff": 100,
-          "tot": 1
+          "eff": 50,
+          "tot": 2
         }
       }
     }
@@ -12954,17 +12954,17 @@ const PARTIDOS_INDIVIDUAL = [
           },
           {
             "label": "SO",
-            "eff": 24,
-            "tot": 63,
-            "pts": 25,
-            "pts_pct": 40
+            "eff": 26,
+            "tot": 50,
+            "pts": 21,
+            "pts_pct": 42
           },
           {
             "label": "TR",
-            "eff": 60,
-            "tot": 10,
-            "pts": 7,
-            "pts_pct": 70
+            "eff": 35,
+            "tot": 23,
+            "pts": 11,
+            "pts_pct": 48
           }
         ],
         "llamadas": [
@@ -13136,12 +13136,12 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "so": {
-          "eff": 24,
-          "tot": 63
+          "eff": 26,
+          "tot": 50
         },
         "tr": {
-          "eff": 60,
-          "tot": 10
+          "eff": 35,
+          "tot": 23
         }
       },
       "suplente": {
@@ -16519,17 +16519,17 @@ const PARTIDOS_INDIVIDUAL = [
           },
           {
             "label": "SO",
-            "eff": 19,
-            "tot": 58,
-            "pts": 22,
-            "pts_pct": 38
+            "eff": 13,
+            "tot": 45,
+            "pts": 16,
+            "pts_pct": 36
           },
           {
             "label": "TR",
-            "eff": 9,
-            "tot": 11,
-            "pts": 4,
-            "pts_pct": 36
+            "eff": 25,
+            "tot": 24,
+            "pts": 10,
+            "pts_pct": 42
           }
         ],
         "llamadas": [
@@ -16650,12 +16650,12 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "so": {
-          "eff": 19,
-          "tot": 58
+          "eff": 13,
+          "tot": 45
         },
         "tr": {
-          "eff": 9,
-          "tot": 11
+          "eff": 25,
+          "tot": 24
         }
       },
       "suplente": {
@@ -16855,17 +16855,17 @@ const PARTIDOS_INDIVIDUAL = [
           },
           {
             "label": "SO",
-            "eff": 26,
-            "tot": 27,
-            "pts": 12,
-            "pts_pct": 44
+            "eff": 17,
+            "tot": 23,
+            "pts": 9,
+            "pts_pct": 39
           },
           {
             "label": "TR",
-            "eff": -50,
-            "tot": 2,
-            "pts": 0,
-            "pts_pct": 0
+            "eff": 33,
+            "tot": 6,
+            "pts": 3,
+            "pts_pct": 50
           }
         ],
         "llamadas": [
@@ -16914,12 +16914,12 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "so": {
-          "eff": 26,
-          "tot": 27
+          "eff": 17,
+          "tot": 23
         },
         "tr": {
-          "eff": -50,
-          "tot": 2
+          "eff": 33,
+          "tot": 6
         }
       }
     }
@@ -20519,17 +20519,17 @@ const PARTIDOS_INDIVIDUAL = [
           },
           {
             "label": "SO",
-            "eff": 38,
-            "tot": 79,
-            "pts": 39,
-            "pts_pct": 49
+            "eff": 46,
+            "tot": 65,
+            "pts": 37,
+            "pts_pct": 57
           },
           {
             "label": "TR",
-            "eff": 21,
-            "tot": 28,
-            "pts": 11,
-            "pts_pct": 39
+            "eff": 14,
+            "tot": 42,
+            "pts": 13,
+            "pts_pct": 31
           }
         ],
         "llamadas": [
@@ -20686,12 +20686,12 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "so": {
-          "eff": 38,
-          "tot": 79
+          "eff": 46,
+          "tot": 65
         },
         "tr": {
-          "eff": 21,
-          "tot": 28
+          "eff": 14,
+          "tot": 42
         }
       },
       "suplente": {
@@ -23492,17 +23492,17 @@ const PARTIDOS_INDIVIDUAL = [
           },
           {
             "label": "SO",
-            "eff": 41,
-            "tot": 90,
-            "pts": 48,
+            "eff": 40,
+            "tot": 68,
+            "pts": 36,
             "pts_pct": 53
           },
           {
             "label": "TR",
-            "eff": 14,
-            "tot": 21,
-            "pts": 8,
-            "pts_pct": 38
+            "eff": 30,
+            "tot": 43,
+            "pts": 20,
+            "pts_pct": 47
           }
         ],
         "llamadas": [
@@ -23602,12 +23602,12 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "so": {
-          "eff": 41,
-          "tot": 90
+          "eff": 40,
+          "tot": 68
         },
         "tr": {
-          "eff": 14,
-          "tot": 21
+          "eff": 30,
+          "tot": 43
         }
       },
       "suplente": {
@@ -23779,17 +23779,17 @@ const PARTIDOS_INDIVIDUAL = [
           },
           {
             "label": "SO",
-            "eff": 28,
-            "tot": 18,
-            "pts": 7,
-            "pts_pct": 39
+            "eff": 31,
+            "tot": 13,
+            "pts": 5,
+            "pts_pct": 38
           },
           {
             "label": "TR",
-            "eff": 100,
-            "tot": 1,
-            "pts": 1,
-            "pts_pct": 100
+            "eff": 33,
+            "tot": 6,
+            "pts": 3,
+            "pts_pct": 50
           }
         ],
         "llamadas": [
@@ -23824,12 +23824,12 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "so": {
-          "eff": 28,
-          "tot": 18
+          "eff": 31,
+          "tot": 13
         },
         "tr": {
-          "eff": 100,
-          "tot": 1
+          "eff": 33,
+          "tot": 6
         }
       }
     }
@@ -27065,17 +27065,17 @@ const PARTIDOS_INDIVIDUAL = [
           },
           {
             "label": "SO",
-            "eff": 33,
-            "tot": 73,
-            "pts": 34,
-            "pts_pct": 47
+            "eff": 39,
+            "tot": 64,
+            "pts": 32,
+            "pts_pct": 50
           },
           {
             "label": "TR",
-            "eff": -4,
-            "tot": 23,
-            "pts": 6,
-            "pts_pct": 26
+            "eff": -6,
+            "tot": 32,
+            "pts": 8,
+            "pts_pct": 25
           }
         ],
         "llamadas": [
@@ -27190,12 +27190,12 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "so": {
-          "eff": 33,
-          "tot": 73
+          "eff": 39,
+          "tot": 64
         },
         "tr": {
-          "eff": -4,
-          "tot": 23
+          "eff": -6,
+          "tot": 32
         }
       },
       "suplente": {
@@ -27337,26 +27337,26 @@ const PARTIDOS_INDIVIDUAL = [
           {
             "label": "SO",
             "eff": 0,
-            "tot": 8,
-            "pts": 2,
-            "pts_pct": 25
+            "tot": 5,
+            "pts": 1,
+            "pts_pct": 20
           },
           {
             "label": "TR",
-            "eff": null,
-            "tot": 0,
-            "pts": 0,
-            "pts_pct": null
+            "eff": 0,
+            "tot": 3,
+            "pts": 1,
+            "pts_pct": 33
           }
         ],
         "llamadas": [],
         "so": {
           "eff": 0,
-          "tot": 8
+          "tot": 5
         },
         "tr": {
-          "eff": null,
-          "tot": 0
+          "eff": 0,
+          "tot": 3
         }
       }
     }
@@ -30539,17 +30539,17 @@ const PARTIDOS_INDIVIDUAL = [
           },
           {
             "label": "SO",
-            "eff": 32,
-            "tot": 84,
-            "pts": 39,
-            "pts_pct": 46
+            "eff": 36,
+            "tot": 66,
+            "pts": 34,
+            "pts_pct": 52
           },
           {
             "label": "TR",
-            "eff": 22,
-            "tot": 27,
-            "pts": 12,
-            "pts_pct": 44
+            "eff": 20,
+            "tot": 45,
+            "pts": 17,
+            "pts_pct": 38
           }
         ],
         "llamadas": [
@@ -30627,12 +30627,12 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "so": {
-          "eff": 32,
-          "tot": 84
+          "eff": 36,
+          "tot": 66
         },
         "tr": {
-          "eff": 22,
-          "tot": 27
+          "eff": 20,
+          "tot": 45
         }
       },
       "suplente": {
@@ -33018,17 +33018,17 @@ const PARTIDOS_INDIVIDUAL = [
           },
           {
             "label": "SO",
-            "eff": 34,
-            "tot": 70,
-            "pts": 31,
-            "pts_pct": 44
+            "eff": 42,
+            "tot": 52,
+            "pts": 27,
+            "pts_pct": 52
           },
           {
             "label": "TR",
-            "eff": 41,
-            "tot": 29,
-            "pts": 14,
-            "pts_pct": 48
+            "eff": 30,
+            "tot": 47,
+            "pts": 18,
+            "pts_pct": 38
           }
         ],
         "llamadas": [
@@ -33099,12 +33099,12 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "so": {
-          "eff": 34,
-          "tot": 70
+          "eff": 42,
+          "tot": 52
         },
         "tr": {
-          "eff": 41,
-          "tot": 29
+          "eff": 30,
+          "tot": 47
         }
       },
       "suplente": {
@@ -33209,27 +33209,27 @@ const PARTIDOS_INDIVIDUAL = [
           },
           {
             "label": "SO",
-            "eff": -25,
-            "tot": 4,
+            "eff": 0,
+            "tot": 3,
             "pts": 0,
             "pts_pct": 0
           },
           {
             "label": "TR",
-            "eff": null,
-            "tot": 0,
+            "eff": -100,
+            "tot": 1,
             "pts": 0,
-            "pts_pct": null
+            "pts_pct": 0
           }
         ],
         "llamadas": [],
         "so": {
-          "eff": -25,
-          "tot": 4
+          "eff": 0,
+          "tot": 3
         },
         "tr": {
-          "eff": null,
-          "tot": 0
+          "eff": -100,
+          "tot": 1
         }
       }
     }
@@ -35714,17 +35714,17 @@ const PARTIDOS_INDIVIDUAL = [
           },
           {
             "label": "SO",
-            "eff": 44,
-            "tot": 63,
-            "pts": 36,
-            "pts_pct": 57
+            "eff": 42,
+            "tot": 52,
+            "pts": 29,
+            "pts_pct": 56
           },
           {
             "label": "TR",
-            "eff": 33,
-            "tot": 15,
-            "pts": 7,
-            "pts_pct": 47
+            "eff": 42,
+            "tot": 26,
+            "pts": 14,
+            "pts_pct": 54
           }
         ],
         "llamadas": [
@@ -35824,12 +35824,12 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "so": {
-          "eff": 44,
-          "tot": 63
+          "eff": 42,
+          "tot": 52
         },
         "tr": {
-          "eff": 33,
-          "tot": 15
+          "eff": 42,
+          "tot": 26
         }
       },
       "suplente": {
@@ -35949,26 +35949,26 @@ const PARTIDOS_INDIVIDUAL = [
           {
             "label": "SO",
             "eff": 0,
-            "tot": 4,
+            "tot": 3,
             "pts": 1,
-            "pts_pct": 25
+            "pts_pct": 33
           },
           {
             "label": "TR",
-            "eff": 100,
-            "tot": 2,
+            "eff": 67,
+            "tot": 3,
             "pts": 2,
-            "pts_pct": 100
+            "pts_pct": 67
           }
         ],
         "llamadas": [],
         "so": {
           "eff": 0,
-          "tot": 4
+          "tot": 3
         },
         "tr": {
-          "eff": 100,
-          "tot": 2
+          "eff": 67,
+          "tot": 3
         }
       }
     }
@@ -38659,17 +38659,17 @@ const PARTIDOS_INDIVIDUAL = [
           },
           {
             "label": "SO",
-            "eff": 45,
-            "tot": 55,
-            "pts": 31,
-            "pts_pct": 56
+            "eff": 48,
+            "tot": 46,
+            "pts": 27,
+            "pts_pct": 59
           },
           {
             "label": "TR",
-            "eff": 21,
-            "tot": 28,
-            "pts": 9,
-            "pts_pct": 32
+            "eff": 24,
+            "tot": 37,
+            "pts": 13,
+            "pts_pct": 35
           }
         ],
         "llamadas": [
@@ -38718,12 +38718,12 @@ const PARTIDOS_INDIVIDUAL = [
           }
         ],
         "so": {
-          "eff": 45,
-          "tot": 55
+          "eff": 48,
+          "tot": 46
         },
         "tr": {
-          "eff": 21,
-          "tot": 28
+          "eff": 24,
+          "tot": 37
         }
       },
       "suplente": {
@@ -38859,30 +38859,30 @@ const PARTIDOS_INDIVIDUAL = [
           },
           {
             "label": "SO",
-            "eff": 25,
-            "tot": 4,
-            "pts": 2,
-            "pts_pct": 50
+            "eff": -50,
+            "tot": 2,
+            "pts": 0,
+            "pts_pct": 0
           },
           {
             "label": "TR",
-            "eff": 67,
-            "tot": 3,
-            "pts": 2,
-            "pts_pct": 67
+            "eff": 80,
+            "tot": 5,
+            "pts": 4,
+            "pts_pct": 80
           }
         ],
         "llamadas": [],
         "so": {
-          "eff": 25,
-          "tot": 4
+          "eff": -50,
+          "tot": 2
         },
         "tr": {
-          "eff": 67,
-          "tot": 3
+          "eff": 80,
+          "tot": 5
         }
       }
     }
   }
 ];
-const PARTIDOS_ARMADOR = {"titular": {"nombre": "4 Vazquez Ezequiel", "num": 4, "rotaciones": [{"pos": "P4", "total": 42, "total_all": 90, "dist": [{"zona": 4, "tot": 17, "pts": 13, "pct": 40, "pct_p": 76}, {"zona": 3, "tot": 16, "pts": 9, "pct": 38, "pct_p": 56}, {"zona": 9, "tot": 8, "pts": 4, "pct": 19, "pct_p": 50}, {"zona": 8, "tot": 1, "pts": 0, "pct": 2, "pct_p": 0}]}, {"pos": "P3", "total": 39, "total_all": 108, "dist": [{"zona": 4, "tot": 16, "pts": 8, "pct": 41, "pct_p": 50}, {"zona": 3, "tot": 15, "pts": 11, "pct": 38, "pct_p": 73}, {"zona": 9, "tot": 6, "pts": 2, "pct": 15, "pct_p": 33}, {"zona": 2, "tot": 1, "pts": 0, "pct": 3, "pct_p": 0}, {"zona": 8, "tot": 1, "pts": 0, "pct": 3, "pct_p": 0}]}, {"pos": "P2", "total": 41, "total_all": 109, "dist": [{"zona": 3, "tot": 14, "pts": 8, "pct": 34, "pct_p": 57}, {"zona": 4, "tot": 14, "pts": 6, "pct": 34, "pct_p": 43}, {"zona": 9, "tot": 8, "pts": 3, "pct": 20, "pct_p": 38}, {"zona": 8, "tot": 4, "pts": 2, "pct": 10, "pct_p": 50}, {"zona": 2, "tot": 1, "pts": 1, "pct": 2, "pct_p": 100}]}, {"pos": "P5", "total": 42, "total_all": 115, "dist": [{"zona": 4, "tot": 18, "pts": 11, "pct": 43, "pct_p": 61}, {"zona": 3, "tot": 16, "pts": 9, "pct": 38, "pct_p": 56}, {"zona": 2, "tot": 8, "pts": 3, "pct": 19, "pct_p": 38}]}, {"pos": "P6", "total": 52, "total_all": 140, "dist": [{"zona": 4, "tot": 19, "pts": 10, "pct": 37, "pct_p": 53}, {"zona": 3, "tot": 17, "pts": 9, "pct": 33, "pct_p": 53}, {"zona": 2, "tot": 15, "pts": 8, "pct": 29, "pct_p": 53}, {"zona": 8, "tot": 1, "pts": 0, "pct": 2, "pct_p": 0}]}, {"pos": "P1", "total": 59, "total_all": 152, "dist": [{"zona": 4, "tot": 21, "pts": 9, "pct": 36, "pct_p": 43}, {"zona": 3, "tot": 20, "pts": 12, "pct": 34, "pct_p": 60}, {"zona": 2, "tot": 12, "pts": 5, "pct": 20, "pct_p": 42}, {"zona": 8, "tot": 6, "pts": 5, "pct": 10, "pct_p": 83}]}], "pills": [{"label": "P1", "eff": 32, "tot": 152, "pts": 70, "pts_pct": 46}, {"label": "P6", "eff": 31, "tot": 140, "pts": 61, "pts_pct": 44}, {"label": "P5", "eff": 40, "tot": 115, "pts": 63, "pts_pct": 55}, {"label": "P4", "eff": 43, "tot": 90, "pts": 48, "pts_pct": 53}, {"label": "P3", "eff": 29, "tot": 108, "pts": 48, "pts_pct": 44}, {"label": "P2", "eff": 28, "tot": 109, "pts": 47, "pts_pct": 43}, {"label": "SO", "eff": 37, "tot": 541, "pts": 270, "pts_pct": 50}, {"label": "TR", "eff": 21, "tot": 173, "pts": 67, "pts_pct": 39}], "llamadas": [{"call": "K1", "tot": 246, "eff": 40, "pts_pct": 54, "dist": [{"zona": 4, "tot": 91, "pts": 51, "pct": 38, "pct_p": 56}, {"zona": 3, "tot": 83, "pts": 51, "pct": 35, "pct_p": 61}, {"zona": 2, "tot": 33, "pts": 14, "pct": 14, "pct_p": 42}, {"zona": 9, "tot": 20, "pts": 7, "pct": 8, "pct_p": 35}, {"zona": 8, "tot": 11, "pts": 7, "pct": 5, "pct_p": 64}]}, {"call": "K7", "tot": 12, "eff": 17, "pts_pct": 33, "dist": [{"zona": 4, "tot": 2, "pts": 0, "pct": 40, "pct_p": 0}, {"zona": 3, "tot": 2, "pts": 1, "pct": 40, "pct_p": 50}, {"zona": 8, "tot": 1, "pts": 0, "pct": 20, "pct_p": 0}]}, {"call": "KM", "tot": 17, "eff": 59, "pts_pct": 59, "dist": [{"zona": 2, "tot": 6, "pts": 5, "pct": 35, "pct_p": 83}, {"zona": 3, "tot": 5, "pts": 2, "pct": 29, "pct_p": 40}, {"zona": 9, "tot": 3, "pts": 2, "pct": 18, "pct_p": 67}, {"zona": 4, "tot": 2, "pts": 0, "pct": 12, "pct_p": 0}, {"zona": 8, "tot": 1, "pts": 1, "pct": 6, "pct_p": 100}]}, {"call": "K2", "tot": 20, "eff": 65, "pts_pct": 70, "dist": [{"zona": 3, "tot": 12, "pts": 6, "pct": 67, "pct_p": 50}, {"zona": 9, "tot": 2, "pts": 2, "pct": 11, "pct_p": 100}, {"zona": 2, "tot": 2, "pts": 2, "pct": 11, "pct_p": 100}, {"zona": 4, "tot": 2, "pts": 2, "pct": 11, "pct_p": 100}]}, {"call": "KC", "tot": 43, "eff": 16, "pts_pct": 33, "dist": [{"zona": 4, "tot": 22, "pts": 7, "pct": 51, "pct_p": 32}, {"zona": 3, "tot": 8, "pts": 3, "pct": 19, "pct_p": 38}, {"zona": 9, "tot": 7, "pts": 3, "pct": 16, "pct_p": 43}, {"zona": 2, "tot": 4, "pts": 0, "pct": 9, "pct_p": 0}, {"zona": 8, "tot": 2, "pts": 1, "pct": 5, "pct_p": 50}]}, {"call": "KP", "tot": 8, "eff": 50, "pts_pct": 50, "dist": [{"zona": 4, "tot": 4, "pts": 1, "pct": 50, "pct_p": 25}, {"zona": 3, "tot": 3, "pts": 2, "pct": 38, "pct_p": 67}, {"zona": 8, "tot": 1, "pts": 1, "pct": 12, "pct_p": 100}]}, {"call": "KE", "tot": 50, "eff": 38, "pts_pct": 52, "dist": [{"zona": 4, "tot": 29, "pts": 12, "pct": 59, "pct_p": 41}, {"zona": 9, "tot": 7, "pts": 5, "pct": 14, "pct_p": 71}, {"zona": 3, "tot": 7, "pts": 6, "pct": 14, "pct_p": 86}, {"zona": 2, "tot": 6, "pts": 3, "pct": 12, "pct_p": 50}]}, {"call": "KB", "tot": 16, "eff": 50, "pts_pct": 62, "dist": [{"zona": 4, "tot": 6, "pts": 5, "pct": 40, "pct_p": 83}, {"zona": 2, "tot": 4, "pts": 4, "pct": 27, "pct_p": 100}, {"zona": 3, "tot": 3, "pts": 1, "pct": 20, "pct_p": 33}, {"zona": 9, "tot": 2, "pts": 0, "pct": 13, "pct_p": 0}]}], "so": {"eff": 37, "tot": 541}, "tr": {"eff": 21, "tot": 173}}, "suplente": {"nombre": "9 Godoy Martin", "num": 9, "rotaciones": [{"pos": "P4", "total": 18, "total_all": 37, "dist": [{"zona": 4, "tot": 9, "pts": 4, "pct": 50, "pct_p": 44}, {"zona": 3, "tot": 7, "pts": 5, "pct": 39, "pct_p": 71}, {"zona": 9, "tot": 2, "pts": 1, "pct": 11, "pct_p": 50}]}, {"pos": "P3", "total": 13, "total_all": 44, "dist": [{"zona": 3, "tot": 6, "pts": 3, "pct": 46, "pct_p": 50}, {"zona": 4, "tot": 4, "pts": 1, "pct": 31, "pct_p": 25}, {"zona": 8, "tot": 2, "pts": 1, "pct": 15, "pct_p": 50}, {"zona": 9, "tot": 1, "pts": 0, "pct": 8, "pct_p": 0}]}, {"pos": "P2", "total": 12, "total_all": 38, "dist": [{"zona": 4, "tot": 4, "pts": 3, "pct": 33, "pct_p": 75}, {"zona": 3, "tot": 4, "pts": 3, "pct": 33, "pct_p": 75}, {"zona": 9, "tot": 3, "pts": 3, "pct": 25, "pct_p": 100}, {"zona": 8, "tot": 1, "pts": 1, "pct": 8, "pct_p": 100}]}, {"pos": "P5", "total": 24, "total_all": 39, "dist": [{"zona": 3, "tot": 13, "pts": 6, "pct": 54, "pct_p": 46}, {"zona": 4, "tot": 7, "pts": 4, "pct": 29, "pct_p": 57}, {"zona": 2, "tot": 3, "pts": 1, "pct": 12, "pct_p": 33}, {"zona": 8, "tot": 1, "pts": 0, "pct": 4, "pct_p": 0}]}, {"pos": "P6", "total": 29, "total_all": 54, "dist": [{"zona": 4, "tot": 10, "pts": 6, "pct": 34, "pct_p": 60}, {"zona": 2, "tot": 10, "pts": 5, "pct": 34, "pct_p": 50}, {"zona": 3, "tot": 9, "pts": 6, "pct": 31, "pct_p": 67}]}, {"pos": "P1", "total": 30, "total_all": 79, "dist": [{"zona": 4, "tot": 11, "pts": 3, "pct": 37, "pct_p": 27}, {"zona": 3, "tot": 11, "pts": 5, "pct": 37, "pct_p": 45}, {"zona": 2, "tot": 6, "pts": 0, "pct": 20, "pct_p": 0}, {"zona": 8, "tot": 2, "pts": 0, "pct": 7, "pct_p": 0}]}], "pills": [{"label": "P1", "eff": 16, "tot": 79, "pts": 26, "pts_pct": 33}, {"label": "P6", "eff": 39, "tot": 54, "pts": 27, "pts_pct": 50}, {"label": "P5", "eff": 23, "tot": 39, "pts": 17, "pts_pct": 44}, {"label": "P4", "eff": 32, "tot": 37, "pts": 19, "pts_pct": 51}, {"label": "P3", "eff": 18, "tot": 44, "pts": 16, "pts_pct": 36}, {"label": "P2", "eff": 55, "tot": 38, "pts": 23, "pts_pct": 61}, {"label": "SO", "eff": 28, "tot": 239, "pts": 105, "pts_pct": 44}, {"label": "TR", "eff": 31, "tot": 52, "pts": 23, "pts_pct": 44}], "llamadas": [{"call": "K1", "tot": 95, "eff": 32, "pts_pct": 47, "dist": [{"zona": 3, "tot": 42, "pts": 21, "pct": 45, "pct_p": 50}, {"zona": 4, "tot": 30, "pts": 15, "pct": 32, "pct_p": 50}, {"zona": 2, "tot": 12, "pts": 5, "pct": 13, "pct_p": 42}, {"zona": 8, "tot": 5, "pts": 2, "pct": 5, "pct_p": 40}, {"zona": 9, "tot": 4, "pts": 2, "pct": 4, "pct_p": 50}]}, {"call": "K7", "tot": 30, "eff": 37, "pts_pct": 50, "dist": [{"zona": 4, "tot": 12, "pts": 5, "pct": 46, "pct_p": 42}, {"zona": 3, "tot": 7, "pts": 6, "pct": 27, "pct_p": 86}, {"zona": 2, "tot": 5, "pts": 1, "pct": 19, "pct_p": 20}, {"zona": 9, "tot": 2, "pts": 2, "pct": 8, "pct_p": 100}]}, {"call": "KM", "tot": 12, "eff": -17, "pts_pct": 17, "dist": [{"zona": 2, "tot": 8, "pts": 1, "pct": 67, "pct_p": 12}, {"zona": 4, "tot": 2, "pts": 1, "pct": 17, "pct_p": 50}, {"zona": 9, "tot": 1, "pts": 0, "pct": 8, "pct_p": 0}, {"zona": 8, "tot": 1, "pts": 0, "pct": 8, "pct_p": 0}]}, {"call": "KC", "tot": 69, "eff": 32, "pts_pct": 43, "dist": [{"zona": 4, "tot": 35, "pts": 14, "pct": 51, "pct_p": 40}, {"zona": 2, "tot": 11, "pts": 4, "pct": 16, "pct_p": 36}, {"zona": 9, "tot": 11, "pts": 6, "pct": 16, "pct_p": 55}, {"zona": 3, "tot": 8, "pts": 5, "pct": 12, "pct_p": 62}, {"zona": 8, "tot": 3, "pts": 1, "pct": 4, "pct_p": 33}]}, {"call": "KP", "tot": 6, "eff": 50, "pts_pct": 50, "dist": [{"zona": 4, "tot": 3, "pts": 1, "pct": 100, "pct_p": 33}]}, {"call": "KE", "tot": 24, "eff": 21, "pts_pct": 42, "dist": [{"zona": 4, "tot": 12, "pts": 4, "pct": 50, "pct_p": 33}, {"zona": 2, "tot": 5, "pts": 4, "pct": 21, "pct_p": 80}, {"zona": 9, "tot": 5, "pts": 1, "pct": 21, "pct_p": 20}, {"zona": 3, "tot": 2, "pts": 1, "pct": 8, "pct_p": 50}]}], "so": {"eff": 28, "tot": 239}, "tr": {"eff": 31, "tot": 52}}};
+const PARTIDOS_ARMADOR = {"titular": {"nombre": "4 Vazquez Ezequiel", "num": 4, "rotaciones": [{"pos": "P4", "total": 42, "total_all": 90, "dist": [{"zona": 4, "tot": 17, "pts": 13, "pct": 40, "pct_p": 76}, {"zona": 3, "tot": 16, "pts": 9, "pct": 38, "pct_p": 56}, {"zona": 9, "tot": 8, "pts": 4, "pct": 19, "pct_p": 50}, {"zona": 8, "tot": 1, "pts": 0, "pct": 2, "pct_p": 0}]}, {"pos": "P3", "total": 39, "total_all": 108, "dist": [{"zona": 4, "tot": 16, "pts": 8, "pct": 41, "pct_p": 50}, {"zona": 3, "tot": 15, "pts": 11, "pct": 38, "pct_p": 73}, {"zona": 9, "tot": 6, "pts": 2, "pct": 15, "pct_p": 33}, {"zona": 2, "tot": 1, "pts": 0, "pct": 3, "pct_p": 0}, {"zona": 8, "tot": 1, "pts": 0, "pct": 3, "pct_p": 0}]}, {"pos": "P2", "total": 41, "total_all": 109, "dist": [{"zona": 3, "tot": 14, "pts": 8, "pct": 34, "pct_p": 57}, {"zona": 4, "tot": 14, "pts": 6, "pct": 34, "pct_p": 43}, {"zona": 9, "tot": 8, "pts": 3, "pct": 20, "pct_p": 38}, {"zona": 8, "tot": 4, "pts": 2, "pct": 10, "pct_p": 50}, {"zona": 2, "tot": 1, "pts": 1, "pct": 2, "pct_p": 100}]}, {"pos": "P5", "total": 42, "total_all": 115, "dist": [{"zona": 4, "tot": 18, "pts": 11, "pct": 43, "pct_p": 61}, {"zona": 3, "tot": 16, "pts": 9, "pct": 38, "pct_p": 56}, {"zona": 2, "tot": 8, "pts": 3, "pct": 19, "pct_p": 38}]}, {"pos": "P6", "total": 52, "total_all": 140, "dist": [{"zona": 4, "tot": 19, "pts": 10, "pct": 37, "pct_p": 53}, {"zona": 3, "tot": 17, "pts": 9, "pct": 33, "pct_p": 53}, {"zona": 2, "tot": 15, "pts": 8, "pct": 29, "pct_p": 53}, {"zona": 8, "tot": 1, "pts": 0, "pct": 2, "pct_p": 0}]}, {"pos": "P1", "total": 59, "total_all": 152, "dist": [{"zona": 4, "tot": 21, "pts": 9, "pct": 36, "pct_p": 43}, {"zona": 3, "tot": 20, "pts": 12, "pct": 34, "pct_p": 60}, {"zona": 2, "tot": 12, "pts": 5, "pct": 20, "pct_p": 42}, {"zona": 8, "tot": 6, "pts": 5, "pct": 10, "pct_p": 83}]}], "pills": [{"label": "P1", "eff": 32, "tot": 152, "pts": 70, "pts_pct": 46}, {"label": "P6", "eff": 31, "tot": 140, "pts": 61, "pts_pct": 44}, {"label": "P5", "eff": 40, "tot": 115, "pts": 63, "pts_pct": 55}, {"label": "P4", "eff": 43, "tot": 90, "pts": 48, "pts_pct": 53}, {"label": "P3", "eff": 29, "tot": 108, "pts": 48, "pts_pct": 44}, {"label": "P2", "eff": 28, "tot": 109, "pts": 47, "pts_pct": 43}, {"label": "SO", "eff": 40, "tot": 436, "pts": 231, "pts_pct": 53}, {"label": "TR", "eff": 22, "tot": 278, "pts": 106, "pts_pct": 38}], "llamadas": [{"call": "K1", "tot": 246, "eff": 40, "pts_pct": 54, "dist": [{"zona": 4, "tot": 91, "pts": 51, "pct": 38, "pct_p": 56}, {"zona": 3, "tot": 83, "pts": 51, "pct": 35, "pct_p": 61}, {"zona": 2, "tot": 33, "pts": 14, "pct": 14, "pct_p": 42}, {"zona": 9, "tot": 20, "pts": 7, "pct": 8, "pct_p": 35}, {"zona": 8, "tot": 11, "pts": 7, "pct": 5, "pct_p": 64}]}, {"call": "K7", "tot": 12, "eff": 17, "pts_pct": 33, "dist": [{"zona": 4, "tot": 2, "pts": 0, "pct": 40, "pct_p": 0}, {"zona": 3, "tot": 2, "pts": 1, "pct": 40, "pct_p": 50}, {"zona": 8, "tot": 1, "pts": 0, "pct": 20, "pct_p": 0}]}, {"call": "KM", "tot": 17, "eff": 59, "pts_pct": 59, "dist": [{"zona": 2, "tot": 6, "pts": 5, "pct": 35, "pct_p": 83}, {"zona": 3, "tot": 5, "pts": 2, "pct": 29, "pct_p": 40}, {"zona": 9, "tot": 3, "pts": 2, "pct": 18, "pct_p": 67}, {"zona": 4, "tot": 2, "pts": 0, "pct": 12, "pct_p": 0}, {"zona": 8, "tot": 1, "pts": 1, "pct": 6, "pct_p": 100}]}, {"call": "K2", "tot": 20, "eff": 65, "pts_pct": 70, "dist": [{"zona": 3, "tot": 12, "pts": 6, "pct": 67, "pct_p": 50}, {"zona": 9, "tot": 2, "pts": 2, "pct": 11, "pct_p": 100}, {"zona": 2, "tot": 2, "pts": 2, "pct": 11, "pct_p": 100}, {"zona": 4, "tot": 2, "pts": 2, "pct": 11, "pct_p": 100}]}, {"call": "KC", "tot": 43, "eff": 16, "pts_pct": 33, "dist": [{"zona": 4, "tot": 22, "pts": 7, "pct": 51, "pct_p": 32}, {"zona": 3, "tot": 8, "pts": 3, "pct": 19, "pct_p": 38}, {"zona": 9, "tot": 7, "pts": 3, "pct": 16, "pct_p": 43}, {"zona": 2, "tot": 4, "pts": 0, "pct": 9, "pct_p": 0}, {"zona": 8, "tot": 2, "pts": 1, "pct": 5, "pct_p": 50}]}, {"call": "KP", "tot": 8, "eff": 50, "pts_pct": 50, "dist": [{"zona": 4, "tot": 4, "pts": 1, "pct": 50, "pct_p": 25}, {"zona": 3, "tot": 3, "pts": 2, "pct": 38, "pct_p": 67}, {"zona": 8, "tot": 1, "pts": 1, "pct": 12, "pct_p": 100}]}, {"call": "KE", "tot": 50, "eff": 38, "pts_pct": 52, "dist": [{"zona": 4, "tot": 29, "pts": 12, "pct": 59, "pct_p": 41}, {"zona": 9, "tot": 7, "pts": 5, "pct": 14, "pct_p": 71}, {"zona": 3, "tot": 7, "pts": 6, "pct": 14, "pct_p": 86}, {"zona": 2, "tot": 6, "pts": 3, "pct": 12, "pct_p": 50}]}, {"call": "KB", "tot": 16, "eff": 50, "pts_pct": 62, "dist": [{"zona": 4, "tot": 6, "pts": 5, "pct": 40, "pct_p": 83}, {"zona": 2, "tot": 4, "pts": 4, "pct": 27, "pct_p": 100}, {"zona": 3, "tot": 3, "pts": 1, "pct": 20, "pct_p": 33}, {"zona": 9, "tot": 2, "pts": 0, "pct": 13, "pct_p": 0}]}], "so": {"eff": 40, "tot": 436}, "tr": {"eff": 22, "tot": 278}}, "suplente": {"nombre": "9 Godoy Martin", "num": 9, "rotaciones": [{"pos": "P4", "total": 18, "total_all": 37, "dist": [{"zona": 4, "tot": 9, "pts": 4, "pct": 50, "pct_p": 44}, {"zona": 3, "tot": 7, "pts": 5, "pct": 39, "pct_p": 71}, {"zona": 9, "tot": 2, "pts": 1, "pct": 11, "pct_p": 50}]}, {"pos": "P3", "total": 13, "total_all": 44, "dist": [{"zona": 3, "tot": 6, "pts": 3, "pct": 46, "pct_p": 50}, {"zona": 4, "tot": 4, "pts": 1, "pct": 31, "pct_p": 25}, {"zona": 8, "tot": 2, "pts": 1, "pct": 15, "pct_p": 50}, {"zona": 9, "tot": 1, "pts": 0, "pct": 8, "pct_p": 0}]}, {"pos": "P2", "total": 12, "total_all": 38, "dist": [{"zona": 4, "tot": 4, "pts": 3, "pct": 33, "pct_p": 75}, {"zona": 3, "tot": 4, "pts": 3, "pct": 33, "pct_p": 75}, {"zona": 9, "tot": 3, "pts": 3, "pct": 25, "pct_p": 100}, {"zona": 8, "tot": 1, "pts": 1, "pct": 8, "pct_p": 100}]}, {"pos": "P5", "total": 24, "total_all": 39, "dist": [{"zona": 3, "tot": 13, "pts": 6, "pct": 54, "pct_p": 46}, {"zona": 4, "tot": 7, "pts": 4, "pct": 29, "pct_p": 57}, {"zona": 2, "tot": 3, "pts": 1, "pct": 12, "pct_p": 33}, {"zona": 8, "tot": 1, "pts": 0, "pct": 4, "pct_p": 0}]}, {"pos": "P6", "total": 29, "total_all": 54, "dist": [{"zona": 4, "tot": 10, "pts": 6, "pct": 34, "pct_p": 60}, {"zona": 2, "tot": 10, "pts": 5, "pct": 34, "pct_p": 50}, {"zona": 3, "tot": 9, "pts": 6, "pct": 31, "pct_p": 67}]}, {"pos": "P1", "total": 30, "total_all": 79, "dist": [{"zona": 4, "tot": 11, "pts": 3, "pct": 37, "pct_p": 27}, {"zona": 3, "tot": 11, "pts": 5, "pct": 37, "pct_p": 45}, {"zona": 2, "tot": 6, "pts": 0, "pct": 20, "pct_p": 0}, {"zona": 8, "tot": 2, "pts": 0, "pct": 7, "pct_p": 0}]}], "pills": [{"label": "P1", "eff": 16, "tot": 79, "pts": 26, "pts_pct": 33}, {"label": "P6", "eff": 39, "tot": 54, "pts": 27, "pts_pct": 50}, {"label": "P5", "eff": 23, "tot": 39, "pts": 17, "pts_pct": 44}, {"label": "P4", "eff": 32, "tot": 37, "pts": 19, "pts_pct": 51}, {"label": "P3", "eff": 18, "tot": 44, "pts": 16, "pts_pct": 36}, {"label": "P2", "eff": 55, "tot": 38, "pts": 23, "pts_pct": 61}, {"label": "SO", "eff": 28, "tot": 183, "pts": 81, "pts_pct": 44}, {"label": "TR", "eff": 30, "tot": 108, "pts": 47, "pts_pct": 44}], "llamadas": [{"call": "K1", "tot": 95, "eff": 32, "pts_pct": 47, "dist": [{"zona": 3, "tot": 42, "pts": 21, "pct": 45, "pct_p": 50}, {"zona": 4, "tot": 30, "pts": 15, "pct": 32, "pct_p": 50}, {"zona": 2, "tot": 12, "pts": 5, "pct": 13, "pct_p": 42}, {"zona": 8, "tot": 5, "pts": 2, "pct": 5, "pct_p": 40}, {"zona": 9, "tot": 4, "pts": 2, "pct": 4, "pct_p": 50}]}, {"call": "K7", "tot": 30, "eff": 37, "pts_pct": 50, "dist": [{"zona": 4, "tot": 12, "pts": 5, "pct": 46, "pct_p": 42}, {"zona": 3, "tot": 7, "pts": 6, "pct": 27, "pct_p": 86}, {"zona": 2, "tot": 5, "pts": 1, "pct": 19, "pct_p": 20}, {"zona": 9, "tot": 2, "pts": 2, "pct": 8, "pct_p": 100}]}, {"call": "KM", "tot": 12, "eff": -17, "pts_pct": 17, "dist": [{"zona": 2, "tot": 8, "pts": 1, "pct": 67, "pct_p": 12}, {"zona": 4, "tot": 2, "pts": 1, "pct": 17, "pct_p": 50}, {"zona": 9, "tot": 1, "pts": 0, "pct": 8, "pct_p": 0}, {"zona": 8, "tot": 1, "pts": 0, "pct": 8, "pct_p": 0}]}, {"call": "KC", "tot": 69, "eff": 32, "pts_pct": 43, "dist": [{"zona": 4, "tot": 35, "pts": 14, "pct": 51, "pct_p": 40}, {"zona": 2, "tot": 11, "pts": 4, "pct": 16, "pct_p": 36}, {"zona": 9, "tot": 11, "pts": 6, "pct": 16, "pct_p": 55}, {"zona": 3, "tot": 8, "pts": 5, "pct": 12, "pct_p": 62}, {"zona": 8, "tot": 3, "pts": 1, "pct": 4, "pct_p": 33}]}, {"call": "KP", "tot": 6, "eff": 50, "pts_pct": 50, "dist": [{"zona": 4, "tot": 3, "pts": 1, "pct": 100, "pct_p": 33}]}, {"call": "KE", "tot": 24, "eff": 21, "pts_pct": 42, "dist": [{"zona": 4, "tot": 12, "pts": 4, "pct": 50, "pct_p": 33}, {"zona": 2, "tot": 5, "pts": 4, "pct": 21, "pct_p": 80}, {"zona": 9, "tot": 5, "pts": 1, "pct": 21, "pct_p": 20}, {"zona": 3, "tot": 2, "pts": 1, "pct": 8, "pct_p": 50}]}], "so": {"eff": 28, "tot": 183}, "tr": {"eff": 30, "tot": 108}}};
