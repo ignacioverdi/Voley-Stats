@@ -242,6 +242,9 @@ def update_database(dvw_dir, temporada, db_path='casla_players_db.json'):
     else:
         teams_data = {}; games_log = []; existing_dates = set()
 
+    # firma por PARTIDO (fecha + equipos) para evitar contar dos veces archivos duplicados/copias
+    existing_sigs = {(g.get('date'), tuple(sorted([g.get('home',''), g.get('away','')]))) for g in games_log}
+
     dvw_files = sorted([f for f in os.listdir(dvw_dir) if f.endswith('.dvw')])
     added = 0; skipped = 0
 
@@ -256,6 +259,13 @@ def update_database(dvw_dir, temporada, db_path='casla_players_db.json'):
             result, date, home, away = parse_dvw_both(fpath, temporada)
         except Exception as e:
             print(f"  ERROR {fname}: {e}"); continue
+
+        # mismo partido ya cargado desde otro archivo (copia "(1)", re-scout, etc.) → no contar doble
+        sig = (date, tuple(sorted([home, away])))
+        if date and sig in existing_sigs:
+            print(f"  ⚠ DUPLICADO omitido: {fname} (mismo partido que uno ya cargado)")
+            skipped += 1; continue
+        existing_sigs.add(sig)
 
         for team, data in result.items():
             if team not in teams_data: teams_data[team] = {}
@@ -518,6 +528,7 @@ def collect_setter_rallies(dvw_dir, team_norm_map, main_teams, teams_data=None):
             liberos_by_team[tm] = libs
     rallies_both = defaultdict(lambda: defaultdict(list))
     setters_detected = {}
+    seen_sigs = set()  # evitar contar dos veces archivos del mismo partido (copias/duplicados)
     files = sorted([f for f in os.listdir(dvw_dir) if f.endswith('.dvw')])
     for fname in files:
         with open(os.path.join(dvw_dir, fname), encoding='utf-8', errors='ignore') as f:
@@ -527,6 +538,10 @@ def collect_setter_rallies(dvw_dir, team_norm_map, main_teams, teams_data=None):
         home = norm(h_raw); away = norm(a_raw)
         m = re.search(r'(\d{4}-\d{2}-\d{2})', fname)
         date = m.group(1) if m else ''
+        sig = (date, tuple(sorted([home, away])))
+        if date and sig in seen_sigs:
+            continue  # mismo partido ya procesado (copia "(1)", re-scout) → no contar doble
+        seen_sigs.add(sig)
         for team, pfx, rpfx, ishome, rival in [(home, '*', 'a', True, away), (away, 'a', '*', False, home)]:
             if team not in main_teams: continue
             team_libs = liberos_by_team.get(team, set())
