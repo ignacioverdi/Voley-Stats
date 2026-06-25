@@ -95,7 +95,8 @@ def build(folder, ent=False):
     matches={}
     for f in sorted(glob.glob(os.path.join(folder,'*.dvw'))):
         r=parse_dvw(f, ent=ent)
-        if r and r[0] and r[0] not in matches: matches[r[0]]=r[1]
+        # Solo incluir si tiene al menos 1 accion con segundo (scouteado con video)
+        if r and r[0] and r[1].get('actions') and r[0] not in matches: matches[r[0]]=r[1]
     return matches
 
 if __name__=='__main__':
