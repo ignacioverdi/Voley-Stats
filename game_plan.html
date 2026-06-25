@@ -1932,6 +1932,15 @@ function gpMmss(s){ s=Math.max(0,Math.round(s||0)); var m=Math.floor(s/60),x=s%6
 
 // recolecta los clips de un cuadrante con EL MISMO filtro que la canchita
 function gpPlayerName(num){ if(!num) return ''; var a=(GP_TD&&GP_TD.atk)||{}; var p=a[String(num)]; if(p&&p.name){ var pp=String(p.name).trim().split(' '); return pp[pp.length-1]; } return ''; }
+function gpApellido(num){
+  if(!num) return '';
+  var td=GP_TD||{}, p=null, secs=['atk','rec','srv'];
+  for(var i=0;i<secs.length;i++){ var sec=td[secs[i]]||{}; if(sec[String(num)] && sec[String(num)].name){ p=sec[String(num)]; break; } }
+  if(!p) return '';
+  var w=String(p.name).trim().split(/\s+/), pre=['DE','DEL','DI','LA','LE','VAN','VON','DER','DEN','MC','DA','SAN','SANTA'];
+  var ap=w[0]||''; if(w.length>=2 && pre.indexOf(w[0].toUpperCase())>=0) ap=w[0]+' '+w[1];
+  return ap.split(' ').map(function(x){ return x.charAt(0).toUpperCase()+x.slice(1).toLowerCase(); }).join(' ');
+}
 function gpZoneClips(setterObj,pos,phase,rec,zone){
   var RES=['#','/','+','!','=','-'];
   if(!setterObj||!setterObj.s) return [];
@@ -2248,7 +2257,7 @@ function renderArmador(){
       var recv={}; ((setterRaw&&setterRaw.s)||[]).forEach(function(r){ if(r[16]>0) recv[r[16]]=(recv[r[16]]||0)+1; });
       var nums=Object.keys(recv).map(Number).sort(function(a,b){return recv[b]-recv[a];});
       var o0=document.createElement('option'); o0.value=''; o0.textContent='Todos'; rnSel.appendChild(o0);
-      nums.forEach(function(n){ var o=document.createElement('option'); o.value=n; o.textContent='#'+n+' ('+recv[n]+')'; rnSel.appendChild(o); });
+      nums.forEach(function(n){ var o=document.createElement('option'); o.value=n; var ap=gpApellido(n); o.textContent='#'+n+(ap?' '+ap:'')+' ('+recv[n]+')'; rnSel.appendChild(o); });
       rnSel.addEventListener('change',function(){ GP_ARM_RECNUM=this.value?parseInt(this.value,10):null; gpArmSyncAll(); });
     })();
     function gpPaintFilters(){
