@@ -17,6 +17,22 @@ en el que pasó. El sistema toma ese segundo + el **link de YouTube** del partid
 
 ---
 
+## ⚡ Lo más fácil de todo: `HACER_TODO.bat`
+
+Un **solo doble-clic** que hace TODO lo automatizable de una (igual que en NÄFELS):
+1. Procesa los **partidos** (liga, heatmaps, tabla, game plans, datos y cortes).
+2. Procesa los **entrenamientos** (si hay carpeta con `.dvw`; si está vacía o no existe, la saltea solo, sin romperse).
+3. Te recuerda cargar los **links** si subiste videos nuevos.
+4. Te pregunta **¿Publicar? (S/N)** y sube todo a GitHub.
+
+Si una carpeta está vacía o un paso da error, **el bat NO se cuelga**: te avisa y sigue con lo que pueda.
+
+> El único paso que un .bat **no puede** hacer solo es **pegar los links de YouTube** (eso es en el navegador, en *Cargar Videos*). Cuando el bat te lo recuerde, abrís *Cargar Videos*, generás el `mapa_videos.js`, lo ponés en la carpeta, y recién ahí escribís **S** para publicar. La ventana te espera.
+
+Los bats viejos (`correr_casla.bat`, `correr_entrenamientos.bat`, `PUBLICAR_EN_GITHUB.bat`) siguen andando por separado si los querés. Pero con `HACER_TODO.bat` ya no los necesitás.
+
+---
+
 ## 🏐 PARTIDOS — paso a paso
 
 1. **Scouteás el partido en DataVolley con el video cargado.** (Es lo de siempre; es lo que pone el segundo a cada acción.)
