@@ -204,6 +204,15 @@ select, select option {
   color: #111111 !important;
   background-color: #ffffff !important;
 }
+/* ── Selector de rival en el header ── */
+.rival-select{
+  margin-top:6px; padding:5px 12px; cursor:pointer;
+  background:#0f1a2e !important; color:#fbbf24 !important;
+  border:1px solid rgba(251,191,36,.45); border-radius:8px;
+  font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:2px;
+}
+.rival-select:hover{ border-color:rgba(251,191,36,.8); }
+.rival-select option{ color:#111 !important; background:#fff !important; letter-spacing:1px; }
 
 .pdf-btn {
   padding: 7px 16px;
@@ -281,6 +290,7 @@ select, select option {
   <div>
     <div class="rival-name" id="rival-nombre">AMRISWIL</div>
     <div class="match-info" id="match-info">NLA Suiza 2026/27 · temporada en curso</div>
+    <select id="rival-select" class="rival-select" title="Elegir equipo rival"></select>
   </div>
   <div id="lang-wrap" style="display:flex;align-items:center;gap:4px;margin-right:8px"></div>
   <div class="nav-dots" id="nav-dots"></div>
@@ -503,7 +513,7 @@ var GP_L = window.LIGA_DATA;
 
 // Si no hay rival especificado, tomar el primero que no sea el equipo propio
 if (!GP_RIVAL_SLUG || !GP_L.teams[GP_RIVAL_SLUG]) {
-  var _keys = Object.keys(GP_L.teams);
+  var _keys = Object.keys(GP_L.teams).filter(function(k){ return k !== 'casla'; });
   GP_RIVAL_SLUG = _keys[0];
 }
 var GP_TD = GP_L.teams[GP_RIVAL_SLUG];
@@ -1780,6 +1790,24 @@ document.getElementById('modal').addEventListener('click',function(e){if(e.targe
 // INIT
 // ═══════════════════════════════════════════════════════
 document.getElementById('rival-nombre').textContent=RIVAL.nombre;
+
+// ── Selector de rival: lista todos los equipos (menos el propio) y cambia al elegir ──
+(function(){
+  var sel=document.getElementById('rival-select');
+  if(!sel || !GP_L || !GP_L.teams) return;
+  var opts=Object.keys(GP_L.teams)
+    .filter(function(s){ return s!=='casla'; })
+    .map(function(s){ return {slug:s, name:(GP_L.teams[s].name||s).toUpperCase()}; })
+    .sort(function(a,b){ return a.name.localeCompare(b.name); });
+  sel.innerHTML=opts.map(function(o){
+    return '<option value="'+o.slug+'"'+(o.slug===GP_RIVAL_SLUG?' selected':'')+'>'+o.name+'</option>';
+  }).join('');
+  sel.onchange=function(){
+    var p=new URLSearchParams(window.location.search);
+    p.set('rival', this.value);
+    window.location.search=p.toString();
+  };
+})();
 document.getElementById('match-info').textContent=RIVAL.info;
 var main=document.getElementById('main-content');
 var dots=document.getElementById('nav-dots');
