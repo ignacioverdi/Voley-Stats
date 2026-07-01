@@ -2404,7 +2404,7 @@ function renderArmador(){
         var notaInp=document.createElement('input');
         notaInp.type='text'; notaInp.placeholder='✍️ Anotá algo…';
         try{ notaInp.value=localStorage.getItem(notaKey)||''; }catch(e){}
-        notaInp.style.cssText='width:100%;box-sizing:border-box;background:transparent;border:none;color:#e2e8f0;font-family:Barlow Condensed,sans-serif;font-size:12px;padding:6px 8px;text-align:center;outline:none';
+        notaInp.style.cssText='width:100%;box-sizing:border-box;background:transparent;border:none;color:#e2e8f0;font-family:Barlow Condensed,sans-serif;font-size:12px;font-weight:700;padding:6px 8px;text-align:center;outline:none';
         notaInp.addEventListener('input',function(){ try{ localStorage.setItem(notaKey,this.value); }catch(e){} });
         notaWrap.appendChild(notaInp); card.appendChild(notaWrap);
         var stRow=document.createElement('div');
