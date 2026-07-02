@@ -339,8 +339,9 @@ function openArmZone(pos,zn){
 function evLabel(ev){if(ev==="#")return'<span class="r-pt">punto</span>';if(ev==="/")return'<span class="r-bl">bloq</span>';if(ev==="=")return'<span class="r-er">error</span>';return ev;}
 function tiles3(p,cfg){var t=cfg.tiles.map(function(lb,i){var hl=cfg.hl.indexOf(i)>=0?' hl':'';return '<div class="tile'+hl+'"><div class="l">'+lb+'</div><div class="v" id="'+p.id+'-s'+i+'"></div></div>';});return '<div class="row3">'+t.slice(0,3).join('')+'</div><div class="row3">'+t.slice(3,6).join('')+'</div><div class="row3">'+t.slice(6,9).join('')+'</div>';}
 function U(role){return role==='saque'?' saques':role==='reception'?' recep.':' ataques';}
+function filterOpts(p,cfg,fl){if(cfg.stats==='atk'&&fl.idx===0){var cm={};(p.data||[]).forEach(function(a){if(a[0])cm[a[0]]=1;});return [['all','Todos']].concat(Object.keys(cm).sort().map(function(c){return [c,c];}));}return fl.opts;}
 function buildSection(p){var cfg=ROLECFG[p.role];
-  var fh=cfg.filters.map(function(fl,i){return '<div class="fgroup"><label>'+fl.lab+'</label><select id="'+p.id+'-f'+i+'">'+opts(fl.opts)+'</select></div>';}).join('');
+  var fh=cfg.filters.map(function(fl,i){return '<div class="fgroup"><label>'+fl.lab+'</label><select id="'+p.id+'-f'+i+'">'+opts(filterOpts(p,cfg,fl))+'</select></div>';}).join('');
   if(cfg.stats==='atk'||cfg.stats==='srv'){fh+='<div class="fgroup"><label title="Mín. pelotas">Mín.</label><input type="number" min="0" value="0" id="'+p.id+'-min" style="background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:7px;font-family:inherit;font-weight:700"></div>';}
   return '<div class="player"><div class="phead"><div class="pnum">'+p.num+'</div><div class="pname">'+p.name+'</div><div class="prole">'+(p.pos||p.role)+'</div><div class="pmeta">'+p.total+U(p.role)+'</div></div>'
    +'<div class="filters">'+fh+'</div><div class="natt" id="'+p.id+'-n"></div>'
@@ -407,7 +408,7 @@ var VSEL={};try{VSEL=JSON.parse(localStorage.getItem("pp_vsel")||"{}")||{};}catc
 function ensureYT(cb){if(window.YT&&window.YT.Player){cb();return;}window.onYouTubeIframeAPIReady=cb;if(!document.getElementById("ytapi")){var s=document.createElement("script");s.id="ytapi";s.src="https://www.youtube.com/iframe_api";document.head.appendChild(s);}}
 function ppVid(code){var M=window.MAPA_VIDEOS||{};var u=M[code]||"";if(!u)return "";u=String(u);var m=u.match(/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_-]{11})/);return m?m[1]:(u.length===11?u:"");}
 function openZone(pid,zn){curP=PLAYERS.find(function(x){return x.id===pid;});curZn=zn;curKey=TEAM+"|"+pid+"|"+zn;onlyShow=false;var _vo=document.getElementById("vonly");if(_vo)_vo.checked=false;var cfg=ROLECFG[curP.role];
-  document.getElementById('vfilters').innerHTML=cfg.filters.map(function(fl,i){return '<div class="fgroup"><label>'+fl.lab+'</label><select id="vf'+i+'" onchange="recompute()">'+opts(fl.opts)+'</select></div>';}).join('');
+  document.getElementById('vfilters').innerHTML=cfg.filters.map(function(fl,i){return '<div class="fgroup"><label>'+fl.lab+'</label><select id="vf'+i+'" onchange="recompute()">'+opts(filterOpts(curP,cfg,fl))+'</select></div>';}).join('');
   cfg.filters.forEach(function(_,i){document.getElementById('vf'+i).value=g(pid+'-f'+i);});
   document.getElementById("vmodal").style.display="flex";recompute();}
 function recompute(){if(!curP)return;var cfg=ROLECFG[curP.role];
