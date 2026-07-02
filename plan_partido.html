@@ -196,8 +196,8 @@ footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--border);font-
           <button class="sec" onclick="nextClip()">▶</button>
           <span class="vcount" id="vcount"></span>
           <label>Vel <select id="vspeed" onchange="setSpeed(this.value)" style="width:auto"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
-          <label>Antes <input id="vpre" type="number" value="7" min="0" max="20" onchange="pre=+this.value||7"></label>
-          <label>Después <input id="vpost" type="number" value="3" min="0" max="20" onchange="post=+this.value||3"></label>
+          <label>Antes <input id="vpre" type="number" value="2" min="0" max="20" onchange="pre=+this.value||2"></label>
+          <label>Después <input id="vpost" type="number" value="8" min="0" max="20" onchange="post=+this.value||8"></label>
         </div>
       </div>
       <div class="vside">
@@ -403,7 +403,7 @@ document.getElementById('teamsel').addEventListener('change',function(){setTeam(
 buildTeam();
 
 /* ---- Video ---- */
-let YTP=null,YTReady=false,clips=[],cur=0,loadedVid="",vtimer=null,pre=7,post=3,speed=1,curP=null,curZn="";
+let YTP=null,YTReady=false,clips=[],cur=0,loadedVid="",vtimer=null,pre=2,post=8,speed=1,curP=null,curZn="";
 var VSEL={};try{VSEL=JSON.parse(localStorage.getItem("pp_vsel")||"{}")||{};}catch(e){VSEL={};}var onlyShow=false,curKey="";
 function ensureYT(cb){if(window.YT&&window.YT.Player){cb();return;}window.onYouTubeIframeAPIReady=cb;if(!document.getElementById("ytapi")){var s=document.createElement("script");s.id="ytapi";s.src="https://www.youtube.com/iframe_api";document.head.appendChild(s);}}
 function ppVid(code){var M=window.MAPA_VIDEOS||{};var u=M[code]||"";if(!u)return "";u=String(u);var m=u.match(/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_-]{11})/);return m?m[1]:(u.length===11?u:"");}
