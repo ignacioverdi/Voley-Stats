@@ -62,6 +62,7 @@ echo  Generando el scouting con %PY% ... puede tardar unos segundos.
 echo.
 
 %PY% gen_scouting.py --dvw_dir "%DVWDIR%" --output_dir .
+%PY% gen_plan_partido.py --dvw_dir "%DVWDIR%" --output_dir .
 
 if errorlevel 1 (
   echo.
