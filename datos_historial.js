@@ -1,4 +1,4 @@
-// datos_historial.js — 2026-07-06 23:12
+// datos_historial.js — 2026-07-06 23:25
 // 26 sesiones totales
 window.HISTORIAL_DATA = {
   "entrenamientos": [
