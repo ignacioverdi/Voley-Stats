@@ -321,6 +321,7 @@ function renderArmador(){
   if(armSetIdx>=armTeam.setters.length)armSetIdx=0;
   document.getElementById("armsetsel").innerHTML='<label>Armador</label>'+armTeam.setters.map(function(s,i){return '<button class="'+(i===armSetIdx?"on":"")+'" onclick="setArmSetter('+i+')">#'+s.num+" "+apellidoJS(s.name)+'</button>';}).join("");
   var setter=armTeam.setters[armSetIdx]||armTeam.setters[0];
+  if(typeof MSEL!=="undefined"&&typeof MATCHES!=="undefined"&&MSEL.size<MATCHES.length){var _ad=armDates();setter=Object.assign({},setter,{s:(setter.s||[]).filter(function(r){var _m=(armTeam.matches||[])[r[12]];return _m&&_ad[_m.date];})});}
   document.getElementById("armname").textContent=setter.name+" · "+setter.s.length+" armados";
   var callCount={};setter.s.forEach(function(r){if(r[5]>=0)callCount[r[5]]=(callCount[r[5]]||0)+1;});
   var callIdxs=Object.keys(callCount).map(Number).sort(function(a,b){return callCount[b]-callCount[a];});
@@ -351,6 +352,7 @@ function setArmRecNum(v){armRecNum=v?parseInt(v,10):null;renderArmador();}
 function setArmCall(v){armCall=(v==="all")?"all":parseInt(v,10);renderArmador();}
 function openArmZone(pos,zn){
   var setter=armTeam.setters[armSetIdx]||armTeam.setters[0];
+  if(typeof MSEL!=="undefined"&&typeof MATCHES!=="undefined"&&MSEL.size<MATCHES.length){var _ad=armDates();setter=Object.assign({},setter,{s:(setter.s||[]).filter(function(r){var _m=(armTeam.matches||[])[r[12]];return _m&&_ad[_m.date];})});}
   var rows=armRallies(setter,pos).filter(function(r){return String(gpGetZone(GP_COMBOS[r[8]]||"",r[11],r[6]))===zn;});
   var mt=(armTeam.matches||[]);
   clips=rows.map(function(r){var mm=mt[r[12]]||{},mid=mm.code||"",yt=ppVid(mid);return {tag:GP_COMBOS[r[8]]||"",ev:RESARM[r[9]]||"",t:r[14]||r[13],vid:yt,sel:true};}).filter(function(c){return c.vid&&c.t;});
