@@ -18,6 +18,12 @@ TEAMS_MAP = {
  '511':('ferro','Ferro'), '544':('uba','UBA'), '587':('velez','V\u00e9lez'),
 }
 TYPE={'Q':'pot','T':'pot','M':'flo','H':'flo'}
+# Unificación de combos: distintos diccionarios de scout, misma jugada -> código único
+COMBO_UNIFY={
+ 'W4':'X5','G4':'V5','Y8':'XP',            # punta
+ 'W2':'X6','G2':'V6','Y9':'X8','G9':'V8',  # opuesto
+ 'J1':'X1','J4':'XM','J2':'X7','J3':'X2',  # central
+}
 
 def read_dvw(fp):
     b=open(fp,'rb').read()
@@ -25,7 +31,27 @@ def read_dvw(fp):
     except UnicodeDecodeError: t=b.decode('latin-1','replace')
     return t.replace('\r\n','\n').replace('\r','\n')
 
-def build(dvw_dir, out_dir):
+def load_season_map(db_path, out_dir):
+    """Mapa archivo->temporada leido del mismo nla_players_db.json que usa update_db."""
+    cands=[]
+    if db_path: cands.append(db_path)
+    cands += [os.path.join(out_dir,'nla_players_db.json'), 'nla_players_db.json']
+    for p in cands:
+        try:
+            if os.path.exists(p):
+                db=json.load(open(p,encoding='utf-8'))
+                return {g.get('file'):g.get('temporada') for g in db.get('games',[]) if g.get('file')}
+        except Exception: pass
+    return {}
+
+def season_from_date(date):
+    """Fallback: deduce temporada 'YYYY/YY' desde la fecha (arranca en agosto)."""
+    try:
+        p=date.split('-'); y=int(p[0]); m=int(p[1]); st=y if m>=8 else y-1
+        return "%d/%02d"%(st,(st+1)%100)
+    except Exception: return None
+
+def build(dvw_dir, out_dir, filter_temp=None, db_path=None):
     TARGETS={tid:slug for tid,(slug,disp) in TEAMS_MAP.items()}
     NAMES_T={slug:disp for tid,(slug,disp) in TEAMS_MAP.items()}
     DISP_BY_ID={tid:disp for tid,(slug,disp) in TEAMS_MAP.items()}
@@ -89,13 +115,14 @@ def build(dvw_dir, out_dir):
             if team!=pfx and sk in ('A','D','E','B'): recv=False; continue
             if team==pfx and sk=='A':
                 tp=code[5:].split('~'); tr=tp[1] if len(tp)>1 else ''
-                D['atk'][pnum].append([tp[0],('g' if(recv and rq in '#+') else 'b' if(recv and rq in '!-') else 'o'),
+                D['atk'][pnum].append([COMBO_UNIFY.get(tp[0],tp[0]),('g' if(recv and rq in '#+') else 'b' if(recv and rq in '!-') else 'o'),
                     1 if(recv and rby==pnum) else 0, recz if recv else '', tr[1] if len(tr)>1 else '',
                     code[4] if len(code)>4 else '', tr[3] if len(tr)>3 else '', tsv, mid, (rby if recv else 0)])
                 recv=False
 
     files=sorted(glob.glob(os.path.join(dvw_dir,'*.dvw')))
-    nf=0
+    season_map = load_season_map(db_path, out_dir) if filter_temp else {}
+    nf=0; skipped_season=0
     for fp in files:
         fn=os.path.basename(fp); m=re.search(r'\b(\d{6})\b',fn) or re.search(r'\b(\d{5})\b',fn)
         if not m: continue
@@ -108,6 +135,10 @@ def build(dvw_dir, out_dir):
         home=tl[0].split(';'); away=tl[1].split(';')
         hid=home[0].strip(); aid=away[0].strip()
         dm=re.search(r'(20\d\d-\d\d-\d\d)',fn); date=dm.group(1) if dm else '?'
+        if filter_temp:
+            temp = season_map.get(fn) or season_from_date(date)
+            if temp != filter_temp:
+                skipped_season+=1; continue
         try: hs,as_=int(home[2]),int(away[2])
         except: hs,as_=0,0
         for tid,pfx,opp_id,my_s,opp_s in [(hid,'*',aid,hs,as_),(aid,'a',hid,as_,hs)]:
@@ -176,8 +207,9 @@ def build(dvw_dir, out_dir):
 
     outp=os.path.join(out_dir,'plan_partido_data.js')
     open(outp,'w',encoding='utf-8').write('window.PP_DATA='+json.dumps(PP,ensure_ascii=False,separators=(',',':'))+';')
-    print("[plan_partido] %d DVW -> %s (%d equipos, %.1f KB)" % (
-        nf, outp, len(PP), os.path.getsize(outp)/1024))
+    ftxt = (" | temporada %s (%d fuera)"%(filter_temp,skipped_season)) if filter_temp else ""
+    print("[plan_partido] %d DVW -> %s (%d equipos, %.1f KB)%s" % (
+        nf, outp, len(PP), os.path.getsize(outp)/1024, ftxt))
 
 def autodetect_dvw():
     dirs=[d for d in glob.glob('DVW*') if os.path.isdir(d) and glob.glob(os.path.join(d,'*.dvw'))]
@@ -187,8 +219,10 @@ if __name__=='__main__':
     ap=argparse.ArgumentParser()
     ap.add_argument('--dvw_dir',default=None)
     ap.add_argument('--output_dir',default='.')
+    ap.add_argument('--filter_temporada',default=None)
+    ap.add_argument('--db',default=None)
     a=ap.parse_args()
     dvw=a.dvw_dir or autodetect_dvw()
     if not dvw or not os.path.isdir(dvw):
         print("[plan_partido] ERROR: no encontre la carpeta de DVW"); sys.exit(1)
-    build(dvw, a.output_dir)
+    build(dvw, a.output_dir, a.filter_temporada or None, a.db)
