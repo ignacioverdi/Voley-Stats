@@ -165,3 +165,140 @@ function renderObjetivosJugador(containerId, nombreJugador, extra){
   html+='</div>';
   el.innerHTML=html;
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   MOTOR DE BATERÍAS EN VIVO — port fiel de baterias_engine.py
+   Calcula las 11 baterías desde los códigos crudos del scout (M.codes).
+   ════════════════════════════════════════════════════════════════════ */
+function _batNuevo(){
+  var na=function(){return {'#':0,'/':0,'=':0,'T':0};};
+  return {S:{'#':0,'+':0,'/':0,'=':0,'T':0},
+          R:{'#':0,'+':0,'/':0,'=':0,'T':0},
+          B:{'#':0,'+':0,'T':0},
+          Aall:na(), cent:na(), alta:na(), rap:na(),
+          rp:na(), ri:na(), rm:na(), tr:na()};
+}
+/* calcula acumuladores por jugador para un lado ('*' local, 'a' visitante) */
+function calcBaterias(codes, side){
+  var pl={};
+  var get=function(num){ if(!pl[num]) pl[num]=_batNuevo(); return pl[num]; };
+  var last_rec=null, rec_valida=false;
+  for(var i=0;i<codes.length;i++){
+    var l=(codes[i].c||'').trim();
+    if(l.length<5) continue;
+    var pfx=l[0]; var body=l.slice(1).split(';')[0];
+    if(body.length<5 || !/^\d\d/.test(body)) continue;
+    var num=body.slice(0,2), skill=body[2], res=body[4];
+    if(skill==='S'){
+      last_rec=null; rec_valida=false;
+      if(pfx===side){ var P=get(num); P.S.T++; if(res in P.S) P.S[res]++; }
+    } else if(skill==='R' && pfx===side){
+      last_rec=res; rec_valida=true;
+      var Pr=get(num); Pr.R.T++; if(res in Pr.R) Pr.R[res]++;
+    } else if(pfx!==side && (skill==='A'||skill==='D'||skill==='E'||skill==='B')){
+      rec_valida=false;
+    } else if(skill==='B' && pfx===side){
+      var Pb=get(num); Pb.B.T++; if(res in Pb.B) Pb.B[res]++;
+    } else if(skill==='A' && pfx===side){
+      var tipo=body[3];  /* Q=central · H=alta · T=rápida */
+      var cat;
+      if(last_rec!==null && rec_valida){
+        rec_valida=false;
+        cat = (last_rec==='#'||last_rec==='+')?'rp' : last_rec==='!'?'ri' : last_rec==='-'?'rm' : 'tr';
+      } else cat='tr';
+      var Pa=get(num);
+      Pa.Aall.T++; if(res in Pa.Aall) Pa.Aall[res]++;
+      if(tipo==='Q'){ Pa.cent.T++; if(res in Pa.cent) Pa.cent[res]++; }
+      else if(tipo==='T'){ Pa.rap.T++; if(res in Pa.rap) Pa.rap[res]++; }
+      else if(tipo==='H'){ Pa.alta.T++; if(res in Pa.alta) Pa.alta[res]++; }
+      Pa[cat].T++; if(res in Pa[cat]) Pa[cat][res]++;
+    }
+  }
+  /* equipo = suma de todos */
+  var eq=_batNuevo();
+  Object.keys(pl).forEach(function(n){
+    var P=pl[n];
+    Object.keys(P).forEach(function(sec){
+      Object.keys(P[sec]).forEach(function(k){ eq[sec][k]+=P[sec][k]; });
+    });
+  });
+  pl['__EQUIPO__']=eq;
+  return pl;
+}
+/* Redondeo bancario (igual que round() de Python): .5 va al par más cercano.
+   Necesario para que los números coincidan EXACTO con el dashboard oficial. */
+function roundPy(x){
+  var r=Math.round(x);
+  if(Math.abs(x-Math.trunc(x))===0.5){ r=2*Math.round(x/2); }
+  return r;
+}
+/* acumuladores -> 11 baterías en % (fórmulas exactas del engine) */
+function batToPcts(P){
+  var atk=function(d){ return d.T ? roundPy((d['#']-d['/']-d['='])/d.T*100) : null; };
+  var S=P.S, R=P.R, B=P.B;
+  return {
+    sq:    S.T ? roundPy((S['#']+0.5*S['/']+0.25*S['+']-S['='])/S.T*100) : null,
+    rec:   R.T ? roundPy((R['#']+0.5*R['+']-0.5*R['/']-R['='])/R.T*100) : null,
+    bqpos: B.T ? roundPy((B['#']+B['+'])/B.T*100) : null,
+    bqpt:  B.T ? roundPy(B['#']/B.T*100) : null,
+    atqq:  atk(P.cent),
+    atqhb: atk(P.alta),
+    atqx:  atk(P.rap),
+    atqrp: atk(P.rp),
+    atqri: atk(P.ri),
+    atqrm: atk(P.rm),
+    atqtr: atk(P.tr)
+  };
+}
+/* API para el panel: dado el lado, devuelve {jugadores:{num:vals}, equipo:vals} */
+window.bateriasVivo = function(codes, side){
+  var acum = calcBaterias(codes||[], side);
+  var out = {jugadores:{}, equipo:null};
+  Object.keys(acum).forEach(function(num){
+    var v = batToPcts(acum[num]);
+    if(num==='__EQUIPO__') out.equipo=v; else out.jugadores[num]=v;
+  });
+  return out;
+};
+
+/* ── Render de las baterías: fila Jugador vs fila Equipo (diseño del dashboard) ── */
+function renderBaterias(containerId, jugVals, eqVals, titulo){
+  var el=document.getElementById(containerId); if(!el) return;
+  var metas=window.OBJETIVOS_CONFIG.metas;
+  var rows=[{label:'Jugador',vals:jugVals||{},isJug:true},{label:'Equipo',vals:eqVals||{},isJug:false}];
+  var html='<div style="font-family:Barlow Condensed,sans-serif;padding:4px 0 8px">'
+    +'<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">'
+    +'<div style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#64748b">'+(titulo||'BATERÍAS')+'</div>'
+    +'<div style="display:flex;gap:10px;flex-wrap:wrap">'
+    +[['#22c55e','Sobre equipo'],['#86efac','Cerca'],['#fbbf24','Neutro'],['#ef4444','Bajo equipo']].map(function(x){
+      return'<div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#64748b"><div style="width:7px;height:7px;border-radius:50%;background:'+x[0]+'"></div>'+x[1]+'</div>';
+    }).join('')+'</div></div>'
+    +'<div style="display:flex;gap:8px;width:100%;margin-bottom:4px">'
+    +'<div style="width:64px;flex-shrink:0"></div>'
+    +Object.keys(metas).map(function(id){
+      return '<div style="flex:1;min-width:60px;text-align:center;padding:4px 2px">'
+        +'<div style="font-size:10px;font-weight:800;color:#e2e8f0;letter-spacing:0.5px;text-transform:uppercase;line-height:1.3;word-break:break-word">'+metas[id].label+'</div>'
+        +'<div style="font-size:10px;color:#22c55e;font-weight:700;margin-top:3px">'+metas[id].obj+'%</div>'
+        +'</div>';
+    }).join('')
+    +'</div>';
+  rows.forEach(function(row){
+    html+='<div style="display:flex;align-items:center;gap:8px;width:100%;margin-bottom:8px">'
+      +'<div style="width:64px;flex-shrink:0;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#94a3b8;text-align:right;padding-right:8px">'+row.label+'</div>'
+      +Object.keys(metas).map(function(id){
+        var m=metas[id], val=row.vals[id]!==undefined && row.vals[id]!==null ? row.vals[id] : null;
+        var cls, objLine;
+        if(row.isJug){
+          var eq=(eqVals&&eqVals[id]!==undefined&&eqVals[id]!==null)?eqVals[id]:null;
+          cls=val!==null?objClassifyVsTeam(val,eq):{color:'#334155',bg:'rgba(51,65,85,.08)',border:'rgba(51,65,85,.2)',label:'—'};
+          objLine=eq!==null?eq:m.obj;
+        } else {
+          cls=val!==null?objClassify(id,val):{color:'#334155',bg:'rgba(51,65,85,.08)',border:'rgba(51,65,85,.2)',label:'—'};
+          objLine=m.obj;
+        }
+        return objSingleBat(id,val,m,cls,objLine);
+      }).join('')+'</div>';
+  });
+  html+='</div>';
+  el.innerHTML=html;
+}
