@@ -607,10 +607,10 @@ input.f:focus,select.f:focus{border-color:var(--b2)}
     <div class="fgrid">
       <div><label class="f">Completar automáticamente</label><select class="f" id="d-auto">
         <option value="0">No (código estándar de DataVolley)</option>
-        <option value="1">Sí — como los archivos de Näfels: diferencia de puntos + fila del jugador</option></select></div>
+        <option value="1">Sí — diferencia de puntos + fila del jugador (convención de la liga)</option></select></div>
     </div>
-    <div class="ref" style="margin-top:10px">La opción de Näfels <b>no es un estándar de DataVolley</b>: la dedujimos de sus
-      archivos (coincide en el 98% de las acciones). Dejala en "No" si querés el código puro del manual.</div>
+    <div class="ref" style="margin-top:10px">Esta opción <b>no es un estándar de DataVolley</b>: se dedujo de archivos reales
+      (coincide en el 98% de las acciones). Dejala en "No" si querés el código puro del manual.</div>
   </div>
 
   <div class="sec">
@@ -2067,8 +2067,8 @@ function renderStats(){
 }
 /* nombre del jugador, si lo tenemos en el plantel */
 function nombreJug(side,num){
-  if(side==='home' && window.PLANTEL_NAFELS){
-    const j=window.PLANTEL_NAFELS.find(p=>String(p.c)===String(num));
+  if(side==='home' && window.PLANTEL_CASLA){
+    const j=window.PLANTEL_CASLA.find(p=>String(p.c)===String(num));
     if(j) return j.n;
   }
   return '';
@@ -2431,7 +2431,7 @@ function deleteEdit(){
 }
 
 /* ============================================================
-   FICHAS — compatibilidad con el panel de Näfels
+   FICHAS — compatibilidad con el panel de análisis
    Genera window.VOLEY_DATA con la MISMA estructura que scout_vivo.js,
    para que panel_voley.html siga dibujando fichas, tablas y gráficos.
    Escala de valores: 1=#  2=+  3=!  4=-  5=/  6==   (igual que DataVolley)
@@ -2875,7 +2875,7 @@ function nombreDe(num, side){
   for(const sd of ['home','away']){
     if(M[sd] && M[sd].plantel){ const j=M[sd].plantel.find(x=>String(x.c)===String(num)); if(j) return j.n; }
   }
-  const P = window.PLANTEL_NAFELS;
+  const P = window.PLANTEL_CASLA;
   if(P && P.length){ const j=P.find(x=>String(x.c)===String(num)); if(j) return j.n; }
   return String(num);
 }
@@ -2908,7 +2908,7 @@ function ladoVivo(side){
 function buildVoleyData(side){
   const pre = side==='home'?'*':'a';
   const VD = {ts:new Date().toTimeString().slice(0,5), j:[]};
-  const P = window.PLANTEL_NAFELS;
+  const P = window.PLANTEL_CASLA;
   if(P && P.length) P.forEach(p=>VD.j.push(nuevoJugador(p.c,p.n)));
   const find=num=>{ let j=VD.j.find(x=>x.c===num); if(!j){ j=nuevoJugador(num,nombreDe(num)); VD.j.push(j); } return j; };
 
@@ -3069,7 +3069,7 @@ function exportDVW(){
       let nom = '';
       const pl = M[sd].plantel;
       if(pl){ const j=pl.find(x=>String(x.c)===String(n)); if(j) nom = j.n; }
-      if(!nom && sd==='home' && window.PLANTEL_NAFELS){ const j=window.PLANTEL_NAFELS.find(p=>String(p.c)===String(n)); if(j) nom=j.n; }
+      if(!nom && sd==='home' && window.PLANTEL_CASLA){ const j=window.PLANTEL_CASLA.find(p=>String(p.c)===String(n)); if(j) nom=j.n; }
       const esLib = (n===M[sd].libero);
       const pos = [];
       for(let st=1; st<=5; st++){
