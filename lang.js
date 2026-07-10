@@ -6,6 +6,8 @@ const TRADUCCIONES = {
   "ES": {
     "hub": "HUB",
     "panel_vivo": "Panel en Vivo",
+    "scout_vivo": "Scout en Vivo",
+    "cargar": "Cargar",
     "historial": "Historial",
     "game_plan": "Plan de Juego",
     "videos": "Videos",
@@ -215,6 +217,8 @@ const TRADUCCIONES = {
   "EN": {
     "hub": "HUB",
     "panel_vivo": "Live Panel",
+    "scout_vivo": "Live Scout",
+    "cargar": "Load",
     "historial": "History",
     "game_plan": "Game Plan",
     "videos": "Videos",
