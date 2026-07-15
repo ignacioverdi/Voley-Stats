@@ -31,7 +31,7 @@ window.MAPA_VIDEOS = {
   "10128": "",
   "10129": "",
   "10130": "",
-  "10131": "",
+  "10131": "https://youtu.be/pECIK_6vvN4",
   "10132": "",
   "10133": "",
   "10134": "",
@@ -68,5 +68,6 @@ window.MAPA_VIDEOS = {
   "10165": "",
   "10190": "",
   "10193": "",
+  "10196": "https://youtu.be/9cVuDBm95AY",
   "10199": "https://youtu.be/T2LgRslOUAM"
 };
