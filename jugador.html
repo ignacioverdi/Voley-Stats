@@ -564,6 +564,7 @@ function renderAccesos(j){
   items.splice(items.length-1,0,{icon:'⚡',title:'Saque',desc:'Mis saques por zona',url:'saque_jugador.html?num='+j.num,color:'#f97316'});
   var ATK_POS=['PUNTA','OPUESTO','CENTRAL'];
   if(ATK_POS.indexOf((j.pos||'').toUpperCase())>=0) items.splice(items.length-1,0,{icon:'💥',title:'Ataque',desc:'Mis ataques por zona',url:'ataque_jugador.html?num='+j.num,color:'#818cf8'});
+  items.splice(items.length-1,0,{icon:'🤲',title:'Defensa',desc:'Mi mapa de defensa',url:'hm_defensa.html?equipo=casla&num='+j.num,color:'#ef4444'});
   if(typeof PARTIDOS_VIDEOS!=='undefined'){
     var myVideos=PARTIDOS_VIDEOS.filter(function(v){ return v.jugador && v.jugador.toUpperCase()===(j.nombre||'').replace(/^\d+\s*/,'').split(' ')[0].toUpperCase(); });
     if(myVideos.length>0) items.splice(1,0,{icon:'🎬',title:'Mis Videos',desc:myVideos.length+' acciones grabadas',url:'videos.html?num='+j.num,color:'#EF4444'});
@@ -660,6 +661,7 @@ if(jugador){
       <a class="hm-card" href="hm_saque.html?equipo=casla"     style="background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3)"><span class="hm-icon">🎯</span><span class="hm-lbl" style="color:#22C55E">SAQUE</span><span class="hm-sub">EFF · Flotado/Potencia<br>Zonas origen/destino</span></a>
       <a class="hm-card" href="hm_recepcion.html?equipo=casla" style="background:rgba(129,140,248,.08);border-color:rgba(129,140,248,.3)"><span class="hm-icon">🛡️</span><span class="hm-lbl" style="color:#818CF8">RECEPCION</span><span class="hm-sub">EFF · Calidad · Zonas</span></a>
       <a class="hm-card" href="hm_armador.html?equipo=casla"   style="background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.3)"><span class="hm-icon">🎱</span><span class="hm-lbl" style="color:#F59E0B">ARMADO</span><span class="hm-sub">Llamadas · Pos · EFF</span></a>
+      <a class="hm-card" href="hm_defensa.html?equipo=casla"  style="background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.3)"><span class="hm-icon">🤲</span><span class="hm-lbl" style="color:#EF4444">DEFENSA</span><span class="hm-sub">EFF · Zonas · Origen/Destino</span></a>
     </div>
     <div style="margin-top:14px;font-size:10px;color:#475569;text-align:center">División de Honor 2026</div>
   </div>
