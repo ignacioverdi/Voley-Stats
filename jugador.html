@@ -16,6 +16,8 @@
 <script src="lang.js" onerror="void 0"></script>
 <script src="datos_historial.js" onerror="window.HISTORIAL_DATA=null"></script>
 <script src="datos_gameplan.js" onerror="window.GAMEPLAN_DATA=null"></script>
+<script src="plan_partido_data.js" onerror="void 0"></script>
+<script src="datos_bloqueo.js" onerror="void 0"></script>
 <script src="datos_prep_fisica.js" onerror="window.PREP_DATA=null"></script>
 
 <style>
@@ -38,7 +40,7 @@ body{background:var(--bg);font-family:'Barlow Condensed',sans-serif;color:var(--
 .pos-tag{display:inline-block;padding:2px 10px;border-radius:4px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;border:1px solid;}
 .hero-nombre{font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:2px;line-height:1;margin-bottom:4px;}
 .hero-sub{font-size:10px;color:var(--mut);letter-spacing:.5px;}
-.qs-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.qs-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
 .qs-item{background:var(--card);padding:14px 8px;text-align:center;}
 .qs-val{font-family:'Bebas Neue',sans-serif;font-size:24px;line-height:1;margin-bottom:3px;}
 .qs-lbl{font-size:7px;color:var(--mut);letter-spacing:1.5px;text-transform:uppercase;}
@@ -512,26 +514,24 @@ function renderNextMatch(){
 // PILLS — leen totales de PARTIDOS_JUGADORES (datos actuales con baterías)
 function renderQuickStats(j){
   var qs=document.getElementById('quick-stats');
-  var color=POS_COLOR[j.pos]||'#64748b';
-  var totSaque=0,totRecep=0,totAtaque=0,effAtq=null;
-  if(typeof PARTIDOS_JUGADORES!=='undefined'){
-    var nmC=(j.nombre||'').replace(/^\d+\s*/,'').toLowerCase().split(' ')[0];
-    var pj=PARTIDOS_JUGADORES.find(function(x){ return x.nombre && x.nombre.replace(/^\d+\s*/,'').toLowerCase().split(' ')[0]===nmC; });
-    if(pj){
-      totSaque=pj.tot_saques||0; totRecep=pj.tot_recep||0; totAtaque=pj.tot_ataques||0;
-      if(pj.objetivos){
-        var o=pj.objetivos, vals=[o.atqq,o.atqhb,o.atqx].filter(function(v){return v!==null&&v!==undefined;});
-        if(vals.length) effAtq=Math.round(vals.reduce(function(a,b){return a+b;},0)/vals.length);
-      }
-    }
-  }
+  var num=parseInt(j.num);
+  var PP=(window.PP_DATA&&window.PP_DATA['sanlorenzo'])||{players:[]};
+  var BLK=(window.PP_BLOCK&&window.PP_BLOCK['sanlorenzo'])||[];
+  function card(roles){return (PP.players||[]).filter(function(p){return parseInt(p.num)===num && roles.indexOf(p.role)>=0;})[0];}
+  function eff(data,ei,kind){ if(!data||!data.length)return null; var n=data.length,k=0,e=0,b=0,pos=0;
+    data.forEach(function(a){var ev=a[ei]; if(ev==='#'){k++;pos++;} else if(ev==='+')pos++; else if(ev==='=')e++; else if(ev==='/')b++;});
+    var v; if(kind==='atk')v=(k-e-b)/n; else if(kind==='srv')v=(k-e)/n; else v=(pos-e-b)/n; return Math.round(v*100); }
+  var sC=card(['saque']),rC=card(['reception']),aC=card(['punta','central','opuesto']),dC=card(['defense']);
+  var bC=BLK.filter(function(p){return parseInt(p.num)===num;})[0];
+  var pills=[
+    {lbl:'Saque',    v:sC?eff(sC.data,3,'srv'):null, c:'#f97316'},
+    {lbl:'Recepción',v:rC?eff(rC.data,3,'rec'):null, c:'#818cf8'},
+    {lbl:'Ataque',   v:aC?eff(aC.data,5,'atk'):null, c:'#ef4444'},
+    {lbl:'Bloqueo',  v:bC?eff(bC.data,2,'blk'):null, c:'#2dd4bf'},
+    {lbl:'Defensa',  v:dC?eff(dC.data,3,'def'):null, c:'#22c55e'}
+  ];
   qs.style.display='grid';
-  qs.innerHTML=[
-    {lbl:'Saques',val:totSaque||'—',c:color},
-    {lbl:'Recepciones',val:totRecep||'—',c:'#22c55e'},
-    {lbl:'Ataques',val:totAtaque||'—',c:'#818cf8'},
-    {lbl:'Eff. Ataque',val:effAtq!==null?effAtq+'%':'—',c:'#f59e0b'}
-  ].map(function(s){ return '<div class="qs-item"><div class="qs-val" style="color:'+s.c+'">'+s.val+'</div><div class="qs-lbl">'+s.lbl+'</div></div>'; }).join('');
+  qs.innerHTML=pills.map(function(s){ return '<div class="qs-item"><div class="qs-val" style="color:'+s.c+'">'+(s.v!==null?s.v+'%':'\u2014')+'</div><div class="qs-lbl">'+s.lbl+'</div></div>'; }).join('');
 }
 
 function renderAccesos(j){
