@@ -189,6 +189,7 @@ footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--border);font-
   <span class="mhint" id="mhint"></span></div>
 <div class="tabsbar" id="tabsbar">
   <span class="tabteam" id="tabteam">—</span>
+  <select id="focusSel" onchange="applyFocus()" style="margin-left:8px;background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:5px 9px;font-family:inherit;font-weight:700;font-size:12px;max-width:220px"><option value="all">Todos los jugadores</option></select>
   <button class="ptab active" data-tab="armador" onclick="setTab('armador')">Distribución armador</button>
   <button class="ptab" data-tab="ataque" onclick="setTab('ataque')">Direcciones ataque</button>
   <button class="ptab" data-tab="saque" onclick="setTab('saque')">Direcciones saque</button>
@@ -256,6 +257,7 @@ footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--border);font-
 <script src="plan_partido_vivo.js" onerror="void 0"></script>
 <script>
 const QP=new URLSearchParams(location.search);
+var FOCUS_NUM=(QP.get('jug')||'').trim();
 const VIVO=QP.get('vivo')==='1';
 let TEAMS = VIVO ? {} : (window.PP_DATA||{});
 let TEAM=(QP.get('rival')||QP.get('equipo')||'').toLowerCase();
@@ -429,7 +431,7 @@ function saveRead(el){try{localStorage.setItem(readKey(el.getAttribute("data-pid
 function buildSection(p){var cfg=ROLECFG[p.role];
   var fh=cfg.filters.map(function(fl,i){return filtCtrl(p.id+'-f'+i,fl,'',filterOpts(p,fl));}).join('');
   if(cfg.stats==='atk'||cfg.stats==='srv'||cfg.stats==='dig'){fh+='<div class="fgroup"><label title="Mín. pelotas">Mín.</label><input type="number" min="0" value="0" id="'+p.id+'-min" style="background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:7px;font-family:inherit;font-weight:700"></div>';}
-  return '<div class="player"><div class="phead"><div class="pnum">'+p.num+'</div><div class="pname">'+p.name+'</div><div class="prole">'+(p.pos||p.role)+'</div><div class="pmeta">'+p.total+U(p.role)+'</div></div>'
+  return '<div class="player" data-num="'+p.num+'"><div class="phead"><div class="pnum">'+p.num+'</div><div class="pname">'+p.name+'</div><div class="prole">'+(p.pos||p.role)+'</div><div class="pmeta">'+p.total+U(p.role)+'</div></div>'
    +'<div class="filters">'+fh+'</div><div class="natt" id="'+p.id+'-n"></div>'
    +'<div class="body"><div class="courtwrap"><div class="court" id="'+p.id+'-court"></div><div class="cnote">Doble-click en zona con ▶ → video (partidos con 🎥)</div></div>'
    +'<div class="stats">'+tiles3(p,cfg)+'</div></div>'+'<div class="read" contenteditable="true" spellcheck="false" data-pid="'+p.id+'" data-ph="Escribí tu análisis…" title="Click para editar" oninput="saveRead(this)">'+readVal(p)+'</div>'+'</div>';
@@ -493,6 +495,8 @@ function buildTeam(){
 }
 function setTeam(slug){TEAM=slug;document.querySelectorAll('.mpanel').forEach(function(x){x.classList.remove('open');});pintarBotonesEquipo();buildTeam();}
 /* ── SOLAPAS ── */
+function buildFocusSel(){var sel=document.getElementById("focusSel");if(!sel)return;var seen={},o='<option value="all">Todos los jugadores</option>';(PLAYERS||[]).slice().sort(function(a,b){return (a.num||0)-(b.num||0);}).forEach(function(p){if(seen[p.num])return;seen[p.num]=1;o+='<option value="'+p.num+'">#'+p.num+' '+p.name+'</option>';});sel.innerHTML=o;sel.value=(FOCUS_NUM&&seen[FOCUS_NUM])?FOCUS_NUM:"all";}
+function applyFocus(){var sel=document.getElementById("focusSel");var v=sel?sel.value:"all";document.querySelectorAll(".player").forEach(function(el){var mn=el.getAttribute("data-num");el.style.display=(v==="all"||String(mn)===String(v))?"":"none";});}
 function setTab(t){
   document.querySelectorAll('.ptab').forEach(function(b){ b.classList.toggle('active', b.dataset.tab===t); });
   document.getElementById('armsec').classList.toggle('tabhide', t!=='armador');
@@ -501,6 +505,7 @@ function setTab(t){
   document.getElementById('tab-recepcion').classList.toggle('show', t==='recepcion');
   document.getElementById('tab-defensa').classList.toggle('show', t==='defensa');
   try{ location.hash=t; }catch(e){}
+  if(typeof applyFocus==="function")applyFocus();
 }
 function solapaActiva(){ var b=document.querySelector('.ptab.active'); return b?b.dataset.tab:'armador'; }
 
@@ -551,6 +556,7 @@ var _h=(location.hash||'').replace('#','');
 setTab(['armador','ataque','saque','recepcion','defensa'].indexOf(_h)>=0?_h:'armador');
 if(VIVO){ cargarVivo(true); setInterval(function(){ cargarVivo(false); }, 2000); }
 buildTeam();
+buildFocusSel(); applyFocus();
 
 /* ---- Video ---- */
 let YTP=null,YTReady=false,clips=[],cur=0,loadedVid="",vtimer=null,pre=2,post=8,speed=1,curP=null,curZn="";

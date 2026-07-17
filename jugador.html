@@ -564,7 +564,7 @@ function renderAccesos(j){
   items.splice(items.length-1,0,{icon:'⚡',title:'Saque',desc:'Mis saques por zona',url:'saque_jugador.html?num='+j.num,color:'#f97316'});
   var ATK_POS=['PUNTA','OPUESTO','CENTRAL'];
   if(ATK_POS.indexOf((j.pos||'').toUpperCase())>=0) items.splice(items.length-1,0,{icon:'💥',title:'Ataque',desc:'Mis ataques por zona',url:'ataque_jugador.html?num='+j.num,color:'#818cf8'});
-  items.splice(items.length-1,0,{icon:'🤲',title:'Defensa',desc:'Mi mapa de defensa',url:'plan_partido.html?equipo=sanlorenzo#defensa',color:'#ef4444'});
+  items.splice(items.length-1,0,{icon:'🤲',title:'Defensa',desc:'Mi mapa de defensa',url:'plan_partido.html?equipo=sanlorenzo&jug='+j.num+'#defensa',color:'#ef4444'});
   if(typeof PARTIDOS_VIDEOS!=='undefined'){
     var myVideos=PARTIDOS_VIDEOS.filter(function(v){ return v.jugador && v.jugador.toUpperCase()===(j.nombre||'').replace(/^\d+\s*/,'').split(' ')[0].toUpperCase(); });
     if(myVideos.length>0) items.splice(1,0,{icon:'🎬',title:'Mis Videos',desc:myVideos.length+' acciones grabadas',url:'videos.html?num='+j.num,color:'#EF4444'});
@@ -626,7 +626,12 @@ function renderRutina(j){
   if(n>0){ html+='<a href="prep_fisica.html?player='+encodeURIComponent(j.nombre)+'" style="display:block;text-align:center;margin-top:12px;font-size:10px;color:var(--red);letter-spacing:1px;text-decoration:none;">VER RUTINA COMPLETA →</a>'; card.innerHTML=html; }
 }
 
-function showHeatmapMenu(){ document.getElementById('hm-overlay').classList.add('open'); }
+function showHeatmapMenu(){
+  try{var n=(typeof jugador!=='undefined'&&jugador&&jugador.num)?jugador.num:'';
+    if(n){document.querySelectorAll('#hm-overlay .hm-card').forEach(function(a){var hr=a.getAttribute('href')||'';if(hr.indexOf('plan_partido.html')>=0&&hr.indexOf('jug=')<0){a.setAttribute('href',hr.replace('#','&jug='+n+'#'));}});}
+  }catch(e){}
+  document.getElementById('hm-overlay').classList.add('open');
+}
 function closeHeatmapMenu(){ document.getElementById('hm-overlay').classList.remove('open'); }
 
 function cambiarJugador(){
