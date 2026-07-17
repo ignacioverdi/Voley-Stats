@@ -61,6 +61,15 @@ html,body{background:var(--bg);color:var(--text);font-family:"Barlow Condensed",
 .cc-cell .zn{position:absolute;top:2px;left:4px;font-size:7px;opacity:.5;font-family:'Bebas Neue',sans-serif}
 .cc-cell .cn{font-family:'Bebas Neue',sans-serif;font-size:19px;line-height:1;color:#fff}
 .cc-cell .pc{position:absolute;bottom:2px;right:4px;font-size:7px;opacity:.75;color:#fff}
+.cc-wrap{max-width:200px;margin:0 auto}
+.cc-lbl{font-size:8px;font-weight:800;letter-spacing:2px;text-align:center;margin:4px 0 2px;font-family:'Barlow Condensed',sans-serif}
+.cc-origin{font-size:10px;font-weight:700;color:#94a3b8;text-align:center;margin:2px 0 6px;font-family:'Barlow Condensed',sans-serif}
+.cc-origin b{color:#e2e8f0;font-weight:800}
+.cc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+.cc-cell{position:relative;height:44px;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.06)}
+.cc-cell .zn{position:absolute;top:2px;left:4px;font-size:7px;opacity:.5;font-family:'Bebas Neue',sans-serif}
+.cc-cell .cn{font-family:'Bebas Neue',sans-serif;font-size:20px;line-height:1;color:#fff}
+.cc-cell .pc{position:absolute;bottom:2px;right:4px;font-size:7px;opacity:.75;color:#fff}
 </style>
 <script src="liga_data.js"></script>
 <script src="liga_data_entrenamientos.js"></script>
@@ -295,6 +304,13 @@ var CC_MIN=2;
 function _ccRGB(c){if(!c)return '129,140,248';c=String(c);if(c.charAt(0)==='#'){var x=c.slice(1);if(x.length===3)x=x.charAt(0)+x.charAt(0)+x.charAt(1)+x.charAt(1)+x.charAt(2)+x.charAt(2);var n=parseInt(x,16);return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);}var m=c.match(/(\d+)\D+(\d+)\D+(\d+)/);return m?(m[1]+','+m[2]+','+m[3]):'129,140,248';}
 function ccGrid(zones,layout,color,total,opts){opts=opts||{};var minN=opts.minN||0,rgb=_ccRGB(color);var vals=[];layout.forEach(function(r){r.forEach(function(z){vals.push(zones[z]||0);});});var mx=Math.max.apply(null,vals)||1;var h="<div class='cc-grid'>";layout.forEach(function(row){row.forEach(function(z){var cnt=zones[z]||0,low=(minN>0&&cnt>0&&cnt<minN),bg,inner='';if(cnt<=0){bg='rgba(255,255,255,.02)';}else if(low){bg='rgba(255,255,255,.05)';inner="<div class='cn' style='color:#64748b;font-size:14px'>"+cnt+"</div>";}else{var a=0.16+(cnt/mx)*0.72;bg='rgba('+rgb+','+a.toFixed(2)+')';inner="<div class='cn'>"+cnt+"</div>"+((total>0)?"<div class='pc'>"+Math.round(cnt/total*100)+"%</div>":'');}h+="<div class='cc-cell' style='background:"+bg+"'><div class='zn'>"+z+"</div>"+inner+"</div>";});});return h+"</div>";}
 
+
+/* === Canchita estilo Plan de Partido (una cancha + línea de origen) === */
+var CC_MIN=2;
+function _ccRGB(c){if(!c)return '129,140,248';c=String(c);if(c.charAt(0)==='#'){var x=c.slice(1);if(x.length===3)x=x.charAt(0)+x.charAt(0)+x.charAt(1)+x.charAt(1)+x.charAt(2)+x.charAt(2);var n=parseInt(x,16);return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);}var m=c.match(/(\d+)\D+(\d+)\D+(\d+)/);return m?(m[1]+','+m[2]+','+m[3]):'129,140,248';}
+function ccGrid(zones,layout,color,total,opts){opts=opts||{};var minN=opts.minN||0,rgb=_ccRGB(color);var vals=[];layout.forEach(function(r){r.forEach(function(z){vals.push(zones[z]||0);});});var mx=Math.max.apply(null,vals)||1;var h="<div class='cc-grid'>";layout.forEach(function(row){row.forEach(function(z){var cnt=zones[z]||0,low=(minN>0&&cnt>0&&cnt<minN),bg,inner='';if(cnt<=0){bg='rgba(255,255,255,.02)';}else if(low){bg='rgba(255,255,255,.05)';inner="<div class='cn' style='color:#64748b;font-size:14px'>"+cnt+"</div>";}else{var a=0.16+(cnt/mx)*0.72;bg='rgba('+rgb+','+a.toFixed(2)+')';inner="<div class='cn'>"+cnt+"</div>"+((total>0)?"<div class='pc'>"+Math.round(cnt/total*100)+"%</div>":'');}h+="<div class='cc-cell' style='background:"+bg+"'><div class='zn'>"+z+"</div>"+inner+"</div>";});});return h+"</div>";}
+function ccOriginLine(zones,total){var arr=[];for(var z in zones){if(zones[z]>0)arr.push([z,zones[z]]);}arr.sort(function(a,b){return b[1]-a[1];});if(!arr.length)return "";var top=arr.slice(0,3).map(function(p){return "Z"+p[0]+(total>0?" "+Math.round(p[1]/total*100)+"%":" ("+p[1]+")");}).join(" \u00b7 ");return "<div class='cc-origin'>Zona de origen: <b>"+top+"</b></div>";}
+
 function setterCourtSVG(sets,accentColor,W,H){
   W=W||150; H=H||105;
   var total=sets.length; if(!total) return '';
@@ -364,18 +380,13 @@ function setterCourtSVG(sets,accentColor,W,H){
 
 // === ATTACK DESTINATION HEATMAP ===
 function destCourtSVG(sets,color,W,H){
-  var RIVAL=[[1,6,5],[9,8,7],[2,3,4]], OWN=[[4,3,2],[7,8,9],[5,6,1]];
+  var RIVAL=[[1,6,5],[9,8,7],[2,3,4]];
   var destZ={1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0};
   sets.forEach(function(s){if(s.atk_dest) destZ[s.atk_dest]=(destZ[s.atk_dest]||0)+1;});
   var total=sets.filter(function(s){return s.atk_dest;}).length;
   var h="<div class='cc-wrap'>";
-  h+="<div class='cc-lbl' style='color:rgba(232,25,44,.6)'>RIVAL</div>";
+  h+="<div class='cc-lbl' style='color:rgba(232,25,44,.6)'>DESTINO ATAQUE</div>";
   h+=ccGrid(destZ,RIVAL,color,total,{minN:CC_MIN});
-  h+="<div class='cc-net'></div>";
-  h+="<div class='cc-grid'>";
-  OWN.forEach(function(row){row.forEach(function(z){h+="<div class='cc-cell' style='background:rgba(255,255,255,.02)'><div class='zn'>"+z+"</div></div>";});});
-  h+="</div>";
-  h+="<div class='cc-lbl' style='color:rgba(129,140,248,.4)'>\u25bc PROPIO</div>";
   return h+"</div>";
 }
 
