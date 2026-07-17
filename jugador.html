@@ -16,6 +16,7 @@
 <script src="lang.js" onerror="void 0"></script>
 <script src="datos_historial.js" onerror="window.HISTORIAL_DATA=null"></script>
 <script src="datos_gameplan.js" onerror="window.GAMEPLAN_DATA=null"></script>
+<script src="datos_baterias.js" onerror="void 0"></script>
 <script src="plan_partido_data.js" onerror="void 0"></script>
 <script src="datos_bloqueo.js" onerror="void 0"></script>
 <script src="datos_prep_fisica.js" onerror="window.PREP_DATA=null"></script>
@@ -199,10 +200,29 @@ var _OBJ_NULOS = {sq:null,rec:null,bqpos:null,bqpt:null,atqq:null,atqhb:null,atq
 //   nombre = "14 Nielson" → datos del JUGADOR
 //   Respeta _objTipo (partido/entrenamiento) y _objPartido (acumulado/partido puntual)
 // ════════════════════════════════════════════════════════════════
+function _batMatchName(nombre, keys){
+  var b=(nombre||'').replace(/^\d+\s*/,'').toLowerCase().trim(); var bs=b.split(' ')[0];
+  for(var i=0;i<keys.length;i++){ if(keys[i].toLowerCase().replace(/^\d+\s*/,'').trim()===b) return keys[i]; }
+  for(var i=0;i<keys.length;i++){ var k=keys[i].toLowerCase().replace(/^\d+\s*/,'').trim(); if(k.split(' ')[0]===bs || (bs.length>2&&k.indexOf(bs)>=0)) return keys[i]; }
+  return null;
+}
+function batGet(nombre, partido){
+  var B=window.BAT_PARTIDOS; if(!B) return null;
+  if(partido && partido!=='acumulado'){
+    var m=(B.ind||[]).find(function(x){return String(x.id)===String(partido);});
+    if(!m) return _OBJ_NULOS;
+    if(nombre){ var k=_batMatchName(nombre, Object.keys(m.jug||{})); return (k&&m.jug[k])?m.jug[k]:_OBJ_NULOS; }
+    return m.eq||_OBJ_NULOS;
+  }
+  if(nombre){ var k2=_batMatchName(nombre, Object.keys(B.jug||{})); return (k2&&B.jug[k2])?B.jug[k2]:_OBJ_NULOS; }
+  return B.eq||_OBJ_NULOS;
+}
 function objGetVals(nombre){
   var tipo    = window._objTipo;
   var partido = window._objPartido;
   var ent     = (tipo==='entrenamiento');
+
+  if(!ent && window.BAT_PARTIDOS){ return batGet(nombre, partido); }
 
   var JUG = ent ? (typeof ENTRENAMIENTOS_JUGADORES!=='undefined'?ENTRENAMIENTOS_JUGADORES:null)
                 : (typeof PARTIDOS_JUGADORES!=='undefined'?PARTIDOS_JUGADORES:null);
@@ -330,7 +350,7 @@ function objBuildSubfiltro(){
   if(!row) return;
   var ent = (window._objTipo==='entrenamiento');
   var META = ent ? (typeof ENTRENAMIENTOS_META!=='undefined'?ENTRENAMIENTOS_META:null)
-                 : (typeof PARTIDOS_META!=='undefined'?PARTIDOS_META:null);
+                 : (window.BAT_PARTIDOS ? window.BAT_PARTIDOS.meta : (typeof PARTIDOS_META!=='undefined'?PARTIDOS_META:null));
   if(!META){ row.style.display='none'; return; }
   row.innerHTML=''; row.style.display='flex'; row.style.alignItems='center';
   var lbl=document.createElement('span');
