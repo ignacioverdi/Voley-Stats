@@ -211,6 +211,10 @@ def build(dvw_dir, out_dir, filter_temp=None, db_path=None):
         for n in opues[:2]:
             d=D['atk'].get(str(n),[])
             if d: add("a",n,"opuesto",d,"Combo principal: "+domcombo(D,n)+".")
+        # Armadores: toques de 2\u00aa / ataque del armador (aparecen en la solapa de ataque)
+        for n in [x for x in pos if pos[x]=='Armador']:
+            d=D['atk'].get(str(n),[])
+            if len(d)>=3: add("a",n,"opuesto",d,"Toques de 2\u00aa / ataque del armador.")
         for n in servers:
             add("s",n,"saque",D['srv'].get(str(n),[]),"Saque "+domserve(D,n)+".")
         for n in receiv:
