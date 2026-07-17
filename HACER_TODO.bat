@@ -49,6 +49,8 @@ if !NDVW! GTR 0 (
     echo  [1/7] Procesando partidos: liga, heatmaps, tabla...
     python update_db_casla.py --dvw_dir "!DVW_DIR!" --temporada !ANIO!
 python gen_plan_partido.py --dvw_dir "!DVW_DIR!" --output_dir .
+    echo  [1b/7] Baterias (13 partidos)...
+    python gen_baterias.py "!DVW_DIR!"
     if errorlevel 1 echo      [aviso] Hubo un problema en partidos. Mira arriba; sigo igual.
 ) else (
     echo  [1/7] No hay .dvw nuevos. Regenero los datos igual.
