@@ -330,31 +330,25 @@ function objBuildSubfiltro(){
   var META = ent ? (typeof ENTRENAMIENTOS_META!=='undefined'?ENTRENAMIENTOS_META:null)
                  : (typeof PARTIDOS_META!=='undefined'?PARTIDOS_META:null);
   if(!META){ row.style.display='none'; return; }
-  row.innerHTML=''; row.style.display='flex';
+  row.innerHTML=''; row.style.display='flex'; row.style.alignItems='center';
   var lbl=document.createElement('span');
-  lbl.style.cssText='font-size:9px;color:#475569;letter-spacing:2px;text-transform:uppercase;align-self:center;margin-right:4px';
+  lbl.style.cssText='font-size:9px;color:#475569;letter-spacing:2px;text-transform:uppercase;margin-right:6px';
   lbl.textContent='VER:';
   row.appendChild(lbl);
-  function mkBtn(texto, valor){
-    var b=document.createElement('button');
-    b.className='obj-sfbtn'+(window._objPartido===valor?' on':'');
-    b.textContent=texto;
-    b.onclick=function(){
-      window._objPartido=valor;
-      document.querySelectorAll('.obj-sfbtn').forEach(function(x){x.classList.remove('on');});
-      b.classList.add('on');
-      objRenderBaterias();
-    };
-    row.appendChild(b);
-  }
-  mkBtn('Acumulado','acumulado');
+  var sel=document.createElement('select');
+  sel.style.cssText='background:#fff;color:#111;border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-family:inherit;font-weight:700;font-size:12px;max-width:270px';
   var __cuenta={};META.forEach(function(m){var r=m.rival||m.nombre;__cuenta[r]=(__cuenta[r]||0)+1;});
+  var opts='<option value="acumulado">Acumulado</option>';
   META.forEach(function(m){
     var rival=m.rival||m.nombre;var label=rival;
     if(__cuenta[rival]>1 && m.fecha) label+=' '+m.fecha;
     if(m.resultado) label+=' ('+m.resultado+')';
-    mkBtn(label, m.id||m.nombre);
+    opts+='<option value="'+(m.id||m.nombre)+'">'+label+'</option>';
   });
+  sel.innerHTML=opts;
+  sel.value=window._objPartido||'acumulado';
+  sel.onchange=function(){ window._objPartido=sel.value; objRenderBaterias(); };
+  row.appendChild(sel);
 }
 
 // ── Toggle Partido/Entrenamiento ──
@@ -512,13 +506,7 @@ function renderHero(j){
 }
 
 function renderNextMatch(){
-  var wrap=document.getElementById('next-match-wrap');
-  if(!window.GAMEPLAN_DATA) return;
-  var gp=window.GAMEPLAN_DATA;
-  wrap.innerHTML='<a class="next-match" href="game_plan_dbanf.html"><div class="next-match-dot"></div>'+
-    '<div class="next-match-info"><div class="next-match-label">Próximo partido · F'+(gp.fecha||'')+'</div>'+
-    '<div class="next-match-rival">vs '+(gp.rival||'RIVAL')+'</div>'+
-    '<div class="next-match-sub">'+(gp.torneo||'')+' · Ver plan de juego →</div></div><div style="font-size:20px">🎯</div></a>';
+  var wrap=document.getElementById('next-match-wrap'); if(wrap) wrap.innerHTML=''; // icono de próximo partido removido (desactualizado)
 }
 
 // PILLS — leen totales de PARTIDOS_JUGADORES (datos actuales con baterías)
@@ -563,8 +551,9 @@ function renderAccesos(j){
   if(REC_POS.indexOf((j.pos||'').toUpperCase())>=0) items.splice(items.length-1,0,{icon:'🛡',title:'Recepción',desc:'Mi recepción por zona',url:'plan_partido.html?equipo=sanlorenzo&jug='+j.num+'#recepcion',color:'#22c55e'});
   items.splice(items.length-1,0,{icon:'⚡',title:'Saque',desc:'Mis saques por zona',url:'plan_partido.html?equipo=sanlorenzo&jug='+j.num+'#saque',color:'#f97316'});
   var ATK_POS=['PUNTA','OPUESTO','CENTRAL'];
-  if(ATK_POS.indexOf((j.pos||'').toUpperCase())>=0) items.splice(items.length-1,0,{icon:'💥',title:'Ataque',desc:'Mis ataques por zona',url:'plan_partido.html?equipo=sanlorenzo&jug='+j.num+'#ataque',color:'#818cf8'});
+  if(ATK_POS.indexOf((j.pos||'').toUpperCase())>=0 || SETTER_NUMS.indexOf(parseInt(j.num))>=0) items.splice(items.length-1,0,{icon:'💥',title:'Ataque',desc:'Mis ataques por zona',url:'plan_partido.html?equipo=sanlorenzo&jug='+j.num+'#ataque',color:'#818cf8'});
   items.splice(items.length-1,0,{icon:'🤲',title:'Defensa',desc:'Mi mapa de defensa',url:'plan_partido.html?equipo=sanlorenzo&jug='+j.num+'#defensa',color:'#ef4444'});
+  if((j.pos||'').toUpperCase()!=='LIBERO') items.splice(items.length-1,0,{icon:'🧱',title:'Bloqueo',desc:'Dónde bloqueo',url:'plan_partido.html?equipo=sanlorenzo&jug='+j.num+'#bloqueo',color:'#2dd4bf'});
   if(typeof PARTIDOS_VIDEOS!=='undefined'){
     var myVideos=PARTIDOS_VIDEOS.filter(function(v){ return v.jugador && v.jugador.toUpperCase()===(j.nombre||'').replace(/^\d+\s*/,'').split(' ')[0].toUpperCase(); });
     if(myVideos.length>0) items.splice(1,0,{icon:'🎬',title:'Mis Videos',desc:myVideos.length+' acciones grabadas',url:'videos.html?num='+j.num,color:'#EF4444'});
