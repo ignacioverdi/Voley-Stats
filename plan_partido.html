@@ -156,6 +156,7 @@ footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--border);font-
 .mopt{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;text-transform:none;letter-spacing:0;color:var(--text)}
 .mopt input{width:auto;min-width:0;margin:0;padding:0}
 .msel{position:relative}
+#focusSel,#focusSel option{color:#111 !important;background:#fff !important;font-weight:700}
 </style>
 <style>
 .tabsbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 12px 0;align-items:center}
@@ -189,7 +190,7 @@ footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--border);font-
   <span class="mhint" id="mhint"></span></div>
 <div class="tabsbar" id="tabsbar">
   <span class="tabteam" id="tabteam">—</span>
-  <select id="focusSel" onchange="applyFocus()" style="margin-left:8px;background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:5px 9px;font-family:inherit;font-weight:700;font-size:12px;max-width:220px"><option value="all">Todos los jugadores</option></select>
+  <select id="focusSel" onchange="applyFocus()" style="margin-left:8px;background:#fff;color:#111;border:1px solid var(--border);border-radius:8px;padding:5px 9px;font-family:inherit;font-weight:700;font-size:12px;max-width:220px"><option value="all">Todos los jugadores</option></select>
   <button class="ptab active" data-tab="armador" onclick="setTab('armador')">Distribución armador</button>
   <button class="ptab" data-tab="ataque" onclick="setTab('ataque')">Direcciones ataque</button>
   <button class="ptab" data-tab="saque" onclick="setTab('saque')">Direcciones saque</button>
@@ -313,7 +314,7 @@ const ROLECFG={
    filters:[{lab:'Tipo',idx:7,opts:[["all","Todas"]],dyn:'combo'},{lab:'Ataque desde',idx:1,opts:DAZ},{lab:'Momento',idx:4,opts:SMO,range:true},{lab:'Resultado',idx:3,opts:DGS}],
    dir:null,tiles:['Efic','#+','/=','Potencia','Flotado','N','Perfecta','Cubre','Mala'],hl:[0,1]},
  bloqueo:{court:1,evIdx:2,tIdx:3,vIdx:4,tagIdx:0,stats:'blk',pal:'blue',
-   filters:[{lab:"Zona",idx:1,opts:[["all","Todas"],["1","z1"],["2","z2"],["3","z3"],["5","z5"],["6","z6"],["7","z7"],["8","z8"],["9","z9"]]},{lab:"Resultado",idx:2,opts:BLS}],
+   filters:[{lab:"Zona",idx:1,opts:[["all","Todas"],["4","z4 (punta)"],["3","z3 (central)"],["2","z2 (opuesto)"],["8","z8 (pipe)"],["9","z9 (zaguero)"]]},{lab:"Resultado",idx:2,opts:BLS}],
    dir:null,tiles:['Efic','Positivos','Err/Tocado','\u2014','\u2014','Bloqueos','Kills','Toques','Malos'],hl:[0,5]}
 };
 const TAGFMT={pot:'Pot',flo:'Flot'};
