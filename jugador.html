@@ -567,8 +567,8 @@ function renderAccesos(j){
   ];
   var SETTER_NUMS=[4,9,19];
   if(SETTER_NUMS.indexOf(parseInt(j.num))>=0) items.splice(items.length-1,0,{icon:'🎯',title:'Distribución',desc:'Mi armado de juego',url:'plan_partido.html?equipo=sanlorenzo&jug='+j.num+'#armador',color:'#f59e0b'});
-  var REC_POS=['PUNTA','LIBERO'];
-  if(REC_POS.indexOf((j.pos||'').toUpperCase())>=0) items.splice(items.length-1,0,{icon:'🛡',title:'Recepción',desc:'Mi recepción por zona',url:'plan_partido.html?equipo=sanlorenzo&jug='+j.num+'#recepcion',color:'#22c55e'});
+  var _ppRec=(window.PP_DATA&&window.PP_DATA['sanlorenzo']&&(window.PP_DATA['sanlorenzo'].players||[]))||[];
+  if(_ppRec.some(function(p){return parseInt(p.num)===parseInt(j.num)&&p.role==='reception';})) items.splice(items.length-1,0,{icon:'🛡',title:'Recepción',desc:'Mi recepción por zona',url:'plan_partido.html?equipo=sanlorenzo&jug='+j.num+'#recepcion',color:'#22c55e'});
   items.splice(items.length-1,0,{icon:'⚡',title:'Saque',desc:'Mis saques por zona',url:'plan_partido.html?equipo=sanlorenzo&jug='+j.num+'#saque',color:'#f97316'});
   var ATK_POS=['PUNTA','OPUESTO','CENTRAL'];
   if(ATK_POS.indexOf((j.pos||'').toUpperCase())>=0 || SETTER_NUMS.indexOf(parseInt(j.num))>=0) items.splice(items.length-1,0,{icon:'💥',title:'Ataque',desc:'Mis ataques por zona',url:'plan_partido.html?equipo=sanlorenzo&jug='+j.num+'#ataque',color:'#818cf8'});
