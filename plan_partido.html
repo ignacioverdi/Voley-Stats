@@ -369,7 +369,7 @@ function renderArmador(){
   armTeam=(slug&&GPL.teams&&GPL.teams[slug])?GPL.teams[slug]:null;
   if(!armTeam||!(armTeam.setters&&armTeam.setters.length)){sec.classList.add("hidden");return;}
   sec.classList.remove("hidden");
-  var _foc=(typeof FOCUS_NUM!=="undefined")?FOCUS_NUM:"";
+  var _fs=document.getElementById("focusSel");var _foc=(_fs&&_fs.value&&_fs.value!=="all")?_fs.value:"";
   var _asel=document.getElementById("armsetsel");
   if(_foc){
     var _si=armTeam.setters.map(function(s){return String(s.num);}).indexOf(String(_foc));
@@ -522,7 +522,7 @@ function buildTeam(){
 function setTeam(slug){TEAM=slug;document.querySelectorAll('.mpanel').forEach(function(x){x.classList.remove('open');});pintarBotonesEquipo();buildTeam();}
 /* ── SOLAPAS ── */
 function buildFocusSel(){var sel=document.getElementById("focusSel");if(!sel)return;var seen={},o='<option value="all">Todos los jugadores</option>';(PLAYERS||[]).slice().sort(function(a,b){return (a.num||0)-(b.num||0);}).forEach(function(p){if(seen[p.num])return;seen[p.num]=1;o+='<option value="'+p.num+'">#'+p.num+' '+p.name+'</option>';});sel.innerHTML=o;sel.value=(FOCUS_NUM&&seen[FOCUS_NUM])?FOCUS_NUM:"all";}
-function applyFocus(){var sel=document.getElementById("focusSel");var v=sel?sel.value:"all";FOCUS_NUM=(v==="all")?"":v;document.querySelectorAll(".player").forEach(function(el){var mn=el.getAttribute("data-num");el.style.display=(v==="all"||String(mn)===String(v))?"":"none";});if(typeof renderArmador==="function")renderArmador();}
+function applyFocus(){var sel=document.getElementById("focusSel");var v=sel?sel.value:"all";document.querySelectorAll(".player").forEach(function(el){var mn=el.getAttribute("data-num");el.style.display=(v==="all"||String(mn)===String(v))?"":"none";});if(typeof renderArmador==="function")renderArmador();}
 function setTab(t){
   document.querySelectorAll('.ptab').forEach(function(b){ b.classList.toggle('active', b.dataset.tab===t); });
   document.getElementById('armsec').classList.toggle('tabhide', t!=='armador');
