@@ -130,11 +130,6 @@ if exist "datos_partidos.js"     (echo      OK  datos_partidos.js)     else (ech
 if exist "datos_video.js"        (echo      OK  datos_video.js)        else (echo      --  falta datos_video.js)
 echo  ==================================================
 echo.
-echo  RECORDATORIO IMPORTANTE:
-echo  Si subiste VIDEOS NUEVOS a YouTube, HACELO AHORA:
-echo    1) Abri "Cargar Videos", pega los links y genera mapa_videos.js
-echo    2) Pone ese mapa_videos.js en esta carpeta
-echo  (La ventana espera. Si NO subiste videos nuevos, segui de largo.)
 echo.
 
 REM ================= PUBLICAR =================
