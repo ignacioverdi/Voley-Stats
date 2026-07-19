@@ -1,5 +1,5 @@
-// datos_entrenamientos.js — 19/07/2026 10:06
-const ENTRENAMIENTOS_GENERADO = "19/07/2026 10:06";
+// datos_entrenamientos.js — 19/07/2026 10:09
+const ENTRENAMIENTOS_GENERADO = "19/07/2026 10:09";
 const ENTRENAMIENTOS_TOTAL = 3;
 const ENTRENAMIENTOS_META = [
   {
