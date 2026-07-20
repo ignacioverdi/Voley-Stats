@@ -80,6 +80,10 @@ echo  [7/7] Cortes de video de partidos...
 python build_video.py "!DVW_DIR!" datos_video.js VIDEO_DATA
 if errorlevel 1 echo      [aviso] Problema en cortes de partidos. Sigo igual.
 echo.
+echo  [+]   Solapa de bloqueo del plan de partido...
+python gen_bloqueo.py
+if errorlevel 1 echo      [aviso] Problema generando el bloqueo. Sigo igual.
+echo.
 
 REM ================= ENTRENAMIENTOS =================
 :ENTRENAMIENTOS
