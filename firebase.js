@@ -52,9 +52,9 @@ function _fbRefrescar(){
     .then(function(r){ return r.json(); })
     .then(function(d){
       if(!d || !d.id_token) throw new Error('sesion vencida');
-      _fbGuardarSes({idToken:d.id_token, refreshToken:d.refresh_token,
+      _fbGuardarSes({emitido:(FB_SES && FB_SES.emitido) || 0,   /* se conserva: NO se renueva al refrescar */ idToken:d.id_token, refreshToken:d.refresh_token,
                      vence:Date.now() + (parseInt(d.expires_in,10)||3600)*1000 - 60000,
-                     email:FB_SES.email, emitido:Date.now(), uid:d.user_id || FB_SES.uid});
+                     email:FB_SES.email, uid:d.user_id || FB_SES.uid});
       return FB_SES.idToken;
     });
 }
@@ -84,7 +84,7 @@ function _fbEntrar(usuario, clave){
         if(m.indexOf('TOO_MANY')>=0) throw new Error('Demasiados intentos. Espera un rato.');
         throw new Error('No pude entrar (' + m + ')');
       }
-      _fbGuardarSes({idToken:d.idToken, refreshToken:d.refreshToken,
+      _fbGuardarSes({emitido:Date.now(),   /* cuándo se abrió esta sesión */ idToken:d.idToken, refreshToken:d.refreshToken,
                      vence:Date.now() + (parseInt(d.expiresIn,10)||3600)*1000 - 60000,
                      email:mail, uid:d.localId});
       return true;
