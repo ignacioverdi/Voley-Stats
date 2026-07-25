@@ -1,0 +1,24 @@
+# ============================================================================
+#  .vercelignore — qué NO se publica en la web (CASLA)
+#  ----------------------------------------------------------------------------
+#  Todo esto SIGUE en tu repo y en tu PC. Sólo deja de poder descargarse desde
+#  el sitio publicado. Verificado: ninguna página del sitio los carga.
+# ============================================================================
+
+# ── Tus motores y la automatización (corren en tu PC) ───────────────────────
+*.py
+*.bat
+*.ps1
+__pycache__/
+
+# ── Datos crudos de scouting ───────────────────────────────────────────────
+*.dvw
+DVW*
+
+# ── Llave del cifrado y respaldos de los scripts ───────────────────────────
+LLAVE.txt
+*.antes
+
+# ── Temporales ─────────────────────────────────────────────────────────────
+*.log
+diagnostico.txt

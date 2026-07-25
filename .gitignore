@@ -1,0 +1,6 @@
+# Archivos que NO se suben
+
+# NUNCA subir la llave de los datos
+LLAVE.txt
+# copias de respaldo que dejan los scripts
+*.antes
