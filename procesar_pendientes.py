@@ -88,13 +88,21 @@ def borrar(ruta, tok):
     return llamar('%s/%s%s.json?auth=%s' % (FB_URL, RAIZ, ruta, tok), None, 'DELETE')
 
 
-def carpeta_del_anio():
-    """La misma que usa procesar.py: la del año más alto."""
+def carpeta_para(tipo):
+    """Un partido y un entrenamiento van a carpetas distintas y se procesan
+       distinto. Si se mezclan, los números salen mal: por eso el entrenador
+       elige qué está subiendo y acá lo respetamos."""
     import glob, re
-    c = [d for d in glob.glob(os.path.join(AQUI, 'DVW*')) if os.path.isdir(d)]
-    if not c:
+    todas = [d for d in glob.glob(os.path.join(AQUI, 'DVW*')) if os.path.isdir(d)]
+    if not todas:
         return None
-    return sorted(c, key=lambda d: (re.findall(r'(\d{4})', d) or ['0'])[-1])[-1]
+    es_ent = lambda d: 'ENTREN' in os.path.basename(d).upper()
+    grupo = [d for d in todas if es_ent(d)] if tipo == 'entrenamiento' \
+            else [d for d in todas if not es_ent(d)]
+    if not grupo:
+        grupo = todas          # el club no separa: va todo a la misma
+    # dentro del grupo, la del año más alto
+    return sorted(grupo, key=lambda d: (re.findall(r'(\d{4})', d) or ['0'])[-1])[-1]
 
 
 def main():
@@ -123,18 +131,21 @@ def main():
 
     ids.sort(key=lambda k: pend[k].get('subido', 0))
     ids = ids[:MAX]
-    destino = carpeta_del_anio()
-    if not destino:
-        print('  No encuentro la carpeta de partidos.')
-        return 1
 
-    print('  %d partido(s) en espera' % len(ids))
+    print('  %d archivo(s) en espera' % len(ids))
     guardados = []
     for k in ids:
         p = pend[k]
         nombre = (p.get('nombre') or (k + '.dvw')).replace('/', '_').replace('\\', '_')
         if not nombre.lower().endswith('.dvw'):
             nombre += '.dvw'
+        tipo = (p.get('tipo') or 'partido').lower()
+        destino = carpeta_para(tipo)
+        if not destino:
+            escribir('pendientes/%s/estado' % k, 'error', tok)
+            escribir('pendientes/%s/detalle' % k, 'no encuentro la carpeta', tok)
+            print('     [error] no hay carpeta para %s' % tipo)
+            continue
         try:
             crudo = base64.b64decode(p.get('datos') or '')
             if not crudo:
@@ -143,7 +154,8 @@ def main():
                 f.write(crudo)
             guardados.append((k, nombre))
             escribir('pendientes/%s/estado' % k, 'procesando', tok)
-            print('     guardado: %-44s %6.0f KB' % (nombre[:44], len(crudo)/1024))
+            print('     %-13s %-40s %6.0f KB  →  %s'
+                  % (tipo + ':', nombre[:40], len(crudo)/1024, os.path.basename(destino)))
         except Exception as e:
             escribir('pendientes/%s/estado' % k, 'error', tok)
             escribir('pendientes/%s/detalle' % k, 'no pude leer el archivo', tok)
@@ -152,25 +164,33 @@ def main():
     if not guardados:
         return 0
 
-    print()
-    print('  Procesando...')
-    # Si el club tiene carpeta de entrenamientos, se procesan también: para el
-    # entrenador es lo mismo, sube un archivo y espera.
-    import glob as _g
-    cmd = [sys.executable, os.path.join(AQUI, 'procesar.py'), '--json']
-    if [d for d in _g.glob(os.path.join(AQUI, '*'))
-        if os.path.isdir(d) and 'ENTREN' in os.path.basename(d).upper()]:
-        cmd.append('--entrenamientos')
-    r = subprocess.run(cmd,
-                       cwd=AQUI, capture_output=True, text=True, timeout=3000)
-    salida = (r.stdout or '').strip().splitlines()
+    # Una pasada por tipo, nunca las dos juntas: el motor de partidos y el de
+    # entrenamientos escriben los mismos archivos, así que mezclarlos en una
+    # sola corrida pisa datos. Es el mismo criterio que los dos .bat de siempre.
+    tipos = []
+    for k, _n in guardados:
+        t = (pend[k].get('tipo') or 'partido').lower()
+        if t not in tipos:
+            tipos.append(t)
+    if 'partido' in tipos:                      # primero los partidos
+        tipos = ['partido'] + [t for t in tipos if t != 'partido']
+
+    ok = True
     resumen = {}
-    for l in reversed(salida):
-        if l.startswith('{'):
-            try: resumen = json.loads(l); break
-            except Exception: pass
-    print(r.stdout[-1800:] if r.stdout else '')
-    ok = (r.returncode == 0) and resumen.get('ok', r.returncode == 0)
+    for t in tipos:
+        modo = 'entrenamientos' if t == 'entrenamiento' else 'partidos'
+        print()
+        print('  Procesando %s...' % modo)
+        r = subprocess.run([sys.executable, os.path.join(AQUI, 'procesar.py'),
+                            '--solo', modo, '--json'],
+                           cwd=AQUI, capture_output=True, text=True, timeout=3000)
+        print(r.stdout[-1500:] if r.stdout else '')
+        for l in reversed((r.stdout or '').strip().splitlines()):
+            if l.startswith('{'):
+                try: resumen = json.loads(l); break
+                except Exception: pass
+        if r.returncode != 0 or not resumen.get('ok', r.returncode == 0):
+            ok = False
 
     for k, nombre in guardados:
         if ok:
