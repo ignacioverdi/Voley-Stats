@@ -73,6 +73,7 @@ jobs:
           ROBOT_MAIL:  ${{ secrets.ROBOT_MAIL }}
           ROBOT_CLAVE: ${{ secrets.ROBOT_CLAVE }}
           CLUB_ID:     ${{ secrets.CLUB_ID }}
+          FB_REFERER:  ${{ secrets.FB_REFERER }}
         run: python procesar_pendientes.py
 
       - name: Sacar la llave de en medio

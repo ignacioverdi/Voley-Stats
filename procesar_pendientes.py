@@ -36,6 +36,11 @@ FB_KEY      =  os.environ.get('FB_KEY')     or ''
 ROBOT_MAIL  =  os.environ.get('ROBOT_MAIL') or ''
 ROBOT_CLAVE =  os.environ.get('ROBOT_CLAVE') or ''
 CLUB_ID     = (os.environ.get('CLUB_ID')    or '').strip()
+# La clave del proyecto suele estar restringida a los dominios de la web, para
+# que nadie la use desde otro lado. El robot no navega desde ninguna página, así
+# que Google lo rechaza con "Requests from referer <empty> are blocked".
+# Se resuelve diciéndole desde qué dominio viene: el de la propia app del club.
+FB_REFERER  = (os.environ.get('FB_REFERER') or '').strip()
 
 RAIZ = ('clubes/%s/' % CLUB_ID) if CLUB_ID else ''
 MAX  = 10          # cuántos partidos se procesan por corrida
@@ -43,8 +48,10 @@ MAX  = 10          # cuántos partidos se procesan por corrida
 
 def llamar(url, datos=None, metodo='GET'):
     cuerpo = json.dumps(datos).encode('utf-8') if datos is not None else None
-    pedido = urllib.request.Request(url, data=cuerpo, method=metodo,
-                                    headers={'Content-Type': 'application/json'})
+    cabeceras = {'Content-Type': 'application/json'}
+    if FB_REFERER:
+        cabeceras['Referer'] = FB_REFERER
+    pedido = urllib.request.Request(url, data=cuerpo, method=metodo, headers=cabeceras)
     try:
         with urllib.request.urlopen(pedido, timeout=60) as r:
             t = r.read().decode('utf-8')
@@ -98,6 +105,9 @@ def main():
     tok = entrar()
     if not tok:
         print('  No pude entrar a la base con la cuenta del robot.')
+        if not FB_REFERER:
+            print('  Si el error de arriba dice "referer", falta el secreto FB_REFERER')
+            print('  con la dirección de la web del club (ej: https://tuclub.vercel.app).')
         return 1
 
     pend = leer('pendientes', tok)
