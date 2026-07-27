@@ -1,6 +1,22 @@
-# Archivos que NO se suben
+# ============================================================================
+#  .gitignore — CASLA
+# ============================================================================
 
-# NUNCA subir la llave de los datos
+# ── NUNCA subir la llave de los datos ───────────────────────────────────────
 LLAVE.txt
-# copias de respaldo que dejan los scripts
+
+# ── Basura que genera Python al correr los motores ──────────────────────────
+#    Se subió sola al repo la primera vez que corrió el robot. No sirve para
+#    nada y ensucia cada commit.
+__pycache__/
+*.pyc
+*.pyo
+
+# ── Copias de respaldo que dejan los scripts ────────────────────────────────
 *.antes
+
+# ── Temporales ──────────────────────────────────────────────────────────────
+*.log
+diagnostico.txt
+Thumbs.db
+desktop.ini

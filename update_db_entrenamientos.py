@@ -24,6 +24,12 @@ ESTRUCTURA DE ARCHIVOS:
 import os, re, json, argparse, shutil
 from collections import defaultdict, Counter
 
+# ── EL NOMBRE DE LA COMPETENCIA ────────────────────────────────────────────
+#    Antes decía "NLA Suiza" acá adentro, heredado del club de origen, y
+#    terminaba escrito en los datos de cada partido. Ahora está en un solo
+#    lugar: se cambia acá y listo.
+LIGA_NOMBRE = "División de Honor"
+
 # ── NORMALIZACIÓN DE COMBOS AL CANÓNICO MUNDIAL ──────────────────────
 # Equivalencias argentino → canónico (mismo ataque, distinto idioma de scout)
 COMBO_EQUIV = {
@@ -655,8 +661,9 @@ def build_heatmaps(teams_data, template_dir='.', output_dir='.', temporada_filte
         display = team.upper()
         SUBS=[('CASLA VOLEY',f'{display} VOLEY'),('CASLA Voley',f'{display} Voley'),
               ('San Lorenzo',display),('SAN LORENZO',display),
-              ('División de Honor 2026','NLA Suiza'),('División de Honor','NLA Suiza'),
-              ('DHM 2026','NLA 2025/26'),('<script src="chat.js"></script>',''),
+              # Antes acá se reemplazaba el nombre de la liga por el del club de
+              # origen, así que las páginas del rival salían diciendo otra cosa.
+              ('DHM 2026', f'{LIGA_NOMBRE} 2026'),('<script src="chat.js"></script>',''),
               ('ataque_casla.html',f'ataque_{slug}.html'),
               ('saque_casla.html',f'saque_{slug}.html'),
               ('recepcion_casla.html',f'recepcion_{slug}.html'),
@@ -862,7 +869,7 @@ def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025
         partidos_jug.append({'num':num,'nombre':f"{num} {name.title()}",'pos':pos_label,'color':POS_COLOR.get(pos_label,'#64748b'),'info':{},'ataques':ataques,'saques':saques,'recepciones':recepciones})
     partidos_jug.sort(key=lambda x:x['num'])
 
-    partidos_meta=[{'nombre':g['rival'],'rival':g['rival'],'fecha':'/'.join(reversed(g['date'].split('-'))),'torneo':f'NLA Suiza {temporada}','resultado':g['result'],'sets_nafels':str(g['tsets']),'sets_rival':str(g['rsets'])} for g in sorted(games,key=lambda x:x['date']) if g['date']]
+    partidos_meta=[{'nombre':g['rival'],'rival':g['rival'],'fecha':'/'.join(reversed(g['date'].split('-'))),'torneo':f'{LIGA_NOMBRE} {temporada}','resultado':g['result'],'sets_nafels':str(g['tsets']),'sets_rival':str(g['rsets'])} for g in sorted(games,key=lambda x:x['date']) if g['date']]
 
     pjs = f'// datos_partidos.js — {now}\n'
     pjs += f'const PARTIDOS_GENERADO = "{now}";\n'
