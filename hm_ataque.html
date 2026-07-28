@@ -149,7 +149,16 @@ html,body{background:var(--bg);color:var(--text);font-family:"Barlow Condensed",
   window.__TEAM_SLUG=equipo;
   return {
     rivals: td.rivals,
-    games: td.rivals.map(function(r,i){return {idx:i,rival:r,date:''};}),
+    /* ══ Los partidos, no la lista de rivales ═══════════════════════════
+       Acá se armaba un "partido" falso por cada rival, con la fecha vacía.
+       Por eso el selector «Partido específico» mostraba nombres sueltos en
+       vez de los cruces con su fecha, y elegir uno no filtraba nada.
+       Los partidos de verdad están en td.matches, con su fecha. */
+    games: (td.matches && td.matches.length)
+             ? td.matches.map(function(m,i){
+                 return {idx:(m.i!=null?m.i:i), rival:m.rival||'', date:m.date||'', r:m.r||''};
+               })
+             : td.rivals.map(function(r,i){return {idx:i,rival:r,date:''};}),
     combos: L.combos,
     players: td.atk
   };
