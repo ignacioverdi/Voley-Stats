@@ -172,7 +172,10 @@ function makeRow(j, i, sk, maxV){
   var isCur=CUR_NUM&&j.num===CUR_NUM;
   var valC=v>=sk.o?'#22c55e':v>=(sk.o-8)?'#fbbf24':'#ef4444';
   var acc=getActionCount(j.pjug,sk);
-  var subTxt=(acc!==null?acc+' acc · ':'')+'obj '+sk.o+'%';
+  /* getActionCount devuelve {tot, pos}: hay que sacarle el número, no pegarlo
+     entero. Antes se concatenaba el objeto y salía "[object Object] acc".
+     Se muestran las dos cifras: cuántas acciones y cuántas buenas. */
+  var subTxt=(acc&&acc.tot ? acc.tot+' acc'+(acc.pos?' · '+acc.pos+' ok':'')+' · ' : '')+'obj '+sk.o+'%';
 
   var row=document.createElement('div');
   row.className='row'+(isCur?' me':'');
