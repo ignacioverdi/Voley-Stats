@@ -1,5 +1,5 @@
-// datos_partidos.js — 27/07/2026, 23:21:09
-const PARTIDOS_GENERADO = "27/07/2026, 23:21:09";
+// datos_partidos.js — 28/07/2026, 01:15:18
+const PARTIDOS_GENERADO = "28/07/2026, 01:15:18";
 const PARTIDOS_TOTAL = 14;
 const PARTIDOS_META = [
   {
@@ -7,7 +7,7 @@ const PARTIDOS_META = [
     "nombre": "Untref",
     "rival": "Untref",
     "fecha": "01/05/2026",
-    "torneo": "NLA Suiza 2025/26",
+    "torneo": "División de Honor 2025/26",
     "resultado": "V",
     "sets_nafels": "3",
     "sets_rival": "1"
@@ -17,7 +17,7 @@ const PARTIDOS_META = [
     "nombre": "Ciudad",
     "rival": "Ciudad",
     "fecha": "05/05/2026",
-    "torneo": "NLA Suiza 2025/26",
+    "torneo": "División de Honor 2025/26",
     "resultado": "D",
     "sets_nafels": "0",
     "sets_rival": "3"
@@ -27,7 +27,7 @@ const PARTIDOS_META = [
     "nombre": "Ferro",
     "rival": "Ferro",
     "fecha": "08/05/2026",
-    "torneo": "NLA Suiza 2025/26",
+    "torneo": "División de Honor 2025/26",
     "resultado": "D",
     "sets_nafels": "1",
     "sets_rival": "3"
@@ -37,7 +37,7 @@ const PARTIDOS_META = [
     "nombre": "Hacoaj",
     "rival": "Hacoaj",
     "fecha": "16/05/2026",
-    "torneo": "NLA Suiza 2025/26",
+    "torneo": "División de Honor 2025/26",
     "resultado": "V",
     "sets_nafels": "3",
     "sets_rival": "1"
@@ -47,7 +47,7 @@ const PARTIDOS_META = [
     "nombre": "Velez",
     "rival": "Velez",
     "fecha": "22/05/2026",
-    "torneo": "NLA Suiza 2025/26",
+    "torneo": "División de Honor 2025/26",
     "resultado": "V",
     "sets_nafels": "3",
     "sets_rival": "2"
@@ -57,7 +57,7 @@ const PARTIDOS_META = [
     "nombre": "Defensores",
     "rival": "Defensores",
     "fecha": "26/05/2026",
-    "torneo": "NLA Suiza 2025/26",
+    "torneo": "División de Honor 2025/26",
     "resultado": "D",
     "sets_nafels": "2",
     "sets_rival": "3"
@@ -67,7 +67,7 @@ const PARTIDOS_META = [
     "nombre": "Lomas",
     "rival": "Lomas",
     "fecha": "30/05/2026",
-    "torneo": "NLA Suiza 2025/26",
+    "torneo": "División de Honor 2025/26",
     "resultado": "V",
     "sets_nafels": "3",
     "sets_rival": "2"
@@ -77,7 +77,7 @@ const PARTIDOS_META = [
     "nombre": "UBA",
     "rival": "UBA",
     "fecha": "09/06/2026",
-    "torneo": "NLA Suiza 2025/26",
+    "torneo": "División de Honor 2025/26",
     "resultado": "V",
     "sets_nafels": "3",
     "sets_rival": "1"
@@ -87,7 +87,7 @@ const PARTIDOS_META = [
     "nombre": "Campana",
     "rival": "Campana",
     "fecha": "13/06/2026",
-    "torneo": "NLA Suiza 2025/26",
+    "torneo": "División de Honor 2025/26",
     "resultado": "V",
     "sets_nafels": "3",
     "sets_rival": "1"
@@ -97,7 +97,7 @@ const PARTIDOS_META = [
     "nombre": "Boca",
     "rival": "Boca",
     "fecha": "19/06/2026",
-    "torneo": "NLA Suiza 2025/26",
+    "torneo": "División de Honor 2025/26",
     "resultado": "V",
     "sets_nafels": "3",
     "sets_rival": "0"
@@ -107,7 +107,7 @@ const PARTIDOS_META = [
     "nombre": "River",
     "rival": "River",
     "fecha": "26/06/2026",
-    "torneo": "NLA Suiza 2025/26",
+    "torneo": "División de Honor 2025/26",
     "resultado": "V",
     "sets_nafels": "3",
     "sets_rival": "1"
@@ -117,7 +117,7 @@ const PARTIDOS_META = [
     "nombre": "Campana",
     "rival": "Campana",
     "fecha": "04/07/2026",
-    "torneo": "NLA Suiza 2025/26",
+    "torneo": "División de Honor 2025/26",
     "resultado": "V",
     "sets_nafels": "3",
     "sets_rival": "1"
@@ -127,7 +127,7 @@ const PARTIDOS_META = [
     "nombre": "Campana",
     "rival": "Campana",
     "fecha": "10/07/2026",
-    "torneo": "NLA Suiza 2025/26",
+    "torneo": "División de Honor 2025/26",
     "resultado": "V",
     "sets_nafels": "3",
     "sets_rival": "1"
@@ -137,7 +137,7 @@ const PARTIDOS_META = [
     "nombre": "Defensores",
     "rival": "Defensores",
     "fecha": "17/07/2026",
-    "torneo": "NLA Suiza 2025/26",
+    "torneo": "División de Honor 2025/26",
     "resultado": "D",
     "sets_nafels": "0",
     "sets_rival": "3"
