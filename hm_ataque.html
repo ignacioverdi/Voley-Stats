@@ -46,7 +46,12 @@ html,body{background:var(--bg);color:var(--text);font-family:"Barlow Condensed",
 .ccard{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:9px 12px;min-width:85px;cursor:pointer;transition:all .14s;text-align:center}
 .ccard:hover{border-color:rgba(255,255,255,.14)}
 .ccard.sel{border-color:rgba(232,25,44,.4);background:rgba(232,25,44,.06)}
-.court-row{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;margin-bottom:18px}
+/* Cinco canchas repartidas en todo el ancho, todas del mismo tamaño.
+   Antes iban en una fila flexible con separación fija: sobraba espacio
+   a la derecha y quedaban desparejas. */
+.court-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;align-items:start;margin-bottom:18px}
+@media(max-width:1100px){.court-row{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.court-row{grid-template-columns:repeat(2,1fr)}}
 .court-block{text-align:center}
 .court-title{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px;font-weight:800}
 .nodata{color:var(--muted);font-size:11px;padding:30px;text-align:center}
@@ -92,6 +97,7 @@ html,body{background:var(--bg);color:var(--text);font-family:"Barlow Condensed",
   </div>
   <div class="flabel" data-i18n="Jugador">Jugador</div>
   <select class="psel" id="psel" onchange="onPlayerChange(this.value)"><option value="">Seleccionar...</option></select>
+  <button id="ver-video-btn" onclick="abrirVideo()" style="width:100%;margin-top:8px;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.32);color:#F97316;border-radius:8px;padding:9px;font-family:inherit;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer">&#9654; Ver los videos</button>
   <div class="active-filters" id="active-tags"></div>
   <div class="acc-group"><div class="acc-header" id="acc-hdr-partido" onclick="accToggle('partido')"><span>Partido</span><div style="display:flex;align-items:center;gap:6px"><div class="acc-dot"></div><span class="acc-arrow">▶</span></div></div>
   <div class="acc-body" id="acc-body-partido">
@@ -363,8 +369,40 @@ function getMainOrigin(acts){
 /* === Canchita estilo Plan de Partido (una cancha + linea de origen) === */
 var CC_MIN=2;
 function _ccRGB(c){if(!c)return '129,140,248';c=String(c);if(c.charAt(0)==='#'){var x=c.slice(1);if(x.length===3)x=x.charAt(0)+x.charAt(0)+x.charAt(1)+x.charAt(1)+x.charAt(2)+x.charAt(2);var n=parseInt(x,16);return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);}var m=c.match(/(\d+)\D+(\d+)\D+(\d+)/);return m?(m[1]+','+m[2]+','+m[3]):'129,140,248';}
-function ccGrid(zones,layout,color,total,opts){opts=opts||{};var minN=opts.minN||0,rgb=_ccRGB(color);var vals=[];layout.forEach(function(r){r.forEach(function(z){vals.push(zones[z]||0);});});var mx=Math.max.apply(null,vals)||1;var h="<div class='cc-grid'>";layout.forEach(function(row){row.forEach(function(z){var cnt=zones[z]||0,low=(minN>0&&cnt>0&&cnt<minN),bg,inner='';if(cnt<=0){bg='rgba(255,255,255,.02)';}else if(low){bg='rgba(255,255,255,.05)';inner="<div class='cn' style='color:#64748b;font-size:20px'>"+cnt+"</div>";}else{var a=0.16+(cnt/mx)*0.72;bg='rgba('+rgb+','+a.toFixed(2)+')';inner="<div class='cn'>"+cnt+"</div>"+((total>0)?"<div class='pc'>"+Math.round(cnt/total*100)+"%</div>":'');}h+="<div class='cc-cell' style='background:"+bg+"'><div class='zn'>"+z+"</div>"+inner+"</div>";});});return h+"</div>";}
+function ccGrid(zones,layout,color,total,opts){opts=opts||{};var minN=opts.minN||0,rgb=_ccRGB(color);var vals=[];layout.forEach(function(r){r.forEach(function(z){vals.push(zones[z]||0);});});var mx=Math.max.apply(null,vals)||1;var h="<div class='cc-grid'>";layout.forEach(function(row){row.forEach(function(z){var cnt=zones[z]||0,low=(minN>0&&cnt>0&&cnt<minN),bg,inner='';if(cnt<=0){bg='rgba(255,255,255,.02)';}else if(low){bg='rgba(255,255,255,.05)';inner="<div class='cn' style='color:#64748b;font-size:20px'>"+cnt+"</div>";}else{var a=0.16+(cnt/mx)*0.72;bg='rgba('+rgb+','+a.toFixed(2)+')';inner="<div class='cn'>"+cnt+"</div>"+((total>0)?"<div class='pc'>"+Math.round(cnt/total*100)+"%</div>":'');}/* Si la zona tiene acciones, se puede tocar para ver esos videos.
+       El heatmap deja de ser un cuadro y pasa a ser una puerta al video. */
+    var _clic = (cnt>0 && typeof verVideoDest==='function')
+      ? " onclick=\"verVideoDest("+z+")\" style=\"background:"+bg+";cursor:pointer\" title=\"Ver los videos de esta zona\""
+      : " style='background:"+bg+"'";
+    h+="<div class='cc-cell'"+_clic+"><div class='zn'>"+z+"</div>"+inner+"</div>";});});return h+"</div>";}
 function ccOriginLine(zones,total){var arr=[];for(var z in zones){if(zones[z]>0)arr.push([z,zones[z]]);}arr.sort(function(a,b){return b[1]-a[1];});if(!arr.length)return "";var top=arr.slice(0,3).map(function(p){return "Z"+p[0]+(total>0?" "+Math.round(p[1]/total*100)+"%":" ("+p[1]+")");}).join(" \u00b7 ");return "<div class='cc-origin'>Zona de origen: <b>"+top+"</b></div>";}
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   VER EL VIDEO DE LO QUE SE ESTÁ MIRANDO
+   Cada zona de la cancha abre los cortes de ese jugador filtrados por lo que
+   se está viendo. El heatmap deja de ser un cuadro y pasa a ser una puerta al
+   video: hacés clic en la zona donde te bloquean y ves las jugadas.
+   ══════════════════════════════════════════════════════════════════════════ */
+function _vfilt(){
+  var u = '';
+  try{
+    if(F.rival && F.rival !== 'all') u += '&rival=' + encodeURIComponent(F.rival);
+    if(F.set   && F.set   !== 'all') u += '&set='   + encodeURIComponent(F.set);
+  }catch(e){}
+  return u;
+}
+function abrirVideo(){
+  if(!F.player){ alert('Elegí un jugador primero.'); return; }
+  var u = 'cortes.html?num=' + encodeURIComponent(F.player) + '&sk=Ataque';
+  if(F.combo && F.combo !== 'all') u += '&combo=' + encodeURIComponent(F.combo);
+  window.open(u + _vfilt(), '_blank');
+}
+function verVideoDest(zone, extra){
+  if(!F.player){ alert('Elegí un jugador primero.'); return; }
+  window.open('cortes.html?num=' + encodeURIComponent(F.player) +
+              '&sk=Ataque&dz=' + zone + (extra || '') + _vfilt(), '_blank');
+}
 
 function courtSVG(destZones,originZone,total,color,title){
   var RIVAL=[[1,6,5],[9,8,7],[2,3,4]];
@@ -378,6 +416,9 @@ function courtSVG(destZones,originZone,total,color,title){
 function courtSVGOrigin(originZones,total,color,title){
   var OWN=[[4,3,2],[7,8,9],[5,6,1]];
   var h="<div class='cc-wrap'>";
+  /* Las otras canchas llevan la línea «Zona de origen»: acá va una vacía
+     del mismo alto, si no esta arranca más arriba y queda desalineada. */
+  h+="<div class='cc-origin' style='visibility:hidden'>&nbsp;</div>";
   h+="<div class='cc-lbl' style='color:rgba(239,68,68,.6)'>"+title+"</div>";
   h+=ccGrid(originZones,OWN,color,total,{minN:CC_MIN});
   return h+"</div>";
