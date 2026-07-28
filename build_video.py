@@ -95,6 +95,18 @@ def parse_dvw(path, ent=False):
             ev=code0[5] if len(code0)>5 else ''
             a={'t':t,'num':num,'name':pmap[num],'skill':sk,'sk':SK.get(sk,sk),
                'ev':ev,'set':c[8] if len(c)>8 else '','tm':tslug}
+            # ── LAS ZONAS DE LA JUGADA ──────────────────────────────────────
+            #    Sin esto, hacer clic en un cuadrante del heatmap abría los
+            #    cortes pero no mostraba nada: cortes.html filtra por a.dz y el
+            #    campo no existía, así que no coincidía con ninguna acción.
+            #    Se leen separando por tildes, que es como quedan en el código:
+            #    en el ataque el par de zonas va en el grupo 1, y en defensa,
+            #    saque y recepción en el 3. (Copiado de NÄFELS, donde ya andaba.)
+            if sk in ('A','D','S','R'):
+                _rest = code0[6:]; _tp = _rest.split('~'); _ti = 1 if sk=='A' else 3
+                _traj = _tp[_ti] if len(_tp) > _ti else ''
+                if _traj and len(_traj) > 0 and _traj[0].isdigit(): a['oz'] = int(_traj[0])
+                if _traj and len(_traj) > 1 and _traj[1].isdigit(): a['dz'] = int(_traj[1])
             if sk=='A':
                 cb=code0[6:8]
                 if cb and cb[0] in 'XVPC' and '~' not in cb: a['x']=cb
