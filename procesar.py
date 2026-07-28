@@ -195,6 +195,9 @@ def main():
             # está bien detallado, salen las mismas canchitas y distribuciones.
             c.paso('Plan del entrenamiento', [sys.executable, 'gen_plan_partido.py',
                                               '--dvw_dir', ent[-1], '--output_dir', AQUI], False)
+        # Este es el que arma el archivo que lee el dashboard. Sin él, la pantalla
+        # de entrenamientos queda en cero por más que todo lo demás haya corrido.
+        c.paso('Datos para el dashboard', [sys.executable, 'generar_datos_entrenamientos.py'], False)
 
     # 7) volver a cerrar los datos antes de publicar
     if hay('cifrar_datos.py') and hay('LLAVE.txt'):
