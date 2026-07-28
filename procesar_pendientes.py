@@ -41,6 +41,9 @@ CLUB_ID     = (os.environ.get('CLUB_ID')    or '').strip()
 # que Google lo rechaza con "Requests from referer <empty> are blocked".
 # Se resuelve diciéndole desde qué dominio viene: el de la propia app del club.
 FB_REFERER  = (os.environ.get('FB_REFERER') or '').strip()
+# Con esto se vuelve a procesar todo aunque nadie haya subido nada. Sirve
+# cuando se corrige un motor y hay que regenerar los datos ya publicados.
+FORZAR      = (os.environ.get('FORZAR') or '').strip().lower() in ('1','true','yes','si','sí')
 
 RAIZ = ('clubes/%s/' % CLUB_ID) if CLUB_ID else ''
 MAX  = 10          # cuántos partidos se procesan por corrida
@@ -105,7 +108,27 @@ def carpeta_para(tipo):
     return sorted(grupo, key=lambda d: (re.findall(r'(\d{4})', d) or ['0'])[-1])[-1]
 
 
+def reprocesar_todo():
+    """Vuelve a generar los datos desde los .dvw que ya están en el repo, sin
+       esperar a que alguien suba nada. Se usa cuando se corrige un motor."""
+    ok = True
+    for modo in ('partidos', 'entrenamientos'):
+        print()
+        print('  Regenerando %s...' % modo)
+        r = subprocess.run([sys.executable, os.path.join(AQUI, 'procesar.py'),
+                            '--solo', modo, '--json'],
+                           cwd=AQUI, capture_output=True, text=True, timeout=3000)
+        print(r.stdout[-1500:] if r.stdout else '')
+        if r.returncode != 0:
+            ok = False
+    return 0 if ok else 1
+
+
 def main():
+    if FORZAR:
+        print('  Reproceso forzado: no espero a que suban nada.')
+        return reprocesar_todo()
+
     if not (FB_URL and FB_KEY and ROBOT_MAIL and ROBOT_CLAVE):
         print('  Faltan los datos de acceso a la base. Nada que hacer.')
         return 0                      # no es un error: el robot simplemente no está configurado
