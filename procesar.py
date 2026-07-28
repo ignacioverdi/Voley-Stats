@@ -141,8 +141,37 @@ def main():
 
     c = Corrida()
     solo_ent = (args.solo == 'entrenamientos')
+
+    # ══ LAS DOS TEMPORADAS, QUE NO SON LA MISMA ═══════════════════════════
+    #    Es la parte más fácil de arruinar y la más difícil de notar.
+    #
+    #    ETIQUETA · con qué nombre se guardan los datos de la carpeta que se
+    #      está procesando. La carpeta "DVW NAFELS 2026" son los partidos de
+    #      la temporada 2025/26, así que se etiquetan "2025/26".
+    #
+    #    VISTA · qué temporada muestra la web. Puede ser otra: en pleno receso
+    #      la carpeta más nueva es la del año pasado, pero la app ya tiene que
+    #      apuntar a la que viene. Si se confunden, el equipo abre la app y ve
+    #      los partidos del año pasado como si fueran los de ahora.
     anio = re.findall(r'(\d{4})', dvw)
-    anio = anio[-1] if anio else str(time.localtime().tm_year)
+    anio = int(anio[-1]) if anio else time.localtime().tm_year
+    etiqueta = '%d/%s' % (anio - 1, str(anio)[2:])
+
+    # La temporada en vista sale del .bat del club, que es donde se decide.
+    # Si no está, se asume la de la carpeta.
+    vista = etiqueta
+    try:
+        for b in ('HACER_TODO.bat', 'correr_todo.bat'):
+            if not hay(b): continue
+            t = open(os.path.join(AQUI, b), encoding='utf-8', errors='replace').read()
+            m = re.search(r'TEMPORADA_ACTUAL\s*=\s*"?(\d{4}/\d{2})', t)
+            if m: vista = m.group(1); break
+    except Exception:
+        pass
+
+    print('    etiqueta:   %s     (con qué nombre se guardan)' % etiqueta)
+    print('    en la web:  %s     (qué temporada se muestra)' % vista)
+    print()
 
     # ── Los pasos, en el mismo orden que HACER_TODO.bat ──────────────────────
     #    No es una reinterpretación: es la misma secuencia, uno por uno. Si
@@ -160,11 +189,14 @@ def main():
             upd = next((os.path.basename(f) for f in sorted(glob.glob(os.path.join(AQUI, 'update_db_*.py')))
                         if 'entrenamiento' not in os.path.basename(f).lower()), None)
         if upd:
-            c.paso('Base de jugadores', [sys.executable, upd, '--dvw_dir', dvw, '--temporada', anio])
+            c.paso('Base de jugadores', [sys.executable, upd, '--dvw_dir', dvw,
+                                         '--temporada', etiqueta, '--output_dir', AQUI,
+                                         '--filter_temporada', vista])
 
         # 3) el plan de partido y las baterías
         c.paso('Plan de partido', [sys.executable, 'gen_plan_partido.py',
-                                   '--dvw_dir', dvw, '--output_dir', AQUI], False)
+                                   '--dvw_dir', dvw, '--output_dir', AQUI,
+                                   '--filter_temporada', vista], False)
         c.paso('Baterías', [sys.executable, 'gen_baterias.py', dvw], False)
         c.paso('Scouting del rival', [sys.executable, 'gen_scouting.py',
                                       '--dvw_dir', dvw, '--output_dir', AQUI], False)
@@ -199,15 +231,18 @@ def main():
                      key=lambda d: (re.findall(r'(\d{4})', d) or ['0'])[-1])
         upd_e = buscar_script('update_db_entrenamientos*.py')
         if ent and upd_e:
-            ent_anio = (re.findall(r'(\d{4})', ent[-1]) or [anio])[-1]
+            ent_anio = (re.findall(r'(\d{4})', ent[-1]) or [str(anio)])[-1]
             c.paso('Entrenamientos', [sys.executable, upd_e, '--dvw_dir', ent[-1],
                                       '--temporada', ent_anio], False)
             c.paso('Video de entrenamientos', [sys.executable, 'build_video.py', ent[-1],
                                                'datos_video_ent.js', 'VIDEO_DATA_ENT', 'ent'], False)
-            # El plan de partido también sirve para el entrenamiento: si el scout
-            # está bien detallado, salen las mismas canchitas y distribuciones.
-            c.paso('Plan del entrenamiento', [sys.executable, 'gen_plan_partido.py',
-                                              '--dvw_dir', ent[-1], '--output_dir', AQUI], False)
+            # ══ NO correr acá gen_plan_partido.py ═══════════════════════════
+            #    Escribe SIEMPRE en plan_partido_data.js, el mismo archivo del
+            #    plan de partido de verdad. Al pasarle la carpeta de
+            #    entrenamientos lo dejaba en 619 bytes y la solapa Plan de
+            #    Partido aparecía toda en cero.
+            #    Para tener el plan del entrenamiento hay que enseñarle a
+            #    escribir en otro archivo primero. Queda pendiente.
         # Y al final, los archivos que leen las pantallas: van SIEMPRE, porque
         # arman el historial completo con los partidos y los entrenamientos juntos.
         for scr, titulo in [('generar_datos_entrenamientos.py', 'Datos de entrenamientos'),
