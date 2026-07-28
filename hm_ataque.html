@@ -265,8 +265,14 @@ function buildChips(){
   var MO=['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
   var ur=uniq(acts.map(function(a){return a.rival;})).sort();
   buildSelect('fsel-rival',[['all',t('Todos')]].concat(ur.map(function(r){return [r,r.split(' ').slice(-1)[0].substring(0,12)];})),'rival',fChange);
-  var ug=uniq(acts.map(function(a){return a.gi;})).sort(function(a,b){return a-b;});
-  buildSelect('fsel-gi',[['all',t('Todos')]].concat(ug.map(function(gi){var g=GA[gi];if(!g)return[gi,'P'+gi];var rs=g.rival.split(' ').slice(-1)[0].substring(0,9);var dl='';if(g.date){var pts=g.date.split('-');try{dl=' ('+parseInt(pts[2])+' '+MO[parseInt(pts[1])]+')'}catch(e){}}return[gi,rs+dl];})),'gi',fChange);
+  /* ══ Los partidos contra el rival elegido ═══════════════════════════════
+     Antes la lista mostraba SIEMPRE todos los partidos, aunque hubieras
+     elegido un rival: si querías ver el segundo cruce contra Defensores no
+     había forma de encontrarlo. Ahora quedan sólo los de ese rival, con su
+     fecha y su resultado. (Igual que en NÄFELS, de donde se copió.) */
+  var actsGi=(F.rival&&F.rival!=='all')?acts.filter(function(a){return a.rival===F.rival;}):acts;
+  var ug=uniq(actsGi.map(function(a){return a.gi;})).sort(function(a,b){return a-b;});
+  buildSelect('fsel-gi',[['all',t('Todos')]].concat(ug.map(function(gi){var g=GA[gi];if(!g)return[gi,'P'+gi];var rs=g.rival.split(' ').slice(-1)[0].substring(0,9);var dl='';if(g.date){var pts=g.date.split('-');try{dl=' ('+parseInt(pts[2])+' '+MO[parseInt(pts[1])]+')'}catch(e){}}return[gi,rs+dl+(g.r?' · '+g.r:'')];})),'gi',fChange);
   buildSelect('fsel-atype',[['all',t('Todos')],['SO','Side Out'],['TR',t('Transicion')]],'atype',fChange);
   var sets=['all'].concat(uniq(acts.map(function(a){return a.set;})).sort(function(a,b){return a-b;}));
   buildSelect('fsel-set',sets.map(function(s){return[s,s==='all'?t('Todos'):'S'+s];}),'set',fChange);
@@ -298,6 +304,10 @@ function buildSelect(id,opts,key,cb){
 }
 function fChange(key,val){
   F[key]=val; updateAccDots(); updateActiveTags();
+  /* Al cambiar de rival hay que rearmar «Partido específico» con los partidos
+     de ESE rival, y soltar el que estuviera elegido: si no, queda filtrando por
+     un partido de otro equipo y la pantalla aparece vacía sin explicación. */
+  if(key==='rival'){ F.gi='all'; buildChips(); }
   if(typeof render==='function') render();
 }
 function updateAccDots(){
