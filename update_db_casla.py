@@ -587,7 +587,7 @@ def collect_setter_rallies(dvw_dir, team_norm_map, main_teams, teams_data=None):
     return setters_map, rallies_final
 
 
-def build_liga_data(teams_data, combos, output_dir='.', setters=None, rallies=None):
+def build_liga_data(teams_data, combos, output_dir='.', setters=None, rallies=None, games=None):
     """Genera liga_data.js con TODA la liga para los heatmaps universales."""
     COMBO_IDX={c:i for i,c in enumerate(combos)}
     RES_IDX={'#':0,'/':1,'+':2,'!':3,'=':4,'-':5}
@@ -614,7 +614,29 @@ def build_liga_data(teams_data, combos, output_dir='.', setters=None, rallies=No
             for a in pd.get(sk,[]) if a.get('date')
         ))
         gidx = {par: i for i, par in enumerate(_pares)}
-        partidos = [{'i': i, 'date': d, 'rival': rv} for i, (d, rv) in enumerate(_pares)]
+
+        # El resultado está en el nombre del archivo — "(3-0)" — y la base
+        # guarda quién era local, así que se puede escribir siempre desde el
+        # punto de vista del club: gana o pierde, no local o visitante.
+        _res = {}
+        try:
+            import re as _re
+            for _g in (games or []):
+                _m = _re.search(r'\((\d)\s*-\s*(\d)\)', _g.get('file', '') or '')
+                if not _m: continue
+                _h, _a = int(_m.group(1)), int(_m.group(2))
+                _loc = (_g.get('home') or '').strip().lower()
+                _vis = (_g.get('away') or '').strip().lower()
+                _mio = team.strip().lower()
+                if _mio == _loc:   _p, _c, _riv = _h, _a, _g.get('away', '')
+                elif _mio == _vis: _p, _c, _riv = _a, _h, _g.get('home', '')
+                else: continue
+                _res[(_g.get('date', ''), _riv)] = ('V' if _p > _c else 'D') + ' %d-%d' % (_p, _c)
+        except Exception:
+            _res = {}
+
+        partidos = [{'i': i, 'date': d, 'rival': rv, 'r': _res.get((d, rv), '')}
+                    for i, (d, rv) in enumerate(_pares)]
         def _gi(a):
             return gidx.get((a.get('date',''), a.get('rival','')), 0)
         atk_p,srv_p,rec_p={},{},{}
@@ -1498,7 +1520,16 @@ if __name__ == '__main__':
     canon_order = ['X5','V5','C5','V4','X1','XM','XG','XC','XD','X2','X7','CB','CD','CF','V3',
                    'X6','V6','V2','X8','V8','XB','XR','XP','VB','VR','VP']
     combos = [c for c in canon_order if c in all_combos] + sorted(c for c in all_combos if c not in canon_order)
-    build_liga_data(teams_data, combos, args.output_dir, setters_map, rallies)
+    # La lista de partidos con su resultado sale de la base, que se lee acá
+    # mismo: build_liga_data la necesita para poner "V 3-1" en cada partido.
+    _games = []
+    try:
+        if os.path.exists(args.db_path):
+            with open(args.db_path, encoding='utf-8') as _f:
+                _games = (json.load(_f) or {}).get('games') or []
+    except Exception:
+        _games = []
+    build_liga_data(teams_data, combos, args.output_dir, setters_map, rallies, games=_games)
     print(f"   \u2713 liga_data.js ({len(combos)} combos, {len(setters_map)} equipos con armadores)")
 
     # Step 5: Build stats table
