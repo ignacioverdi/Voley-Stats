@@ -746,6 +746,91 @@ try:
 except NameError:
     POS_COLOR = {'ARMADOR':'#a855f7','OPUESTO':'#ef4444','CENTRAL':'#22c55e','PUNTA':'#3b82f6','LIBERO':'#f59e0b','OTRO':'#64748b'}
 
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  EL HISTORIAL QUE LEE EL DASHBOARD
+# ------------------------------------------------------------------------------
+#  El archivo datos_historial.js alimenta el filtro Partidos / Entrenamientos.
+#  Cada entrada es una sesión con los números de cada jugador.
+#
+#  Se arma con lo que este mismo motor ya calculó al parsear —no se vuelve a
+#  leer ningún .dvw— y se SUMA a lo que haya: los partidos los escribe el otro
+#  motor en este mismo archivo, y si acá lo reemplazáramos entero, cada vez que
+#  se procesa un entrenamiento desaparecerían todos los partidos.
+# ══════════════════════════════════════════════════════════════════════════════
+def escribir_historial_entrenamientos(teams_data, output_dir='.'):
+    from collections import defaultdict
+    from datetime import datetime
+
+    def eff(acc, buenos, malos):
+        t = len(acc)
+        if not t: return 0
+        b = sum(1 for x in acc if x.get('effect') in buenos)
+        m = sum(1 for x in acc if x.get('effect') in malos)
+        return round((b - m) / t * 100)
+
+    def cuenta(acc, sig):
+        return sum(1 for x in acc if x.get('effect') == sig)
+
+    # agrupar todas las acciones por sesión (la fecha) y por jugador
+    sesiones = defaultdict(lambda: defaultdict(lambda: {'atk': [], 'srv': [], 'rec': [], 'blk': []}))
+    nombres = {}
+    for equipo, jugadores in (teams_data or {}).items():
+        for num_str, pd in (jugadores or {}).items():
+            info = pd.get('info') or {}
+            nombres[num_str] = info.get('name', '') or ''
+            for clave, dest in (('atk','atk'), ('srv','srv'), ('rec','rec'), ('blk','blk')):
+                for a in pd.get(clave, []) or []:
+                    f = a.get('date') or ''
+                    if f: sesiones[f][num_str][dest].append(a)
+
+    historial = []
+    for fecha in sorted(sesiones):
+        jugs = []
+        for num_str in sorted(sesiones[fecha], key=lambda n: int(n) if str(n).isdigit() else 0):
+            d = sesiones[fecha][num_str]
+            s_, r_, a_, b_ = d['srv'], d['rec'], d['atk'], d['blk']
+            if not (len(s_) + len(r_) + len(a_) + len(b_)): continue
+            jugs.append({
+                'c': num_str, 'n': nombres.get(num_str, '') or ('#' + str(num_str)),
+                'sT': len(s_), 'sEff': eff(s_, '#', '='), 'sPunto': cuenta(s_, '#'),
+                'sPos': cuenta(s_, '+'), 'sNeg': cuenta(s_, '-'), 'sErr': cuenta(s_, '='),
+                'rT': len(r_), 'rEff': eff(r_, '#+', '=/'), 'rPunto': cuenta(r_, '#'),
+                'rPos': cuenta(r_, '+'), 'rNeg': cuenta(r_, '-'), 'rErr': cuenta(r_, '='),
+                'aT': len(a_), 'aEff': eff(a_, '#', '=/'), 'aPunto': cuenta(a_, '#'),
+                'aPos': cuenta(a_, '+'), 'aNeg': cuenta(a_, '-'), 'aErr': cuenta(a_, '='),
+                'bT': len(b_), 'bPt': cuenta(b_, '#'), 'bPtPos': cuenta(b_, '+'),
+                'bEff': eff(b_, '#+', '='),
+            })
+        if not jugs: continue
+        # la fecha viene como aaaa-mm-dd y el dashboard la muestra dd/mm/aaaa
+        partes = str(fecha).split('-')
+        bonita = '/'.join(reversed(partes)) if len(partes) == 3 else str(fecha)
+        historial.append({'fecha': bonita, 'tipo': 'E', 'rival': 'Entrenamiento',
+                          'resultado': {}, 'jugadores': jugs})
+
+    ruta = os.path.join(output_dir, 'datos_historial.js')
+    previo = []
+    try:
+        if os.path.exists(ruta):
+            txt = open(ruta, encoding='utf-8').read()
+            i, j = txt.find('{'), txt.rfind('}')
+            if i >= 0 and j > i:
+                previo = [x for x in (json.loads(txt[i:j+1]).get('entrenamientos') or [])
+                          if x.get('tipo') != 'E']
+    except Exception:
+        previo = []
+
+    todo = previo + historial
+    todo.sort(key=lambda x: tuple(reversed((x.get('fecha') or '').split('/'))))
+
+    ahora = datetime.now().strftime('%d/%m/%Y, %H:%M:%S')
+    with open(ruta, 'w', encoding='utf-8') as f:
+        f.write('window.HISTORIAL_DATA = ' +
+                json.dumps({'generado': ahora, 'entrenamientos': todo}, ensure_ascii=False, indent=1) + ';\n')
+    print(f"   \u2713 datos_historial.js: {len(historial)} entrenamientos + {len(previo)} partidos")
+
+
 def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025/26'):
     """Generate datos_historial.js + datos_partidos.js for a specific team from DVW."""
     from datetime import datetime
@@ -819,12 +904,37 @@ def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025
                 'rT':r['T'],'rEff':r['Eff'],'rPunto':r['Punto'],'rPos':r['Pos'],'rNeg':r['Neg'],'rErr':r['Err'],'rAdm':r['Adm'],'rVend':r['Vend'],
                 'aT':a['T'],'aEff':a['Eff'],'aPunto':a['Punto'],'aPos':a['Pos'],'aNeg':a['Neg'],'aErr':a['Err'],'aAdm':a['Adm'],'aVend':a['Vend'],
                 'bT':bT,'bPt':bk,'bPtPos':bp,'bEff':bEff})
-        historial.append({'fecha':'/'.join(reversed(g['date'].split('-'))),'tipo':'P','rival':g['rival'],
+        # Este motor procesa ENTRENAMIENTOS: van marcados con 'E'. Antes decía 'P'
+        # y por eso el dashboard, que filtra por ese campo, no mostraba ninguno.
+        historial.append({'fecha':'/'.join(reversed(g['date'].split('-'))),'tipo':'E','rival':g['rival'],
             'resultado':{'nafels':g['tsets'],'rival':g['rsets'],'sets':g['set_strings']},'jugadores':jugs})
 
     now = datetime.now().strftime('%d/%m/%Y, %H:%M:%S')
-    hist_js = 'window.HISTORIAL_DATA = ' + json.dumps({'generado':now,'entrenamientos':historial}, ensure_ascii=False, indent=2) + ';\n'
-    with open(os.path.join(output_dir,'datos_historial.js'),'w',encoding='utf-8') as f: f.write(hist_js)
+
+    # ── SUMARSE AL HISTORIAL, NO PISARLO ────────────────────────────────────
+    #    Los partidos los escribe el otro motor en este mismo archivo. Si acá
+    #    lo reemplazáramos entero, cada vez que se procesa un entrenamiento
+    #    desaparecerían todos los partidos (y al revés). Por eso se lee lo que
+    #    ya hay, se dejan las entradas del otro tipo y se reemplazan sólo las
+    #    propias.
+    hist_path = os.path.join(output_dir, 'datos_historial.js')
+    previo = []
+    try:
+        if os.path.exists(hist_path):
+            txt = open(hist_path, encoding='utf-8').read()
+            ini = txt.find('{')
+            fin = txt.rfind('}')
+            if ini >= 0 and fin > ini:
+                d = json.loads(txt[ini:fin+1])
+                previo = [x for x in (d.get('entrenamientos') or []) if x.get('tipo') != 'E']
+    except Exception:
+        previo = []
+
+    todo = previo + historial
+    todo.sort(key=lambda x: tuple(reversed((x.get('fecha') or '').split('/'))))
+
+    hist_js = 'window.HISTORIAL_DATA = ' + json.dumps({'generado': now, 'entrenamientos': todo}, ensure_ascii=False, indent=1) + ';\n'
+    with open(hist_path, 'w', encoding='utf-8') as f: f.write(hist_js)
 
     # ── DATOS_PARTIDOS.JS (ataques, saques, recepciones por jugador acumulado) ──
     if os.path.exists('nla_players_db.json'):
@@ -943,6 +1053,13 @@ if __name__ == '__main__':
     # Step 5: Generar stats_entrenamiento.js (datos para el selector de la tabla)
     print("\n5. Building stats_entrenamiento.js...")
     build_stats_table(players, teams, os.path.join(args.output_dir,'stats_entrenamiento.html'))
+
+    # ── Step 6: el historial que lee el dashboard ───────────────────────────
+    print("\n6. Building datos_historial.js...")
+    try:
+        escribir_historial_entrenamientos(teams_data, args.output_dir)
+    except Exception as e:
+        print(f"   [aviso] no pude armar el historial: {e}")
 
     print(f"\n{'='*60}")
     print(f"\u2713 LISTO — {len(games_log)} partidos en la base")

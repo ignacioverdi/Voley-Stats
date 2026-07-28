@@ -141,65 +141,81 @@ def main():
 
     c = Corrida()
     solo_ent = (args.solo == 'entrenamientos')
-    solo_par = (args.solo == 'partidos')
+    anio = re.findall(r'(\d{4})', dvw)
+    anio = anio[-1] if anio else str(time.localtime().tm_year)
+
+    # ── Los pasos, en el mismo orden que HACER_TODO.bat ──────────────────────
+    #    No es una reinterpretación: es la misma secuencia, uno por uno. Si
+    #    alguno se saltea, la pantalla que lo usa queda vacía y cuesta darse
+    #    cuenta, porque el resto sí funciona.
 
     # 1) los datos están cifrados: hay que abrirlos para que el motor los lea
     if hay('descifrar_datos.py') and hay('LLAVE.txt'):
         c.paso('Abriendo los datos', [sys.executable, 'descifrar_datos.py'])
 
-    # 2) la base de jugadores
-    #    OJO: el motor de partidos y el de entrenamientos escriben los MISMOS
-    #    archivos (datos_partidos.js, datos_historial.js, la base de jugadores).
-    #    Por eso nunca se corren los dos en la misma pasada sin querer: el
-    #    robot manda una pasada por tipo, igual que los dos .bat de siempre.
-    upd = buscar_script('update_db_*_FULL.py')
-    if not upd:
-        upd = next((os.path.basename(f) for f in sorted(glob.glob(os.path.join(AQUI, 'update_db_*.py')))
-                    if 'entrenamiento' not in os.path.basename(f).lower()), None)
-    if upd and not solo_ent:
-        c.paso('Base de jugadores',
-               [sys.executable, upd, '--dvw_dir', dvw, '--temporada', temporada,
-                '--output_dir', AQUI, '--filter_temporada', temporada])
-
-    # 3) el scouting del rival y el plan de partido
     if not solo_ent:
+        # 2) la base de jugadores, la liga y los heatmaps
+        upd = buscar_script('update_db_*_FULL.py')
+        if not upd:
+            upd = next((os.path.basename(f) for f in sorted(glob.glob(os.path.join(AQUI, 'update_db_*.py')))
+                        if 'entrenamiento' not in os.path.basename(f).lower()), None)
+        if upd:
+            c.paso('Base de jugadores', [sys.executable, upd, '--dvw_dir', dvw, '--temporada', anio])
+
+        # 3) el plan de partido y las baterías
+        c.paso('Plan de partido', [sys.executable, 'gen_plan_partido.py',
+                                   '--dvw_dir', dvw, '--output_dir', AQUI], False)
+        c.paso('Baterías', [sys.executable, 'gen_baterias.py', dvw], False)
         c.paso('Scouting del rival', [sys.executable, 'gen_scouting.py',
                                       '--dvw_dir', dvw, '--output_dir', AQUI], False)
-    if not solo_ent:
-        c.paso('Plan de partido', [sys.executable, 'gen_plan_partido.py',
-                                   '--dvw_dir', dvw, '--output_dir', AQUI,
-                                   '--filter_temporada', temporada], False)
 
-    # 4) los cortes de video (los segundos salen de adentro del .dvw)
-    if not solo_ent:
+        # 4) los archivos que leen las pantallas
+        for scr, titulo in [('generar_datos_casla.py',           'Datos por jugador'),
+                            ('generar_datos_nafels.py',          'Datos por jugador'),
+                            ('generar_datos_partidos.py',        'Datos de partidos'),
+                            ('generar_datos_entrenamientos.py',  'Datos de entrenamientos'),
+                            ]:
+            if hay(scr):
+                c.paso(titulo, [sys.executable, scr], False)
+
+        # 5) los game plans por rival
+        c.paso('Game plans por rival', [sys.executable, 'actualizar_gameplan.py'], False)
+
+        # 6) los videos
+        xls = next((os.path.basename(f) for f in glob.glob(os.path.join(AQUI, 'videos_*.xlsx'))), None)
+        if xls:
+            c.paso('Highlights', [sys.executable, 'build_videos.py', xls], False)
         c.paso('Cortes de video', [sys.executable, 'build_video.py', dvw,
                                    'datos_video.js', 'VIDEO_DATA'], False)
 
-    # 5) bloqueo y tabla de liga
-    if not solo_ent:
+        # 7) bloqueo y tabla de la liga
         c.paso('Bloqueo', [sys.executable, 'gen_bloqueo.py'], False)
         c.paso('Tabla de la liga', [sys.executable, 'gen_liga_stats.py'], False)
 
-    # 6) entrenamientos, si se pidieron
+    # ── Entrenamientos ───────────────────────────────────────────────────────
     if args.entrenamientos or solo_ent:
         ent = sorted([d for d in glob.glob(os.path.join(AQUI, '*')) if os.path.isdir(d)
                       and 'ENTREN' in os.path.basename(d).upper()],
                      key=lambda d: (re.findall(r'(\d{4})', d) or ['0'])[-1])
         upd_e = buscar_script('update_db_entrenamientos*.py')
         if ent and upd_e:
+            ent_anio = (re.findall(r'(\d{4})', ent[-1]) or [anio])[-1]
             c.paso('Entrenamientos', [sys.executable, upd_e, '--dvw_dir', ent[-1],
-                                      '--temporada', temporada.split('/')[0]], False)
+                                      '--temporada', ent_anio], False)
             c.paso('Video de entrenamientos', [sys.executable, 'build_video.py', ent[-1],
                                                'datos_video_ent.js', 'VIDEO_DATA_ENT', 'ent'], False)
             # El plan de partido también sirve para el entrenamiento: si el scout
             # está bien detallado, salen las mismas canchitas y distribuciones.
             c.paso('Plan del entrenamiento', [sys.executable, 'gen_plan_partido.py',
                                               '--dvw_dir', ent[-1], '--output_dir', AQUI], False)
-        # Este es el que arma el archivo que lee el dashboard. Sin él, la pantalla
-        # de entrenamientos queda en cero por más que todo lo demás haya corrido.
-        c.paso('Datos para el dashboard', [sys.executable, 'generar_datos_entrenamientos.py'], False)
+        # Y al final, los archivos que leen las pantallas: van SIEMPRE, porque
+        # arman el historial completo con los partidos y los entrenamientos juntos.
+        for scr, titulo in [('generar_datos_entrenamientos.py', 'Datos de entrenamientos'),
+                            ]:
+            if hay(scr):
+                c.paso(titulo, [sys.executable, scr], False)
 
-    # 7) volver a cerrar los datos antes de publicar
+    # 8) volver a cerrar los datos antes de publicar
     if hay('cifrar_datos.py') and hay('LLAVE.txt'):
         ok = c.paso('Protegiendo los datos', [sys.executable, 'cifrar_datos.py'])
         if not ok:
