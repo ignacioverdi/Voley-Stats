@@ -374,7 +374,10 @@ function ccGrid(zones,layout,color,total,opts){opts=opts||{};var minN=opts.minN|
 function ccOriginLine(zones,total){var arr=[];for(var z in zones){if(zones[z]>0)arr.push([z,zones[z]]);}arr.sort(function(a,b){return b[1]-a[1];});if(!arr.length)return "";var top=arr.slice(0,3).map(function(p){return "Z"+p[0]+(total>0?" "+Math.round(p[1]/total*100)+"%":" ("+p[1]+")");}).join(" \u00b7 ");return "<div class='cc-origin'>Zona de origen: <b>"+top+"</b></div>";}
 
 function destCourtSVG(sets,color,W,H){
-  var RIVAL=[[1,6,5],[9,8,7],[2,3,4]];
+  /* La cancha del rival, como se ve desde el banco: la red arriba y la
+     fila delantera 4-3-2. Antes estaba invertida en los dos ejes, así que
+     los números caían en el lugar equivocado de la cancha. */
+  var RIVAL=[[4,3,2],[7,8,9],[5,6,1]];
   var destZ={1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0};
   sets.forEach(function(s){if(s.atk_dest) destZ[s.atk_dest]=(destZ[s.atk_dest]||0)+1;});
   var total=sets.filter(function(s){return s.atk_dest;}).length;

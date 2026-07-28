@@ -424,7 +424,10 @@ function verVideoDest(zone, extra){
 }
 
 function courtSVG(destZones,originZone,total,color,title){
-  var RIVAL=[[1,6,5],[9,8,7],[2,3,4]];
+  /* La cancha del rival, como se ve desde el banco: la red arriba y la
+     fila delantera 4-3-2. Antes estaba invertida en los dos ejes, así que
+     los números caían en el lugar equivocado de la cancha. */
+  var RIVAL=[[4,3,2],[7,8,9],[5,6,1]];
   var h="<div class='cc-wrap'>";
   if(originZone) h+="<div class='cc-origin'>Zona de origen: <b>Z"+originZone+"</b></div>";
   h+="<div class='cc-lbl' style='color:rgba(232,25,44,.6)'>"+title+"</div>";
