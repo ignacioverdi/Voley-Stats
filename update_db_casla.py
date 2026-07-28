@@ -601,17 +601,33 @@ def build_liga_data(teams_data, combos, output_dir='.', setters=None, rallies=No
         if not td: continue
         rivals=sorted(set(a.get('rival','') for pd in td.values() for sk in ['atk','srv','rec'] for a in pd.get(sk,[]) if a.get('rival')))
         ridx={r:i for i,r in enumerate(rivals)}
+
+        # ── EL PARTIDO AL QUE PERTENECE CADA ACCIÓN ──────────────────────────
+        #    Antes este índice se escribía a mano como 0, así que las miles de
+        #    acciones decían pertenecer todas al primer partido. Por eso el
+        #    filtro «Partido específico» de los heatmaps nunca funcionó: elegías
+        #    un rival y te ofrecía un partido de otro.
+        #    Cada acción trae su fecha y su rival, así que el índice sale de ahí.
+        _pares = sorted(set(
+            (a.get('date',''), a.get('rival',''))
+            for pd in td.values() for sk in ['atk','srv','rec']
+            for a in pd.get(sk,[]) if a.get('date')
+        ))
+        gidx = {par: i for i, par in enumerate(_pares)}
+        partidos = [{'i': i, 'date': d, 'rival': rv} for i, (d, rv) in enumerate(_pares)]
+        def _gi(a):
+            return gidx.get((a.get('date',''), a.get('rival','')), 0)
         atk_p,srv_p,rec_p={},{},{}
         for ns,pd in td.items():
             info=pd.get('info') or {}; num=int(ns); name=override_name(team, num, info.get('name',ns))
             atk,srv,rec=pd.get('atk',[]),pd.get('srv',[]),pd.get('rec',[])
-            if atk: atk_p[ns]={'name':name,'num':num,'a':[[ridx.get(a.get('rival',''),0),0,a.get('set_num',1),1,a.get('atype',0),COMBO_IDX.get(a.get('combo',''),-1),RES_IDX.get(a.get('effect','='),4),a.get('orig',0),a.get('dest',0),6,-1] for a in atk]}
+            if atk: atk_p[ns]={'name':name,'num':num,'a':[[ridx.get(a.get('rival',''),0),_gi(a),a.get('set_num',1),1,a.get('atype',0),COMBO_IDX.get(a.get('combo',''),-1),RES_IDX.get(a.get('effect','='),4),a.get('orig',0),a.get('dest',0),6,-1] for a in atk]}
             if srv:
                 stl=list(dict.fromkeys('S'+a.get('stype','Q') for a in srv)) or ['SQ']; sidx={s:i for i,s in enumerate(stl)}
-                srv_p[ns]={'name':name,'num':num,'stypes':stl,'s':[[ridx.get(a.get('rival',''),0),0,a.get('set_num',1),1,sidx.get('S'+a.get('stype','Q'),0),RES_IDX.get(a.get('effect','='),4),a.get('orig',0),a.get('dest',0)] for a in srv]}
+                srv_p[ns]={'name':name,'num':num,'stypes':stl,'s':[[ridx.get(a.get('rival',''),0),_gi(a),a.get('set_num',1),1,sidx.get('S'+a.get('stype','Q'),0),RES_IDX.get(a.get('effect','='),4),a.get('orig',0),a.get('dest',0)] for a in srv]}
             if rec:
                 rtl=list(dict.fromkeys('R'+a.get('stype','M') for a in rec)) or ['RM']; rtidx={r:i for i,r in enumerate(rtl)}
-                rec_p[ns]={'name':name,'num':num,'rtypes':rtl,'r':[[ridx.get(a.get('rival',''),0),0,a.get('set_num',1),1,rtidx.get('R'+a.get('stype','M'),0),REC_IDX.get(a.get('effect','-'),3),a.get('orig',0),a.get('dest',0)] for a in rec]}
+                rec_p[ns]={'name':name,'num':num,'rtypes':rtl,'r':[[ridx.get(a.get('rival',''),0),_gi(a),a.get('set_num',1),1,rtidx.get('R'+a.get('stype','M'),0),REC_IDX.get(a.get('effect','-'),3),a.get('orig',0),a.get('dest',0)] for a in rec]}
         # Armar AMBOS armadores (estructura setters array que usa el game plan)
         team_setters = setters.get(team, [])
         if not isinstance(team_setters, list): team_setters = [team_setters]
@@ -620,9 +636,13 @@ def build_liga_data(teams_data, combos, output_dir='.', setters=None, rallies=No
         _all_rl = []
         for _sn in team_setters:
             _all_rl.extend(team_rallies.get(str(_sn), []) if isinstance(team_rallies, dict) else [])
-        _seen = sorted(set((r.get('date',''), r.get('rival','')) for r in _all_rl))
-        match_idx = {dk: i for i, dk in enumerate(_seen)}
-        matches = [{'i': i, 'date': d, 'rival': rv} for i, (d, rv) in enumerate(_seen)]
+        # ── UNA SOLA LISTA DE PARTIDOS ──────────────────────────────────
+        #    El armador armaba su propia lista con los partidos donde hubo
+        #    armados, y las demás destrezas usaban otra. Con dos listas
+        #    distintas los índices no coinciden y el filtro apunta al partido
+        #    equivocado. Se usa la de arriba, que sale de TODAS las acciones.
+        match_idx = gidx
+        matches = partidos
         setters_list = []
         for sn in team_setters:
             rl = team_rallies.get(str(sn), []) if isinstance(team_rallies, dict) else []
