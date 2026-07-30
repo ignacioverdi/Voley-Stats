@@ -3727,8 +3727,17 @@ document.addEventListener('keydown', e=>{
   if((e.ctrlKey||e.metaKey) && (e.key==='r'||e.key==='R')){ e.preventDefault(); buscarCodigo(); return; }        /* buscar */
   if((e.ctrlKey||e.metaKey) && (e.key==='u'||e.key==='U')){ e.preventDefault(); actualizarTablas(); return; }    /* = UPDATE */
 
-  /* manual 2.6 [Add]: atajos propios. Tienen prioridad sobre todo lo demás. */
-  const at = atajoDe(e);
+  /* manual 2.6 [Add]: atajos propios. Tienen prioridad sobre todo lo demás...
+     salvo cuando el menú extendido está abierto.
+
+     Si el scout abrió el menú es porque quiere elegir una de SUS opciones, y
+     esas tienen que ganar. Con un atajo en la misma tecla —por ejemplo la "O",
+     que en el menú es "recepción de arriba"— el atajo se la quedaba y el valor
+     nunca se guardaba. */
+  const menuExt = document.getElementById('extmenu');
+  const extAbierto = (typeof EXT_MODO !== 'undefined' && EXT_MODO) ||
+                     (menuExt && menuExt.classList.contains('open'));
+  const at = extAbierto ? null : atajoDe(e);
   if(at){ e.preventDefault(); aplicarAtajo(at); return; }
 
   const inp0=document.getElementById('code');
