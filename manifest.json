@@ -1,0 +1,13 @@
+{
+  "name": "CASLA VOLEY — Análisis",
+  "short_name": "Casla Volley",
+  "description": "Sistema de análisis, estadísticas y video — San Lorenzo de Almagro",
+  "lang": "es",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": []
+}
