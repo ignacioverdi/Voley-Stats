@@ -24,41 +24,6 @@ ESTRUCTURA DE ARCHIVOS:
 import os, re, json, argparse, shutil
 from collections import defaultdict, Counter
 
-def _fecha_del_dvw(ruta):
-    """La fecha del partido, leida de adentro del archivo.
-
-       Los .dvw que descarga la liga traen la fecha en el nombre; los que se
-       exportan del panel, no —"_NAF-VIS.dvw"—. Pero todos la traen adentro,
-       en el bloque [3MATCH], escrita como 30/07/2026.
-
-       Se devuelve como 2026-07-30, que es el formato que usa el resto."""
-    try:
-        with open(ruta, 'rb') as f:
-            crudo = f.read()
-        txt = crudo.decode('windows-1252', errors='replace')
-        if re.search(r'[\u00C3\u00C2][\u0080-\u00BF]', txt):
-            try:
-                txt = crudo.decode('utf-8', errors='replace')
-            except Exception:
-                pass
-        lin = txt.split('\n')
-        i = [k for k, l in enumerate(lin) if l.strip().upper() == '[3MATCH]']
-        if not i:
-            return ''
-        col = lin[i[0] + 1].split(';')
-        f0 = (col[0] or '').strip()
-        m = re.match(r'^(\d{1,2})[/.-](\d{1,2})[/.-](\d{4})$', f0)
-        if m:
-            return '%s-%02d-%02d' % (m.group(3), int(m.group(2)), int(m.group(1)))
-        m = re.match(r'^(\d{4})[/.-](\d{1,2})[/.-](\d{1,2})$', f0)
-        if m:
-            return '%s-%02d-%02d' % (m.group(1), int(m.group(2)), int(m.group(3)))
-    except Exception:
-        pass
-    return ''
-
-
-
 # ── EL NOMBRE DE LA COMPETENCIA ────────────────────────────────────────────
 #    Antes decía "NLA Suiza" acá adentro, heredado del club de origen, y
 #    terminaba escrito en los datos de cada partido. Ahora está en un solo
@@ -80,7 +45,7 @@ def normalize_combo(combo):
 # ═══════════════════════════════════════════════════════════════════
 # CONFIGURACIÓN CASLA (Liga Argentina División de Honor)
 # ═══════════════════════════════════════════════════════════════════
-NLA_TEAMS = ['CASLA','Boca','River','Velez','Lomas','Ciudad','Untref','Ferro','Defensores','Hacoaj','UBA','Campana']
+NLA_TEAMS = ['ENTRENAMIENTO']
 
 TEAM_NORM = {
     'Club Atltico San Lorenzo de Almagro':'CASLA','Club S. y D. Defensores de Banfield':'Defensores',
@@ -89,30 +54,7 @@ TEAM_NORM = {
     'Universidad Nacional de Tres de Febrero':'Untref','Club Ferro Carril Oeste':'Ferro',
     'Club Nautico Hacoaj':'Hacoaj','Club Atltico Boca Juniors':'Boca',
 }
-MAIN_TEAM = 'CASLA'
-
-# ── NOMBRES MANUALES (override) ───────────────────────────────────
-# Corrige nombres que vienen mal o vacíos desde los .dvw. Se aplican CADA
-# vez que se regenera, así NO se pierden al cargar partidos nuevos.
-# Formato:  'Equipo': { numero: 'Apellido Nombre' }
-NAME_OVERRIDES = {
-    'River': {9: 'Mendez Nicolas', 10: 'Trucco Federico', 11: 'Fernandez Gaston'},
-}
-def override_name(team, num, default_name=''):
-    try: num = int(num)
-    except: return default_name
-    ov = NAME_OVERRIDES.get(team) or NAME_OVERRIDES.get(str(team).lower().replace(' ', '_'))
-    if ov and num in ov: return ov[num]
-    return default_name
-
-# Posiciones oficiales del plantel CASLA (por número de camiseta).
-# Fuente única de verdad — coincide con EQUIPO_DEMO de jugador.html.
-CASLA_POS_OFICIAL = {
-    2:'CENTRAL', 3:'LIBERO', 4:'ARMADOR', 5:'OPUESTO', 6:'PUNTA',
-    9:'ARMADOR', 10:'CENTRAL', 11:'PUNTA', 12:'LIBERO', 13:'PUNTA',
-    14:'PUNTA', 15:'CENTRAL', 17:'CENTRAL', 18:'OPUESTO', 19:'ARMADOR',
-    20:'PUNTA', 1:'CENTRAL'
-}
+MAIN_TEAM = 'ENTRENAMIENTO'
 
 
 TEAM_COLORS = {
@@ -156,7 +98,7 @@ def get_players(lines, section):
                 pc=parts[13].strip() if len(parts)>13 else ''
                 pm={'1':'OH','2':'OPP','3':'MB','4':'S','L':'L','5':'OH','':'?'}
                 pos='L' if role=='L' else pm.get(pc,'?')
-                players[num]={'name':f"{last} {first}".strip(),'apellido':last,'pos':pos,'num':num}
+                players[num]={'name':f"{last} {first}".strip(),'pos':pos,'num':num}
             except: pass
     return players
 
@@ -216,19 +158,14 @@ def parse_dvw_both(fpath, temporada):
     home_raw, away_raw = get_teams(lines)
     home = norm(home_raw); away = norm(away_raw)
     m = re.search(r'(\d{4}-\d{2}-\d{2})', os.path.basename(fpath))
-    # Si el nombre no la trae, se lee de adentro del archivo.
-    date = m.group(1) if m else _fecha_del_dvw(fpath)
+    date = m.group(1) if m else ''
     result = {}
 
     for team, pfx, section in [(home,'*','[3PLAYERS-H]'),(away,'a','[3PLAYERS-V]')]:
         if not team: continue
+        team = 'ENTRENAMIENTO'  # ENTRENAMIENTO: todo San Lorenzo en un solo equipo
         players = get_players(lines, section)
-        for _pn, _pinfo in players.items():
-            _nw = override_name(team, _pn, '')
-            if _nw:
-                _pinfo['name'] = _nw
-                _pinfo['apellido'] = _nw.split(' ')[0]
-        rival = away if pfx=='*' else home
+        rival = 'ENTRENAMIENTO'
 
         idx = content.find('[3SCOUT]\n')
         if idx < 0: continue
@@ -288,12 +225,21 @@ def parse_dvw_both(fpath, temporada):
             elif skill=='E': sets[pnum].append(action)
             elif skill=='B': blk[pnum].append(action)
 
-        result[team]={'players':players,'atk':dict(atk),'srv':dict(srv),
-                      'rec':dict(rec),'sets':dict(sets),'blk':dict(blk)}
+        if team in result:
+            # Acumular el segundo lado (away) sobre el primero (home)
+            r=result[team]
+            for k,v in players.items():
+                if k not in r['players']: r['players'][k]=v
+            for src_d,dst_k in [(atk,'atk'),(srv,'srv'),(rec,'rec'),(sets,'sets'),(blk,'blk')]:
+                for num,acts in src_d.items():
+                    r[dst_k].setdefault(num,[]).extend(acts)
+        else:
+            result[team]={'players':players,'atk':dict(atk),'srv':dict(srv),
+                          'rec':dict(rec),'sets':dict(sets),'blk':dict(blk)}
     return result, date, home, away
 
 # ── UPDATE DATABASE ───────────────────────────────────────────────
-def update_database(dvw_dir, temporada, db_path='casla_players_db.json'):
+def update_database(dvw_dir, temporada, db_path='entrenamientos_db.json'):
     # Load existing DB
     if os.path.exists(db_path):
         with open(db_path) as f: db = json.load(f)
@@ -302,9 +248,6 @@ def update_database(dvw_dir, temporada, db_path='casla_players_db.json'):
         existing_dates = {g['file'] for g in games_log}
     else:
         teams_data = {}; games_log = []; existing_dates = set()
-
-    # firma por PARTIDO (fecha + equipos) para evitar contar dos veces archivos duplicados/copias
-    existing_sigs = {(g.get('date'), tuple(sorted([g.get('home',''), g.get('away','')]))) for g in games_log}
 
     dvw_files = sorted([f for f in os.listdir(dvw_dir) if f.endswith('.dvw')])
     added = 0; skipped = 0
@@ -320,13 +263,6 @@ def update_database(dvw_dir, temporada, db_path='casla_players_db.json'):
             result, date, home, away = parse_dvw_both(fpath, temporada)
         except Exception as e:
             print(f"  ERROR {fname}: {e}"); continue
-
-        # mismo partido ya cargado desde otro archivo (copia "(1)", re-scout, etc.) → no contar doble
-        sig = (date, tuple(sorted([home, away])))
-        if date and sig in existing_sigs:
-            print(f"  ⚠ DUPLICADO omitido: {fname} (mismo partido que uno ya cargado)")
-            skipped += 1; continue
-        existing_sigs.add(sig)
 
         for team, data in result.items():
             if team not in teams_data: teams_data[team] = {}
@@ -517,7 +453,7 @@ def parse_setter_rallies(content, pfx, rival_pfx, is_home, setter_num, date, riv
     idx = content.find('[3SCOUT]\n')
     if idx < 0: return []
     scout = content[idx+9:content.find('\n[3', idx+9)].strip().split('\n')
-    rallies = []; pending = None; last_skill = ''; last_rq = '?'; atype = 0; last_serve_t = 0; last_rec_t = 0; last_rec_zone = 0; last_rec_num = 0; last_rec_type = ''
+    rallies = []; pending = None; last_skill = ''; last_rq = '?'; atype = 0
     for line in scout:
         l = line.strip()
         if len(l) < 6: continue
@@ -536,23 +472,18 @@ def parse_setter_rallies(content, pfx, rival_pfx, is_home, setter_num, date, riv
         except: spos = 0
         try: setn = int(sc[8].strip()) if len(sc) > 8 and sc[8].strip().isdigit() else 1
         except: setn = 1
-        try: vt = int(sc[12].strip()) if len(sc) > 12 and sc[12].strip().isdigit() else 0
-        except: vt = 0
         if skill == 'S':
             if pending: rallies.append(pending); pending = None
             last_skill = ''; last_rq = '?'; atype = 0 if t == rival_pfx else 1
-            last_serve_t = vt; last_rec_zone = (int(tp[3][1]) if len(tp) > 3 and tp[3] and len(tp[3]) > 1 and tp[3][1].isdigit() else 0); last_rec_num = 0; last_rec_type = ''
             continue
         if t != pfx: continue
-        if skill == 'R': last_rq = effect; last_skill = 'R'; last_rec_t = vt; last_rec_num = pnum; last_rec_type = (code[3].upper() if len(code) > 3 else '')
+        if skill == 'R': last_rq = effect; last_skill = 'R'
         elif skill == 'E' and pnum == setter_num:
             if pending: rallies.append(pending)
             rq = last_rq if last_skill == 'R' else '?'
             raw = tp[0] if tp else ''; call = raw[:2] if len(raw) >= 2 else raw
-            pending = {'setter_pos': spos, 'set_num': setn, 'call': call, 'rec_quality': rq, 'atype': (0 if last_skill == 'R' else 1),
-                       'atk_combo': '', 'atk_result': '', 'atk_dest': 0, 'atk_orig': 0, 'date': date, 'rival': rival,
-                       't_start': (last_serve_t or last_rec_t or vt), 't_atk': 0,
-                       'rec_zone': last_rec_zone, 'rec_num': last_rec_num, 'atk_num': 0, 'rec_type': last_rec_type}
+            pending = {'setter_pos': spos, 'set_num': setn, 'call': call, 'rec_quality': rq, 'atype': atype,
+                       'atk_combo': '', 'atk_result': '', 'atk_dest': 0, 'atk_orig': 0, 'date': date, 'rival': rival}
             last_skill = 'E'
         elif skill == 'A':
             if pending:
@@ -560,7 +491,6 @@ def parse_setter_rallies(content, pfx, rival_pfx, is_home, setter_num, date, riv
                 pending['atk_combo'] = combo; pending['atk_result'] = effect
                 pending['atk_dest'] = int(traj[1]) if traj and len(traj) > 1 and traj[1].isdigit() else 0
                 pending['atk_orig'] = int(traj[0]) if traj and traj[0].isdigit() else 0
-                pending['t_atk'] = vt; pending['atk_num'] = pnum
                 rallies.append(pending); pending = None
             last_skill = 'A'
         elif skill in ('B', 'D', 'F'):
@@ -589,7 +519,6 @@ def collect_setter_rallies(dvw_dir, team_norm_map, main_teams, teams_data=None):
             liberos_by_team[tm] = libs
     rallies_both = defaultdict(lambda: defaultdict(list))
     setters_detected = {}
-    seen_sigs = set()  # evitar contar dos veces archivos del mismo partido (copias/duplicados)
     files = sorted([f for f in os.listdir(dvw_dir) if f.endswith('.dvw')])
     for fname in files:
         with open(os.path.join(dvw_dir, fname), encoding='utf-8', errors='ignore') as f:
@@ -598,13 +527,7 @@ def collect_setter_rallies(dvw_dir, team_norm_map, main_teams, teams_data=None):
         h_raw, a_raw = get_teams(lines)
         home = norm(h_raw); away = norm(a_raw)
         m = re.search(r'(\d{4}-\d{2}-\d{2})', fname)
-        # Si el nombre no la trae —los entrenamientos del panel no la traen—
-        # se lee de adentro del archivo, que siempre la tiene.
-        date = m.group(1) if m else _fecha_del_dvw(os.path.join(dvw_dir, fname))
-        sig = (date, tuple(sorted([home, away])))
-        if date and sig in seen_sigs:
-            continue  # mismo partido ya procesado (copia "(1)", re-scout) → no contar doble
-        seen_sigs.add(sig)
+        date = m.group(1) if m else ''
         for team, pfx, rpfx, ishome, rival in [(home, '*', 'a', True, away), (away, 'a', '*', False, home)]:
             if team not in main_teams: continue
             team_libs = liberos_by_team.get(team, set())
@@ -625,7 +548,7 @@ def collect_setter_rallies(dvw_dir, team_norm_map, main_teams, teams_data=None):
     return setters_map, rallies_final
 
 
-def build_liga_data(teams_data, combos, output_dir='.', setters=None, rallies=None, games=None):
+def build_liga_data(teams_data, combos, output_dir='.', setters=None, rallies=None):
     """Genera liga_data.js con TODA la liga para los heatmaps universales."""
     COMBO_IDX={c:i for i,c in enumerate(combos)}
     RES_IDX={'#':0,'/':1,'+':2,'!':3,'=':4,'-':5}
@@ -639,76 +562,27 @@ def build_liga_data(teams_data, combos, output_dir='.', setters=None, rallies=No
         if not td: continue
         rivals=sorted(set(a.get('rival','') for pd in td.values() for sk in ['atk','srv','rec'] for a in pd.get(sk,[]) if a.get('rival')))
         ridx={r:i for i,r in enumerate(rivals)}
-
-        # ── EL PARTIDO AL QUE PERTENECE CADA ACCIÓN ──────────────────────────
-        #    Antes este índice se escribía a mano como 0, así que las miles de
-        #    acciones decían pertenecer todas al primer partido. Por eso el
-        #    filtro «Partido específico» de los heatmaps nunca funcionó: elegías
-        #    un rival y te ofrecía un partido de otro.
-        #    Cada acción trae su fecha y su rival, así que el índice sale de ahí.
-        _pares = sorted(set(
-            (a.get('date',''), a.get('rival',''))
-            for pd in td.values() for sk in ['atk','srv','rec']
-            for a in pd.get(sk,[]) if a.get('date')
-        ))
-        gidx = {par: i for i, par in enumerate(_pares)}
-
-        # El resultado está en el nombre del archivo — "(3-0)" — y la base
-        # guarda quién era local, así que se puede escribir siempre desde el
-        # punto de vista del club: gana o pierde, no local o visitante.
-        _res = {}
-        try:
-            import re as _re
-            for _g in (games or []):
-                _m = _re.search(r'\((\d)\s*-\s*(\d)\)', _g.get('file', '') or '')
-                if not _m: continue
-                _h, _a = int(_m.group(1)), int(_m.group(2))
-                _loc = (_g.get('home') or '').strip().lower()
-                _vis = (_g.get('away') or '').strip().lower()
-                _mio = team.strip().lower()
-                if _mio == _loc:   _p, _c, _riv = _h, _a, _g.get('away', '')
-                elif _mio == _vis: _p, _c, _riv = _a, _h, _g.get('home', '')
-                else: continue
-                _res[(_g.get('date', ''), _riv)] = ('V' if _p > _c else 'D') + ' %d-%d' % (_p, _c)
-        except Exception:
-            _res = {}
-
-        partidos = [{'i': i, 'date': d, 'rival': rv, 'r': _res.get((d, rv), '')}
-                    for i, (d, rv) in enumerate(_pares)]
-        def _gi(a):
-            return gidx.get((a.get('date',''), a.get('rival','')), 0)
         atk_p,srv_p,rec_p={},{},{}
         for ns,pd in td.items():
-            info=pd.get('info') or {}; num=int(ns); name=override_name(team, num, info.get('name',ns))
+            info=pd.get('info') or {}; name=info.get('name',ns); num=int(ns)
             atk,srv,rec=pd.get('atk',[]),pd.get('srv',[]),pd.get('rec',[])
-            if atk: atk_p[ns]={'name':name,'num':num,'a':[[ridx.get(a.get('rival',''),0),_gi(a),a.get('set_num',1),1,a.get('atype',0),COMBO_IDX.get(a.get('combo',''),-1),RES_IDX.get(a.get('effect','='),4),a.get('orig',0),a.get('dest',0),6,-1] for a in atk]}
+            if atk: atk_p[ns]={'name':name,'num':num,'a':[[ridx.get(a.get('rival',''),0),0,a.get('set_num',1),1,a.get('atype',0),COMBO_IDX.get(a.get('combo',''),-1),RES_IDX.get(a.get('effect','='),4),a.get('orig',0),a.get('dest',0),6,-1] for a in atk]}
             if srv:
                 stl=list(dict.fromkeys('S'+a.get('stype','Q') for a in srv)) or ['SQ']; sidx={s:i for i,s in enumerate(stl)}
-                srv_p[ns]={'name':name,'num':num,'stypes':stl,'s':[[ridx.get(a.get('rival',''),0),_gi(a),a.get('set_num',1),1,sidx.get('S'+a.get('stype','Q'),0),RES_IDX.get(a.get('effect','='),4),a.get('orig',0),a.get('dest',0)] for a in srv]}
+                srv_p[ns]={'name':name,'num':num,'stypes':stl,'s':[[ridx.get(a.get('rival',''),0),0,a.get('set_num',1),1,sidx.get('S'+a.get('stype','Q'),0),RES_IDX.get(a.get('effect','='),4),a.get('orig',0),a.get('dest',0)] for a in srv]}
             if rec:
                 rtl=list(dict.fromkeys('R'+a.get('stype','M') for a in rec)) or ['RM']; rtidx={r:i for i,r in enumerate(rtl)}
-                rec_p[ns]={'name':name,'num':num,'rtypes':rtl,'r':[[ridx.get(a.get('rival',''),0),_gi(a),a.get('set_num',1),1,rtidx.get('R'+a.get('stype','M'),0),REC_IDX.get(a.get('effect','-'),3),a.get('orig',0),a.get('dest',0)] for a in rec]}
+                rec_p[ns]={'name':name,'num':num,'rtypes':rtl,'r':[[ridx.get(a.get('rival',''),0),0,a.get('set_num',1),1,rtidx.get('R'+a.get('stype','M'),0),REC_IDX.get(a.get('effect','-'),3),a.get('orig',0),a.get('dest',0)] for a in rec]}
         # Armar AMBOS armadores (estructura setters array que usa el game plan)
         team_setters = setters.get(team, [])
         if not isinstance(team_setters, list): team_setters = [team_setters]
         team_rallies = rallies.get(team, {})  # dict {str(num): [rallies]}
-        # ── Lista de partidos del equipo (para el filtro de partidos del game plan) ──
-        _all_rl = []
-        for _sn in team_setters:
-            _all_rl.extend(team_rallies.get(str(_sn), []) if isinstance(team_rallies, dict) else [])
-        # ── UNA SOLA LISTA DE PARTIDOS ──────────────────────────────────
-        #    El armador armaba su propia lista con los partidos donde hubo
-        #    armados, y las demás destrezas usaban otra. Con dos listas
-        #    distintas los índices no coinciden y el filtro apunta al partido
-        #    equivocado. Se usa la de arriba, que sale de TODAS las acciones.
-        match_idx = gidx
-        matches = partidos
         setters_list = []
         for sn in team_setters:
             rl = team_rallies.get(str(sn), []) if isinstance(team_rallies, dict) else []
             if not rl: continue
-            sname = override_name(team, sn, td.get(str(sn),{}).get('info',{}).get('name',f'#{sn}'))
-            arm = [[ridx.get(r['rival'],0),0,r.get('set_num',1),1,r['atype'],CALL_IDX.get(r['call'],-1),r['setter_pos'],RES_IDX.get(r.get('rec_quality','?'),9),COMBO_IDX.get(r['atk_combo'],-1),RES_IDX.get(r['atk_result'],4),r['atk_dest'],r['atk_orig'],match_idx.get((r.get('date',''),r.get('rival','')),-1),r.get('t_start',0),r.get('t_atk',0),r.get('rec_zone',0),r.get('rec_num',0),r.get('atk_num',0),r.get('rec_type','')] for r in rl]
+            sname = td.get(str(sn),{}).get('info',{}).get('name',f'#{sn}')
+            arm = [[ridx.get(r['rival'],0),0,r.get('set_num',1),1,r['atype'],CALL_IDX.get(r['call'],-1),r['setter_pos'],RES_IDX.get(r.get('rec_quality','?'),9),COMBO_IDX.get(r['atk_combo'],-1),RES_IDX.get(r['atk_result'],4),r['atk_dest'],r['atk_orig']] for r in rl]
             setters_list.append({'num':sn,'name':sname,'s':arm,'total':len(rl)})
         setters_list.sort(key=lambda x:-x['total'])
         # Roster de posiciones — jerarquía: setter→libero→central→outside/opposite
@@ -729,9 +603,9 @@ def build_liga_data(teams_data, combos, output_dir='.', setters=None, rallies=No
             if rec0 >= 20: roster[nser]='OUTSIDE'
             elif rec0 <= 8: roster[nser]=('OUTSIDE' if punta>opp else 'OPPOSITE')
             else: roster[nser]=('OUTSIDE' if punta>=opp else 'OPPOSITE')
-        LIGA['teams'][team.lower().replace(' ','_')]={'name':team,'rivals':rivals,'atk':atk_p,'srv':srv_p,'rec':rec_p,'setters':setters_list,'setter':setters_list[0] if setters_list else None,'roster':roster,'matches':matches}
-    with open(os.path.join(output_dir,'liga_data.js'),'w',encoding='utf-8') as f:
-        f.write('window.LIGA_DATA = '+json.dumps(LIGA,ensure_ascii=False)+';\n')
+        LIGA['teams'][team.lower().replace(' ','_')]={'name':team,'rivals':rivals,'atk':atk_p,'srv':srv_p,'rec':rec_p,'setters':setters_list,'setter':setters_list[0] if setters_list else None,'roster':roster}
+    with open(os.path.join(output_dir,'liga_data_entrenamientos.js'),'w',encoding='utf-8') as f:
+        f.write('window.LIGA_DATA_ENT = '+json.dumps(LIGA,ensure_ascii=False)+';\n')
     return len(LIGA['teams'])
 
 
@@ -817,21 +691,15 @@ def build_heatmaps(teams_data, template_dir='.', output_dir='.', temporada_filte
 
 # ── BUILD STATS TABLE ─────────────────────────────────────────────
 def build_stats_table(players, teams, output_path='nla_stats_table.html'):
-    """Build the interactive HTML stats table."""
-    tpl_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'nla_stats_template.html')
-    with open(tpl_path, encoding='utf-8') as f:
-        template = f.read()
-
-    js_data = f"var PLAYERS={json.dumps(players,ensure_ascii=False)};\nvar TEAMS={json.dumps(teams,ensure_ascii=False)};\n"
-    temporadas = sorted(set(p.get('temporada','') for p in players if p.get('temporada') and p.get('temporada')!='all'))
-
-    html = template.replace('/*__DATA_PLACEHOLDER__*/', js_data)
-    opts = ''.join(f'<option>{t}</option>' for t in temporadas)
-    html = html.replace('<!--__TEMPORADAS__-->', opts)
-
-    with open(output_path, 'w', encoding='utf-8') as f:
-        f.write(html)
-    print(f"   ✓ Stats table: {os.path.getsize(output_path)//1024}KB")
+    """Genera stats_entrenamiento.js con los datos de entrenamiento (para el selector)."""
+    out_dir = os.path.dirname(output_path) or '.'
+    data_path = os.path.join(out_dir, 'stats_entrenamiento.js')
+    js = "window.STATS_ENT = {\n"
+    js += "  players: " + json.dumps(players, ensure_ascii=False) + ",\n"
+    js += "  teams: " + json.dumps(teams, ensure_ascii=False) + "\n};\n"
+    with open(data_path, 'w', encoding='utf-8') as f:
+        f.write(js)
+    print(f"   \u2713 stats_entrenamiento.js: {os.path.getsize(data_path)//1024}KB ({len(players)} jugadores)")
 
 # ── MAIN ──────────────────────────────────────────────────────────
 def parse_set_scores(content):
@@ -878,385 +746,89 @@ try:
 except NameError:
     POS_COLOR = {'ARMADOR':'#a855f7','OPUESTO':'#ef4444','CENTRAL':'#22c55e','PUNTA':'#3b82f6','LIBERO':'#f59e0b','OTRO':'#64748b'}
 
-# ═══ MOTOR DE BATERÍAS (validado 100% vs DataVolley oficial) ═══
-# ════════════════════════════════════════════════════════════════════
-# MOTOR DE BATERÍAS — validado al 100% contra DataVolley oficial (Casla-Velez)
-# Calcula las 11 baterías desde DVW, por jugador y por equipo.
-# ════════════════════════════════════════════════════════════════════
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  EL HISTORIAL QUE LEE EL DASHBOARD
+# ------------------------------------------------------------------------------
+#  El archivo datos_historial.js alimenta el filtro Partidos / Entrenamientos.
+#  Cada entrada es una sesión con los números de cada jugador.
 #
-# LAS 11 BATERÍAS Y SUS FÓRMULAS (FIRMES):
-#  sq    Saque        = (# + 0.5×/ + 0.25×+ − =) / total saques
-#  rec   Recepción    = (# + 0.5×+ − 0.5×/ − =) / total recepciones
-#  bqpos Bloqueo #+   = (blq# + blq+) / total bloqueos
-#  bqpt  Bloqueo #    = blq# / total bloqueos
-#  atqq  Atq Central  = (# − / − =) / total   [tipo de ataque = Q (quick)]
-#  atqhb Atq Alta     = (# − / − =) / total   [tipo de ataque = H (high ball)]
-#  atqx  Atq Rápida   = (# − / − =) / total   [tipo de ataque = T (tense)]
-#  atqrp Atq R#+      = (# − / − =) / total   [primer atk tras recepción #/+]
-#  atqri Atq R!       = (# − / − =) / total   [primer atk tras recepción !]
-#  atqrm Atq R-       = (# − / − =) / total   [primer atk tras recepción -]
-#  atqtr Transición   = (# − / − =) / total   [resto de ataques]
-#
-# REGLA CLAVE DEL CRUCE RECEPCIÓN→ATAQUE:
-#  - La recepción solo cuenta para el PRIMER ataque del equipo tras recibir.
-#  - Si el RIVAL interviene (A/D/E/B) entre la recepción y el ataque,
-#    ese ataque pasa a TRANSICIÓN (no es side-out).
-#  - Todo ataque sin recepción previa válida = transición.
+#  Se arma con lo que este mismo motor ya calculó al parsear —no se vuelve a
+#  leer ningún .dvw— y se SUMA a lo que haya: los partidos los escribe el otro
+#  motor en este mismo archivo, y si acá lo reemplazáramos entero, cada vez que
+#  se procesa un entrenamiento desaparecerían todos los partidos.
+# ══════════════════════════════════════════════════════════════════════════════
+def escribir_historial_entrenamientos(teams_data, output_dir='.'):
+    from collections import defaultdict
+    from datetime import datetime
 
-# Clasificación de ataques POR TIPO (body[3]):
-#   H = Alta (high ball)   T = Rápida (tense)   Q = Central (quick)
+    def eff(acc, buenos, malos):
+        t = len(acc)
+        if not t: return 0
+        b = sum(1 for x in acc if x.get('effect') in buenos)
+        m = sum(1 for x in acc if x.get('effect') in malos)
+        return round((b - m) / t * 100)
 
-def _na(): return {'#':0,'/':0,'=':0,'T':0}
+    def cuenta(acc, sig):
+        return sum(1 for x in acc if x.get('effect') == sig)
 
-def calc_baterias(scout, side):
-    """scout: lista de líneas crudas del [3SCOUT]. side: '*' o 'a'.
-    Devuelve {num: baterias} con num='__EQUIPO__' para el total del equipo."""
-    # acumuladores por jugador
-    def nuevo():
-        return {'S':{'#':0,'+':0,'/':0,'=':0,'T':0},
-                'R':{'#':0,'+':0,'/':0,'=':0,'T':0},
-                'B':{'#':0,'+':0,'T':0},
-                'Aall':_na(),
-                'cent':_na(),'alta':_na(),'rap':_na(),
-                'rp':_na(),'ri':_na(),'rm':_na(),'tr':_na(),
-                '_sq_dest':{},        # saque: conteo por zona destino
-                '_sq_tipo':{},        # saque: por tipo (Q/M/T) → {tot,pt,err}
-                '_atk_combo':{},      # ataque: por combo → {tot,#,/,=,orig,dest:{}}
-                '_rec':{}}            # recepción: tipo(M/Q) → origen(1/6/5) → pos(1/6/5) → {tot,pt,pos,neg,err}
-    pl={}
-    def get(num):
-        if num not in pl: pl[num]=nuevo()
-        return pl[num]
-    last_rec=None; rec_valida=False; last_serve_orig=None
-    for l in scout:
-        l=l.strip()
-        if len(l)<5: continue
-        pfx=l[0]; body=l[1:].split(';')[0]
-        if len(body)<5 or not body[:2].isdigit(): continue
-        num=body[:2]; skill=body[2]; res=body[4]
-        if skill=='S':
-            last_rec=None; rec_valida=False
-            # origen del saque = PRIMER dígito del primer grupo de 2 dígitos de la línea del saque
-            last_serve_orig=None
-            for _so in body[3:].split('~'):
-                _sod=''.join(ch for ch in _so if ch.isdigit())
-                if len(_sod)>=2: last_serve_orig=_sod[0]; break
-            if pfx==side:
-                P=get(num); P['S']['T']+=1
-                if res in P['S']: P['S'][res]+=1
-                # zona destino del saque: último grupo de dígitos
-                _segs=body[3:].split('~')
-                _z=None
-                for _s in reversed(_segs):
-                    _d=''.join(ch for ch in _s if ch.isdigit())
-                    if len(_d)>=2: _z=_d[-1]; break
-                    elif len(_d)==1: _z=_d; break
-                _tp=body[3]  # tipo de saque (Q/M/T/H)
-                if _tp not in P['_sq_tipo']: P['_sq_tipo'][_tp]={'tot':0,'pt':0,'err':0,'dest':{}}
-                P['_sq_tipo'][_tp]['tot']+=1
-                if res=='#': P['_sq_tipo'][_tp]['pt']+=1
-                if res=='=': P['_sq_tipo'][_tp]['err']+=1
-                if _z: P['_sq_tipo'][_tp]['dest'][_z]=P['_sq_tipo'][_tp]['dest'].get(_z,0)+1
-        elif skill=='R' and pfx==side:
-            last_rec=res; rec_valida=True
-            P=get(num); P['R']['T']+=1
-            if res in P['R']: P['R'][res]+=1
-            # recepción: ORIGEN = zona del saque rival (línea de saque anterior)
-            #            DESTINO = 2º dígito del primer grupo de la recepción
-            #   Agrupación (origen y destino): P1=1,2,9 | P6=6,3,8 | P5=5,4,7
-            #   tipo: M/H=flotado, Q/T=potencia
-            _rtp=body[3]
-            _rd=None
-            for _s in body[3:].split('~'):
-                _dd=''.join(ch for ch in _s if ch.isdigit())
-                if len(_dd)>=2: _rd=_dd[:2]; break
-            if _rd and last_serve_orig:
-                _zdest=_rd[1]
-                _GMAP={'1':'P1','2':'P1','9':'P1','6':'P6','3':'P6','8':'P6','5':'P5','4':'P5','7':'P5'}
-                _OKEY={'P1':'Z1','P6':'Z6','P5':'Z5'}
-                _Praw=_GMAP.get(last_serve_orig)   # origen agrupado
-                _O=_OKEY.get(_Praw) if _Praw else None
-                _P=_GMAP.get(_zdest)               # destino agrupado
-                if _O and _P:
-                    T=P['_rec'].setdefault(_rtp,{}).setdefault(_O,{}).setdefault(_P,{'tot':0,'#':0,'+':0,'!':0,'-':0,'/':0,'=':0})
-                    T['tot']+=1
-                    if res in T: T[res]+=1
-        elif pfx!=side and skill in('A','D','E','B'):
-            rec_valida=False
-        elif skill=='B' and pfx==side:
-            P=get(num); P['B']['T']+=1
-            if res in P['B']: P['B'][res]+=1
-        elif skill=='A' and pfx==side:
-            combo=body[5:7]
-            tipo=body[3]  # tipo de ataque: H=alta, T=tense/rápida, Q=quick/central
-            # categoría por recepción (estado del equipo)
-            if last_rec is not None and rec_valida:
-                rec_valida=False
-                cat='rp' if last_rec in('#','+') else 'ri' if last_rec=='!' else 'rm' if last_rec=='-' else 'tr'
-            else:
-                cat='tr'
-            P=get(num)
-            # EFF de ataque GENERAL (todos los ataques)
-            P['Aall']['T']+=1
-            if res in P['Aall']: P['Aall'][res]+=1
-            # Central, Rápida y Alta TODAS por TIPO de ataque (body[3])
-            if tipo=='Q':
-                P['cent']['T']+=1
-                if res in P['cent']: P['cent'][res]+=1
-            elif tipo=='T':
-                P['rap']['T']+=1
-                if res in P['rap']: P['rap'][res]+=1
-            elif tipo=='H':
-                P['alta']['T']+=1
-                if res in P['alta']: P['alta'][res]+=1
-            P[cat]['T']+=1
-            if res in P[cat]: P[cat][res]+=1
-            # canchita por combo: origen/destino
-            if combo:
-                if combo not in P['_atk_combo']:
-                    P['_atk_combo'][combo]={'tot':0,'#':0,'/':0,'=':0,'orig':0,'dest':{}}
-                ac=P['_atk_combo'][combo]
-                ac['tot']+=1
-                if res in('#','/','='): ac[res]+=1
-                # zonas: primer segmento de 2 dígitos tras el combo
-                _segs=body[3:].split('~')
-                for _s in _segs[1:]:
-                    _d=''.join(ch for ch in _s if ch.isdigit())
-                    if len(_d)>=2:
-                        if not ac['orig']: ac['orig']=int(_d[0])
-                        _zd=_d[1]
-                        ac['dest'][_zd]=ac['dest'].get(_zd,0)+1
-                        break
-    # agregar equipo (suma de todos) — omitir campos de canchita (dicts)
-    eq=nuevo()
-    for num,P in pl.items():
-        for sec in P:
-            if sec.startswith('_'): continue   # _sq_dest, _sq_tipo, _atk_combo
-            for k in P[sec]: eq[sec][k]+=P[sec][k]
-    pl['__EQUIPO__']=eq
-    return pl
+    # agrupar todas las acciones por sesión (la fecha) y por jugador
+    sesiones = defaultdict(lambda: defaultdict(lambda: {'atk': [], 'srv': [], 'rec': [], 'blk': []}))
+    nombres = {}
+    for equipo, jugadores in (teams_data or {}).items():
+        for num_str, pd in (jugadores or {}).items():
+            info = pd.get('info') or {}
+            nombres[num_str] = info.get('name', '') or ''
+            for clave, dest in (('atk','atk'), ('srv','srv'), ('rec','rec'), ('blk','blk')):
+                for a in pd.get(clave, []) or []:
+                    f = a.get('date') or ''
+                    if f: sesiones[f][num_str][dest].append(a)
 
-def to_pcts(P):
-    """Convierte acumuladores a las 11 baterías en %."""
-    def atk(d): return round((d['#']-d['/']-d['='])/d['T']*100) if d['T'] else None
-    S=P['S']; R=P['R']; B=P['B']
-    return {
-        'sq':    round((S['#']+0.5*S['/']+0.25*S['+']-S['='])/S['T']*100) if S['T'] else None,
-        'rec':   round((R['#']+0.5*R['+']-0.5*R['/']-R['='])/R['T']*100) if R['T'] else None,
-        'bqpos': round((B['#']+B['+'])/B['T']*100) if B['T'] else None,
-        'bqpt':  round(B['#']/B['T']*100) if B['T'] else None,
-        'atk':   atk(P['Aall']) if 'Aall' in P else None,
-        'atqq':  atk(P['cent']),
-        'atqhb': atk(P['alta']),
-        'atqx':  atk(P['rap']),
-        'atqrp': atk(P['rp']),
-        'atqri': atk(P['ri']),
-        'atqrm': atk(P['rm']),
-        'atqtr': atk(P['tr']),
-    }
+    historial = []
+    for fecha in sorted(sesiones):
+        jugs = []
+        for num_str in sorted(sesiones[fecha], key=lambda n: int(n) if str(n).isdigit() else 0):
+            d = sesiones[fecha][num_str]
+            s_, r_, a_, b_ = d['srv'], d['rec'], d['atk'], d['blk']
+            if not (len(s_) + len(r_) + len(a_) + len(b_)): continue
+            jugs.append({
+                'c': num_str, 'n': nombres.get(num_str, '') or ('#' + str(num_str)),
+                'sT': len(s_), 'sEff': eff(s_, '#', '='), 'sPunto': cuenta(s_, '#'),
+                'sPos': cuenta(s_, '+'), 'sNeg': cuenta(s_, '-'), 'sErr': cuenta(s_, '='),
+                'rT': len(r_), 'rEff': eff(r_, '#+', '=/'), 'rPunto': cuenta(r_, '#'),
+                'rPos': cuenta(r_, '+'), 'rNeg': cuenta(r_, '-'), 'rErr': cuenta(r_, '='),
+                'aT': len(a_), 'aEff': eff(a_, '#', '=/'), 'aPunto': cuenta(a_, '#'),
+                'aPos': cuenta(a_, '+'), 'aNeg': cuenta(a_, '-'), 'aErr': cuenta(a_, '='),
+                'bT': len(b_), 'bPt': cuenta(b_, '#'), 'bPtPos': cuenta(b_, '+'),
+                'bEff': eff(b_, '#+', '='),
+            })
+        if not jugs: continue
+        # la fecha viene como aaaa-mm-dd y el dashboard la muestra dd/mm/aaaa
+        partes = str(fecha).split('-')
+        bonita = '/'.join(reversed(partes)) if len(partes) == 3 else str(fecha)
+        historial.append({'fecha': bonita, 'tipo': 'E', 'rival': 'Entrenamiento',
+                          'resultado': {}, 'jugadores': jugs})
 
-def merge_acum(lista_pl):
-    """Suma acumuladores de varios partidos (lista de dicts {num:acums})."""
-    def nuevo():
-        return {'S':{'#':0,'+':0,'/':0,'=':0,'T':0},'R':{'#':0,'+':0,'/':0,'=':0,'T':0},
-                'B':{'#':0,'+':0,'T':0},'Aall':_na(),'cent':_na(),'alta':_na(),'rap':_na(),
-                'rp':_na(),'ri':_na(),'rm':_na(),'tr':_na(),
-                '_sq_dest':{},'_sq_tipo':{},'_atk_combo':{},'_rec':{}}
-    acum={}
-    for pl in lista_pl:
-        for num,P in pl.items():
-            if num not in acum: acum[num]=nuevo()
-            A=acum[num]
-            for sec in P:
-                if sec=='_sq_dest':
-                    for z,n in P[sec].items(): A[sec][z]=A[sec].get(z,0)+n
-                elif sec=='_sq_tipo':
-                    for tp,d in P[sec].items():
-                        if tp not in A[sec]: A[sec][tp]={'tot':0,'pt':0,'err':0,'dest':{}}
-                        for kk in ('tot','pt','err'): A[sec][tp][kk]+=d.get(kk,0)
-                        for z,n in d.get('dest',{}).items(): A[sec][tp]['dest'][z]=A[sec][tp]['dest'].get(z,0)+n
-                elif sec=='_atk_combo':
-                    for cb,d in P[sec].items():
-                        if cb not in A[sec]: A[sec][cb]={'tot':0,'#':0,'/':0,'=':0,'orig':0,'dest':{}}
-                        ac=A[sec][cb]
-                        ac['tot']+=d.get('tot',0); ac['#']+=d.get('#',0)
-                        ac['/']+=d.get('/',0); ac['=']+=d.get('=',0)
-                        if not ac['orig']: ac['orig']=d.get('orig',0)
-                        for z,n in d.get('dest',{}).items(): ac['dest'][z]=ac['dest'].get(z,0)+n
-                elif sec=='_rec':
-                    for tp,od in P[sec].items():
-                        for O,pd in od.items():
-                            for Pp,d in pd.items():
-                                T=A[sec].setdefault(tp,{}).setdefault(O,{}).setdefault(Pp,{'tot':0,'#':0,'+':0,'!':0,'-':0,'/':0,'=':0})
-                                for kk in ('tot','#','+','!','-','/','='): T[kk]+=d.get(kk,0)
-                else:
-                    for k in P[sec]: A[sec][k]+=P[sec][k]
-    return acum
+    ruta = os.path.join(output_dir, 'datos_historial.js')
+    previo = []
+    try:
+        if os.path.exists(ruta):
+            txt = open(ruta, encoding='utf-8').read()
+            i, j = txt.find('{'), txt.rfind('}')
+            if i >= 0 and j > i:
+                previo = [x for x in (json.loads(txt[i:j+1]).get('entrenamientos') or [])
+                          if x.get('tipo') != 'E']
+    except Exception:
+        previo = []
 
-def to_canchitas(P):
-    """Convierte los acumuladores de zonas al formato de canchitas de los HTML.
-    Devuelve {'saques':[...], 'ataques':[...]}."""
-    SQ_TIPO={'Q':'POTENCIA','M':'FLOTADO','T':'POTENCIA','H':'FLOTADO'}
-    saques=[]
-    st=P.get('_sq_tipo',{})
-    tot_sq=sum(d['tot'] for d in st.values()) if st else 0
-    if tot_sq:
-        # un cuadro por tipo de saque, CON SUS PROPIOS DESTINOS
-        for tp,d in sorted(st.items(),key=lambda x:-x[1]['tot']):
-            if not d['tot']: continue
-            dd=d.get('dest',{})
-            tdd=sum(dd.values()) or 1
-            destinos=[{'z':int(z),'pct':round(n/tdd*100)} for z,n in sorted(dd.items(),key=lambda x:-x[1]) if z.isdigit()][:6]
-            eff=round((d['pt']-d['err'])/d['tot']*100) if d['tot'] else None
-            saques.append({'cod':'S'+tp,'tipo':SQ_TIPO.get(tp,'SAQUE'),'orig':6,
-                'destinos':destinos,'eff':eff,'tot':d['tot'],'pts':d['pt'],
-                'plus':0,'slash':0,'err':d['err'],'video':None,
-                'pts_pct':round(d['pt']/d['tot']*100) if d['tot'] else 0})
-    # ── ATAQUE: fusionar combos equivalentes (mismo ataque, scout distinto) ──
-    # mapa: cualquier código → código canónico
-    FUSION={'W4':'X5','G4':'V5','W2':'X6','G2':'V6','W3':'X6','G3':'V6',
-            'Y8':'XP','G8':'VP','Y9':'X8','G9':'V8',
-            'J1':'X1','J3':'X2','J4':'XM','JJ':'XM','J2':'X7',
-            'V3':'X6','V4':'X8'}
-    # origen oficial por combo canónico
-    ORIG={'X5':4,'V5':4,'X6':2,'V6':2,'X8':9,'V8':9,'XP':8,'VP':8,
-          'X1':3,'X2':3,'XM':3,'X7':3}
-    fused={}
-    for cb,d in P.get('_atk_combo',{}).items():
-        canon=FUSION.get(cb,cb)
-        if canon not in fused: fused[canon]={'tot':0,'#':0,'/':0,'=':0,'dest':{}}
-        f=fused[canon]
-        f['tot']+=d.get('tot',0); f['#']+=d.get('#',0)
-        f['/']+=d.get('/',0); f['=']+=d.get('=',0)
-        for z,n in d.get('dest',{}).items(): f['dest'][z]=f['dest'].get(z,0)+n
-    ataques=[]
-    for cb,d in sorted(fused.items(),key=lambda x:-x[1]['tot']):
-        if not d['tot']: continue
-        td=sum(d['dest'].values()) or 1
-        destinos=[{'z':int(z),'pct':round(n/td*100)} for z,n in sorted(d['dest'].items(),key=lambda x:-x[1]) if z.isdigit()][:4]
-        eff=round((d['#']-d['/']-d['='])/d['tot']*100) if d['tot'] else None
-        ataques.append({'cod':cb,'tipo':'','orig':ORIG.get(cb,8),'destinos':destinos,
-            'eff':eff,'tot':d['tot'],'pts':d['#'],'slash':d['/'],'err':d['='],
-            'video':None,'pts_pct':round(d['#']/d['tot']*100) if d['tot'] else 0})
-    # recepción: tipo (flotado/potencia) → origen (desde_z1/z6/z5) → destino (P5/P6/P1)
-    # P1=Z1+Z2+Z9, P6=Z6+Z3+Z8, P5=Z5+Z4+Z7 (origen y destino con misma agrupación)
-    def _celda(d):
-        t=d.get('tot',0)
-        if not t: return {'tot':0,'eff':0,'pos':0,'neg':0,'pt':0,'mas':0,'neu':0,'med':0,'ovp':0,'err':0}
-        npt=d.get('#',0); nmas=d.get('+',0); nneu=d.get('!',0)
-        nmed=d.get('-',0); novp=d.get('/',0); nerr=d.get('=',0)
-        eff=round((npt*1 + nmas*0.5 - novp*0.5 - nerr)/t*100)
-        pos=round((npt+nmas)/t*100); neg=round((novp+nerr)/t*100)
-        return {'tot':t,'eff':eff,'pos':pos,'neg':neg,
-                'pt':npt,'mas':nmas,'neu':nneu,'med':nmed,'ovp':novp,'err':nerr}
-    def _zona_vacia():
-        return {'P5':_celda({}),'P6':_celda({}),'P1':_celda({}),'total':_celda({})}
-    def _tipo_vacio():
-        return {'desde_z1':_zona_vacia(),'desde_z6':_zona_vacia(),'desde_z5':_zona_vacia()}
-    rec_struct={'flotado':_tipo_vacio(),'potencia':_tipo_vacio()}
-    TIPO_MAP={'M':'flotado','H':'flotado','Q':'potencia','T':'potencia'}
-    OKEY={'Z1':'desde_z1','Z6':'desde_z6','Z5':'desde_z5'}
-    rec=P.get('_rec',{})
-    tiene_rec=False
-    for tp,od in rec.items():
-        tkey=TIPO_MAP.get(tp)
-        if not tkey: continue
-        for O,pd in od.items():
-            okey=OKEY.get(O)
-            if not okey: continue
-            ztot={'tot':0,'#':0,'+':0,'!':0,'-':0,'/':0,'=':0}
-            for Pp,d in pd.items():
-                if Pp not in ('P1','P6','P5'): continue
-                rec_struct[tkey][okey][Pp]=_celda(d)
-                tiene_rec=True
-                for kk in ztot: ztot[kk]+=d.get(kk,0)
-            rec_struct[tkey][okey]['total']=_celda(ztot)
-    return {'saques':saques,'ataques':ataques,'recepcion':rec_struct if tiene_rec else {}}
+    todo = previo + historial
+    todo.sort(key=lambda x: tuple(reversed((x.get('fecha') or '').split('/'))))
 
-
-# ═══ MOTOR ARMADOR ═══
-# Función que replica gpBuildArmador del game plan, pero desde rallies crudos (dict con date/rival)
-# Cada rally: {setter_pos, set_num, call, rec_quality, atype, atk_combo, atk_result, atk_dest, atk_orig, date, rival}
-
-FRONT_POS = [4,3,2]
-def arm_get_zone(combo, orig, sp):
-    c = combo
-    if c in ('X6','V6'): return 2
-    if c in ('X8','V8','X0','V0'): return 9 if orig in (9,8) else 2
-    if c in ('X5','V5'): return 4
-    if c in ('X1','XM','X2','XG','XC','XD'): return 3
-    if c == 'XB': return orig if orig>0 else 8
-    if c == 'X7': return 3
-    if c in ('X3','X4'): return 2
-    if c in ('XP','XR','X9','XT'): return orig if orig>0 else 8
-    if c in ('PP','CB','CF','CD'): return 2 if sp in FRONT_POS else 0
-    return orig
-
-def arm_eff_atk(arr):
-    if not arr: return None
-    k=bl=e=0
-    for r in arr:
-        res=r.get('atk_result','=')
-        if res=='#': k+=1
-        elif res=='/': bl+=1
-        elif res=='=': e+=1
-    return round((k-bl-e)/len(arr)*100)
-
-def arm_pts_pct(arr):
-    if not arr: return None
-    k=sum(1 for r in arr if r.get('atk_result')=='#')
-    return round(k/len(arr)*100)
-
-def build_dist(subset):
-    # side-out con recepción # o + (rec_quality)
-    k1=[r for r in subset if r.get('rec_quality') in ('#','+')]
-    base = k1 if len(k1)>=3 else subset
-    linked=[r for r in base if r.get('atk_combo') and arm_get_zone(r['atk_combo'], r.get('atk_orig',0), r.get('setter_pos',0))>0]
-    total=len(linked)
-    if not total: return []
-    zc={}
-    for r in linked:
-        z=arm_get_zone(r['atk_combo'], r.get('atk_orig',0), r.get('setter_pos',0))
-        zc[z]=zc.get(z,0)+1
-    out=[]
-    for z,n in zc.items():
-        k=sum(1 for r in linked if arm_get_zone(r['atk_combo'],r.get('atk_orig',0),r.get('setter_pos',0))==z and r.get('atk_result')=='#')
-        out.append({'zona':int(z),'tot':n,'pts':k,'pct':round(n/total*100),'pct_p':round(k/n*100) if n else 0})
-    return sorted(out, key=lambda x:-x['tot'])
-
-def build_one_setter(name, num, rallies):
-    if not rallies: return None
-    rotaciones=[]
-    for pos in [4,3,2,5,6,1]:
-        g=[r for r in rallies if r.get('setter_pos')==pos]
-        k1=[r for r in g if r.get('rec_quality') in ('#','+')]
-        rotaciones.append({'pos':'P'+str(pos),'total':len(k1),'total_all':len(g),'dist':build_dist(g)})
-    pills=[]
-    for pos in [1,6,5,4,3,2]:
-        g=[r for r in rallies if r.get('setter_pos')==pos]
-        pills.append({'label':'P'+str(pos),'eff':arm_eff_atk(g),'tot':len(g),
-                      'pts':sum(1 for r in g if r.get('atk_result')=='#'),'pts_pct':arm_pts_pct(g)})
-    so=[r for r in rallies if r.get('atype')==0]; tr=[r for r in rallies if r.get('atype')==1]
-    pills.append({'label':'SO','eff':arm_eff_atk(so),'tot':len(so),'pts':sum(1 for r in so if r.get('atk_result')=='#'),'pts_pct':arm_pts_pct(so)})
-    pills.append({'label':'TR','eff':arm_eff_atk(tr),'tot':len(tr),'pts':sum(1 for r in tr if r.get('atk_result')=='#'),'pts_pct':arm_pts_pct(tr)})
-    calls=['K1','K7','KM','K2','KC','KP','KE','KB']
-    llamadas=[]
-    for call in calls:
-        subset=[r for r in rallies if r.get('call')==call]
-        if len(subset)>=5:
-            llamadas.append({'call':call,'tot':len(subset),'eff':arm_eff_atk(subset),'pts_pct':arm_pts_pct(subset),'dist':build_dist(subset)})
-    return {'nombre':('%d %s'%(num,name)).strip(),'num':num,'rotaciones':rotaciones,'pills':pills,'llamadas':llamadas,
-            'so':{'eff':arm_eff_atk(so),'tot':len(so)},'tr':{'eff':arm_eff_atk(tr),'tot':len(tr)}}
-
-def build_armador_data(setters_rallies, setter_names):
-    # setters_rallies: {num: [rallies]}, setter_names: {num: name}
-    ranked=sorted(setters_rallies.items(), key=lambda x:-len(x[1]))[:2]
-    res={'titular':None,'suplente':None}
-    if len(ranked)>=1:
-        n,rl=ranked[0]; res['titular']=build_one_setter(setter_names.get(n,str(n)),n,rl)
-    if len(ranked)>=2:
-        n,rl=ranked[1]; res['suplente']=build_one_setter(setter_names.get(n,str(n)),n,rl)
-    return res
+    ahora = datetime.now().strftime('%d/%m/%Y, %H:%M:%S')
+    with open(ruta, 'w', encoding='utf-8') as f:
+        f.write('window.HISTORIAL_DATA = ' +
+                json.dumps({'generado': ahora, 'entrenamientos': todo}, ensure_ascii=False, indent=1) + ';\n')
+    print(f"   \u2713 datos_historial.js: {len(historial)} entrenamientos + {len(previo)} partidos")
 
 
 def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025/26'):
@@ -1275,9 +847,7 @@ def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025
 
         sets = parse_set_scores(content)
         m = re.search(r'(\d{4}-\d{2}-\d{2})', fname)
-        # Si el nombre no la trae —los entrenamientos del panel no la traen—
-        # se lee de adentro del archivo, que siempre la tiene.
-        date = m.group(1) if m else _fecha_del_dvw(os.path.join(dvw_dir, fname))
+        date = m.group(1) if m else ''
         team_home = home == team_name
         rival = away if team_home else home
 
@@ -1328,19 +898,43 @@ def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025
             bk=sum(1 for x in acts['b'] if x['effect']=='#'); bp=sum(1 for x in acts['b'] if x['effect']=='+')
             bT=len(acts['b']); bEff=round((bk+bp)/bT*100) if bT else 0
             if s['T']+r['T']+a['T']+bT<1: continue
-            _p = players.get(pn,{})
-            nm = NAFELS_NAMES.get(pn, _p.get('apellido') or (_p.get('name','').split()[0] if _p.get('name') else str(pn)))
+            nm = NAFELS_NAMES.get(pn, players.get(pn,{}).get('name','').split()[-1] if players.get(pn,{}).get('name') else str(pn))
             jugs.append({'c':pn,'n':nm,
                 's'+'T':s['T'],'sEff':s['Eff'],'sPunto':s['Punto'],'sPos':s['Pos'],'sNeg':s['Neg'],'sErr':s['Err'],'sAdm':s['Adm'],'sVend':s['Vend'],
                 'rT':r['T'],'rEff':r['Eff'],'rPunto':r['Punto'],'rPos':r['Pos'],'rNeg':r['Neg'],'rErr':r['Err'],'rAdm':r['Adm'],'rVend':r['Vend'],
                 'aT':a['T'],'aEff':a['Eff'],'aPunto':a['Punto'],'aPos':a['Pos'],'aNeg':a['Neg'],'aErr':a['Err'],'aAdm':a['Adm'],'aVend':a['Vend'],
                 'bT':bT,'bPt':bk,'bPtPos':bp,'bEff':bEff})
-        historial.append({'fecha':'/'.join(reversed(g['date'].split('-'))),'tipo':'P','rival':g['rival'],
+        # Este motor procesa ENTRENAMIENTOS: van marcados con 'E'. Antes decía 'P'
+        # y por eso el dashboard, que filtra por ese campo, no mostraba ninguno.
+        historial.append({'fecha':'/'.join(reversed(g['date'].split('-'))),'tipo':'E','rival':g['rival'],
             'resultado':{'nafels':g['tsets'],'rival':g['rsets'],'sets':g['set_strings']},'jugadores':jugs})
 
     now = datetime.now().strftime('%d/%m/%Y, %H:%M:%S')
-    hist_js = 'window.HISTORIAL_DATA = ' + json.dumps({'generado':now,'entrenamientos':historial}, ensure_ascii=False, indent=2) + ';\n'
-    with open(os.path.join(output_dir,'datos_historial.js'),'w',encoding='utf-8') as f: f.write(hist_js)
+
+    # ── SUMARSE AL HISTORIAL, NO PISARLO ────────────────────────────────────
+    #    Los partidos los escribe el otro motor en este mismo archivo. Si acá
+    #    lo reemplazáramos entero, cada vez que se procesa un entrenamiento
+    #    desaparecerían todos los partidos (y al revés). Por eso se lee lo que
+    #    ya hay, se dejan las entradas del otro tipo y se reemplazan sólo las
+    #    propias.
+    hist_path = os.path.join(output_dir, 'datos_historial.js')
+    previo = []
+    try:
+        if os.path.exists(hist_path):
+            txt = open(hist_path, encoding='utf-8').read()
+            ini = txt.find('{')
+            fin = txt.rfind('}')
+            if ini >= 0 and fin > ini:
+                d = json.loads(txt[ini:fin+1])
+                previo = [x for x in (d.get('entrenamientos') or []) if x.get('tipo') != 'E']
+    except Exception:
+        previo = []
+
+    todo = previo + historial
+    todo.sort(key=lambda x: tuple(reversed((x.get('fecha') or '').split('/'))))
+
+    hist_js = 'window.HISTORIAL_DATA = ' + json.dumps({'generado': now, 'entrenamientos': todo}, ensure_ascii=False, indent=1) + ';\n'
+    with open(hist_path, 'w', encoding='utf-8') as f: f.write(hist_js)
 
     # ── DATOS_PARTIDOS.JS (ataques, saques, recepciones por jugador acumulado) ──
     if os.path.exists('nla_players_db.json'):
@@ -1385,120 +979,13 @@ def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025
         partidos_jug.append({'num':num,'nombre':f"{num} {name.title()}",'pos':pos_label,'color':POS_COLOR.get(pos_label,'#64748b'),'info':{},'ataques':ataques,'saques':saques,'recepciones':recepciones})
     partidos_jug.sort(key=lambda x:x['num'])
 
-    partidos_meta=[{'id':g['rival']+'__'+g['date'],'nombre':g['rival'],'rival':g['rival'],'fecha':'/'.join(reversed(g['date'].split('-'))),'torneo':f'{LIGA_NOMBRE} {temporada}','resultado':g['result'],'sets_nafels':str(g['tsets']),'sets_rival':str(g['rsets'])} for g in sorted(games,key=lambda x:x['date']) if g['date']]
-
-    # ═══ BATERÍAS (objetivos) por partido, jugador y acumulado ═══
-    def _bat_name_map(content, side):
-        psec = '[3PLAYERS-H]' if side=='*' else '[3PLAYERS-V]'
-        pi=content.find(psec); pe=content.find('[3',pi+5)
-        nm={}
-        for l in content[pi:pe].split('\n'):
-            p=l.split(';')
-            if len(p)>10 and p[1].isdigit():
-                nm[p[1].zfill(2)]=f"{p[1]} {(p[9]+' '+p[10]).strip().title()}"
-        return nm
-
-    bat_all_pl=[]              # acumuladores por partido (para merge)
-    partidos_individual=[]     # baterías por partido
-    _arm_acum_rallies={}; _arm_acum_names={}
-    for g in sorted(games,key=lambda x:x['date']):
-        if not g['date']: continue
-        with open(g['content_path'], encoding='utf-8', errors='ignore') as f:
-            bcontent=f.read().replace('\r\n','\n')
-        bidx=bcontent.find('[3SCOUT]\n')
-        if bidx<0: continue
-        bscout=bcontent[bidx+9:bcontent.find('\n[3',bidx+9)].split('\n')
-        bside='*' if g['team_home'] else 'a'
-        bpl=calc_baterias(bscout, bside)
-        bat_all_pl.append(bpl)
-        bnames=_bat_name_map(bcontent, bside)
-        jug_obj=[]
-        for num,P in bpl.items():
-            if num=='__EQUIPO__': continue
-            _canch=to_canchitas(P)
-            jug_obj.append({'nombre':bnames.get(num,num),'num':int(num),'objetivos':to_pcts(P),
-                'saques':_canch['saques'],'ataques':_canch['ataques'],'recepcion':_canch.get('recepcion',{})})
-        # ── ARMADOR de este partido ──
-        _arm_pd={}
-        try:
-            _psec='[3PLAYERS-H]' if g['team_home'] else '[3PLAYERS-V]'
-            _pos=_get_positions(bcontent, _psec)
-            _setters=detectar_armadores(bcontent, bside, 2, None, _pos)
-            _snames={}
-            for _sn in _setters:
-                _bn=bnames.get(str(_sn).zfill(2))
-                _snames[_sn]=_bn.split(' ',1)[-1] if _bn else str(_sn)
-            _rpfx='a' if g['team_home'] else '*'
-            _sr={}
-            for _sn in _setters:
-                _rl=parse_setter_rallies(bcontent, bside, _rpfx, g['team_home'], _sn, g['date'], g['rival'])
-                if _rl:
-                    _sr[_sn]=_rl
-                    _arm_acum_rallies.setdefault(_sn,[]).extend(_rl)
-                    _arm_acum_names[_sn]=_snames.get(_sn,str(_sn))
-            if _sr: _arm_pd=build_armador_data(_sr, _snames)
-        except Exception as _e:
-            _arm_pd={}
-        partidos_individual.append({'id':g['rival']+'__'+g['date'],'nombre':g['rival'],'rival':g['rival'],'fecha':'/'.join(reversed(g['date'].split('-'))),
-            'resultado':g['result'],'equipo_obj':to_pcts(bpl['__EQUIPO__']),'jugadores':jug_obj,'armadores':_arm_pd})
-
-    # Acumulado
-    bat_acum=merge_acum(bat_all_pl)
-    equipo_obj_acum=to_pcts(bat_acum['__EQUIPO__'])
-    # Mapa de nombres acumulado (último partido disponible)
-    acum_names={}
-    for g in sorted(games,key=lambda x:x['date']):
-        if not g['date']: continue
-        with open(g['content_path'], encoding='utf-8', errors='ignore') as f:
-            cc=f.read().replace('\r\n','\n')
-        acum_names.update(_bat_name_map(cc, '*' if g['team_home'] else 'a'))
-    # Inyectar objetivos acumulados en cada jugador de partidos_jug
-    obj_by_num={}
-    for num,P in bat_acum.items():
-        if num=='__EQUIPO__': continue
-        obj_by_num[int(num)]=to_pcts(P)
-    for pj in partidos_jug:
-        pj['objetivos']=obj_by_num.get(pj['num'],{})
-    # Si partidos_jug quedó vacío (flujo no pobló desde team_db),
-    # construirlo desde el motor de baterías para tener nombre+objetivos.
-    if not partidos_jug:
-        nums_presentes=set(int(n) for n in bat_acum if n!='__EQUIPO__')
-        # Mapa posición PT/PUNTA/etc → etiqueta del perfil
-        POS_MAP={'MIDDLE':'CENTRAL','OUTSIDE':'PUNTA','OPPOSITE':'OPUESTO','SETTER':'ARMADOR','LIBERO':'LIBERO'}
-        # Detectar posición por su perfil de juego en el acumulado
-        def _detectar_pos(num):
-            P=bat_acum.get(f"{num:02d}") or bat_acum.get(str(num))
-            if not P: return 'OTRO'
-            rT=P['R']['T']; aT=sum(P[g]['T'] for g in ['cent','rap','alta'])
-            cent=P['cent']['T']
-            if rT>15 and aT<=max(2,rT*0.05): return 'LIBERO'
-            if aT<5 and rT<5: return 'OTRO'
-            if aT>0 and cent/aT>0.4: return 'CENTRAL'
-            if rT>=20: return 'PUNTA'
-            return 'OTRO'
-        for num in sorted(nums_presentes):
-            nm=acum_names.get(f"{num:02d}", str(num))  # "14 Nielson Ramiro"
-            P=bat_acum.get(f"{num:02d}") or bat_acum.get(str(num)) or {}
-            sT=P.get('S',{}).get('T',0)
-            rT=P.get('R',{}).get('T',0)
-            aT=sum(P.get(g,{}).get('T',0) for g in ['cent','rap','alta'])
-            pos_det=CASLA_POS_OFICIAL.get(num) or _detectar_pos(num)
-            _canch=to_canchitas(P) if P else {'saques':[],'ataques':[],'recepcion':{}}
-            partidos_jug.append({'num':num,'nombre':nm,'pos':pos_det,
-                'color':POS_COLOR.get(pos_det,'#64748b'),'info':{},
-                'ataques':_canch['ataques'],'saques':_canch['saques'],'recepciones':[],'recepcion':_canch.get('recepcion',{}),
-                'objetivos':obj_by_num.get(num,{}),
-                'tot_saques':sT,'tot_recep':rT,'tot_ataques':aT})
+    partidos_meta=[{'nombre':g['rival'],'rival':g['rival'],'fecha':'/'.join(reversed(g['date'].split('-'))),'torneo':f'{LIGA_NOMBRE} {temporada}','resultado':g['result'],'sets_nafels':str(g['tsets']),'sets_rival':str(g['rsets'])} for g in sorted(games,key=lambda x:x['date']) if g['date']]
 
     pjs = f'// datos_partidos.js — {now}\n'
     pjs += f'const PARTIDOS_GENERADO = "{now}";\n'
     pjs += f'const PARTIDOS_TOTAL = {len(partidos_meta)};\n'
     pjs += 'const PARTIDOS_META = ' + json.dumps(partidos_meta, ensure_ascii=False, indent=2) + ';\n'
     pjs += 'const PARTIDOS_JUGADORES = ' + json.dumps(partidos_jug, ensure_ascii=False, indent=2) + ';\n'
-    pjs += 'const PARTIDOS_EQUIPO_OBJ = ' + json.dumps(equipo_obj_acum, ensure_ascii=False) + ';\n'
-    pjs += 'const PARTIDOS_INDIVIDUAL = ' + json.dumps(partidos_individual, ensure_ascii=False, indent=2) + ';\n'
-    _arm_acum = build_armador_data(_arm_acum_rallies, _arm_acum_names) if _arm_acum_rallies else {'titular':None,'suplente':None}
-    pjs += 'const PARTIDOS_ARMADOR = ' + json.dumps(_arm_acum, ensure_ascii=False) + ';\n'
     with open(os.path.join(output_dir,'datos_partidos.js'),'w',encoding='utf-8') as f: f.write(pjs)
 
     return len(historial), len(games)
@@ -1508,7 +995,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Update CASLA volleyball database from DVW files')
     parser.add_argument('--dvw_dir',    required=True,  help='Directory with new DVW files')
     parser.add_argument('--temporada',  default='2026', help='Season label (e.g. 2026)')
-    parser.add_argument('--db_path',    default='casla_players_db.json', help='Database file path')
+    parser.add_argument('--db_path',    default='entrenamientos_db.json', help='Database file path')
     parser.add_argument('--output_dir', default='.',    help='Output directory for HTML files')
     parser.add_argument('--template_dir', default='.', help='Directory with CASLA template HTML files')
     parser.add_argument('--filter_temporada', default=None, help='Show only this season in stats (default: all)')
@@ -1560,30 +1047,19 @@ if __name__ == '__main__':
     canon_order = ['X5','V5','C5','V4','X1','XM','XG','XC','XD','X2','X7','CB','CD','CF','V3',
                    'X6','V6','V2','X8','V8','XB','XR','XP','VB','VR','VP']
     combos = [c for c in canon_order if c in all_combos] + sorted(c for c in all_combos if c not in canon_order)
-    # La lista de partidos con su resultado sale de la base, que se lee acá
-    # mismo: build_liga_data la necesita para poner "V 3-1" en cada partido.
-    _games = []
-    try:
-        if os.path.exists(args.db_path):
-            with open(args.db_path, encoding='utf-8') as _f:
-                _games = (json.load(_f) or {}).get('games') or []
-    except Exception:
-        _games = []
-    build_liga_data(teams_data, combos, args.output_dir, setters_map, rallies, games=_games)
+    build_liga_data(teams_data, combos, args.output_dir, setters_map, rallies)
     print(f"   \u2713 liga_data.js ({len(combos)} combos, {len(setters_map)} equipos con armadores)")
 
-    # Step 5: Build stats table
-    print("\n5. Building stats table...")
-    build_stats_table(players, teams, os.path.join(args.output_dir,'casla_stats_table.html'))
-    print("   \u2713 casla_stats_table.html")
+    # Step 5: Generar stats_entrenamiento.js (datos para el selector de la tabla)
+    print("\n5. Building stats_entrenamiento.js...")
+    build_stats_table(players, teams, os.path.join(args.output_dir,'stats_entrenamiento.html'))
 
-    # Step 6: datos_partidos.js (para el equipo principal)
-    print("\n6. Building datos_partidos.js...")
+    # ── Step 6: el historial que lee el dashboard ───────────────────────────
+    print("\n6. Building datos_historial.js...")
     try:
-        generate_team_pages_data(args.dvw_dir, MAIN_TEAM, args.output_dir, args.temporada)
-        print("   \u2713 datos_partidos.js")
+        escribir_historial_entrenamientos(teams_data, args.output_dir)
     except Exception as e:
-        print(f"   (datos_partidos: {e})")
+        print(f"   [aviso] no pude armar el historial: {e}")
 
     print(f"\n{'='*60}")
     print(f"\u2713 LISTO — {len(games_log)} partidos en la base")

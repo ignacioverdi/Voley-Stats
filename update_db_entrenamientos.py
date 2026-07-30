@@ -24,6 +24,41 @@ ESTRUCTURA DE ARCHIVOS:
 import os, re, json, argparse, shutil
 from collections import defaultdict, Counter
 
+def _fecha_del_dvw(ruta):
+    """La fecha del partido, leida de adentro del archivo.
+
+       Los .dvw que descarga la liga traen la fecha en el nombre; los que se
+       exportan del panel, no —"_NAF-VIS.dvw"—. Pero todos la traen adentro,
+       en el bloque [3MATCH], escrita como 30/07/2026.
+
+       Se devuelve como 2026-07-30, que es el formato que usa el resto."""
+    try:
+        with open(ruta, 'rb') as f:
+            crudo = f.read()
+        txt = crudo.decode('windows-1252', errors='replace')
+        if re.search(r'[\u00C3\u00C2][\u0080-\u00BF]', txt):
+            try:
+                txt = crudo.decode('utf-8', errors='replace')
+            except Exception:
+                pass
+        lin = txt.split('\n')
+        i = [k for k, l in enumerate(lin) if l.strip().upper() == '[3MATCH]']
+        if not i:
+            return ''
+        col = lin[i[0] + 1].split(';')
+        f0 = (col[0] or '').strip()
+        m = re.match(r'^(\d{1,2})[/.-](\d{1,2})[/.-](\d{4})$', f0)
+        if m:
+            return '%s-%02d-%02d' % (m.group(3), int(m.group(2)), int(m.group(1)))
+        m = re.match(r'^(\d{4})[/.-](\d{1,2})[/.-](\d{1,2})$', f0)
+        if m:
+            return '%s-%02d-%02d' % (m.group(1), int(m.group(2)), int(m.group(3)))
+    except Exception:
+        pass
+    return ''
+
+
+
 # ── EL NOMBRE DE LA COMPETENCIA ────────────────────────────────────────────
 #    Antes decía "NLA Suiza" acá adentro, heredado del club de origen, y
 #    terminaba escrito en los datos de cada partido. Ahora está en un solo
@@ -158,7 +193,8 @@ def parse_dvw_both(fpath, temporada):
     home_raw, away_raw = get_teams(lines)
     home = norm(home_raw); away = norm(away_raw)
     m = re.search(r'(\d{4}-\d{2}-\d{2})', os.path.basename(fpath))
-    date = m.group(1) if m else ''
+    # Si el nombre no la trae, se lee de adentro del archivo.
+    date = m.group(1) if m else _fecha_del_dvw(fpath)
     result = {}
 
     for team, pfx, section in [(home,'*','[3PLAYERS-H]'),(away,'a','[3PLAYERS-V]')]:
@@ -527,7 +563,9 @@ def collect_setter_rallies(dvw_dir, team_norm_map, main_teams, teams_data=None):
         h_raw, a_raw = get_teams(lines)
         home = norm(h_raw); away = norm(a_raw)
         m = re.search(r'(\d{4}-\d{2}-\d{2})', fname)
-        date = m.group(1) if m else ''
+        # Si el nombre no la trae —los entrenamientos del panel no la traen—
+        # se lee de adentro del archivo, que siempre la tiene.
+        date = m.group(1) if m else _fecha_del_dvw(os.path.join(dvw_dir, fname))
         for team, pfx, rpfx, ishome, rival in [(home, '*', 'a', True, away), (away, 'a', '*', False, home)]:
             if team not in main_teams: continue
             team_libs = liberos_by_team.get(team, set())
@@ -847,7 +885,9 @@ def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025
 
         sets = parse_set_scores(content)
         m = re.search(r'(\d{4}-\d{2}-\d{2})', fname)
-        date = m.group(1) if m else ''
+        # Si el nombre no la trae —los entrenamientos del panel no la traen—
+        # se lee de adentro del archivo, que siempre la tiene.
+        date = m.group(1) if m else _fecha_del_dvw(os.path.join(dvw_dir, fname))
         team_home = home == team_name
         rival = away if team_home else home
 
