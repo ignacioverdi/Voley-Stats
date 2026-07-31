@@ -1908,8 +1908,26 @@ function reabrirPunto(){
   }
   let devuelto = '';
   if(iUlt >= 0 && iUlt === M.codes.length-1){
-    devuelto = M.codes[iUlt].c || '';
-    M.codes.pop();
+    /* Vuelve TODA la jugada, no solo la ultima accion. Es como funciona en el
+       DataVolley: al reabrir el punto se recupera lo que se venia tipeando
+       para corregirlo entero, encadenado con puntos. Se para en el saque, que
+       es donde arranca la jugada. */
+    var _cad = [];
+    for(var _i = M.codes.length - 1; _i >= 0; _i--){
+      var _c = M.codes[_i];
+      if(!_c || _c.auto) break;
+      var _t = String(_c.c || '');
+      if(!/^[*a]\d\d[SRABDEF]/.test(_t)) break;
+      _cad.unshift(_t);
+      if(/^[*a]\d\dS/.test(_t)) break;
+    }
+    if(_cad.length){
+      devuelto = _cad.join('.');
+      M.codes = M.codes.slice(0, M.codes.length - _cad.length);
+    } else {
+      devuelto = M.codes[iUlt].c || '';
+      M.codes.pop();
+    }
     /* si ese ataque arrastraba un armado automático se va con él: si no, al
        volver a cerrar la jugada el armado quedaría escrito dos veces */
     const prev = M.codes[M.codes.length-1];
@@ -2538,6 +2556,19 @@ function abrirVideo(){
   document.getElementById('v-url').value  = M.video.url||'';
   document.getElementById('m-video').classList.add('open');
   refrescarVideo();
+
+  /* Con el video abierto se sigue scouteando: el foco vuelve al campo del
+     codigo apenas se termina de escribir la ruta o la direccion. Antes se
+     quedaba en esos casilleros y las teclas de las valoraciones no hacian
+     nada, que es lo que pasaba al mirar un video y querer cargar. */
+  setTimeout(function(){
+    try{
+      var c = document.getElementById('code');
+      if(c && document.activeElement &&
+         document.activeElement.id !== 'v-ruta' &&
+         document.activeElement.id !== 'v-url') c.focus();
+    }catch(_){}
+  }, 120);
 }
 function vidDockInit(){
   const m=document.getElementById('m-video'); if(m.__di) return; m.__di=true;
@@ -3788,7 +3819,22 @@ document.addEventListener('keydown', e=>{
       const np=pv+ev.length; try{ inp.setSelectionRange(np,np); }catch(_){}
       drawDecoder(); return; } }
 });
-document.getElementById('code').addEventListener('input', function(){ drawDecoder(); drawPickers(); pintarEspejo(); });
+document.getElementById('code').addEventListener('input', function(){
+  /* ── SIEMPRE EN MAYUSCULA ─────────────────────────────────────────────────
+     Como en DataVolley: el codigo se escribe en mayuscula sin importar si el
+     Caps Lock esta puesto o no. Asi la mano queda libre y no hay que estar
+     mirando la tecla mientras se scoutea.
+
+     Se respeta donde estaba el cursor: si no, cada letra lo manda al final y
+     no se puede corregir en el medio. */
+  var _pos = this.selectionStart, _fin = this.selectionEnd;
+  var _may = this.value.toUpperCase();
+  if(_may !== this.value){
+    this.value = _may;
+    try{ this.setSelectionRange(_pos, _fin); }catch(_){}
+  }
+  drawDecoder(); drawPickers(); pintarEspejo();
+});
 document.getElementById('e-code').addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); saveEdit(); } });
 
 /* ============================================================
