@@ -1,10 +1,10 @@
 // datos_casla.js — generado automáticamente por generar_datos_casla.py
-// 30/07/2026 16:15 — División de Honor 2026 — LOMAS
+// 01/08/2026 23:52 — División de Honor 2026 — LOMAS
 // NO EDITAR MANUALMENTE
 
 const CASLA_EQUIPO = "División de Honor 2026";
 const CASLA_TEMPORADA = "LOMAS";
-const CASLA_GENERADO = "30/07/2026 16:15";
+const CASLA_GENERADO = "01/08/2026 23:52";
 
 const CASLA_JUGADORES = [
   {

@@ -129,7 +129,37 @@ REC_D  = ['#','+','!','-','/','=','?']; REC_IDX = {r:i for i,r in enumerate(REC_
 
 # ── HELPERS ───────────────────────────────────────────────────────
 def norm(name):
-    return TEAM_NORM.get(name, name.split('(')[0].strip())
+    """El nombre del equipo, siempre igual aunque cambie el patrocinador.
+
+    Los clubes cambian de sponsor todos los anos y el nombre en los .dvw cambia
+    con ellos: "Biogas Volley Nafels" un ano, "AXPO VOLLEY NAFELS" el otro.
+    Buscando el nombre exacto, cada cambio deja al equipo afuera y la app
+    aparece vacia sin decir por que.
+
+    Primero se prueba la tabla de siempre. Si no esta, se busca si alguno de
+    los nombres conocidos aparece adentro del que vino.
+    """
+    if name in TEAM_NORM:
+        return TEAM_NORM[name]
+
+    limpio = name.split('(')[0].strip()
+    if limpio in TEAM_NORM:
+        return TEAM_NORM[limpio]
+
+    # sin acentos, en mayusculas, para comparar
+    def _plano(x):
+        import unicodedata
+        x = unicodedata.normalize('NFD', str(x))
+        x = ''.join(c for c in x if unicodedata.category(c) != 'Mn')
+        return x.upper().strip()
+
+    entro = _plano(limpio)
+    conocidos = set(TEAM_NORM.values())
+    for corto in sorted(conocidos, key=len, reverse=True):
+        if _plano(corto) in entro:
+            return corto
+
+    return limpio
 
 def get_teams(lines):
     in_t=False; tl=[]
@@ -1440,11 +1470,11 @@ def generate_team_pages_data(dvw_dir, team_name, output_dir='.', temporada='2025
         except Exception as _e:
             _arm_pd={}
         partidos_individual.append({'id':g['rival']+'__'+g['date'],'nombre':g['rival'],'rival':g['rival'],'fecha':'/'.join(reversed(g['date'].split('-'))),
-            'resultado':g['result'],'equipo_obj':to_pcts(bpl['__EQUIPO__']),'jugadores':jug_obj,'armadores':_arm_pd})
+            'resultado':g['result'],'equipo_obj':(to_pcts(bpl['__EQUIPO__']) if '__EQUIPO__' in bpl else {}),'jugadores':jug_obj,'armadores':_arm_pd})
 
     # Acumulado
     bat_acum=merge_acum(bat_all_pl)
-    equipo_obj_acum=to_pcts(bat_acum['__EQUIPO__'])
+    equipo_obj_acum=to_pcts(bat_acum['__EQUIPO__']) if '__EQUIPO__' in bat_acum else {}
     # Mapa de nombres acumulado (último partido disponible)
     acum_names={}
     for g in sorted(games,key=lambda x:x['date']):
