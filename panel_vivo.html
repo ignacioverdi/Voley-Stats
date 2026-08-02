@@ -46,12 +46,9 @@
   .pl-vacio{color:var(--dim);font-size:13px;padding:10px 0}
   /* Modo extensión: el campo cambia de color para que se vea que la próxima
      tecla va al código extendido y no arranca una acción nueva. */
-  #code.ext, #code-espejo/* El codigo extendido en la barra, en ROJO y negrita: igual que en DataVolley,
-     para distinguir de un vistazo lo que se agrego con el menu de lo que se
-     tipeo.
-
-     Se llama "ext-barra" y no "ext" porque esa clase ya existe en otras dos
-     partes de la hoja de estilos, y la ultima definicion pisaba el color. */
+  #code.ext, #code-espejo/* El extendido en la barra: en ROJO y negrita, igual que en DataVolley. Se
+     llama "ext-barra" porque la clase "ext" ya existe en otras partes de la
+     hoja de estilos y la ultima definicion pisaba el color. */
   .ext-barra{color:#ef4444 !important;font-weight:900;
              background:rgba(239,68,68,.12);
              border-radius:4px;padding:0 2px;
@@ -1622,23 +1619,13 @@ function parseTail(s,skill,ev){
 }
 function buildTail(d,a){
   /* avanzado (combo, destinatario, zonas, subzona) + extendido (sub-tipo, jugadores, especial) */
-  /* La cola, con la MISMA forma que escribe DataVolley. Verificado sobre 4.980
-     codigos de los .dvw reales del club:
-
-         [0-1] combinacion      X5, V6, P1
-         [2]   destinatario     siempre vacio
-         [3]   desde            zona 1-9
-         [4]   hacia            zona 1-9
-         [5]   subzona          A B C D
-         [6]   tipo de golpe    H S M R B   <- el extendido
-         [7]   bloqueadores     0-4
-         [8]   (siempre vacio)
-         [9-10] personalizados
-         [11]  como termino     F B M       <- el extendido
-
-     Antes se armaba con 9 posiciones y el bloqueo con una sola: el tipo de
-     golpe caia dos lugares corrido y las pantallas lo leian mal, o no lo
-     veian. */
+  /* La cola con la MISMA forma que escribe DataVolley, verificada sobre 4.980
+     codigos de los .dvw reales:
+         [0-1] combinacion   [2] destinatario  [3] desde   [4] hacia
+         [5] subzona         [6] TIPO DE GOLPE [7] bloqueadores
+         [8] vacio           [9-10] personalizados         [11] COMO TERMINO
+     Antes eran 9 posiciones con el bloqueo en una sola: el tipo de golpe caia
+     corrido y las pantallas lo leian en el lugar equivocado. */
   const core=(d.combo||'~~')+(d.target||'~')+(d.sz||'~')+(d.ez||'~')+(d.subz||'~')
             +(d.hit||'~')+(d.blk||'~')+'~'+'~~'+(d.spec||'~');
   const cust = customFor(d,a);
@@ -3549,9 +3536,7 @@ function partirCodigo(cod){
     combo: cola.slice(0,2).replace(/~/g,''),
     dest: en(2),
     sz: en(3), ez: en(4), subz: en(5),
-    /* Las posiciones son las de DataVolley, verificadas sobre los .dvw: el
-       tipo de golpe en la 6, los bloqueadores en la 7, y como termino la
-       jugada en la 11 —al final, despues de los personalizados—. */
+    /* el golpe en la 6 y como termino en la 11, como DataVolley */
     hit: en(6), blk: en(7),
     spec: en(11) || en(8)
   };
