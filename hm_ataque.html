@@ -176,9 +176,6 @@ function translatePage(){document.querySelectorAll('[data-i18n]').forEach(functi
 var RIVALS = RAW.rivals;
 var COMBOS = RAW.combos;
 var GAMES  = RAW.games;
-/* El orden tiene que ser EXACTAMENTE el que usa el motor al guardar
-   —RES_IDX en update_db— o los resultados salen cambiados de lugar: los
-   bloqueados aparecian como positivos y los negativos como neutros. */
 var RES_DECODE  = ['#','/','+','!','=','-'];
 var MOM_DECODE  = ['early','mid','late'];
 var ATYPE_DECODE= ['SO','TR'];
@@ -391,10 +388,10 @@ function getMainOrigin(acts){
 /* === Canchita estilo Plan de Partido (una cancha + linea de origen) === */
 var CC_MIN=2;
 function _ccRGB(c){if(!c)return '129,140,248';c=String(c);if(c.charAt(0)==='#'){var x=c.slice(1);if(x.length===3)x=x.charAt(0)+x.charAt(0)+x.charAt(1)+x.charAt(1)+x.charAt(2)+x.charAt(2);var n=parseInt(x,16);return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);}var m=c.match(/(\d+)\D+(\d+)\D+(\d+)/);return m?(m[1]+','+m[2]+','+m[3]):'129,140,248';}
-function ccGrid(zones,layout,color,total,opts){opts=opts||{};var minN=opts.minN||0,rgb=_ccRGB(color);var vals=[];layout.forEach(function(r){r.forEach(function(z){vals.push(zones[z]||0);});});var mx=Math.max.apply(null,vals)||1;var h="<div class='cc-grid'>";layout.forEach(function(row){row.forEach(function(z){var cnt=zones[z]||0,low=(minN>0&&cnt>0&&cnt<minN),bg,inner='';if(cnt<=0){bg='rgba(255,255,255,.02)';}else if(low){bg='rgba(255,255,255,.05)';inner="<div class='cn' style='color:#64748b;font-size:20px'>"+cnt+"</div>";}else{var a=0.16+(cnt/mx)*0.72;bg='rgba('+rgb+','+a.toFixed(2)+')';inner="<div class='cn'>"+cnt+"</div>"+((total>0)?"<div class='pc'>"+Math.round(cnt/total*100)+"%</div>":'');}/* Si la zona tiene acciones, se puede tocar para ver esos videos.
+function ccGrid(zones,layout,color,total,opts){opts=opts||{};var minN=opts.minN||0,esOrig=!!opts.origen,rgb=_ccRGB(color);var vals=[];layout.forEach(function(r){r.forEach(function(z){vals.push(zones[z]||0);});});var mx=Math.max.apply(null,vals)||1;var h="<div class='cc-grid'>";layout.forEach(function(row){row.forEach(function(z){var cnt=zones[z]||0,low=(minN>0&&cnt>0&&cnt<minN),bg,inner='';if(cnt<=0){bg='rgba(255,255,255,.02)';}else if(low){bg='rgba(255,255,255,.05)';inner="<div class='cn' style='color:#64748b;font-size:20px'>"+cnt+"</div>";}else{var a=0.16+(cnt/mx)*0.72;bg='rgba('+rgb+','+a.toFixed(2)+')';inner="<div class='cn'>"+cnt+"</div>"+((total>0)?"<div class='pc'>"+Math.round(cnt/total*100)+"%</div>":'');}/* Si la zona tiene acciones, se puede tocar para ver esos videos.
        El heatmap deja de ser un cuadro y pasa a ser una puerta al video. */
     var _clic = (cnt>0 && typeof verVideoDest==='function')
-      ? " onclick=\"verVideoDest("+z+")\" style=\"background:"+bg+";cursor:pointer\" title=\"Ver los videos de esta zona\""
+      ? " onclick=\"verVideoDest("+z+","+(esOrig?"1":"0")+")\" style=\"background:"+bg+";cursor:pointer\" title=\"Ver los videos de esta zona\""
       : " style='background:"+bg+"'";
     h+="<div class='cc-cell'"+_clic+"><div class='zn'>"+z+"</div>"+inner+"</div>";});});return h+"</div>";}
 function ccOriginLine(zones,total){var arr=[];for(var z in zones){if(zones[z]>0)arr.push([z,zones[z]]);}arr.sort(function(a,b){return b[1]-a[1];});if(!arr.length)return "";var top=arr.slice(0,3).map(function(p){return "Z"+p[0]+(total>0?" "+Math.round(p[1]/total*100)+"%":" ("+p[1]+")");}).join(" \u00b7 ");return "<div class='cc-origin'>Zona de origen: <b>"+top+"</b></div>";}
@@ -420,10 +417,19 @@ function abrirVideo(){
   if(F.combo && F.combo !== 'all') u += '&combo=' + encodeURIComponent(F.combo);
   window.open(u + _vfilt(), '_blank');
 }
-function verVideoDest(zone, extra){
-  if(!F.player){ alert('Elegí un jugador primero.'); return; }
-  window.open('cortes.html?num=' + encodeURIComponent(F.player) +
-              '&sk=Ataque&dz=' + zone + (extra || '') + _vfilt(), '_blank');
+function verVideoDest(zone, esOrigen){
+  /* En las canchas de destino la zona es a donde FUE la pelota (dz); en la
+     de bloqueados es desde donde SALIO el ataque (oz), porque un ataque
+     bloqueado no tiene destino: la pelota nunca paso.
+
+     Cual de las dos es viene escrito en el propio boton. Y la barra va sin
+     codificar: encodeURIComponent la convierte en %2F y cortes.html compara
+     el texto tal cual. */
+  if(!F.player){ alert('Eleg\u00ed un jugador primero.'); return; }
+  var u = 'cortes.html?num=' + encodeURIComponent(F.player) + '&sk=Ataque' +
+          (esOrigen ? '&oz=' : '&dz=') + zone;
+  if(esOrigen) u += '&ev=/';
+  window.open(u + _vfilt(), '_blank');
 }
 
 function courtSVG(destZones,originZone,total,color,title){
@@ -445,9 +451,7 @@ function courtSVGOrigin(originZones,total,color,title){
      del mismo alto, si no esta arranca más arriba y queda desalineada. */
   h+="<div class='cc-origin' style='visibility:hidden'>&nbsp;</div>";
   h+="<div class='cc-lbl' style='color:rgba(239,68,68,.6)'>"+title+"</div>";
-  /* Sin minimo: los bloqueados son pocos repartidos en nueve zonas, y con el
-     minimo de dos casi ninguna llegaba y la cancha quedaba en blanco. */
-  h+=ccGrid(originZones,OWN,color,total,{minN:0});
+  h+=ccGrid(originZones,OWN,color,total,{minN:0,origen:true});
   return h+"</div>";
 }
 
