@@ -176,7 +176,10 @@ function translatePage(){document.querySelectorAll('[data-i18n]').forEach(functi
 var RIVALS = RAW.rivals;
 var COMBOS = RAW.combos;
 var GAMES  = RAW.games;
-var RES_DECODE  = ['#','+','-','/','=','!'];
+/* El orden tiene que ser EXACTAMENTE el que usa el motor al guardar
+   —RES_IDX en update_db— o los resultados salen cambiados de lugar: los
+   bloqueados aparecian como positivos y los negativos como neutros. */
+var RES_DECODE  = ['#','/','+','!','=','-'];
 var MOM_DECODE  = ['early','mid','late'];
 var ATYPE_DECODE= ['SO','TR'];
 
@@ -442,7 +445,9 @@ function courtSVGOrigin(originZones,total,color,title){
      del mismo alto, si no esta arranca más arriba y queda desalineada. */
   h+="<div class='cc-origin' style='visibility:hidden'>&nbsp;</div>";
   h+="<div class='cc-lbl' style='color:rgba(239,68,68,.6)'>"+title+"</div>";
-  h+=ccGrid(originZones,OWN,color,total,{minN:CC_MIN});
+  /* Sin minimo: los bloqueados son pocos repartidos en nueve zonas, y con el
+     minimo de dos casi ninguna llegaba y la cancha quedaba en blanco. */
+  h+=ccGrid(originZones,OWN,color,total,{minN:0});
   return h+"</div>";
 }
 
